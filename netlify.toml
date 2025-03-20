@@ -1,18 +1,25 @@
+# Netlify configuration file for Apex Predator Insurance
+
 
 # Basic Netlify configuration for SPA
 [build]
   command = "npm run build"
   publish = "dist"
 
+# Redirects for SPA routing
 # Redirects for SPA routing - essential for React Router
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Security headers
 # Basic security headers without overly restrictive CSP
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://lovable.dev https://images.unsplash.com; font-src 'self' data:; connect-src 'self' https://api.netlify.com;"
