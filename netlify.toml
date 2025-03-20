@@ -17,6 +17,12 @@
   to = "/index.html"
   status = 200
 
+# Custom 404 page
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
 # Set custom headers for security
 [[headers]]
   for = "/*"
