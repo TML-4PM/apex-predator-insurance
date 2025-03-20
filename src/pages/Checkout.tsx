@@ -1,9 +1,9 @@
+
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import Layout from '@/components/Layout';
-import Certificate from '@/components/Certificate';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -20,9 +20,10 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-// Initialize Stripe with your publishable key
-// Replace this with your actual publishable key
+// Replace with your own publishable key from your Stripe Dashboard
+// For production, you would want to use your live key instead of test key
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const formSchema = z.object({
@@ -32,6 +33,19 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+// This would normally be an API endpoint on your server
+async function createPaymentIntent(amount: number, metadata: any) {
+  // In production, this would make a request to your server
+  console.log('Creating payment intent for amount:', amount, 'with metadata:', metadata);
+  
+  // For now, simulate a response from your server
+  // In a real implementation, you would call your backend API here
+  return {
+    clientSecret: null, // Your server would return a real client secret
+    error: "This is a demo implementation. To process real payments, you need to implement a server endpoint."
+  };
+}
+
 const CheckoutForm = ({ plan, onSuccess }: { 
   plan: { id: string, name: string, price: number, icon: string },
   onSuccess: (data: FormValues) => void 
@@ -39,6 +53,7 @@ const CheckoutForm = ({ plan, onSuccess }: {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const { toast } = useToast();
 
   const form = useForm<FormValues>({
@@ -55,6 +70,7 @@ const CheckoutForm = ({ plan, onSuccess }: {
     }
 
     setIsLoading(true);
+    setPaymentError(null);
 
     try {
       const cardElement = elements.getElement(CardElement);
@@ -63,38 +79,77 @@ const CheckoutForm = ({ plan, onSuccess }: {
         throw new Error("Card element not found");
       }
 
-      // In a real implementation, you would create a payment intent on your server
-      // and then confirm the payment here
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-      });
+      // In a real implementation, you would:
+      // 1. Call your backend to create a payment intent
+      // 2. Get the client_secret from the response
+      // 3. Use that to confirm the payment with stripe.confirmCardPayment
+
+      const { clientSecret, error } = await createPaymentIntent(
+        Math.round(plan.price * 100), // Convert to cents for Stripe
+        { 
+          plan_id: plan.id,
+          plan_name: plan.name,
+          customer_name: data.fullName,
+          customer_email: data.email
+        }
+      );
 
       if (error) {
-        console.error('[error]', error);
+        setPaymentError(error);
         toast({
-          title: "Payment failed",
-          description: error.message || "Please try again or contact support.",
+          title: "Payment setup failed",
+          description: error,
           variant: "destructive"
         });
         return;
       }
 
-      // This would normally call to your backend to process the payment
-      console.log('[PaymentMethod]', paymentMethod);
-      
-      // Simulate successful payment
-      toast({
-        title: "Payment successful!",
-        description: "Your certificate is ready to download.",
+      if (!clientSecret) {
+        // For the demo, simulate a successful payment
+        // In production, you would use stripe.confirmCardPayment with the client secret
+        console.log('Demo mode: Simulating successful payment');
+        
+        toast({
+          title: "Demo Mode",
+          description: "In a real implementation, this would process a payment. Your certificate is ready to download.",
+        });
+        
+        onSuccess(data);
+        return;
+      }
+
+      // This code would be used in production:
+      /*
+      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: data.fullName,
+            email: data.email,
+          },
+        },
       });
+
+      if (confirmError) {
+        throw new Error(confirmError.message);
+      }
+
+      if (paymentIntent.status === 'succeeded') {
+        toast({
+          title: "Payment successful!",
+          description: "Your certificate is ready to download.",
+        });
+        
+        onSuccess(data);
+      }
+      */
       
-      onSuccess(data);
     } catch (error) {
       console.error('Payment error:', error);
+      setPaymentError(error instanceof Error ? error.message : "An unknown error occurred");
       toast({
         title: "Payment failed",
-        description: "Please try again or contact support.",
+        description: error instanceof Error ? error.message : "Please try again or contact support.",
         variant: "destructive"
       });
     } finally {
@@ -150,6 +205,14 @@ const CheckoutForm = ({ plan, onSuccess }: {
             Payment Details
           </h3>
           
+          {paymentError && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>
+                {paymentError}
+              </AlertDescription>
+            </Alert>
+          )}
+          
           <div className="mb-4">
             <Label>Card Information</Label>
             <div className="mt-1 p-3 border rounded-md focus-within:ring-2 focus-within:ring-apex-red focus-within:border-transparent">
@@ -188,6 +251,18 @@ const CheckoutForm = ({ plan, onSuccess }: {
               </>
             )}
           </Button>
+          
+          <Alert className="mt-4 bg-yellow-50 border-yellow-200">
+            <AlertDescription className="text-yellow-800 text-sm">
+              <p className="font-medium">Demo Mode</p>
+              <p>This is currently in demo mode. To process real payments, you'll need to:</p>
+              <ol className="list-decimal list-inside mt-2 space-y-1">
+                <li>Set up a server with a Stripe payment endpoint</li>
+                <li>Replace the test publishable key with your live key</li>
+                <li>Implement the createPaymentIntent backend function</li>
+              </ol>
+            </AlertDescription>
+          </Alert>
           
           <p className="text-xs text-gray-500 mt-4 text-center">
             * This is a novelty item, not actual insurance.
@@ -280,10 +355,13 @@ const Checkout = () => {
                         Certificate Preview:
                       </p>
                       <div className="transform scale-75 origin-top">
-                        <Certificate 
-                          insuranceType={selectedPlan.name}
-                          name={formData.fullName || "Your Name Here"}
-                        />
+                        <div className="flex justify-center items-center h-full">
+                          {/* Certificate Preview */}
+                          <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
+                            <h3 className="text-xl font-semibold mb-2">{selectedPlan.name}</h3>
+                            <p>Issued to: {formData.fullName || "Your Name Here"}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
