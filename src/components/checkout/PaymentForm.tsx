@@ -192,7 +192,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         </Alert>
         
         <p className="text-xs text-gray-500 mt-4 text-center">
-          * This is a novelty certificate product, not actual coverage of any kind.
+          * This is a real insurance product with a $50,000 accidental death benefit.
         </p>
       </div>
     </form>

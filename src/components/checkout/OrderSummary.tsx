@@ -45,7 +45,8 @@ export const OrderSummary = ({ plan, userName = "Your Name Here" }: OrderSummary
               {/* Certificate Preview */}
               <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
                 <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-                <p>Issued to: {userName}</p>
+                <p className="mb-2">Issued to: {userName}</p>
+                <p className="text-sm text-apex-red">$50,000 Accidental Death Benefit</p>
               </div>
             </div>
           </div>

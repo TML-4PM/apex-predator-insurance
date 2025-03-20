@@ -18,7 +18,7 @@ const faqItems = [
   },
   {
     question: "Do you encourage dangerous encounters with predators?",
-    answer: "Absolutely not! We strongly discourage any attempts to get close to dangerous wildlife. This insurance provides financial protection while acknowledging the healthy respect we should all have for these impressive animals - from a safe distance!"
+    answer: "Absolutely not! We strongly discourage any attempts to get close to dangerous wildlife. This insurance provides real financial protection while acknowledging the healthy respect we should all have for these impressive animals - from a safe distance!"
   },
   {
     question: "Can I purchase this as a gift?",

@@ -18,7 +18,7 @@ const MobileApp = () => {
                 Take Your Adventure Protection on the Go
               </h2>
               <p className="text-xl text-apex-darkgray/70 mb-8">
-                Our mobile app lets you access your predator certificates anytime, anywhere. Even when you're being chased by a bear (not that it will help).
+                Our mobile app lets you access your predator certificates and policy details anytime, anywhere. Even when you're being chased by a bear (not that it will help).
               </p>
               
               <div className="space-y-4 mb-8">
@@ -26,7 +26,7 @@ const MobileApp = () => {
                   <div className="mt-1 flex-shrink-0">
                     <Check className="h-5 w-5 text-apex-red" />
                   </div>
-                  <p className="text-apex-darkgray">Generate certificates even in remote locations (internet required, obviously)</p>
+                  <p className="text-apex-darkgray">Access your policy information even in remote locations (internet required, obviously)</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0">
@@ -55,7 +55,7 @@ const MobileApp = () => {
                     <h3 className="text-lg font-medium text-apex-red">Coming Soon</h3>
                   </div>
                   <p className="text-apex-darkgray text-sm">
-                    Our mobile apps are currently in development. Stay tuned for their release!
+                    Our iOS and Android apps are currently in development. Stay tuned for their release!
                   </p>
                 </div>
               </div>
@@ -95,7 +95,7 @@ const MobileApp = () => {
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-apex-red text-white px-4 py-2 rounded-full shadow-lg">
               <div className="flex items-center gap-2">
                 <Clock size={16} />
-                <span className="font-medium text-sm">Coming Soon</span>
+                <span className="font-medium text-sm">Coming Soon for iOS & Android</span>
               </div>
             </div>
           </div>
