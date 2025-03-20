@@ -18,7 +18,7 @@ const testimonials = [
     age: 26,
     location: 'Australia',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces',
-    quote: 'The Lion Insurance certificate was a hilarious addition to my safari photos. Everyone thinks I'm crazy now!',
+    quote: 'The Lion Insurance certificate was a hilarious addition to my safari photos. Everyone thinks I\'m crazy now!',
     adventure: 'Serengeti National Park',
     rating: 5,
   },
