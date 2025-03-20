@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import Layout from '@/components/Layout';
 import Certificate from '@/components/Certificate';
 import { Input } from '@/components/ui/input';
@@ -8,12 +10,199 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Label } from '@/components/ui/label';
 import { ShoppingCart, CreditCard, Shield } from 'lucide-react';
+import { 
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Initialize Stripe with your publishable key
+// Replace this with your actual publishable key
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+
+const formSchema = z.object({
+  fullName: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
+const CheckoutForm = ({ plan, onSuccess }: { 
+  plan: { id: string, name: string, price: number, icon: string },
+  onSuccess: (data: { fullName: string, email: string }) => void 
+}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+    },
+  });
+
+  const handleSubmit = async (data: FormValues) => {
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const cardElement = elements.getElement(CardElement);
+      
+      if (!cardElement) {
+        throw new Error("Card element not found");
+      }
+
+      // In a real implementation, you would create a payment intent on your server
+      // and then confirm the payment here
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+      });
+
+      if (error) {
+        console.error('[error]', error);
+        toast({
+          title: "Payment failed",
+          description: error.message || "Please try again or contact support.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // This would normally call to your backend to process the payment
+      console.log('[PaymentMethod]', paymentMethod);
+      
+      // Simulate successful payment
+      toast({
+        title: "Payment successful!",
+        description: "Your certificate is ready to download.",
+      });
+      
+      onSuccess(data);
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Payment failed",
+        description: "Please try again or contact support.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <div>
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Your name (as it will appear on the certificate)" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        
+        <div>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="email"
+                    placeholder="Where to send your certificate" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        
+        <div className="pt-4 border-t border-gray-100">
+          <h3 className="text-lg font-medium mb-4 flex items-center">
+            <CreditCard className="mr-2 h-5 w-5 text-apex-red" />
+            Payment Details
+          </h3>
+          
+          <div className="mb-4">
+            <Label>Card Information</Label>
+            <div className="mt-1 p-3 border rounded-md focus-within:ring-2 focus-within:ring-apex-red focus-within:border-transparent">
+              <CardElement 
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: '#424770',
+                      '::placeholder': {
+                        color: '#aab7c4',
+                      },
+                    },
+                    invalid: {
+                      color: '#9e2146',
+                    },
+                  },
+                }}
+              />
+            </div>
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-apex-red hover:bg-apex-red/90"
+            disabled={isLoading || !stripe}
+          >
+            {isLoading ? (
+              <div className="flex items-center">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                Processing...
+              </div>
+            ) : (
+              <>
+                Pay ${plan.price.toFixed(2)}
+              </>
+            )}
+          </Button>
+          
+          <p className="text-xs text-gray-500 mt-4 text-center">
+            * This is a novelty item, not actual insurance.
+          </p>
+        </div>
+      </form>
+    </Form>
+  );
+};
 
 const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -27,49 +216,14 @@ const Checkout = () => {
     icon: '🦈'
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // In a real implementation, this would connect to Stripe
-      // For now, we'll simulate a successful payment
-      
-      setTimeout(() => {
-        // Show success message
-        toast({
-          title: "Payment successful!",
-          description: "Your certificate is ready to download.",
-        });
-        
-        // Navigate to certificate page with user data
-        navigate('/certificate', { 
-          state: { 
-            plan: selectedPlan,
-            user: formData
-          } 
-        });
-        
-        setIsLoading(false);
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast({
-        title: "Payment failed",
-        description: "Please try again or contact support.",
-        variant: "destructive"
-      });
-      setIsLoading(false);
-    }
+  const handlePaymentSuccess = (data: { fullName: string, email: string }) => {
+    // Navigate to certificate page with user data
+    navigate('/certificate', { 
+      state: { 
+        plan: selectedPlan,
+        user: data
+      } 
+    });
   };
 
   return (
@@ -90,62 +244,12 @@ const Checkout = () => {
                     Your Information
                   </h2>
                   
-                  <form onSubmit={handleSubmit}>
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="fullName">Full Name</Label>
-                        <Input 
-                          id="fullName"
-                          name="fullName"
-                          placeholder="Your name (as it will appear on the certificate)"
-                          value={formData.fullName}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input 
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="Where to send your certificate"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      
-                      <div className="pt-4 border-t border-gray-100">
-                        <h3 className="text-lg font-medium mb-4 flex items-center">
-                          <CreditCard className="mr-2 h-5 w-5 text-apex-red" />
-                          Payment Details
-                        </h3>
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-apex-red hover:bg-apex-red/90"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? (
-                            <div className="flex items-center">
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                              Processing...
-                            </div>
-                          ) : (
-                            <>
-                              Pay ${selectedPlan.price.toFixed(2)}
-                            </>
-                          )}
-                        </Button>
-                        
-                        <p className="text-xs text-gray-500 mt-4 text-center">
-                          * This is a novelty item, not actual insurance.
-                        </p>
-                      </div>
-                    </div>
-                  </form>
+                  <Elements stripe={stripePromise}>
+                    <CheckoutForm 
+                      plan={selectedPlan} 
+                      onSuccess={handlePaymentSuccess} 
+                    />
+                  </Elements>
                 </div>
               </div>
               
