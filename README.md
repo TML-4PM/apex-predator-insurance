@@ -61,30 +61,53 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 
 #### For Apex/Root Domain (example.com without www):
 
-5. **Create A records:**
+5. **Create ONE A record with MULTIPLE IP values:**
    - **Record type:** A
-   - **Record name:** LEAVE THIS FIELD BLANK (do not enter "www", "@", or anything else)
-   - **Enter each IP address in a SEPARATE line in the Value field:**
+   - **Record name:** LEAVE THIS FIELD BLANK (leave the "subdomain" field empty)
+   - **Value:** Enter ALL FOUR IP addresses, EACH ON A NEW LINE in the same Value field:
      ```
      104.198.14.52
      104.198.14.53
      104.198.14.54
      104.198.14.55
      ```
-   - **Do NOT create separate A records for each IP** - put all IPs in the same record with multiple lines
    - **TTL:** 300 seconds
    - **Click "Create"**
 
-### Important: Common DNS Setup Error
+### FIXING THE "InvalidChangeBatch 400" ERROR
 
-The error message you see: `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A www.apexpredatorinsurance.com.'` happens when:
+This specific error: `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A apexpredatorinsurance.com.'` occurs because:
 
-1. You're trying to create an A record for the www subdomain (which should be a CNAME)
-2. You're trying to create multiple separate A records for the same name
+1. **You entered something in the subdomain field for an apex record**
+   - For root domain records, the subdomain field MUST be completely empty
+   - Do not enter "@", "apex", or any other text
 
-**CORRECT APPROACH:**
-- www subdomain: ONE CNAME record pointing to your Netlify URL
-- Root domain: ONE A record with MULTIPLE values (all four IPs on separate lines)
+2. **You might be creating separate A records**
+   - Create only ONE A record for the root domain
+   - Put all four Netlify IP addresses in the SAME record
+   - Each IP should be on its own line in the same Value field
+
+3. **You might be trying to use A records for www**
+   - The www subdomain should use a CNAME record, not an A record
+   - Only the apex/root domain needs A records
+
+### VISUAL GUIDE FOR THE CORRECT SETUP
+
+#### For the apex/root domain (example.com):
+- Record type: A
+- Name/subdomain: LEAVE EMPTY (this is critical)
+- Value: All four IPs, each on a new line:
+  ```
+  104.198.14.52
+  104.198.14.53
+  104.198.14.54
+  104.198.14.55
+  ```
+
+#### For the www subdomain:
+- Record type: CNAME
+- Name/subdomain: www
+- Value: your-site.netlify.app (just the domain, no https://)
 
 ### Step 3: Configure Custom Domain in Netlify
 
