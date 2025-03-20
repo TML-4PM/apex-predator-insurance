@@ -5,6 +5,43 @@ import Hero from '@/components/Hero';
 import InsurancePlans from '@/components/InsurancePlans';
 import Certificate from '@/components/Certificate';
 import FAQ from '@/components/FAQ';
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
+import { MapPin, Compass, Route, Camera, Shield } from 'lucide-react';
+
+const adventureTips = [
+  {
+    title: "Pack Light, Travel Far",
+    description: "The less you carry, the more you'll experience. Essentials only!",
+    icon: <Compass className="h-12 w-12 text-apex-red mb-4" />
+  },
+  {
+    title: "Document Your Journey",
+    description: "Capture those wild moments - just don't get too close to the wildlife!",
+    icon: <Camera className="h-12 w-12 text-apex-red mb-4" />
+  },
+  {
+    title: "Off The Beaten Path",
+    description: "The most memorable adventures happen where the tourists aren't.",
+    icon: <Route className="h-12 w-12 text-apex-red mb-4" />
+  },
+  {
+    title: "Local Knowledge",
+    description: "Chat with locals for hidden gems and authentic experiences.",
+    icon: <MapPin className="h-12 w-12 text-apex-red mb-4" />
+  },
+  {
+    title: "Stay Protected",
+    description: "Adventure wisely (and get our certificates to brag about it later)!",
+    icon: <Shield className="h-12 w-12 text-apex-red mb-4" />
+  }
+];
 
 const Index = () => {
   useEffect(() => {
@@ -14,6 +51,47 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
+      
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
+              Adventure Tips & Tricks
+            </h2>
+            <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100">
+              Travel smarter, adventure harder, and always have a good story to tell.
+            </p>
+          </div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {adventureTips.map((tip, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <div className="p-1">
+                    <Card className="border-2 border-apex-lightgray hover:border-apex-red/30 transition-all duration-300">
+                      <CardContent className="flex flex-col items-center text-center p-6">
+                        {tip.icon}
+                        <h3 className="text-xl font-bold mb-2">{tip.title}</h3>
+                        <p className="text-apex-darkgray/70">{tip.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8">
+              <CarouselPrevious className="relative static translate-y-0 mr-2" />
+              <CarouselNext className="relative static translate-y-0 ml-2" />
+            </div>
+          </Carousel>
+        </div>
+      </section>
       
       <section className="py-20 bg-[#1A1F2C]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
