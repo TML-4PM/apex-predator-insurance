@@ -8,5 +8,10 @@ const rootElement = document.getElementById("root");
 if (!rootElement) {
   console.error("Root element not found in the document");
 } else {
-  createRoot(rootElement).render(<App />);
+  try {
+    createRoot(rootElement).render(<App />);
+    console.log("Application successfully rendered");
+  } catch (error) {
+    console.error("Failed to render application:", error);
+  }
 }
