@@ -8,6 +8,8 @@
 # Environment variables
 [build.environment]
   NODE_ENV = "production"
+  # Ensure dev dependencies are installed during build
+  NPM_FLAGS = "--include=dev"
 
 # Handle SPA routing for React Router
 [[redirects]]
