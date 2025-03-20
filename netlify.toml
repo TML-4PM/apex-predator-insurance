@@ -1,29 +1,42 @@
 
-# Netlify configuration file
+# Netlify configuration file for Apex Predator Insurance
+
 [build]
   command = "npm run build"
   publish = "dist"
-  node_version = "18" # Specify Node.js version
+  node_version = "18"
 
-# Environment variables
 [build.environment]
   NODE_ENV = "production"
   # Ensure dev dependencies are installed during build
   NPM_FLAGS = "--include=dev"
 
-# Handle SPA routing for React Router
+# Redirects and rewrites for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
 
-# Custom 404 page
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 404
+# Enable asset optimization
+[build.processing]
+  skip_processing = false
 
-# Set custom headers for security
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -31,4 +44,4 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://lovable.dev; font-src 'self' data:; connect-src 'self';"
