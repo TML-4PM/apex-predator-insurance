@@ -20,6 +20,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
   const [isLoading, setIsLoading] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const { toast } = useToast();
+  const isProd = window.location.hostname === 'apexpredatorinsurance.com';
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -50,7 +51,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
       }
 
       // Call our backend API to create a payment intent
-      const { clientSecret, error } = await createPaymentIntent(
+      const { clientSecret, error, demoMode } = await createPaymentIntent(
         plan.price,
         { 
           plan_id: plan.id,
@@ -70,16 +71,20 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         return;
       }
 
-      if (!clientSecret) {
+      if (demoMode || !clientSecret) {
         // For demo mode or development environment
         console.log('Demo mode: Simulating successful payment');
         
         toast({
-          title: "Demo Mode",
-          description: "In a real implementation, this would process a payment. Your certificate is ready to download.",
+          title: isProd ? "Processing Error" : "Demo Mode",
+          description: isProd 
+            ? "Payment processing is temporarily unavailable. Please try again later."
+            : "In a real implementation, this would process a payment. Your certificate is ready to download.",
         });
         
-        onSuccess(formData);
+        if (!isProd) {
+          onSuccess(formData);
+        }
         return;
       }
 
@@ -179,17 +184,19 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
           )}
         </Button>
         
-        <Alert className="mt-4 bg-yellow-50 border-yellow-200">
-          <AlertDescription className="text-yellow-800 text-sm">
-            <p className="font-medium">Integration Status</p>
-            <p>This component is connected to a Supabase Edge Function. To fully enable payment processing:</p>
-            <ol className="list-decimal list-inside mt-2 space-y-1">
-              <li>Add your Stripe secret key to Supabase environment variables</li>
-              <li>Deploy the Edge Function to handle payment intents</li>
-              <li>Test the integration in a development environment first</li>
-            </ol>
-          </AlertDescription>
-        </Alert>
+        {!isProd && (
+          <Alert className="mt-4 bg-yellow-50 border-yellow-200">
+            <AlertDescription className="text-yellow-800 text-sm">
+              <p className="font-medium">Integration Status</p>
+              <p>This component is connected to a Supabase Edge Function. To fully enable payment processing:</p>
+              <ol className="list-decimal list-inside mt-2 space-y-1">
+                <li>Add your Stripe secret key to Supabase environment variables</li>
+                <li>Deploy the Edge Function to handle payment intents</li>
+                <li>Test the integration in a development environment first</li>
+              </ol>
+            </AlertDescription>
+          </Alert>
+        )}
         
         <p className="text-xs text-gray-500 mt-4 text-center">
           * This is a real insurance product with a $50,000 accidental death benefit.

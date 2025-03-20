@@ -1,11 +1,17 @@
 
 // Follow these steps to set up the Edge Function in Supabase:
-// 1. Install Supabase CLI if you haven't already
-// 2. Run: supabase functions new create-payment-intent
-// 3. Copy this code into the function
+// 1. Install Supabase CLI if you haven't already:
+//    npm install -g supabase
+// 2. Login to Supabase:
+//    supabase login
+// 3. Link your project (if not already done):
+//    supabase link --project-ref your-project-ref
 // 4. Add your Stripe secret key to Supabase secrets:
 //    supabase secrets set STRIPE_SECRET_KEY=sk_live_your_key_here
-// 5. Deploy the function: supabase functions deploy create-payment-intent
+// 5. Deploy the function: 
+//    supabase functions deploy create-payment-intent --no-verify-jwt
+// 6. Check deployment status:
+//    supabase functions list
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
@@ -15,6 +21,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Implement feature flag for testing
+const ENABLE_PAYMENTS = true; // Set to false to disable real payment processing for testing
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -22,7 +31,25 @@ serve(async (req) => {
   }
 
   try {
-    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
+    // Get Stripe key from environment
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
+    
+    // If no key is set or payments are disabled, return demo mode response
+    if (!stripeKey || !ENABLE_PAYMENTS) {
+      console.log('Payment processing disabled or missing Stripe key');
+      return new Response(
+        JSON.stringify({ 
+          demoMode: true,
+          message: 'Payment processing is disabled or not configured' 
+        }),
+        { 
+          status: 200, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    const stripe = new Stripe(stripeKey, {
       apiVersion: '2023-10-16',
       httpClient: Stripe.createFetchHttpClient(),
     });
@@ -35,6 +62,9 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Log payment attempt for monitoring (but don't log full card details)
+    console.log(`Payment intent created for ${amount} cents, plan: ${metadata?.plan_name || 'unknown'}`);
 
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({

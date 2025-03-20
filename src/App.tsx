@@ -11,6 +11,8 @@ import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
 import CertificatePage from "./pages/CertificatePage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/certificate" element={<CertificatePage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
