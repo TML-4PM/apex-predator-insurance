@@ -253,7 +253,7 @@ const Certificate: React.FC<CertificateProps> = ({
                   Coverage of $50,000 for accidental death by {insuranceType.toLowerCase().replace(' insurance', '')}
                 </p>
                 <p className="text-xs text-apex-black/40 mt-1">
-                  Policy valid for 12 months. See Terms & Conditions for exclusions.
+                  Policy valid for 12 months. This is a novelty item, not actual insurance coverage.
                 </p>
               </div>
             </div>

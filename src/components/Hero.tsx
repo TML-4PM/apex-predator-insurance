@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Camera } from 'lucide-react';
@@ -32,7 +31,6 @@ const Hero = () => {
       ref={heroRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-10"
     >
-      {/* Background Element - Real shark image with dark overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-apex-black/90 to-apex-black/80 z-10" />
         <div 
@@ -44,7 +42,6 @@ const Hero = () => {
         />
       </div>
       
-      {/* Scary animal images in background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
         <div className="floating stagger-1 absolute top-1/4 left-[15%] opacity-20">
           <img src="https://images.unsplash.com/photo-1504472478235-9bc48ba4d60f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
@@ -66,14 +63,12 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Tag Pill */}
           <div 
             className="inline-block mb-6 px-4 py-1 rounded-full bg-apex-yellow text-apex-black text-sm font-medium animate-fade-in"
           >
             Because You Never Know... But You Probably Do.
           </div>
           
-          {/* Main Heading */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight animate-fade-up text-shadow-lg">
             Get Covered for the <span className="text-apex-red">Wildest</span> Ways to Go Out
           </h1>
@@ -82,7 +77,6 @@ const Hero = () => {
             $9.99 per policy – or get the full Apex Predator Pack for $49.99!
           </p>
           
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
             <Link 
               to="/plans" 
@@ -102,7 +96,6 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Insurance Card Preview with a darker, more dramatic look */}
         <div className="mt-16 perspective max-w-lg mx-auto">
           <div className="relative w-full preserve-3d transition-all-500 hover:rotate-y-10 animate-scale-in animate-delay-300">
             <div className="premium-card rounded-2xl overflow-hidden shadow-glass p-6 backdrop-blur-md backface-hidden bg-black/40 border border-white/10">
@@ -127,20 +120,19 @@ const Hero = () => {
                   </div>
                   <div>
                     <div className="text-sm text-white/60">VALID UNTIL</div>
-                    <div className="text-base text-white">FOREVER*</div>
+                    <div className="text-base text-white">12 MONTHS</div>
                   </div>
                 </div>
               </div>
               
               <div className="absolute bottom-6 right-6">
-                <div className="text-xs text-white/60">*Not real insurance</div>
+                <div className="text-xs text-white/60">*Novelty item, not actual insurance</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-apex-black clip-polygon z-10" />
     </div>
   );
