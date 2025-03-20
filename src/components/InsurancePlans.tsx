@@ -867,11 +867,23 @@ const fullInsurancePlans = [
   }
 ];
 
+// Define the insurance plan type to ensure proper typing
+interface InsurancePlan {
+  id: string;
+  name: string;
+  icon: string;
+  price: number;
+  description: string;
+  location: string;
+  features: string[];
+  funFact: string;
+}
+
 // Component implementation
 const InsurancePlans = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [filteredPlans, setFilteredPlans] = useState(fullInsurancePlans);
+  const [filteredPlans, setFilteredPlans] = useState<InsurancePlan[]>(fullInsurancePlans);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -896,8 +908,8 @@ const InsurancePlans = () => {
   }, [searchTerm, selectedLocation]);
 
   // Get unique locations from all plans
-  const getUniqueLocations = () => {
-    const locations = new Set();
+  const getUniqueLocations = (): string[] => {
+    const locations = new Set<string>();
     
     fullInsurancePlans.forEach(plan => {
       if (plan.location.includes(',')) {
@@ -912,7 +924,7 @@ const InsurancePlans = () => {
     return Array.from(locations).sort();
   };
 
-  const handleAddToCart = (plan) => {
+  const handleAddToCart = (plan: InsurancePlan) => {
     // Store selected plan in localStorage for checkout
     localStorage.setItem('selectedPlan', JSON.stringify(plan));
     
@@ -951,7 +963,7 @@ const InsurancePlans = () => {
               onChange={(e) => setSelectedLocation(e.target.value)}
             >
               <option value="">All Locations</option>
-              {getUniqueLocations().map((location) => (
+              {getUniqueLocations().map((location: string) => (
                 <option key={location} value={location}>
                   {location}
                 </option>
