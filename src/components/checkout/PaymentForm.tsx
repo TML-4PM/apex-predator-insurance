@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { createPaymentIntent } from '@/lib/stripeClient';
-import { z } from "zod";
+import { CheckoutFormValues } from './CheckoutForm';
 
 interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
-  formData: {
-    fullName: string;
-    email: string;
-  };
-  onSuccess: (data: any) => void;
+  formData: CheckoutFormValues;
+  onSuccess: (data: CheckoutFormValues) => void;
 }
 
 export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => {
@@ -28,6 +25,17 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
     event.preventDefault();
     
     if (!stripe || !elements) {
+      return;
+    }
+
+    // Validate form data
+    if (!formData.fullName || !formData.email) {
+      setPaymentError("Please complete all required fields");
+      toast({
+        title: "Form incomplete",
+        description: "Please fill in all required information",
+        variant: "destructive"
+      });
       return;
     }
 
