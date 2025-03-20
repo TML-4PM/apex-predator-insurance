@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -11,6 +10,7 @@ import PhotoGallery from '@/components/PhotoGallery';
 import MobileApp from '@/components/MobileApp';
 import Community from '@/components/Community';
 import Blog from '@/components/Blog';
+import ContactForm from '@/components/ContactForm';
 import { 
   Carousel,
   CarouselContent,
@@ -19,7 +19,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Compass, Route, Camera, Shield } from 'lucide-react';
+import { MapPin, Compass, Route, Camera, Shield, Mail } from 'lucide-react';
 
 const adventureTips = [
   {
@@ -186,6 +186,25 @@ const Index = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
+              Get In Touch
+            </h2>
+            <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100 mb-8">
+              Have questions about our (not-real) insurance or need assistance with your adventure planning?
+              Drop us a message and we'll get back to you soon!
+            </p>
+            <div className="inline-flex items-center justify-center gap-2 text-apex-red font-medium mb-12">
+              <Mail className="h-5 w-5" />
+              <span>Messages will be sent to: troy.latter@4pm.net.au</span>
+            </div>
+            <ContactForm />
           </div>
         </div>
       </section>

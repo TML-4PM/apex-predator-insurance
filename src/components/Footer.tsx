@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { ShieldCheck, Github, Twitter, Instagram } from 'lucide-react';
+import { ShieldCheck, Github, Twitter, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -57,9 +57,12 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-medium mb-4">Contact Us</h3>
             <p className="text-white/60 mb-2">Have questions about our not-real insurance?</p>
-            <a href="mailto:info@apexpredatorinsurance.com" className="text-apex-red hover:underline">
-              info@apexpredatorinsurance.com
-            </a>
+            <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
+              <Mail size={16} />
+              <a href="mailto:troy.latter@4pm.net.au" className="hover:underline">
+                troy.latter@4pm.net.au
+              </a>
+            </div>
             
             <div className="mt-6 flex items-center text-white/40 text-sm">
               <ShieldCheck size={14} className="mr-2" />
