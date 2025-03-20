@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Shield, ShoppingCart, Check } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const insurancePlans = [
   {
@@ -100,7 +102,19 @@ const insurancePlans = [
 ];
 
 const InsurancePlans = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  
+  const handleSelectPlan = (plan: any) => {
+    setSelectedPlan(plan.id);
+    toast({
+      title: `${plan.name} selected!`,
+      description: "Proceed to checkout to complete your purchase.",
+    });
+    
+    navigate('/checkout', { state: { plan } });
+  };
   
   return (
     <section id="plans" className="py-20 bg-apex-black relative overflow-hidden">
@@ -161,7 +175,7 @@ const InsurancePlans = () => {
                         ? "bg-apex-yellow text-apex-black w-full lg:w-auto transform hover:scale-105"
                         : "bg-white/20 hover:bg-white/30 w-full"
                     )}
-                    onClick={() => setSelectedPlan(plan.id)}
+                    onClick={() => handleSelectPlan(plan)}
                   >
                     {plan.featured ? <Shield size={18} /> : <ShoppingCart size={18} />}
                     {plan.featured ? "Get Complete Protection" : "Add to Cart"}
