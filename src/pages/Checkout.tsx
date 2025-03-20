@@ -203,7 +203,10 @@ const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    fullName: string;
+    email: string;
+  }>({
     fullName: '',
     email: '',
   });
@@ -216,7 +219,7 @@ const Checkout = () => {
     icon: '🦈'
   };
 
-  const handlePaymentSuccess = (data: { fullName: string, email: string }) => {
+  const handlePaymentSuccess = (data: { fullName: string; email: string }) => {
     // Navigate to certificate page with user data
     navigate('/certificate', { 
       state: { 
@@ -228,18 +231,18 @@ const Checkout = () => {
 
   return (
     <Layout>
-      <div className="py-20 bg-white">
+      <div className="py-20 bg-[#1A1F2C]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-apex-black mb-4">Complete Your Purchase</h1>
-              <p className="text-lg text-apex-darkgray/70">You're just a few steps away from your Wildlife Shield certificate!</p>
+              <h1 className="text-3xl font-bold text-white mb-4">Complete Your Purchase</h1>
+              <p className="text-lg text-white/70">You're just a few steps away from your Wildlife Shield certificate!</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               <div className="lg:col-span-3 order-2 lg:order-1">
-                <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                  <h2 className="text-xl font-bold mb-6 flex items-center">
+                <div className="bg-[#222222] rounded-xl shadow-lg border border-white/10 p-6">
+                  <h2 className="text-xl font-bold mb-6 flex items-center text-white">
                     <ShoppingCart className="mr-2 h-5 w-5 text-apex-red" />
                     Your Information
                   </h2>
@@ -255,8 +258,8 @@ const Checkout = () => {
               
               <div className="lg:col-span-2 order-1 lg:order-2">
                 <div className="sticky top-24">
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                    <h2 className="text-xl font-bold mb-6 flex items-center">
+                  <div className="bg-[#222222] rounded-xl p-6 border border-white/10">
+                    <h2 className="text-xl font-bold mb-6 flex items-center text-white">
                       <Shield className="mr-2 h-5 w-5 text-apex-red" />
                       Order Summary
                     </h2>
@@ -264,20 +267,20 @@ const Checkout = () => {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
                         <span className="text-2xl mr-2">{selectedPlan.icon}</span>
-                        <span className="font-medium">{selectedPlan.name}</span>
+                        <span className="font-medium text-white">{selectedPlan.name}</span>
                       </div>
-                      <span className="font-medium">${selectedPlan.price.toFixed(2)}</span>
+                      <span className="font-medium text-white">${selectedPlan.price.toFixed(2)}</span>
                     </div>
                     
-                    <div className="border-t border-gray-200 my-4 pt-4">
+                    <div className="border-t border-white/10 my-4 pt-4">
                       <div className="flex justify-between font-bold">
-                        <span>Total</span>
+                        <span className="text-white">Total</span>
                         <span className="text-apex-red">${selectedPlan.price.toFixed(2)}</span>
                       </div>
                     </div>
                     
                     <div className="mt-8">
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-sm text-white/60 mb-4">
                         Certificate Preview:
                       </p>
                       <div className="transform scale-75 origin-top">

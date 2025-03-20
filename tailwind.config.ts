@@ -26,10 +26,10 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				apex: {
-					red: '#FF3B30',
+					red: '#ea384c',
 					yellow: '#FFCC00',
-					black: '#000000',
-					darkgray: '#1D1D1F',
+					black: '#1A1F2C',
+					darkgray: '#403E43',
 					lightgray: '#F5F5F7'
 				},
 				primary: {
@@ -130,9 +130,9 @@ export default {
 				'mono': ['SF Mono', 'ui-monospace', 'monospace']
 			},
 			boxShadow: {
-				'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.17)',
-				'elevation': '0 10px 40px -10px rgba(0, 0, 0, 0.3)',
-				'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+				'elevation': '0 10px 40px -10px rgba(0, 0, 0, 0.5)',
+				'card': '0 4px 20px rgba(0, 0, 0, 0.2)',
 			},
 			backdropBlur: {
 				'xs': '2px',
