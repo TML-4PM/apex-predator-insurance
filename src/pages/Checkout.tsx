@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
@@ -35,7 +34,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const CheckoutForm = ({ plan, onSuccess }: { 
   plan: { id: string, name: string, price: number, icon: string },
-  onSuccess: (data: { fullName: string, email: string }) => void 
+  onSuccess: (data: FormValues) => void 
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -203,10 +202,7 @@ const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [formData, setFormData] = useState<{
-    fullName: string;
-    email: string;
-  }>({
+  const [formData, setFormData] = useState<FormValues>({
     fullName: '',
     email: '',
   });
@@ -219,7 +215,7 @@ const Checkout = () => {
     icon: '🦈'
   };
 
-  const handlePaymentSuccess = (data: { fullName: string; email: string }) => {
+  const handlePaymentSuccess = (data: FormValues) => {
     // Navigate to certificate page with user data
     navigate('/certificate', { 
       state: { 
