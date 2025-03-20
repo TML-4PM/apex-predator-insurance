@@ -15,7 +15,7 @@ This project is a React application built with:
 
 ## Deployment Guide
 
-To properly deploy this site and fix the DNS resolution error (Error 1001), follow these steps:
+To properly deploy this site with AWS Route 53 DNS configuration, follow these steps:
 
 ### Step 1: Deploy the Site First
 
@@ -42,38 +42,57 @@ Before configuring your domain, you need to deploy the actual website:
    - Output directory: `dist`
 3. Deploy the site and get your Vercel URL
 
-### Step 2: Configure Your Domain Correctly
+### Step 2: Configure AWS Route 53 DNS
 
-For Cloudflare DNS to work properly:
+Since your domain is registered with AWS, follow these steps to configure DNS:
 
-1. **Add DNS Records in Cloudflare**:
-   - Type: `CNAME`
-   - Name: `www` (or `@` for root domain)
-   - Target: Your deployment URL from Step 1 (without https://)
-   - Proxy status: Proxied (orange cloud)
+1. **Log in to AWS Management Console**
+2. **Navigate to Route 53**
+3. **Select "Hosted Zones"** and select your domain
+4. **Create a new record set:**
+   - **Type:** CNAME (or A record if you have a static IP)
+   - **Name:** www (or @ for root domain)
+   - **Value/Route traffic to:** Your deployment URL from Step 1 (without https://)
+   - For root domain (@), you may need to use an A record with AWS's Alias feature
 
-2. **Check Your Cloudflare SSL/TLS Settings**:
-   - Go to SSL/TLS section in Cloudflare
-   - Set SSL/TLS encryption mode to "Full" or "Full (strict)"
+5. **Set TTL:** 300 seconds (5 minutes) for faster propagation
+6. **Save record**
 
-3. **Verify Page Rules**:
-   - Check if you have any conflicting Page Rules
+### Step 3: For Apex Domain (Root Domain) Configuration
 
-4. **Clear Cloudflare Cache**:
-   - Go to Caching section
-   - Click "Purge Everything"
+AWS Route 53 has specific requirements for apex domains (e.g., example.com without www):
 
-### Step 3: Test Your Configuration
+**If using Netlify:**
+1. In Netlify, go to Domain settings → Add custom domain
+2. Add your apex domain
+3. In Route 53, create 4 A records pointing to Netlify's load balancer IPs:
+   ```
+   104.198.14.52
+   104.198.14.53
+   104.198.14.54
+   104.198.14.55
+   ```
 
-After making these changes:
-1. Wait 5-10 minutes for changes to apply
-2. Try accessing your domain in an incognito browser window
-3. If still seeing Error 1001, try accessing your deployment URL directly to ensure it's working
+**If using Vercel:**
+1. In Vercel, add your custom domain
+2. In Route 53, create 4 A records with the values Vercel provides
 
-### Step 4: Stripe Configuration (Post-Launch)
+**If using another provider:**
+Follow their specific instructions for apex domain configuration.
+
+### Step 4: Wait for DNS Propagation
+
+DNS changes can take anywhere from a few minutes to 48 hours to fully propagate, though typically it's within 15-30 minutes.
+
+### Step 5: SSL Configuration
+
+Ensure SSL is properly configured:
+- Most platforms (Netlify, Vercel) will automatically provision SSL certificates
+- For other platforms, you may need to set up SSL manually
+
+### Step 6: Stripe Configuration (Post-Launch)
 
 Once your site is live:
-
 1. Update your Stripe webhook endpoint URLs in the Stripe dashboard
 2. Ensure your Supabase Edge Functions are properly deployed
 3. Test the payment flow on the live site
@@ -99,7 +118,8 @@ npm run dev
 ## Additional Support
 
 If you continue to experience DNS issues:
-- Contact Cloudflare support
-- Verify domain registration is active
-- Ensure nameservers are correctly pointing to Cloudflare
+- Check AWS Route 53 documentation: https://docs.aws.amazon.com/Route53/
+- Verify your domain registration is active in AWS
+- Test with external DNS lookup tools like [dnschecker.org](https://dnschecker.org/)
+- Check that your hosting platform has properly registered your custom domain
 
