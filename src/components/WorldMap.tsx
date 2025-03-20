@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import { Globe, Skull, Paw, AlertTriangle } from 'lucide-react';
+import { Globe, Skull, Fish, AlertTriangle, PawPrint, Bird } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const dangerZones = [
@@ -85,7 +84,11 @@ const WorldMap = () => {
       case 'bears':
       case 'lions':
       case 'jaguars':
-        return <Paw className="h-5 w-5" />;
+        return <PawPrint className="h-5 w-5" />;
+      case 'crocodiles':
+        return <Fish className="h-5 w-5" />;
+      case 'komodo dragons':
+        return <Bird className="h-5 w-5" />;
       default:
         return <AlertTriangle className="h-5 w-5" />;
     }
@@ -150,7 +153,6 @@ const WorldMap = () => {
               
               <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/70 to-[#1A1F2C]/40 backdrop-blur-xs"></div>
               
-              {/* Animated connections between danger zones */}
               <svg className="absolute inset-0 w-full h-full z-0 opacity-60" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
