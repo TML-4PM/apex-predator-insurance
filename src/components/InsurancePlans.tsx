@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -865,3 +866,187 @@ const fullInsurancePlans = [
     funFact: 'Combined, the animals in this pack represent the deadliest creatures on Earth across all continents and habitats!'
   }
 ];
+
+// Component implementation
+const InsurancePlans = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [filteredPlans, setFilteredPlans] = useState(fullInsurancePlans);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Filter plans based on search term and selected location
+  useEffect(() => {
+    let filtered = fullInsurancePlans;
+    
+    if (searchTerm) {
+      filtered = filtered.filter(plan => 
+        plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        plan.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    if (selectedLocation) {
+      filtered = filtered.filter(plan => 
+        plan.location.toLowerCase().includes(selectedLocation.toLowerCase())
+      );
+    }
+    
+    setFilteredPlans(filtered);
+  }, [searchTerm, selectedLocation]);
+
+  // Get unique locations from all plans
+  const getUniqueLocations = () => {
+    const locations = new Set();
+    
+    fullInsurancePlans.forEach(plan => {
+      if (plan.location.includes(',')) {
+        plan.location.split(',').forEach(loc => {
+          locations.add(loc.trim());
+        });
+      } else {
+        locations.add(plan.location.trim());
+      }
+    });
+    
+    return Array.from(locations).sort();
+  };
+
+  const handleAddToCart = (plan) => {
+    // Store selected plan in localStorage for checkout
+    localStorage.setItem('selectedPlan', JSON.stringify(plan));
+    
+    toast({
+      title: "Plan Added to Cart",
+      description: `${plan.name} has been added to your cart.`,
+      variant: "default",
+    });
+    
+    // Navigate to checkout
+    setTimeout(() => {
+      navigate('/checkout');
+    }, 1000);
+  };
+
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center gap-4 mb-8">
+          <div className="relative w-full lg:w-1/2">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search for insurance plans..."
+              className="pl-10 w-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          
+          <div className="flex items-center gap-2 w-full lg:w-1/2">
+            <Globe className="text-gray-400 flex-shrink-0" />
+            <select
+              className="border border-input bg-background rounded-md h-10 px-3 py-2 w-full text-sm"
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+            >
+              <option value="">All Locations</option>
+              {getUniqueLocations().map((location) => (
+                <option key={location} value={location}>
+                  {location}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        {filteredPlans.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPlans.map((plan) => (
+              <div
+                key={plan.id}
+                className={cn(
+                  "border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300",
+                  plan.id === 'apex-pack' ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-3" : "border-gray-200"
+                )}
+              >
+                <div className={cn(
+                  "p-6",
+                  plan.id === 'apex-pack' ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
+                )}>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{plan.icon}</span>
+                      <h3 className={cn(
+                        "text-xl font-bold",
+                        plan.id === 'apex-pack' ? "text-apex-red" : "text-apex-black"
+                      )}>
+                        {plan.name}
+                      </h3>
+                    </div>
+                    
+                    {plan.id === 'apex-pack' && (
+                      <span className="px-3 py-1 bg-apex-red text-white text-xs font-semibold rounded-full">
+                        Best Value
+                      </span>
+                    )}
+                  </div>
+                  
+                  <p className="text-apex-darkgray/70 mb-4">
+                    {plan.description}
+                  </p>
+                  
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin size={16} className="text-apex-darkgray/50" />
+                    <span className="text-sm text-apex-darkgray/70">{plan.location}</span>
+                  </div>
+                  
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold mb-2 text-apex-black">Fun Fact:</h4>
+                    <p className="text-sm text-apex-darkgray/70 italic">"{plan.funFact}"</p>
+                  </div>
+                  
+                  <div className="space-y-2 mb-6">
+                    <h4 className="text-sm font-semibold mb-2 text-apex-black">Coverage Includes:</h4>
+                    {plan.features.map((feature, index) => (
+                      <div key={index} className="flex items-start gap-2">
+                        <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-apex-darkgray/70">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
+                      <span className="text-sm text-apex-darkgray/70">/ year</span>
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleAddToCart(plan)} 
+                      className={cn(
+                        "flex items-center gap-2",
+                        plan.id === 'apex-pack' ? "bg-apex-red hover:bg-apex-red/90" : ""
+                      )}
+                    >
+                      <ShoppingCart size={16} />
+                      <span>Get Protected</span>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
+            <h3 className="text-xl font-medium text-apex-black mb-2">No plans found</h3>
+            <p className="text-apex-darkgray/70">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default InsurancePlans;
