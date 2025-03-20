@@ -5,6 +5,12 @@ import Hero from '@/components/Hero';
 import InsurancePlans from '@/components/InsurancePlans';
 import Certificate from '@/components/Certificate';
 import FAQ from '@/components/FAQ';
+import Testimonials from '@/components/Testimonials';
+import WorldMap from '@/components/WorldMap';
+import PhotoGallery from '@/components/PhotoGallery';
+import MobileApp from '@/components/MobileApp';
+import Community from '@/components/Community';
+import Blog from '@/components/Blog';
 import { 
   Carousel,
   CarouselContent,
@@ -92,6 +98,12 @@ const Index = () => {
           </Carousel>
         </div>
       </section>
+
+      <Testimonials />
+      
+      <WorldMap />
+      
+      <PhotoGallery />
       
       <section className="py-20 bg-[#1A1F2C]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,7 +123,13 @@ const Index = () => {
         </div>
       </section>
       
+      <MobileApp />
+      
       <InsurancePlans />
+      
+      <Community />
+      
+      <Blog />
       
       <section className="py-20 bg-[#221F26] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
