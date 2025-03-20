@@ -1,13 +1,14 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 
-// Use a test publishable key for development
+// You should replace this with your actual Stripe publishable key
+// This is a publishable key which is safe to include in client-side code
 const STRIPE_PUBLISHABLE_KEY = 'pk_test_mockedkeyforyourdevandstagingenvironments';
 
 // Initialize Stripe with the appropriate key
 export const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
-// API endpoint for our Supabase function - we'll bypass this in demo mode
+// API endpoint for our Supabase function
 export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL 
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment-intent`
   : 'http://localhost:54321/functions/v1/create-payment-intent';
@@ -15,18 +16,7 @@ export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL
 // Function to call our Supabase Edge Function
 export const createPaymentIntent = async (amount: number, metadata: any) => {
   try {
-    // Always run in demo mode for simplicity
-    console.log('Demo mode: Simulating payment intent creation');
-    
-    // Return a mock successful response
-    return { 
-      clientSecret: null, 
-      demoMode: true,
-      message: 'Running in demo mode - no actual payment will be processed'
-    };
-    
-    // The actual API call code is kept but will not be reached
-    /* 
+    // Call the actual API endpoint
     const response = await fetch(createPaymentIntentUrl, {
       method: 'POST',
       headers: {
@@ -44,12 +34,10 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
     }
 
     return await response.json();
-    */
   } catch (error) {
     console.error('Error creating payment intent:', error);
     return {
       error: error instanceof Error ? error.message : 'An unknown error occurred',
-      demoMode: true
     };
   }
 };

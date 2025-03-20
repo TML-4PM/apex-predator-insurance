@@ -21,6 +21,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessed, setIsProcessed] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -52,7 +53,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
       }
 
       // Call our backend API to create a payment intent
-      const { demoMode, message } = await createPaymentIntent(
+      const paymentIntentResponse = await createPaymentIntent(
         plan.price,
         { 
           plan_id: plan.id,
@@ -62,23 +63,31 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         }
       );
 
-      // For demo mode (which is now the default)
-      console.log('Demo mode active: Simulating successful payment');
+      // Check if running in demo mode (response from backend indicates this)
+      if (paymentIntentResponse.demoMode) {
+        console.log('Demo mode active: Simulating successful payment');
+        setIsDemoMode(true);
+        
+        toast({
+          title: "Demo Mode",
+          description: "This is a simulated payment. Your certificate is ready to download.",
+        });
+        
+        setIsProcessed(true);
+        setTimeout(() => {
+          onSuccess(formData);
+        }, 1500);
+        
+        return;
+      }
       
-      toast({
-        title: "Demo Mode",
-        description: "This is a simulated payment. Your certificate is ready to download.",
-      });
+      // For real payments, get the client secret
+      const { clientSecret } = paymentIntentResponse;
       
-      setIsProcessed(true);
-      setTimeout(() => {
-        onSuccess(formData);
-      }, 1500);
-      
-      return;
-      
-      // The code below won't execute in demo mode but kept for future reference
-      /* 
+      if (!clientSecret) {
+        throw new Error("No client secret returned from the server");
+      }
+
       // Confirm the card payment with the client secret from our backend
       const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -106,12 +115,11 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
           onSuccess(formData);
         }, 1500);
       }
-      */
     } catch (error) {
       console.error('Payment error:', error);
       setPaymentError(error instanceof Error ? error.message : "An unknown error occurred");
       toast({
-        title: "Payment simulation failed",
+        title: "Payment failed",
         description: error instanceof Error ? error.message : "Please try again or contact support.",
         variant: "destructive"
       });
@@ -196,13 +204,15 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
           )}
         </Button>
         
-        <Alert className="mt-4 bg-yellow-50 border-yellow-200">
-          <AlertDescription className="text-yellow-800 text-sm">
-            <p className="font-medium">Demo Mode Active</p>
-            <p>This is running in demo mode for easy testing. Any card information entered will not be processed.</p>
-            <p className="mt-2">To enable real payments, you would need to set up Stripe integration through Supabase Edge Functions.</p>
-          </AlertDescription>
-        </Alert>
+        {isDemoMode && (
+          <Alert className="mt-4 bg-yellow-50 border-yellow-200">
+            <AlertDescription className="text-yellow-800 text-sm">
+              <p className="font-medium">Demo Mode Active</p>
+              <p>This is running in demo mode for easy testing. Any card information entered will not be processed.</p>
+              <p className="mt-2">To enable real payments, you would need to set up Stripe integration through Supabase Edge Functions.</p>
+            </AlertDescription>
+          </Alert>
+        )}
         
         <p className="text-xs text-gray-500 mt-4 text-center">
           * This is a real insurance product with a $50,000 accidental death benefit.

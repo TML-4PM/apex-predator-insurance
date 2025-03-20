@@ -7,7 +7,7 @@
 // 3. Link your project (if not already done):
 //    supabase link --project-ref your-project-ref
 // 4. Add your Stripe secret key to Supabase secrets:
-//    supabase secrets set STRIPE_SECRET_KEY=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
+//    supabase secrets set STRIPE_SECRET_KEY=your_stripe_secret_key
 // 5. Deploy the function: 
 //    supabase functions deploy create-payment-intent --no-verify-jwt
 // 6. Check deployment status:
