@@ -1,69 +1,105 @@
-# Welcome to your Lovable project
 
-## Project info
+# Apex Predator Insurance
 
-**URL**: https://lovable.dev/projects/548efef0-8b28-4962-ae1b-215c7706b654
+A tongue-in-cheek insurance website for adventurers who encounter predators in the wild.
 
-## How can I edit this code?
+## Project Overview
 
-There are several ways of editing your application.
+This project is a React application built with:
+- Vite
+- TypeScript
+- React 
+- Tailwind CSS
+- shadcn/ui components
+- Stripe payments integration
 
-**Use Lovable**
+## Deployment Guide
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/548efef0-8b28-4962-ae1b-215c7706b654) and start prompting.
+To properly deploy this site and fix the DNS resolution error (Error 1001), follow these steps:
 
-Changes made via Lovable will be committed automatically to this repo.
+### Step 1: Deploy the Site First
 
-**Use your preferred IDE**
+Before configuring your domain, you need to deploy the actual website:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Option A: Deploy with Lovable**
+1. Click on the "Share" button in the top-right corner
+2. Select "Publish" from the dropdown menu
+3. Follow the instructions to deploy to a Lovable subdomain
+4. Make note of your Lovable subdomain URL (e.g., apex-predator.lovable.app)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Option B: Deploy with Netlify**
+1. Connect your GitHub repository to Netlify
+2. Use these build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. Deploy the site and get your Netlify URL (e.g., apex-predator.netlify.app)
 
-Follow these steps:
+**Option C: Deploy with Vercel**
+1. Connect your GitHub repository to Vercel
+2. Use these build settings:
+   - Framework preset: Vite
+   - Build command: `npm run build`
+   - Output directory: `dist`
+3. Deploy the site and get your Vercel URL
+
+### Step 2: Configure Your Domain Correctly
+
+For Cloudflare DNS to work properly:
+
+1. **Add DNS Records in Cloudflare**:
+   - Type: `CNAME`
+   - Name: `www` (or `@` for root domain)
+   - Target: Your deployment URL from Step 1 (without https://)
+   - Proxy status: Proxied (orange cloud)
+
+2. **Check Your Cloudflare SSL/TLS Settings**:
+   - Go to SSL/TLS section in Cloudflare
+   - Set SSL/TLS encryption mode to "Full" or "Full (strict)"
+
+3. **Verify Page Rules**:
+   - Check if you have any conflicting Page Rules
+
+4. **Clear Cloudflare Cache**:
+   - Go to Caching section
+   - Click "Purge Everything"
+
+### Step 3: Test Your Configuration
+
+After making these changes:
+1. Wait 5-10 minutes for changes to apply
+2. Try accessing your domain in an incognito browser window
+3. If still seeing Error 1001, try accessing your deployment URL directly to ensure it's working
+
+### Step 4: Stripe Configuration (Post-Launch)
+
+Once your site is live:
+
+1. Update your Stripe webhook endpoint URLs in the Stripe dashboard
+2. Ensure your Supabase Edge Functions are properly deployed
+3. Test the payment flow on the live site
+
+## Development
+
+To run this project locally:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# Install dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Additional Support
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+If you continue to experience DNS issues:
+- Contact Cloudflare support
+- Verify domain registration is active
+- Ensure nameservers are correctly pointing to Cloudflare
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/548efef0-8b28-4962-ae1b-215c7706b654) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
