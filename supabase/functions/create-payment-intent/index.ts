@@ -7,7 +7,7 @@
 // 3. Link your project (if not already done):
 //    supabase link --project-ref your-project-ref
 // 4. Add your Stripe secret key to Supabase secrets:
-//    supabase secrets set STRIPE_SECRET_KEY=sk_live_your_key_here
+//    supabase secrets set STRIPE_SECRET_KEY=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
 // 5. Deploy the function: 
 //    supabase functions deploy create-payment-intent --no-verify-jwt
 // 6. Check deployment status:
@@ -21,8 +21,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Implement feature flag for testing
-const ENABLE_PAYMENTS = true; // Set to false to disable real payment processing for testing
+// Set to true for production
+const ENABLE_PAYMENTS = true;
 
 serve(async (req) => {
   // Handle CORS preflight requests
