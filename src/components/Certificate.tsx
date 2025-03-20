@@ -12,7 +12,7 @@ type CertificateProps = {
 };
 
 const Certificate: React.FC<CertificateProps> = ({ 
-  insuranceType = "Shark Insurance", 
+  insuranceType = "Shark Certificate", 
   name = "John Adventurer",
   country = "Australia",
   date = new Date().toISOString().split('T')[0],
@@ -189,7 +189,7 @@ const Certificate: React.FC<CertificateProps> = ({
             <div className="relative z-10 p-8 md:p-10">
               <div className="flex justify-between items-start mb-8">
                 <div>
-                  <div className="text-sm uppercase tracking-wider text-apex-black/60">Apex Predator Insurance</div>
+                  <div className="text-sm uppercase tracking-wider text-apex-black/60">Apex Predator Certificates</div>
                   <div className="text-3xl font-bold text-apex-black">Wildlife Shield</div>
                 </div>
                 <div className="h-16 w-16 rounded-full bg-apex-red flex items-center justify-center">
@@ -206,10 +206,10 @@ const Certificate: React.FC<CertificateProps> = ({
                 </div>
                 <div className="text-3xl font-bold text-apex-black my-3">{name}</div>
                 <div className="text-lg text-apex-black/80 max-w-md mx-auto">
-                  is now covered for {insuranceType.toLowerCase().replace(' insurance', '')} encounters {info.text}.
+                  is now covered for {insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')} encounters {info.text}.
                 </div>
                 <div className="text-lg font-bold text-apex-red mt-4">
-                  $50,000 Death Benefit
+                  $50,000 Virtual Certificate Value
                 </div>
               </div>
               
@@ -224,13 +224,13 @@ const Certificate: React.FC<CertificateProps> = ({
               
               <div className="flex flex-col sm:flex-row justify-between gap-4 mt-10">
                 <div className="bg-white/50 backdrop-blur-sm p-3 rounded-lg">
-                  <div className="text-sm text-apex-black/60">POLICY LOCATION</div>
+                  <div className="text-sm text-apex-black/60">CERTIFICATE LOCATION</div>
                   <div className="text-base font-medium flex items-center">
                     <span className="mr-1">📍</span> {country}
                   </div>
                 </div>
                 <div className="bg-white/50 backdrop-blur-sm p-3 rounded-lg">
-                  <div className="text-sm text-apex-black/60">POLICY ID</div>
+                  <div className="text-sm text-apex-black/60">CERTIFICATE ID</div>
                   <div className="text-base font-medium flex items-center">
                     <span className="mr-1">🔢</span> {uniqueId}
                   </div>
@@ -250,10 +250,10 @@ const Certificate: React.FC<CertificateProps> = ({
               
               <div className="mt-8 pt-6 border-t border-apex-black/10 text-center">
                 <p className="text-sm text-apex-black/60">
-                  Coverage of $50,000 for accidental death by {insuranceType.toLowerCase().replace(' insurance', '')}
+                  Virtual certificate value of $50,000 for encounters with {insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')}
                 </p>
                 <p className="text-xs text-apex-black/40 mt-1">
-                  Policy valid for 12 months. This is a novelty item, not actual insurance coverage.
+                  Certificate valid for 12 months. This is a novelty item only, not actual coverage of any kind.
                 </p>
               </div>
             </div>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Check, Smartphone, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Check, Smartphone, ArrowRight, ShieldCheck, Clock } from 'lucide-react';
 
 const MobileApp = () => {
   return (
@@ -49,12 +49,15 @@ const MobileApp = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-apex-red hover:bg-apex-red/90">
-                  <Smartphone className="mr-2 h-4 w-4" /> Download for iOS
-                </Button>
-                <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10">
-                  <Smartphone className="mr-2 h-4 w-4" /> Download for Android
-                </Button>
+                <div className="bg-apex-red/10 border border-apex-red/20 px-6 py-4 rounded-xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="h-5 w-5 text-apex-red" />
+                    <h3 className="text-lg font-medium text-apex-red">Coming Soon</h3>
+                  </div>
+                  <p className="text-apex-darkgray text-sm">
+                    Our mobile apps are currently in development. Stay tuned for their release!
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -74,7 +77,7 @@ const MobileApp = () => {
                     </div>
                     <div className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-medium">Premium</div>
                   </div>
-                  <h3 className="text-white text-2xl font-bold mb-2">Shark Insurance</h3>
+                  <h3 className="text-white text-2xl font-bold mb-2">Shark Certificate</h3>
                   <p className="text-white/80 text-sm mb-4">Your certificate is ready to share</p>
                   <button className="w-full bg-white/20 backdrop-blur-md text-white py-3 rounded-full flex items-center justify-center">
                     View Certificate <ArrowRight className="ml-2 h-4 w-4" />
@@ -87,6 +90,13 @@ const MobileApp = () => {
             
             <div className="absolute top-1/2 -right-8 transform rotate-y-[-10deg] transform3d -translate-y-3/4 w-72 h-[500px] shadow-2xl rounded-[40px] border-8 border-apex-black/90 overflow-hidden opacity-30">
               <div className="absolute inset-0 bg-apex-black/20"></div>
+            </div>
+            
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-apex-red text-white px-4 py-2 rounded-full shadow-lg">
+              <div className="flex items-center gap-2">
+                <Clock size={16} />
+                <span className="font-medium text-sm">Coming Soon</span>
+              </div>
             </div>
           </div>
         </div>

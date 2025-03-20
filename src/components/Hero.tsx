@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Camera } from 'lucide-react';
@@ -74,7 +75,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-white opacity-90 mb-8 animate-fade-up animate-delay-100">
-            $9.99 per policy – or get the full Apex Predator Pack for $49.99!
+            $9.99 per certificate – or get the full Apex Predator Pack for $49.99!
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
@@ -83,7 +84,7 @@ const Hero = () => {
               className="inline-flex items-center justify-center gap-2 bg-apex-red text-white px-8 py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               <ShoppingCart size={20} />
-              <span className="font-medium">Buy Your Insurance Now</span>
+              <span className="font-medium">Buy Your Certificate Now</span>
             </Link>
             
             <Link 
@@ -101,7 +102,7 @@ const Hero = () => {
             <div className="premium-card rounded-2xl overflow-hidden shadow-glass p-6 backdrop-blur-md backface-hidden bg-black/40 border border-white/10">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-white/60 mb-1">Apex Predator Insurance</div>
+                  <div className="text-xs uppercase tracking-wider text-white/60 mb-1">Apex Predator Certificates</div>
                   <div className="text-2xl font-bold text-white">Wildlife Shield</div>
                 </div>
                 <div className="h-12 w-12 rounded-full bg-apex-red flex items-center justify-center">
@@ -110,13 +111,13 @@ const Hero = () => {
               </div>
               
               <div className="space-y-4 mt-6">
-                <div className="text-sm text-white/60">INSURED</div>
+                <div className="text-sm text-white/60">CERTIFICATE HOLDER</div>
                 <div className="text-lg font-medium text-white">John Adventurer</div>
                 
                 <div className="flex gap-8">
                   <div>
-                    <div className="text-sm text-white/60">POLICY</div>
-                    <div className="text-base text-white">Shark Insurance</div>
+                    <div className="text-sm text-white/60">TYPE</div>
+                    <div className="text-base text-white">Shark Certificate</div>
                   </div>
                   <div>
                     <div className="text-sm text-white/60">VALID UNTIL</div>
@@ -126,7 +127,7 @@ const Hero = () => {
               </div>
               
               <div className="absolute bottom-6 right-6">
-                <div className="text-xs text-white/60">*Novelty item, not actual insurance</div>
+                <div className="text-xs text-white/60">*Novelty item only, not actual coverage</div>
               </div>
             </div>
           </div>
