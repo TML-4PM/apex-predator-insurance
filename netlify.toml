@@ -4,37 +4,12 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  node_version = "18"
 
-[build.environment]
-  NODE_ENV = "production"
-  # Ensure dev dependencies are installed during build
-  NPM_FLAGS = "--include=dev"
-
-# Redirects and rewrites for SPA routing
+# Redirects for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = true
-
-# Enable asset optimization
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.html]
-  pretty_urls = true
-
-[build.processing.images]
-  compress = true
 
 # Security headers
 [[headers]]
