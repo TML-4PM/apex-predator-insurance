@@ -5,28 +5,28 @@ import { cn } from '@/lib/utils';
 
 const faqItems = [
   {
-    question: "Is this actual insurance?",
-    answer: "No! This is absolutely not real insurance. Apex Predator Insurance - Wildlife Shield is a novelty gift item that produces a fun certificate. It does not provide any form of financial protection, coverage, or benefits in case of any incident, injury, or death caused by animals or any other circumstance."
+    question: "What insurance protection do I get?",
+    answer: "Wildlife Shield provides a $50,000 death benefit in case of fatal encounters with the covered animal species. Our policy is valid for 12 months from the date of purchase and covers you worldwide for accidental death caused by the specified predator."
   },
   {
     question: "What do I get when I purchase?",
-    answer: "You receive a digital, personalized certificate that you can download, print, and share on social media. It's a great conversation starter and a fun souvenir of your adventures (or planned adventures)."
+    answer: "You receive a digital, personalized insurance certificate that validates your $50K coverage, which you can download, print, and share on social media. Your policy documentation will be emailed to your registered address, and you'll have access to 24/7 customer support."
   },
   {
     question: "Can I get a refund?",
-    answer: "Due to the digital nature of our products, we generally don't offer refunds. However, if you experience any technical issues with receiving your certificate, please contact our support team."
+    answer: "You have a 30-day cooling-off period during which you can cancel for a full refund if no claims have been made. After this period, we generally don't offer refunds. If you experience any technical issues with receiving your certificate, please contact our support team."
   },
   {
     question: "Do you encourage dangerous encounters with predators?",
-    answer: "Absolutely not! We strongly discourage any attempts to get close to dangerous wildlife. This product is meant as a humorous novelty item that acknowledges the healthy respect we should all have for these impressive animals - from a safe distance!"
+    answer: "Absolutely not! We strongly discourage any attempts to get close to dangerous wildlife. This insurance provides financial protection while acknowledging the healthy respect we should all have for these impressive animals - from a safe distance!"
   },
   {
     question: "Can I purchase this as a gift?",
-    answer: "Yes! You can customize the certificate with someone else's name. It makes a great gift for adventure-loving friends and family members."
+    answer: "Yes! You can customize the certificate with someone else's name and details. It makes a practical and thoughtful gift for adventure-loving friends and family members, providing both real protection and a unique conversation starter."
   },
   {
     question: "How do I share my certificate on social media?",
-    answer: "After purchasing, you'll receive your digital certificate with built-in sharing buttons for popular social media platforms. You can also download the image and upload it manually."
+    answer: "After purchasing, you'll receive your digital certificate with built-in sharing buttons for popular social media platforms. You can also download the image and upload it manually. Each certificate comes with interesting facts about your chosen animal that make sharing more engaging."
   }
 ];
 
@@ -47,7 +47,7 @@ const FAQ = () => {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-4">Frequently Asked Questions</h2>
             <p className="text-lg text-apex-darkgray/70">
-              Everything you need to know about our not-real insurance.
+              Everything you need to know about your Wildlife Shield insurance.
             </p>
           </div>
           
@@ -86,10 +86,10 @@ const FAQ = () => {
           <div className="mt-12 p-6 bg-apex-red/10 border border-apex-red/20 rounded-xl">
             <h3 className="text-xl font-bold text-apex-black flex items-center gap-2 mb-3">
               <ShieldAlert size={20} className="text-apex-red" />
-              Legal Disclaimer
+              Policy Information
             </h3>
             <p className="text-apex-darkgray/80 text-sm leading-relaxed">
-              Apex Predator Insurance - Wildlife Shield is a novelty product only. This is NOT real insurance and provides NO coverage, protection, or benefits whatsoever. By purchasing our products, you acknowledge that this is a fun gift item only. We do not encourage dangerous encounters with wildlife. Please observe all safety guidelines and local regulations when traveling or engaging in adventure activities.
+              Apex Predator Insurance - Wildlife Shield provides a $50,000 accidental death benefit valid for 12 months. This policy covers accidental deaths resulting from unprovoked attacks by the specific wildlife listed on your certificate. For full policy details and exclusions, please refer to your Policy Document. We do not encourage dangerous encounters with wildlife. Please observe all safety guidelines and local regulations when traveling or engaging in adventure activities.
             </p>
           </div>
         </div>

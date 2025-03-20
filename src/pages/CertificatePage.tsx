@@ -55,7 +55,7 @@ const CertificatePage = () => {
         
         toast({
           title: "Certificate Downloaded",
-          description: "Your survival certificate has been saved to your device!",
+          description: "Your insurance certificate has been saved to your device!",
         });
       } catch (error) {
         console.error("Error generating certificate image:", error);
@@ -87,7 +87,7 @@ const CertificatePage = () => {
   
   const shareOnPlatform = (platform: string) => {
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(`I just got insured against ${plan.name} attacks! Will I survive my next adventure? #WildlifeShield #SurviveTheWild`);
+    const text = encodeURIComponent(`I just got $50K insurance against ${plan.name.replace(' Insurance', '')} attacks! Will I survive my next adventure? #WildlifeShield #SurviveTheWild`);
     
     let shareUrl = '';
     
@@ -102,7 +102,7 @@ const CertificatePage = () => {
         shareUrl = `https://wa.me/?text=${text} ${url}`;
         break;
       case 'email':
-        shareUrl = `mailto:?subject=Check out my ${plan.name} insurance&body=${text} ${decodeURIComponent(url)}`;
+        shareUrl = `mailto:?subject=My ${plan.name} protection&body=${text} ${decodeURIComponent(url)}`;
         break;
       default:
         break;
@@ -128,7 +128,8 @@ const CertificatePage = () => {
             <div className="mb-10">
               <h1 className="text-3xl md:text-4xl font-bold text-apex-black mb-4">Your Certificate is Ready!</h1>
               <p className="text-xl text-apex-darkgray/70">
-                Congratulations on your Wildlife Shield protection!
+                Congratulations on your Wildlife Shield protection! <br />
+                <span className="text-apex-red font-semibold">$50,000 accidental death benefit</span>
               </p>
             </div>
             
@@ -234,7 +235,7 @@ const CertificatePage = () => {
             </Button>
             
             <p className="text-sm text-gray-500 mt-8">
-              A copy of your certificate has been sent to {user.email}
+              Your official policy document has been sent to {user.email}
             </p>
           </div>
         </div>
