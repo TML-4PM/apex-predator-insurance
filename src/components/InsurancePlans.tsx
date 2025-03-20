@@ -862,4 +862,6 @@ const fullInsurancePlans = [
       'Ultimate Bragging Rights',
       '$50K Death Benefit per Certificate'
     ],
-    funFact: 'Combined, the animals
+    funFact: 'Combined, the animals in this pack represent the deadliest creatures on Earth across all continents and habitats!'
+  }
+];
