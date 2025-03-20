@@ -49,10 +49,11 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 1. **Log in to AWS Management Console**
 2. **Navigate to Route 53**
 3. **Select "Hosted Zones"** and select your domain
+4. **You need to ADD two types of records that are currently missing:**
 
 #### For WWW Subdomain (www.example.com):
 
-4. **Create a new record set:**
+**Create a new CNAME record:**
    - **Type:** CNAME
    - **Name:** www
    - **Value:** Your Netlify URL (e.g., apexpredatorinsurance.netlify.app) - without https://
@@ -61,10 +62,10 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 
 #### For Apex/Root Domain (example.com without www):
 
-5. **Create ONE A record with MULTIPLE IP values:**
+**Create ONE A record with MULTIPLE IP values:**
    - **Record type:** A
-   - **Record name:** LEAVE THIS FIELD BLANK (leave the "subdomain" field empty)
-   - **Value:** Enter ALL FOUR IP addresses, EACH ON A NEW LINE in the same Value field:
+   - **Record name:** LEAVE THIS FIELD COMPLETELY EMPTY
+   - **Value:** Enter ALL FOUR Netlify IP addresses, EACH ON A NEW LINE in the same Value field:
      ```
      104.198.14.52
      104.198.14.53
@@ -74,42 +75,41 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
    - **TTL:** 300 seconds
    - **Click "Create"**
 
-### FIXING THE "InvalidChangeBatch 400" ERROR
+### COMMON DNS SETUP PROBLEMS IN ROUTE 53
 
-This specific error: `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A apexpredatorinsurance.com.'` occurs because:
+Based on your current records (showing only MX, NS, SOA, and TXT), you're missing both the A record and CNAME record needed for Netlify hosting.
 
-1. **You entered something in the subdomain field for an apex record**
-   - For root domain records, the subdomain field MUST be completely empty
-   - Do not enter "@", "apex", or any other text
+1. **You may see this error when creating the A record:**
+   `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A apexpredatorinsurance.com.'`
 
-2. **You might be creating separate A records**
-   - Create only ONE A record for the root domain
-   - Put all four Netlify IP addresses in the SAME record
-   - Each IP should be on its own line in the same Value field
+   This typically occurs when:
+   - Something is entered in the subdomain/name field (it must be EMPTY for apex domain)
+   - You try to create separate A records instead of one record with multiple values
+   - The routing policy isn't set to "Simple"
 
-3. **You might be trying to use A records for www**
-   - The www subdomain should use a CNAME record, not an A record
-   - Only the apex/root domain needs A records
+2. **For the root/apex domain (example.com):**
+   - Record type: A
+   - Name field: COMPLETELY EMPTY (no text, no "@" symbol)
+   - Value: All four IPs in one record, each on its own line
+   - Routing policy: Simple
 
-### VISUAL GUIDE FOR THE CORRECT SETUP
+3. **For the www subdomain:**
+   - Record type: CNAME
+   - Name field: www
+   - Value: your-netlify-site.netlify.app (no https://)
+   - Routing policy: Simple
 
-#### For the apex/root domain (example.com):
-- Record type: A
-- Name/subdomain: LEAVE EMPTY (this is critical)
-- Value: All four IPs, each on a new line:
-  ```
-  104.198.14.52
-  104.198.14.53
-  104.198.14.54
-  104.198.14.55
-  ```
+4. **DO NOT delete or modify your existing NS records!** They are critical for your domain to work.
 
-#### For the www subdomain:
-- Record type: CNAME
-- Name/subdomain: www
-- Value: your-site.netlify.app (just the domain, no https://)
+### Step 3: Verify DNS Configuration
 
-### Step 3: Configure Custom Domain in Netlify
+After setting up the A and CNAME records:
+
+1. **Wait 15-30 minutes for DNS propagation**
+2. Use a DNS lookup tool like [dnschecker.org](https://dnschecker.org/) to verify your new records
+3. Navigate to your Netlify dashboard → Site settings → Domain management → Check domain status
+
+### Step 4: Configure Custom Domain in Netlify
 
 After setting up DNS in Route 53:
 
@@ -118,17 +118,17 @@ After setting up DNS in Route 53:
 3. Enter your domain name (both www and apex versions)
 4. Netlify will verify the DNS configuration and provision SSL certificates
 
-### Step 4: Wait for DNS Propagation
+### Step 5: Wait for DNS Propagation
 
 DNS changes can take anywhere from a few minutes to 48 hours to fully propagate, though typically it's within 15-30 minutes.
 
-### Step 5: SSL Configuration
+### Step 6: SSL Configuration
 
 Ensure SSL is properly configured:
 - Most platforms (Netlify, Vercel) will automatically provision SSL certificates
 - For other platforms, you may need to set up SSL manually
 
-### Step 6: Stripe Configuration (Post-Launch)
+### Step 7: Stripe Configuration (Post-Launch)
 
 Once your site is live:
 1. Update your Stripe webhook endpoint URLs in the Stripe dashboard
@@ -160,3 +160,4 @@ If you continue to experience DNS issues:
 - Verify your domain registration is active in AWS
 - Test with external DNS lookup tools like [dnschecker.org](https://dnschecker.org/)
 - Check that your hosting platform has properly registered your custom domain
+
