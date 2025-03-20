@@ -11,7 +11,7 @@
   to = "/index.html"
   status = 200
 
-# Headers to improve security and allow necessary resources
+# Headers for security and resource loading
 [[headers]]
   for = "/*"
   [headers.values]

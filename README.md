@@ -61,18 +61,30 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 
 #### For Apex/Root Domain (example.com without www):
 
-5. **Create A records (NOT CNAME):**
+5. **Create A records:**
    - **Record type:** A
    - **Record name:** LEAVE THIS FIELD BLANK (do not enter "www", "@", or anything else)
-   - **Value:** Enter EACH of Netlify's load balancer IPs, one by one:
+   - **Enter each IP address in a SEPARATE line in the Value field:**
      ```
      104.198.14.52
      104.198.14.53
      104.198.14.54
      104.198.14.55
      ```
+   - **Do NOT create separate A records for each IP** - put all IPs in the same record with multiple lines
    - **TTL:** 300 seconds
    - **Click "Create"**
+
+### Important: Common DNS Setup Error
+
+The error message you see: `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A www.apexpredatorinsurance.com.'` happens when:
+
+1. You're trying to create an A record for the www subdomain (which should be a CNAME)
+2. You're trying to create multiple separate A records for the same name
+
+**CORRECT APPROACH:**
+- www subdomain: ONE CNAME record pointing to your Netlify URL
+- Root domain: ONE A record with MULTIPLE values (all four IPs on separate lines)
 
 ### Step 3: Configure Custom Domain in Netlify
 
@@ -86,33 +98,6 @@ After setting up DNS in Route 53:
 ### Step 4: Wait for DNS Propagation
 
 DNS changes can take anywhere from a few minutes to 48 hours to fully propagate, though typically it's within 15-30 minutes.
-
-### Common DNS Setup Problems:
-
-1. **"CNAME at apex" error:** You CANNOT use a CNAME record for the apex domain. This is a DNS limitation, not specific to AWS or Netlify. Always use A records with the Netlify IPs for the apex domain.
-
-2. **"Invalid set of changes" error:** Make sure:
-   - For www subdomain: Use a CNAME record with "www" in the Name field
-   - For apex domain: Use A records with a COMPLETELY EMPTY Name field (not "www", not "@", not "subdomain")
-
-3. **"Multiple IP addresses" confusion:** Do not enter all four IPs in one field. Create four separate A records, each with one IP address from the list.
-
-4. **Error occurs even with correct settings:** Sometimes the Route 53 UI can be confusing. Try:
-   - Clearing your browser cache
-   - Using a different browser
-   - Using the AWS CLI instead of the web console
-
-### Visual Guide for AWS Route 53 Setup:
-
-#### For WWW CNAME Record:
-- **Record name:** www
-- **Record type:** CNAME
-- **Value:** apexpredatorinsurance.netlify.app
-
-#### For Apex A Records:
-- **Record name:** (leave completely blank)
-- **Record type:** A
-- **Value:** (enter one IP per record)
 
 ### Step 5: SSL Configuration
 
@@ -152,4 +137,3 @@ If you continue to experience DNS issues:
 - Verify your domain registration is active in AWS
 - Test with external DNS lookup tools like [dnschecker.org](https://dnschecker.org/)
 - Check that your hosting platform has properly registered your custom domain
-

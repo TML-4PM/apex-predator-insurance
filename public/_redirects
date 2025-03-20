@@ -1,2 +1,4 @@
 
+# Redirects from what the browser requests to what we serve
+# This ensures that all routes are handled by index.html for single page applications
 /* /index.html 200
