@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { createPaymentIntent } from '@/lib/stripeClient';
 import { CheckoutFormValues } from './CheckoutForm';
+import { Loader2, CheckCircle2 } from 'lucide-react';
 
 interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
@@ -18,6 +19,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
+  const [isProcessed, setIsProcessed] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const { toast } = useToast();
   const isProd = window.location.hostname === 'apexpredatorinsurance.com';
@@ -83,7 +85,10 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         });
         
         if (!isProd) {
-          onSuccess(formData);
+          setIsProcessed(true);
+          setTimeout(() => {
+            onSuccess(formData);
+          }, 1500);
         }
         return;
       }
@@ -104,12 +109,16 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
       }
 
       if (paymentIntent.status === 'succeeded') {
+        setIsProcessed(true);
         toast({
           title: "Payment successful!",
           description: "Your certificate is ready to download.",
         });
         
-        onSuccess(formData);
+        // Add a small delay to show the success state before redirecting
+        setTimeout(() => {
+          onSuccess(formData);
+        }, 1500);
       }
     } catch (error) {
       console.error('Payment error:', error);
@@ -123,6 +132,22 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
       setIsLoading(false);
     }
   };
+
+  // Show success state after payment is processed
+  if (isProcessed) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8">
+        <div className="text-green-500 mb-4">
+          <CheckCircle2 size={64} />
+        </div>
+        <h3 className="text-xl font-medium text-white mb-2">Payment Successful!</h3>
+        <p className="text-white/70 mb-4">Your insurance certificate is being prepared...</p>
+        <div className="animate-pulse">
+          <Loader2 className="h-8 w-8 text-apex-red animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -174,7 +199,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         >
           {isLoading ? (
             <div className="flex items-center">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               Processing...
             </div>
           ) : (
