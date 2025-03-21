@@ -1,4 +1,3 @@
-
 # Apex Predator Insurance
 
 A tongue-in-cheek insurance website for adventurers who encounter predators in the wild.
