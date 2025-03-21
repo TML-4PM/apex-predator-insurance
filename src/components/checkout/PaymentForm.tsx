@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -13,16 +13,28 @@ interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
   formData: CheckoutFormValues;
   onSuccess: (data: CheckoutFormValues) => void;
+  isBundle?: boolean;
 }
 
-export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => {
+export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false }: PaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessed, setIsProcessed] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [formComplete, setFormComplete] = useState(false);
   const { toast } = useToast();
+
+  // Validate form fields whenever formData changes
+  useEffect(() => {
+    if (formData.fullName && formData.fullName.length >= 2 && 
+        formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setFormComplete(true);
+    } else {
+      setFormComplete(false);
+    }
+  }, [formData]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -59,7 +71,8 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
           plan_id: plan.id,
           plan_name: plan.name,
           customer_name: formData.fullName,
-          customer_email: formData.email
+          customer_email: formData.email,
+          is_bundle: isBundle
         }
       );
 
@@ -190,7 +203,7 @@ export const PaymentForm = ({ plan, formData, onSuccess }: PaymentFormProps) => 
         <Button
           type="submit"
           className="w-full bg-apex-red hover:bg-apex-red/90"
-          disabled={isLoading || !stripe}
+          disabled={isLoading || !stripe || !formComplete}
         >
           {isLoading ? (
             <div className="flex items-center">

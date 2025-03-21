@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { z } from "zod";
@@ -19,9 +19,10 @@ export type CheckoutFormValues = z.infer<typeof formSchema>;
 interface CheckoutFormProps {
   plan: { id: string; name: string; price: number; icon: string };
   onSuccess: (data: CheckoutFormValues) => void;
+  isBundle?: boolean;
 }
 
-export const CheckoutForm = ({ plan, onSuccess }: CheckoutFormProps) => {
+export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutFormProps) => {
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,6 +30,25 @@ export const CheckoutForm = ({ plan, onSuccess }: CheckoutFormProps) => {
       email: "",
     },
   });
+
+  // This will update the parent component with the form values as they change
+  useEffect(() => {
+    const subscription = form.watch((data) => {
+      // Only update if both fields have values
+      if (data.fullName && data.email) {
+        // We don't call onSuccess here as that would navigate away
+        // Just providing the current form values for real-time preview
+        const currentValues = form.getValues();
+        // This is just to update the certificate preview
+        setTimeout(() => {
+          document.dispatchEvent(new CustomEvent('formUpdate', { 
+            detail: { fullName: currentValues.fullName }
+          }));
+        }, 0);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form, form.watch]);
 
   const handleSubmitForm = (data: CheckoutFormValues) => {
     // Form data is valid, now handle payment in the PaymentForm component
@@ -82,7 +102,8 @@ export const CheckoutForm = ({ plan, onSuccess }: CheckoutFormProps) => {
           <PaymentForm 
             plan={plan} 
             formData={form.getValues()} 
-            onSuccess={onSuccess} 
+            onSuccess={onSuccess}
+            isBundle={isBundle}
           />
         </Elements>
       </form>
