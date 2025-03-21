@@ -16,12 +16,18 @@ const Plans = () => {
   const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewedPlan[]>([]);
   
   useEffect(() => {
+    console.log("Plans page mounted");
     window.scrollTo(0, 0);
     
     // Get recently viewed plans from localStorage
-    const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
-    if (storedRecentlyViewed) {
-      setRecentlyViewed(JSON.parse(storedRecentlyViewed));
+    try {
+      const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
+      if (storedRecentlyViewed) {
+        setRecentlyViewed(JSON.parse(storedRecentlyViewed));
+        console.log("Retrieved recently viewed plans:", JSON.parse(storedRecentlyViewed));
+      }
+    } catch (error) {
+      console.error("Error retrieving recently viewed plans:", error);
     }
   }, []);
 

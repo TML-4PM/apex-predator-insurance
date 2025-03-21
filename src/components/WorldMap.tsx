@@ -27,19 +27,22 @@ const WorldMap = () => {
   const activeZoneData = activeZone ? dangerZones.find(zone => zone.id === activeZone) : null;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#1A1F2C] to-[#221F26] relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover opacity-30"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1A1F2C]"></div>
+    <section className="py-20 relative overflow-hidden">
+      {/* Enhanced background with texture and gradient */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C] to-[#221F26]"></div>
+        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover"></div>
+        <div className="absolute inset-0 grid-pattern opacity-30"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1A1F2C]/80"></div>
       </div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-apex-black/50 backdrop-blur-sm border border-white/10"
+            className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-apex-black/70 backdrop-blur-sm border border-white/10 shadow-lg"
           >
             <Globe className="h-5 w-5 text-apex-red" />
             <span className="text-white/90 font-medium">Interactive Danger Map</span>
@@ -49,7 +52,7 @@ const WorldMap = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold text-white mb-6"
+            className="text-3xl md:text-4xl font-bold text-white mb-6 text-shadow-lg"
           >
             Global Apex Predator Zones
           </motion.h2>
@@ -77,13 +80,11 @@ const WorldMap = () => {
               transition={{ duration: 0.8 }}
               className="relative w-full h-full"
             >
-              <img 
-                src="https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                alt="World Map"
-                className="w-full h-full object-cover"
-              />
-              
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/70 to-[#1A1F2C]/40 backdrop-blur-xs"></div>
+              {/* Enhanced map container with depth and texture */}
+              <div className="absolute inset-0 bg-[#1A1F2C]/80 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')] bg-no-repeat bg-cover opacity-60 mix-blend-overlay"></div>
+              <div className="absolute inset-0 grid-pattern opacity-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/70 to-[#1A1F2C]/40"></div>
               
               <ZoneConnections zones={dangerZones} />
               
@@ -114,7 +115,7 @@ const WorldMap = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-apex-black/30 backdrop-blur-sm rounded-lg border border-white/10"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-apex-black/50 backdrop-blur-sm rounded-lg border border-white/10 shadow-md"
           >
             <span className="w-2 h-2 rounded-full bg-apex-red animate-pulse"></span>
             <p className="text-white/70 text-sm">

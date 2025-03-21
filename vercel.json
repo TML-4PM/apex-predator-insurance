@@ -10,6 +10,7 @@
     {
       "src": "/(.*)",
       "dest": "/index.html",
+      "status": 200,
       "headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
