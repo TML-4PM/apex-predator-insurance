@@ -16,6 +16,9 @@ interface OrderSummaryProps {
 export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = false }: OrderSummaryProps) => {
   const [displayName, setDisplayName] = useState(userName);
   
+  // Set isBundle based on plan ID
+  isBundle = plan.id === 'apex-pack';
+  
   // Listen for form updates to update the certificate preview in real-time
   useEffect(() => {
     const handleFormUpdate = (e: CustomEvent) => {
@@ -49,7 +52,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
         {isBundle && (
           <div className="bg-apex-red/20 rounded p-3 mb-4">
             <p className="text-sm text-white font-medium">
-              Premium Bundle: Protection against 10 predators
+              Premium Bundle: Protection against all 60 predators
             </p>
             <div className="mt-2 grid grid-cols-2 gap-1 text-xs text-white/80">
               <div className="flex items-center"><span className="mr-1">🦈</span> Sharks</div>
@@ -62,9 +65,10 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
               <div className="flex items-center"><span className="mr-1">🦏</span> Rhinos</div>
               <div className="flex items-center"><span className="mr-1">🦛</span> Hippos</div>
               <div className="flex items-center"><span className="mr-1">🐺</span> Wolves</div>
+              <div className="flex items-center"><span className="mr-1">+50</span> more predators</div>
             </div>
             <p className="text-xs text-white/80 mt-2">
-              Save over 50% compared to individual plans!
+              Save 60% compared to individual plans!
             </p>
           </div>
         )}

@@ -6,6 +6,17 @@ import { Shield, ShoppingCart, Check, Globe, MapPin, Search } from 'lucide-react
 import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationLink, 
+  PaginationNext, 
+  PaginationPrevious
+} from '@/components/ui/pagination';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 // Complete list of 60 deadly animal insurance plans with their respective countries
 const fullInsurancePlans = [
@@ -884,13 +895,20 @@ const InsurancePlans = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   const [filteredPlans, setFilteredPlans] = useState<InsurancePlan[]>(fullInsurancePlans);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeTab, setActiveTab] = useState('all');
+  const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  // Filter plans based on search term and selected location
+  
+  const plansPerPage = 9; // Show 9 plans per page for better visibility
+  
+  // Filter plans based on search term, selected location and active tab
   useEffect(() => {
     let filtered = fullInsurancePlans;
     
+    // Apply search filter
     if (searchTerm) {
       filtered = filtered.filter(plan => 
         plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -898,14 +916,27 @@ const InsurancePlans = () => {
       );
     }
     
+    // Apply location filter
     if (selectedLocation) {
       filtered = filtered.filter(plan => 
         plan.location.toLowerCase().includes(selectedLocation.toLowerCase())
       );
     }
     
+    // Apply tab filter
+    if (activeTab === 'bundle') {
+      filtered = filtered.filter(plan => plan.id === 'apex-pack');
+    } else if (activeTab === 'popular') {
+      // Filter for some popular plans - for example, shark, lion, snake, bear
+      const popularIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
+      filtered = filtered.filter(plan => popularIds.includes(plan.id));
+    }
+    
     setFilteredPlans(filtered);
-  }, [searchTerm, selectedLocation]);
+    
+    // Reset to first page when filters change
+    setCurrentPage(1);
+  }, [searchTerm, selectedLocation, activeTab]);
 
   // Get unique locations from all plans
   const getUniqueLocations = (): string[] => {
@@ -939,123 +970,446 @@ const InsurancePlans = () => {
       navigate('/checkout');
     }, 1000);
   };
+  
+  // Calculate pagination
+  const indexOfLastPlan = currentPage * plansPerPage;
+  const indexOfFirstPlan = indexOfLastPlan - plansPerPage;
+  const currentPlans = filteredPlans.slice(indexOfFirstPlan, indexOfLastPlan);
+  const totalPages = Math.ceil(filteredPlans.length / plansPerPage);
+  
+  // Generate page numbers for pagination
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+  
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Scroll to top of plans section
+    document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <section className="py-16 bg-white">
+    <section id="plans-section" className="py-10 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-4 mb-8">
-          <div className="relative w-full lg:w-1/2">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search for insurance plans..."
-              className="pl-10 w-full"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        {/* Tabs for content categorization */}
+        <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-3 lg:w-1/2 mx-auto mb-6">
+            <TabsTrigger value="all">All Plans</TabsTrigger>
+            <TabsTrigger value="popular">Popular</TabsTrigger>
+            <TabsTrigger value="bundle">Bundle Deal</TabsTrigger>
+          </TabsList>
+          
+          <div className="flex flex-col lg:flex-row items-center gap-4 mb-8">
+            <div className="relative w-full lg:w-1/2">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search for insurance plans..."
+                className="pl-10 w-full"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex items-center gap-2 w-full lg:w-1/2">
+              <Globe className="text-gray-400 flex-shrink-0" />
+              <select
+                className="border border-input bg-background rounded-md h-10 px-3 py-2 w-full text-sm"
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+              >
+                <option value="">All Locations</option>
+                {getUniqueLocations().map((location: string) => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           
-          <div className="flex items-center gap-2 w-full lg:w-1/2">
-            <Globe className="text-gray-400 flex-shrink-0" />
-            <select
-              className="border border-input bg-background rounded-md h-10 px-3 py-2 w-full text-sm"
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-            >
-              <option value="">All Locations</option>
-              {getUniqueLocations().map((location: string) => (
-                <option key={location} value={location}>
-                  {location}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        
-        {filteredPlans.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPlans.map((plan) => (
-              <div
-                key={plan.id}
-                className={cn(
-                  "border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300",
-                  plan.id === 'apex-pack' ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-3" : "border-gray-200"
-                )}
-              >
-                <div className={cn(
-                  "p-6",
-                  plan.id === 'apex-pack' ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
-                )}>
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">{plan.icon}</span>
-                      <h3 className={cn(
-                        "text-xl font-bold",
-                        plan.id === 'apex-pack' ? "text-apex-red" : "text-apex-black"
-                      )}>
-                        {plan.name}
-                      </h3>
-                    </div>
-                    
-                    {plan.id === 'apex-pack' && (
-                      <span className="px-3 py-1 bg-apex-red text-white text-xs font-semibold rounded-full">
-                        Best Value
-                      </span>
-                    )}
+          {/* How It Works collapsible section */}
+          <Collapsible 
+            open={isHowItWorksOpen} 
+            onOpenChange={setIsHowItWorksOpen}
+            className="mb-8 border rounded-lg p-4"
+          >
+            <CollapsibleTrigger asChild>
+              <Button variant="outline" className="w-full flex justify-between">
+                <span>How It Works - Quick Guide</span>
+                <span>{isHowItWorksOpen ? '▲' : '▼'}</span>
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="pt-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div className="flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-full bg-apex-red/10 text-apex-red flex items-center justify-center mb-3 text-xl font-bold">
+                    1
                   </div>
-                  
-                  <p className="text-apex-darkgray/70 mb-4">
-                    {plan.description}
+                  <h3 className="text-lg font-bold text-apex-black mb-1">Choose Your Predator</h3>
+                  <p className="text-sm text-apex-darkgray/70">
+                    Select from our range of deadly predators or get the complete pack.
                   </p>
-                  
-                  <div className="flex items-center gap-2 mb-4">
-                    <MapPin size={16} className="text-apex-darkgray/50" />
-                    <span className="text-sm text-apex-darkgray/70">{plan.location}</span>
+                </div>
+                
+                <div className="flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-full bg-apex-red/10 text-apex-red flex items-center justify-center mb-3 text-xl font-bold">
+                    2
                   </div>
-                  
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold mb-2 text-apex-black">Fun Fact:</h4>
-                    <p className="text-sm text-apex-darkgray/70 italic">"{plan.funFact}"</p>
+                  <h3 className="text-lg font-bold text-apex-black mb-1">Personalize It</h3>
+                  <p className="text-sm text-apex-darkgray/70">
+                    Add your name or gift recipient's details to customize the certificate.
+                  </p>
+                </div>
+                
+                <div className="flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-full bg-apex-red/10 text-apex-red flex items-center justify-center mb-3 text-xl font-bold">
+                    3
                   </div>
-                  
-                  <div className="space-y-2 mb-6">
-                    <h4 className="text-sm font-semibold mb-2 text-apex-black">Coverage Includes:</h4>
-                    {plan.features.map((feature, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-apex-darkgray/70">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
-                      <span className="text-sm text-apex-darkgray/70">/ year</span>
-                    </div>
-                    
-                    <Button 
-                      onClick={() => handleAddToCart(plan)} 
-                      className={cn(
-                        "flex items-center gap-2",
-                        plan.id === 'apex-pack' ? "bg-apex-red hover:bg-apex-red/90" : ""
-                      )}
-                    >
-                      <ShoppingCart size={16} />
-                      <span>Get Protected</span>
-                    </Button>
-                  </div>
+                  <h3 className="text-lg font-bold text-apex-black mb-1">Download & Share</h3>
+                  <p className="text-sm text-apex-darkgray/70">
+                    Get your digital certificate instantly and share it with friends.
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16">
-            <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
-            <h3 className="text-xl font-medium text-apex-black mb-2">No plans found</h3>
-            <p className="text-apex-darkgray/70">Try adjusting your search or filter criteria</p>
-          </div>
-        )}
+            </CollapsibleContent>
+          </Collapsible>
+          
+          <TabsContent value="all">
+            {currentPlans.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {currentPlans.map((plan) => (
+                    <div
+                      key={plan.id}
+                      className={cn(
+                        "border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300",
+                        plan.id === 'apex-pack' ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-3" : "border-gray-200"
+                      )}
+                    >
+                      <div className={cn(
+                        "p-6",
+                        plan.id === 'apex-pack' ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
+                      )}>
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-3">
+                            <span className="text-3xl">{plan.icon}</span>
+                            <h3 className={cn(
+                              "text-xl font-bold",
+                              plan.id === 'apex-pack' ? "text-apex-red" : "text-apex-black"
+                            )}>
+                              {plan.name}
+                            </h3>
+                          </div>
+                          
+                          {plan.id === 'apex-pack' && (
+                            <span className="px-3 py-1 bg-apex-red text-white text-xs font-semibold rounded-full">
+                              Best Value
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className="text-apex-darkgray/70 mb-4">
+                          {plan.description}
+                        </p>
+                        
+                        <div className="flex items-center gap-2 mb-4">
+                          <MapPin size={16} className="text-apex-darkgray/50" />
+                          <span className="text-sm text-apex-darkgray/70">{plan.location}</span>
+                        </div>
+                        
+                        <ScrollArea className="h-24 mb-4 rounded p-2 bg-gray-50">
+                          <div className="pr-4">
+                            <h4 className="text-sm font-semibold mb-2 text-apex-black">Fun Fact:</h4>
+                            <p className="text-sm text-apex-darkgray/70 italic">"{plan.funFact}"</p>
+                          </div>
+                        </ScrollArea>
+                        
+                        <div className="space-y-2 mb-6">
+                          <h4 className="text-sm font-semibold mb-2 text-apex-black">Coverage Includes:</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                            {plan.features.map((feature, index) => (
+                              <div key={index} className="flex items-start gap-2">
+                                <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-sm text-apex-darkgray/70">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
+                            <span className="text-sm text-apex-darkgray/70">/ year</span>
+                          </div>
+                          
+                          <Button 
+                            onClick={() => handleAddToCart(plan)} 
+                            className={cn(
+                              "flex items-center gap-2",
+                              plan.id === 'apex-pack' ? "bg-apex-red hover:bg-apex-red/90" : ""
+                            )}
+                          >
+                            <ShoppingCart size={16} />
+                            <span>Get Protected</span>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <Pagination className="mt-10">
+                    <PaginationContent>
+                      {currentPage > 1 && (
+                        <PaginationItem>
+                          <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} />
+                        </PaginationItem>
+                      )}
+                      
+                      {pageNumbers.map(number => (
+                        <PaginationItem key={number}>
+                          <PaginationLink 
+                            isActive={currentPage === number}
+                            onClick={() => handlePageChange(number)}
+                          >
+                            {number}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      
+                      {currentPage < totalPages && (
+                        <PaginationItem>
+                          <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+                        </PaginationItem>
+                      )}
+                    </PaginationContent>
+                  </Pagination>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-16">
+                <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
+                <h3 className="text-xl font-medium text-apex-black mb-2">No plans found</h3>
+                <p className="text-apex-darkgray/70">Try adjusting your search or filter criteria</p>
+              </div>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="popular">
+            {currentPlans.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {currentPlans.map((plan) => (
+                    <div
+                      key={plan.id}
+                      className="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border-gray-200"
+                    >
+                      <div className="p-6 bg-white">
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-3">
+                            <span className="text-3xl">{plan.icon}</span>
+                            <h3 className="text-xl font-bold text-apex-black">
+                              {plan.name}
+                            </h3>
+                          </div>
+                          
+                          <span className="px-3 py-1 bg-amber-500 text-white text-xs font-semibold rounded-full">
+                            Popular
+                          </span>
+                        </div>
+                        
+                        <p className="text-apex-darkgray/70 mb-4">
+                          {plan.description}
+                        </p>
+                        
+                        <div className="flex items-center gap-2 mb-4">
+                          <MapPin size={16} className="text-apex-darkgray/50" />
+                          <span className="text-sm text-apex-darkgray/70">{plan.location}</span>
+                        </div>
+                        
+                        <ScrollArea className="h-24 mb-4 rounded p-2 bg-gray-50">
+                          <div className="pr-4">
+                            <h4 className="text-sm font-semibold mb-2 text-apex-black">Fun Fact:</h4>
+                            <p className="text-sm text-apex-darkgray/70 italic">"{plan.funFact}"</p>
+                          </div>
+                        </ScrollArea>
+                        
+                        <div className="space-y-2 mb-6">
+                          <h4 className="text-sm font-semibold mb-2 text-apex-black">Coverage Includes:</h4>
+                          {plan.features.map((feature, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                              <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-sm text-apex-darkgray/70">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
+                            <span className="text-sm text-apex-darkgray/70">/ year</span>
+                          </div>
+                          
+                          <Button 
+                            onClick={() => handleAddToCart(plan)} 
+                            className="flex items-center gap-2"
+                          >
+                            <ShoppingCart size={16} />
+                            <span>Get Protected</span>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <Pagination className="mt-10">
+                    <PaginationContent>
+                      {currentPage > 1 && (
+                        <PaginationItem>
+                          <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} />
+                        </PaginationItem>
+                      )}
+                      
+                      {pageNumbers.map(number => (
+                        <PaginationItem key={number}>
+                          <PaginationLink 
+                            isActive={currentPage === number}
+                            onClick={() => handlePageChange(number)}
+                          >
+                            {number}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      
+                      {currentPage < totalPages && (
+                        <PaginationItem>
+                          <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+                        </PaginationItem>
+                      )}
+                    </PaginationContent>
+                  </Pagination>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-16">
+                <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
+                <h3 className="text-xl font-medium text-apex-black mb-2">No popular plans found</h3>
+                <p className="text-apex-darkgray/70">Try selecting the "All Plans" tab</p>
+              </div>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="bundle">
+            {currentPlans.length > 0 ? (
+              <div className="border-2 border-apex-red rounded-xl overflow-hidden shadow-md bg-gradient-to-r from-apex-red/10 to-apex-black/5 p-8">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex items-center gap-4">
+                    <span className="text-4xl">🏆</span>
+                    <div>
+                      <h3 className="text-2xl font-bold text-apex-red mb-2">
+                        Apex Predator Pack
+                      </h3>
+                      <p className="text-apex-darkgray/70 max-w-xl">
+                        The ultimate protection package with $50K death benefit for the ultimate adventurer.
+                        All sixty certificates for the price of twenty-five!
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <span className="px-4 py-2 bg-apex-red text-white text-sm font-semibold rounded-full">
+                    Save 60%
+                  </span>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 mb-6">
+                  <h4 className="text-lg font-semibold mb-4 text-apex-black">All 60 Predators Included:</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    {fullInsurancePlans
+                      .filter(plan => plan.id !== 'apex-pack')
+                      .map((plan) => (
+                        <div key={plan.id} className="flex items-center gap-2 text-sm">
+                          <span>{plan.icon}</span>
+                          <span className="text-apex-darkgray truncate">{plan.name.replace(' Insurance', '')}</span>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 mb-6">
+                  <h4 className="text-lg font-semibold mb-4 text-apex-black">Bundle Benefits:</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      {currentPlans[0]?.features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-apex-darkgray/80">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-apex-darkgray/80">Coverage for multiple continents and habitats</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-apex-darkgray/80">Complete Wildlife Shield - no predator left behind</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-apex-darkgray/80">60% savings compared to individual plans</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-apex-darkgray/80">Premium bundle certificate design</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col md:flex-row items-center justify-between bg-white rounded-lg p-6">
+                  <div className="mb-4 md:mb-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-lg text-apex-darkgray/70 line-through">$599.40</span>
+                      <span className="bg-apex-red/10 text-apex-red text-xs px-2 py-1 rounded">
+                        Save $349.41
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-bold text-apex-black">$249.99</span>
+                      <span className="text-apex-darkgray/70">/ year</span>
+                    </div>
+                    <p className="text-sm text-apex-darkgray/60 mt-1">
+                      Just $4.17 per predator
+                    </p>
+                  </div>
+                  
+                  <Button 
+                    onClick={() => handleAddToCart(currentPlans[0])}
+                    size="lg"
+                    className="bg-apex-red hover:bg-apex-red/90 flex items-center gap-2 px-8"
+                  >
+                    <ShoppingCart size={18} />
+                    <span>Get The Bundle</span>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
+                <h3 className="text-xl font-medium text-apex-black mb-2">Bundle not available</h3>
+                <p className="text-apex-darkgray/70">Please try clearing your search filters</p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </section>
   );
