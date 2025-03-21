@@ -22,9 +22,14 @@ const Plans = () => {
     // Get recently viewed plans from localStorage
     try {
       const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
+      console.log("Attempting to retrieve recently viewed plans from localStorage");
+      
       if (storedRecentlyViewed) {
-        setRecentlyViewed(JSON.parse(storedRecentlyViewed));
-        console.log("Retrieved recently viewed plans:", JSON.parse(storedRecentlyViewed));
+        const parsedData = JSON.parse(storedRecentlyViewed);
+        setRecentlyViewed(parsedData);
+        console.log("Retrieved recently viewed plans:", parsedData);
+      } else {
+        console.log("No recently viewed plans found in localStorage");
       }
     } catch (error) {
       console.error("Error retrieving recently viewed plans:", error);

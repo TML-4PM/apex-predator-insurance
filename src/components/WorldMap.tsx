@@ -32,7 +32,10 @@ const WorldMap = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C] to-[#221F26]"></div>
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover"></div>
-        <div className="absolute inset-0 grid-pattern opacity-30"></div>
+        <div className="absolute inset-0 opacity-30" style={{ 
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)`,
+          backgroundSize: '30px 30px' 
+        }}></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1A1F2C]/80"></div>
       </div>
       
@@ -52,7 +55,8 @@ const WorldMap = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold text-white mb-6 text-shadow-lg"
+            className="text-3xl md:text-4xl font-bold text-white mb-6"
+            style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)' }}
           >
             Global Apex Predator Zones
           </motion.h2>
@@ -68,7 +72,7 @@ const WorldMap = () => {
           </motion.p>
         </div>
         
-        <div className="relative w-full aspect-[2/1] max-w-5xl mx-auto rounded-xl overflow-hidden shadow-elevation">
+        <div className="relative w-full aspect-[2/1] max-w-5xl mx-auto rounded-xl overflow-hidden shadow-xl">
           {!isMapLoaded ? (
             <div className="absolute inset-0 flex items-center justify-center bg-[#1A1F2C]">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-apex-red"></div>
@@ -83,7 +87,10 @@ const WorldMap = () => {
               {/* Enhanced map container with depth and texture */}
               <div className="absolute inset-0 bg-[#1A1F2C]/80 backdrop-blur-sm"></div>
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')] bg-no-repeat bg-cover opacity-60 mix-blend-overlay"></div>
-              <div className="absolute inset-0 grid-pattern opacity-10"></div>
+              <div className="absolute inset-0 opacity-10" style={{ 
+                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)`,
+                backgroundSize: '30px 30px' 
+              }}></div>
               <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/70 to-[#1A1F2C]/40"></div>
               
               <ZoneConnections zones={dangerZones} />
