@@ -3,6 +3,11 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// Force HTTPS
+if (window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
+  window.location.href = window.location.href.replace('http:', 'https:');
+}
+
 // Global error handler
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
