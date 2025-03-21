@@ -51,7 +51,19 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
             <p className="text-sm text-white font-medium">
               Premium Bundle: Protection against 10 predators
             </p>
-            <p className="text-xs text-white/80">
+            <div className="mt-2 grid grid-cols-2 gap-1 text-xs text-white/80">
+              <div className="flex items-center"><span className="mr-1">🦈</span> Sharks</div>
+              <div className="flex items-center"><span className="mr-1">🐊</span> Crocodiles</div>
+              <div className="flex items-center"><span className="mr-1">🐆</span> Big Cats</div>
+              <div className="flex items-center"><span className="mr-1">🐻</span> Bears</div>
+              <div className="flex items-center"><span className="mr-1">🐍</span> Snakes</div>
+              <div className="flex items-center"><span className="mr-1">🦂</span> Scorpions</div>
+              <div className="flex items-center"><span className="mr-1">🐘</span> Elephants</div>
+              <div className="flex items-center"><span className="mr-1">🦏</span> Rhinos</div>
+              <div className="flex items-center"><span className="mr-1">🦛</span> Hippos</div>
+              <div className="flex items-center"><span className="mr-1">🐺</span> Wolves</div>
+            </div>
+            <p className="text-xs text-white/80 mt-2">
               Save over 50% compared to individual plans!
             </p>
           </div>

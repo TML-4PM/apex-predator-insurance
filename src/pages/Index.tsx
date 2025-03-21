@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -51,7 +50,6 @@ const adventureTips = [
   }
 ];
 
-// Add popular predator plans
 const popularPlans = [
   {
     id: "shark",
@@ -162,51 +160,45 @@ const Index = () => {
               <CarouselNext className="relative static translate-y-0 ml-2" />
             </div>
           </Carousel>
-        </div>
-      </section>
-      
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
-              Adventure Tips & Tricks
-            </h2>
-            <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100">
-              Travel smarter, adventure harder, and always have a good story to tell.
-            </p>
-          </div>
           
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-5xl mx-auto"
-          >
-            <CarouselContent>
-              {adventureTips.map((tip, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                  <div className="p-1">
-                    <Card className="border-2 border-apex-lightgray hover:border-apex-red/30 transition-all duration-300">
-                      <CardContent className="flex flex-col items-center text-center p-6">
-                        {tip.icon}
-                        <h3 className="text-xl font-bold mb-2">{tip.title}</h3>
-                        <p className="text-apex-darkgray/70">{tip.description}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-8">
-              <CarouselPrevious className="relative static translate-y-0 mr-2" />
-              <CarouselNext className="relative static translate-y-0 ml-2" />
+          {/* Special Bundle Call-to-Action */}
+          <div className="mt-16 bg-gradient-to-r from-apex-red/20 to-apex-red/10 rounded-xl p-6 max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-6 md:mb-0 md:mr-6">
+                <div className="flex items-center mb-3">
+                  <Shield className="h-6 w-6 text-apex-red mr-2" />
+                  <h3 className="text-2xl font-bold text-apex-black">Get Protected From All Predators</h3>
+                </div>
+                <p className="text-lg text-apex-darkgray/80 mb-4">
+                  Our best value! The complete Predator Pack Bundle includes protection against 10 deadly predators for just $49.99.
+                </p>
+                <ul className="grid grid-cols-2 gap-2 text-sm mb-6">
+                  <li className="flex items-center"><span className="mr-2">🦈</span> Sharks</li>
+                  <li className="flex items-center"><span className="mr-2">🐊</span> Crocodiles</li>
+                  <li className="flex items-center"><span className="mr-2">🐆</span> Big Cats</li>
+                  <li className="flex items-center"><span className="mr-2">🐻</span> Bears</li>
+                  <li className="flex items-center"><span className="mr-2">🐍</span> Snakes</li>
+                  <li className="flex items-center"><span className="mr-2">🦂</span> Scorpions</li>
+                  <li className="flex items-center"><span className="mr-2">🐘</span> Elephants</li>
+                  <li className="flex items-center"><span className="mr-2">🦏</span> Rhinos</li>
+                  <li className="flex items-center"><span className="mr-2">🦛</span> Hippos</li>
+                  <li className="flex items-center"><span className="mr-2">🐺</span> Wolves</li>
+                </ul>
+                <p className="text-apex-red font-bold">Save over 50% compared to individual plans!</p>
+              </div>
+              <div>
+                <Link 
+                  to="/checkout?plan=bundle&isBundle=true"
+                  className="bg-apex-red hover:bg-apex-red/90 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  <span>Get All Animals Bundle - $49.99</span>
+                </Link>
+              </div>
             </div>
-          </Carousel>
+          </div>
         </div>
       </section>
-
-      <Testimonials />
       
       <WorldMap />
       
@@ -296,6 +288,51 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* Adventure Tips & Tricks moved to bottom */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
+              Adventure Tips & Tricks
+            </h2>
+            <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100">
+              Travel smarter, adventure harder, and always have a good story to tell.
+            </p>
+          </div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {adventureTips.map((tip, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <div className="p-1">
+                    <Card className="border-2 border-apex-lightgray hover:border-apex-red/30 transition-all duration-300">
+                      <CardContent className="flex flex-col items-center text-center p-6">
+                        {tip.icon}
+                        <h3 className="text-xl font-bold mb-2">{tip.title}</h3>
+                        <p className="text-apex-darkgray/70">{tip.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8">
+              <CarouselPrevious className="relative static translate-y-0 mr-2" />
+              <CarouselNext className="relative static translate-y-0 ml-2" />
+            </div>
+          </Carousel>
+        </div>
+      </section>
+      
+      {/* Testimonials section moved to bottom */}
+      <Testimonials />
       
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
