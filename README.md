@@ -1,3 +1,4 @@
+
 # Apex Predator Insurance
 
 A tongue-in-cheek insurance website for adventurers who encounter predators in the wild.
@@ -56,10 +57,11 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 **Create a new record set for the apex domain:**
 - Go to Route 53 and select your hosted zone
 - Click "Create Record"
-- Keep "Record name" EMPTY for apex domain
+- Keep "Record name" EMPTY for apex domain (do not enter @ or anything)
 - Select "Type" as "A"
 - Toggle "Alias" to ON
-- Under "Route traffic to", select "Alias to Vercel nameservers"
+- Under "Route traffic to", select "Alias to other AWS resources"
+- In the dropdown, find and select "Alias to Vercel"
 - Click "Create records"
 
 **Create another record for www subdomain:**
@@ -70,53 +72,48 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 - Set TTL to 300 seconds
 - Click "Create records"
 
-#### For Netlify Deployment (Alternative):
+### FIXING DNS_PROBE_FINISHED_NXDOMAIN ERRORS
 
-**Create a new CNAME record:**
-   - **Type:** CNAME
-   - **Name:** www
-   - **Value:** Your Netlify URL (e.g., apexpredatorinsurance.netlify.app) - without https://
-   - **TTL:** 300 seconds (5 minutes)
-   - **Click "Create"**
+You're seeing a DNS_PROBE_FINISHED_NXDOMAIN error, which means the domain name cannot be resolved to an IP address. This happens when:
 
-**Create ONE A record with MULTIPLE IP values:**
-   - **Record type:** A
-   - **Record name:** LEAVE THIS FIELD COMPLETELY EMPTY
-   - **Value:** Enter ALL FOUR Netlify IP addresses, EACH ON A NEW LINE in the same Value field:
-     ```
-     104.198.14.52
-     104.198.14.53
-     104.198.14.54
-     104.198.14.55
-     ```
-   - **TTL:** 300 seconds
-   - **Click "Create"**
+1. **DNS records are missing or incorrect**
+2. **DNS changes haven't propagated yet**
+3. **The hosted zone isn't correctly linked to your domain registrar**
 
-### COMMON DNS SETUP PROBLEMS IN ROUTE 53
+Follow these specific steps to fix this error:
 
-Based on your current records (showing only MX, NS, SOA, and TXT), you're missing both the A record and CNAME record needed for Netlify hosting.
+1. **Verify your NS (Name Server) records first**:
+   - In Route 53, check the NS records for your domain
+   - Make sure these EXACT SAME name servers are set at your domain registrar (if different from AWS)
+   - The NS records should look something like: `ns-123.awsdns-45.com.`, `ns-678.awsdns-90.net.`, etc.
 
-1. **You may see this error when creating the A record:**
-   `InvalidChangeBatch 400: The request contains an invalid set of changes for a resource record set 'A apexpredatorinsurance.com.'`
+2. **Check for proper A record configuration**:
+   - Ensure your A record for the apex domain (empty name field) points to the correct IP addresses
+   - For Vercel: Use their specific Alias settings as described above
+   - For Netlify: Use their specific IP addresses as listed earlier
 
-   This typically occurs when:
-   - Something is entered in the subdomain/name field (it must be EMPTY for apex domain)
-   - You try to create separate A records instead of one record with multiple values
-   - The routing policy isn't set to "Simple"
+3. **Check CNAME for www subdomain**:
+   - Ensure your CNAME record has "www" in the name field
+   - The value should be your Vercel/Netlify app URL (without https://)
 
-2. **For the root/apex domain (example.com):**
-   - Record type: A
-   - Name field: COMPLETELY EMPTY (no text, no "@" symbol)
-   - Value: All four IPs in one record, each on its own line
-   - Routing policy: Simple
+4. **Wait for DNS propagation**:
+   - DNS changes can take 15 minutes to 48 hours to fully propagate
+   - Use [dnschecker.org](https://dnschecker.org/) to check propagation status globally
 
-3. **For the www subdomain:**
-   - Record type: CNAME
-   - Name field: www
-   - Value: your-netlify-site.netlify.app (no https://)
-   - Routing policy: Simple
+5. **Clear your DNS cache**:
+   - Windows: Run `ipconfig /flushdns` in Command Prompt as administrator
+   - macOS: Run `sudo killall -HUP mDNSResponder` in Terminal
+   - Try accessing the site from a different device or network
 
-4. **DO NOT delete or modify your existing NS records!** They are critical for your domain to work.
+6. **Verify in Vercel/Netlify dashboard**:
+   - Check that your custom domain is properly connected
+   - Look for any error messages related to domain configuration
+
+7. **Check domain registration status**:
+   - Ensure your domain registration is active and not expired
+   - Verify WHOIS information is correct
+
+If you continue to see the NXDOMAIN error after following these steps and waiting for propagation, contact AWS Route 53 support as there may be an issue with your hosted zone configuration.
 
 ### Step 3: Verify DNS Configuration
 
@@ -124,7 +121,7 @@ After setting up the A and CNAME records:
 
 1. **Wait 15-30 minutes for DNS propagation**
 2. Use a DNS lookup tool like [dnschecker.org](https://dnschecker.org/) to verify your new records
-3. Navigate to your Netlify/Vercel dashboard → Domain management → Check domain status
+3. Navigate to your Vercel/Netlify dashboard → Domain management → Check domain status
 
 ### Step 4: Configure Custom Domain in Vercel/Netlify
 
