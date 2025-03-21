@@ -27,20 +27,21 @@ Before configuring your domain, you need to deploy the actual website:
 3. Follow the instructions to deploy to a Lovable subdomain
 4. Make note of your Lovable subdomain URL (e.g., apex-predator.lovable.app)
 
-**Option B: Deploy with Netlify**
-1. Connect your GitHub repository to Netlify
-2. Use these build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-3. Deploy the site and get your Netlify URL (e.g., apexpredatorinsurance.netlify.app)
-
-**Option C: Deploy with Vercel**
+**Option B: Deploy with Vercel (Recommended)**
 1. Connect your GitHub repository to Vercel
 2. Use these build settings:
    - Framework preset: Vite
    - Build command: `npm run build`
    - Output directory: `dist`
 3. Deploy the site and get your Vercel URL
+4. Vercel will automatically provision SSL certificates for HTTPS
+
+**Option C: Deploy with Netlify**
+1. Connect your GitHub repository to Netlify
+2. Use these build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. Deploy the site and get your Netlify URL (e.g., apexpredatorinsurance.netlify.app)
 
 ### Step 2: Configure AWS Route 53 DNS
 
@@ -51,7 +52,26 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 3. **Select "Hosted Zones"** and select your domain
 4. **You need to ADD two types of records that are currently missing:**
 
-#### For WWW Subdomain (www.example.com):
+#### For Vercel Deployment (Recommended):
+
+**Create a new record set for the apex domain:**
+- Go to Route 53 and select your hosted zone
+- Click "Create Record"
+- Keep "Record name" EMPTY for apex domain
+- Select "Type" as "A"
+- Toggle "Alias" to ON
+- Under "Route traffic to", select "Alias to Vercel nameservers"
+- Click "Create records"
+
+**Create another record for www subdomain:**
+- Click "Create Record" again
+- Enter "www" for "Record name"
+- Select "Type" as "CNAME"
+- Enter your Vercel project URL as the value (e.g., project-name.vercel.app) - without https://
+- Set TTL to 300 seconds
+- Click "Create records"
+
+#### For Netlify Deployment (Alternative):
 
 **Create a new CNAME record:**
    - **Type:** CNAME
@@ -59,8 +79,6 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
    - **Value:** Your Netlify URL (e.g., apexpredatorinsurance.netlify.app) - without https://
    - **TTL:** 300 seconds (5 minutes)
    - **Click "Create"**
-
-#### For Apex/Root Domain (example.com without www):
 
 **Create ONE A record with MULTIPLE IP values:**
    - **Record type:** A
@@ -107,16 +125,16 @@ After setting up the A and CNAME records:
 
 1. **Wait 15-30 minutes for DNS propagation**
 2. Use a DNS lookup tool like [dnschecker.org](https://dnschecker.org/) to verify your new records
-3. Navigate to your Netlify dashboard → Site settings → Domain management → Check domain status
+3. Navigate to your Netlify/Vercel dashboard → Domain management → Check domain status
 
-### Step 4: Configure Custom Domain in Netlify
+### Step 4: Configure Custom Domain in Vercel/Netlify
 
-After setting up DNS in Route 53:
+After setting up DNS:
 
-1. Go to your Netlify dashboard and select your site
-2. Navigate to "Site settings" → "Domain management" → "Add custom domain"
+1. Go to your Vercel/Netlify dashboard and select your site
+2. Navigate to "Settings" → "Domains" → "Add domain"
 3. Enter your domain name (both www and apex versions)
-4. Netlify will verify the DNS configuration and provision SSL certificates
+4. The platform will verify the DNS configuration and provision SSL certificates
 
 ### Step 5: Wait for DNS Propagation
 
@@ -125,8 +143,8 @@ DNS changes can take anywhere from a few minutes to 48 hours to fully propagate,
 ### Step 6: SSL Configuration
 
 Ensure SSL is properly configured:
-- Most platforms (Netlify, Vercel) will automatically provision SSL certificates
-- For other platforms, you may need to set up SSL manually
+- Vercel and Netlify automatically provision SSL certificates
+- Verify that HTTPS is enabled in your domain settings
 
 ### Step 7: Stripe Configuration (Post-Launch)
 
@@ -160,4 +178,3 @@ If you continue to experience DNS issues:
 - Verify your domain registration is active in AWS
 - Test with external DNS lookup tools like [dnschecker.org](https://dnschecker.org/)
 - Check that your hosting platform has properly registered your custom domain
-
