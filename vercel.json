@@ -4,17 +4,19 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "routes": [
+    { 
+      "handle": "filesystem"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html",
       "headers": {
-        "X-Frame-Options": "DENY",
+        "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "no-referrer-when-downgrade",
         "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://api.vercel.app;"
-      },
-      "continue": true
+      }
     }
   ],
   "trailingSlash": false,
