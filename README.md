@@ -113,6 +113,39 @@ Follow these specific steps to fix this error:
    - Ensure your domain registration is active and not expired
    - Verify WHOIS information is correct
 
+### FIXING BLANK PAGE ISSUES
+
+If your site is loading (URL resolves correctly) but shows a blank/empty page:
+
+1. **Check Vercel deployment logs**:
+   - Go to your Vercel dashboard
+   - Select your project
+   - Check the "Deployments" tab for any build errors
+   - Look at "Runtime Logs" for any JavaScript errors
+
+2. **Check browser console for errors**:
+   - Open your site in Chrome
+   - Right-click > Inspect > Console tab
+   - Look for any red error messages
+   - Pay attention to Content Security Policy (CSP) violations
+
+3. **Content Security Policy fixes**:
+   - If you see CSP errors, update the CSP in vercel.json to be more permissive
+   - Make sure all external resources your app uses are allowed in the CSP
+
+4. **Clear browser cache**:
+   - Open Chrome settings > Privacy and security > Clear browsing data
+   - Select "Cached images and files"
+   - Click "Clear data"
+
+5. **Try different browsers**:
+   - Test in Chrome, Firefox, Safari, etc.
+   - Test in incognito/private browsing mode
+
+6. **Try direct access to specific routes**:
+   - Sometimes the issue is only with the root route
+   - Try accessing other routes directly (e.g., www.apexpredatorinsurance.com/plans)
+
 If you continue to see the NXDOMAIN error after following these steps and waiting for propagation, contact AWS Route 53 support as there may be an issue with your hosted zone configuration.
 
 ### Step 3: Verify DNS Configuration
