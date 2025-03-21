@@ -1,12 +1,28 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import InsurancePlans from '@/components/InsurancePlans';
 import { ShoppingCart } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
+
+interface RecentlyViewedPlan {
+  id: string;
+  name: string;
+  icon: string;
+}
 
 const Plans = () => {
+  const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewedPlan[]>([]);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Get recently viewed plans from localStorage
+    const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
+    if (storedRecentlyViewed) {
+      setRecentlyViewed(JSON.parse(storedRecentlyViewed));
+    }
   }, []);
 
   return (
@@ -25,6 +41,33 @@ const Plans = () => {
               <span>All plans start at just $9.99</span>
             </div>
           </div>
+          
+          {/* Recently Viewed Section */}
+          {recentlyViewed.length > 0 && (
+            <div className="mt-8 animate-fade-up animate-delay-300">
+              <div className="max-w-6xl mx-auto">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge variant="outline" className="bg-apex-black/5 text-apex-black">
+                    Recently Viewed
+                  </Badge>
+                </div>
+                <ScrollArea className="max-w-full pb-2">
+                  <div className="flex space-x-4">
+                    {recentlyViewed.map((plan) => (
+                      <a 
+                        key={plan.id} 
+                        href={`#${plan.id}`}
+                        className="flex-shrink-0 w-48 h-16 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center p-3 hover:shadow-md transition-shadow duration-200"
+                      >
+                        <span className="text-2xl mr-3">{plan.icon}</span>
+                        <span className="text-sm font-medium truncate">{plan.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       

@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Shield, ShoppingCart, Check, Globe, MapPin, Search } from 'lucide-react';
+import { Shield, ShoppingCart, Check, Globe, MapPin, Search, Trophy, Star, Filter } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { 
   Pagination, 
   PaginationContent, 
@@ -890,6 +891,9 @@ interface InsurancePlan {
   funFact: string;
 }
 
+// Define popular plans
+const popularPlanIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
+
 // Component implementation
 const InsurancePlans = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -898,13 +902,25 @@ const InsurancePlans = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState('all');
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  const [priceFilter, setPriceFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('default');
+  const [showFilters, setShowFilters] = useState(false);
+  const [recentlyViewed, setRecentlyViewed] = useState<{id: string, name: string, icon: string}[]>([]);
   
   const navigate = useNavigate();
   const { toast } = useToast();
   
   const plansPerPage = 9; // Show 9 plans per page for better visibility
+
+  // Load recently viewed from localStorage on component mount
+  useEffect(() => {
+    const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
+    if (storedRecentlyViewed) {
+      setRecentlyViewed(JSON.parse(storedRecentlyViewed));
+    }
+  }, []);
   
-  // Filter plans based on search term, selected location and active tab
+  // Filter plans based on search term, selected location, active tab, and price filter
   useEffect(() => {
     let filtered = fullInsurancePlans;
     
@@ -912,7 +928,8 @@ const InsurancePlans = () => {
     if (searchTerm) {
       filtered = filtered.filter(plan => 
         plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        plan.description.toLowerCase().includes(searchTerm.toLowerCase())
+        plan.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        plan.location.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -923,20 +940,36 @@ const InsurancePlans = () => {
       );
     }
     
+    // Apply price filter
+    if (priceFilter === 'under10') {
+      filtered = filtered.filter(plan => plan.price < 10);
+    } else if (priceFilter === 'over10') {
+      filtered = filtered.filter(plan => plan.price >= 10);
+    }
+    
     // Apply tab filter
     if (activeTab === 'bundle') {
       filtered = filtered.filter(plan => plan.id === 'apex-pack');
     } else if (activeTab === 'popular') {
-      // Filter for some popular plans - for example, shark, lion, snake, bear
-      const popularIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
-      filtered = filtered.filter(plan => popularIds.includes(plan.id));
+      filtered = filtered.filter(plan => popularPlanIds.includes(plan.id));
+    }
+    
+    // Apply sorting
+    if (sortBy === 'name-asc') {
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'name-desc') {
+      filtered = [...filtered].sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === 'price-asc') {
+      filtered = [...filtered].sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price-desc') {
+      filtered = [...filtered].sort((a, b) => b.price - a.price);
     }
     
     setFilteredPlans(filtered);
     
     // Reset to first page when filters change
     setCurrentPage(1);
-  }, [searchTerm, selectedLocation, activeTab]);
+  }, [searchTerm, selectedLocation, activeTab, priceFilter, sortBy]);
 
   // Get unique locations from all plans
   const getUniqueLocations = (): string[] => {
@@ -955,7 +988,36 @@ const InsurancePlans = () => {
     return Array.from(locations).sort();
   };
 
+  // Function to handle adding a plan to recently viewed
+  const addToRecentlyViewed = (plan: InsurancePlan) => {
+    const simplifiedPlan = {
+      id: plan.id,
+      name: plan.name,
+      icon: plan.icon
+    };
+    
+    let updatedRecent = [...recentlyViewed];
+    
+    // Remove the plan if it's already in the list
+    updatedRecent = updatedRecent.filter(item => item.id !== plan.id);
+    
+    // Add the plan to the beginning of the array
+    updatedRecent.unshift(simplifiedPlan);
+    
+    // Limit to 5 recent items
+    if (updatedRecent.length > 5) {
+      updatedRecent = updatedRecent.slice(0, 5);
+    }
+    
+    // Update state and localStorage
+    setRecentlyViewed(updatedRecent);
+    localStorage.setItem('recentlyViewed', JSON.stringify(updatedRecent));
+  };
+
   const handleAddToCart = (plan: InsurancePlan) => {
+    // Add to recently viewed
+    addToRecentlyViewed(plan);
+    
     // Store selected plan in localStorage for checkout
     localStorage.setItem('selectedPlan', JSON.stringify(plan));
     
@@ -969,6 +1031,11 @@ const InsurancePlans = () => {
     setTimeout(() => {
       navigate('/checkout');
     }, 1000);
+  };
+
+  // Function to handle clicking on a plan (add to recently viewed)
+  const handlePlanClick = (plan: InsurancePlan) => {
+    addToRecentlyViewed(plan);
   };
   
   // Calculate pagination
@@ -1000,7 +1067,7 @@ const InsurancePlans = () => {
             <TabsTrigger value="bundle">Bundle Deal</TabsTrigger>
           </TabsList>
           
-          <div className="flex flex-col lg:flex-row items-center gap-4 mb-8">
+          <div className="flex flex-col lg:flex-row items-center gap-4 mb-4">
             <div className="relative w-full lg:w-1/2">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
@@ -1027,6 +1094,50 @@ const InsurancePlans = () => {
                 ))}
               </select>
             </div>
+          </div>
+
+          {/* Advanced Filters Toggle */}
+          <div className="mb-6">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2 text-sm"
+            >
+              <Filter size={16} />
+              {showFilters ? "Hide Advanced Filters" : "Show Advanced Filters"}
+            </Button>
+            
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 p-4 border rounded-md bg-gray-50">
+                <div>
+                  <label className="text-sm font-medium mb-1 block">Price Range</label>
+                  <select
+                    className="border border-input bg-background rounded-md h-10 px-3 py-2 w-full text-sm"
+                    value={priceFilter}
+                    onChange={(e) => setPriceFilter(e.target.value)}
+                  >
+                    <option value="all">All Prices</option>
+                    <option value="under10">Under $10</option>
+                    <option value="over10">$10 and above</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="text-sm font-medium mb-1 block">Sort By</label>
+                  <select
+                    className="border border-input bg-background rounded-md h-10 px-3 py-2 w-full text-sm"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option value="default">Default</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
+                  </select>
+                </div>
+              </div>
+            )}
           </div>
           
           {/* How It Works collapsible section */}
@@ -1076,6 +1187,19 @@ const InsurancePlans = () => {
             </CollapsibleContent>
           </Collapsible>
           
+          {/* Results summary */}
+          <div className="flex justify-between items-center mb-6">
+            <p className="text-sm text-apex-darkgray/70">
+              Showing {filteredPlans.length} {filteredPlans.length === 1 ? 'plan' : 'plans'}
+            </p>
+            
+            {activeTab === 'popular' && (
+              <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">
+                <Trophy size={14} className="mr-1" /> Popular Plans
+              </Badge>
+            )}
+          </div>
+          
           <TabsContent value="all">
             {currentPlans.length > 0 ? (
               <>
@@ -1083,15 +1207,27 @@ const InsurancePlans = () => {
                   {currentPlans.map((plan) => (
                     <div
                       key={plan.id}
+                      id={plan.id}
                       className={cn(
                         "border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300",
                         plan.id === 'apex-pack' ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-3" : "border-gray-200"
                       )}
+                      onClick={() => handlePlanClick(plan)}
                     >
                       <div className={cn(
-                        "p-6",
+                        "p-6 relative",
                         plan.id === 'apex-pack' ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
                       )}>
+                        {/* Popular badge */}
+                        {popularPlanIds.includes(plan.id) && (
+                          <div className="absolute top-0 right-0">
+                            <div className="bg-amber-500 text-white px-3 py-1 rounded-bl-lg rounded-tr-lg flex items-center text-xs font-semibold">
+                              <Star size={14} className="mr-1" fill="white" />
+                              Most Popular
+                            </div>
+                          </div>
+                        )}
+                        
                         <div className="flex justify-between items-center mb-4">
                           <div className="flex items-center gap-3">
                             <span className="text-3xl">{plan.icon}</span>
