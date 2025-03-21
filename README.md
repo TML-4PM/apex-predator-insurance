@@ -50,63 +50,55 @@ Since your domain is registered with AWS, follow these steps to configure DNS:
 1. **Log in to AWS Management Console**
 2. **Navigate to Route 53**
 3. **Select "Hosted Zones"** and select your domain
-4. **You need to create proper DNS records:**
+4. **Create proper DNS records:**
 
-#### CORRECT DNS CONFIGURATION:
+### CRITICAL DNS CONFIGURATION ISSUES:
 
-**For the apex domain (apexpredatorinsurance.com):**
-- Record name: *leave empty* (NOT "@" or "@.apexpredatorinsurance.com")
-- Type: A
-- Value: Your hosting provider's IP address OR use Alias if pointing to AWS services
-  - For Vercel: Use their load balancer IPs or Alias record
-  - For Netlify: Use their load balancer IPs (check Netlify docs for current IPs)
-  - Important: Do NOT include the domain name in the name field for the apex record
+Looking at your current configuration, there are several errors that need to be fixed:
 
-**For www subdomain:**
-- Record name: www
-- Type: CNAME
-- Value: Your hosting provider's URL (e.g., your-site.vercel.app or your-site.netlify.app)
-  - DO NOT include "https://" in the value
-
-**Example of correctly configured records:**
-1. A Record for apex domain:
-   - Name: *empty* (just the root domain)
+1. **For the apex/root domain (apexpredatorinsurance.com):**
+   - ❌ PROBLEM: You currently have "subdomain" or "apexpredatorinsurance.com" text in the Record name field
+   - ✅ FIX: The Record name field should be completely EMPTY (not "subdomain", not "@")
    - Type: A
-   - Value: [hosting provider's IP]
-
-2. CNAME for www subdomain:
-   - Name: www
-   - Type: CNAME
-   - Value: your-site.vercel.app
-
-### IMPORTANT: FIXING YOUR CURRENT DNS CONFIGURATION
-
-Based on the screenshot, here are the issues and fixes:
-1. Your A record appears to be set as "@.apexpredatorinsurance.com" - this is incorrect
-   - Change it to just leave the name field empty (this represents the apex domain)
+   - Value: For Vercel, you need their recommended IPs: 76.76.21.21 (you have this correct)
    
-2. Your CNAME record for www should point to your hosting provider's domain
-   - Ensure it's set as "www" (without quotes) in the name field
-   - Value should be your Vercel/Netlify app address (e.g., your-project.vercel.app)
+2. **For the www subdomain:**
+   - ❌ PROBLEM: Your CNAME value appears to be "cname.vercel-dns.com." (with a trailing period) 
+   - ✅ FIX: The CNAME value should typically be your Vercel project URL like "your-project.vercel.app" (no trailing period)
+   - You should confirm the exact value with Vercel if deploying there
 
-3. NS records should match what AWS provides for your hosted zone
-   - These are typically set automatically by AWS
+3. **Additional Vercel DNS settings:**
+   - If using Vercel, you should use their recommended DNS settings:
+   - For the apex domain: Use their global anycast IP: 76.76.21.21
+   - Alternatively, check that you've added your custom domain in the Vercel project settings
 
-### VERIFYING DNS PROPAGATION
+### CORRECT DNS EXAMPLES:
 
-After making these changes to your Route 53 DNS configuration:
-1. Wait 15-30 minutes for propagation
-2. Use [dnschecker.org](https://dnschecker.org/) to verify your A and CNAME records
-3. Try accessing your site again
+**For the apex domain record:**
+- Name: (leave completely empty - not "subdomain", not "@")
+- Type: A
+- Value: 76.76.21.21 (correct for Vercel)
+- TTL: 300 seconds (fine)
 
-### HTTPS CONFIGURATION
+**For the www subdomain record:**
+- Name: www
+- Type: CNAME
+- Value: cname.vercel-dns.com (remove the trailing period if present)
+  OR your-project.vercel.app (get this from your Vercel dashboard)
+- TTL: 300 seconds (fine)
 
-If DNS is correct but you still see a blank page:
-1. Ensure your hosting provider has valid SSL certificates
-2. Verify your site is being served over HTTPS 
-3. Check browser console for mixed content warnings
+### TESTING AFTER DNS CHANGES:
 
-If you continue to experience issues after fixing the DNS configuration, please check the server logs in your hosting provider's dashboard for more specific error information.
+It may take up to 48 hours for DNS changes to fully propagate, but typically only takes 15-60 minutes.
+
+To check the current DNS settings for your domain:
+- Use `dig apexpredatorinsurance.com` in terminal
+- Or use an online DNS checker like [dnschecker.org](https://dnschecker.org/)
+
+**Important**: Make sure your browser isn't caching the previous errors. Try:
+1. Opening in an incognito/private window
+2. Clearing your browser cache
+3. Testing from a different device/network
 
 ## Development
 
