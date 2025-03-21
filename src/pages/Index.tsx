@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -19,7 +20,8 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Compass, Route, Camera, Shield, Mail } from 'lucide-react';
+import { MapPin, Compass, Route, Camera, Shield, Mail, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const adventureTips = [
   {
@@ -49,6 +51,43 @@ const adventureTips = [
   }
 ];
 
+// Add popular predator plans
+const popularPlans = [
+  {
+    id: "shark",
+    name: "Great White Shark",
+    description: "Our most popular certificate! Face your fear of the ocean's apex predator.",
+    price: 9.99,
+    image: "https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🦈"
+  },
+  {
+    id: "crocodile",
+    name: "Saltwater Crocodile",
+    description: "For those brave souls venturing into murky waters. Don't be a snack!",
+    price: 9.99,
+    image: "https://images.unsplash.com/photo-1610052178570-97bc8e3a0a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🐊"
+  },
+  {
+    id: "bundle",
+    name: "Predator Pack Bundle",
+    description: "Our best value! Get covered for 10 apex predators for the price of 5.",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🛡️",
+    isBundle: true
+  },
+  {
+    id: "bear",
+    name: "Grizzly Bear",
+    description: "For hikers and campers who want to be prepared for the worst.",
+    price: 9.99,
+    image: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🐻"
+  }
+];
+
 const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,6 +96,74 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
+      
+      {/* Popular Plans Carousel */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
+              Most Popular Certificates
+            </h2>
+            <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100">
+              Join thousands of adventure-seekers with our most thrilling predator certificates.
+            </p>
+          </div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {popularPlans.map((plan, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <div className="p-1">
+                    <Card className="border-2 border-apex-lightgray hover:border-apex-red/30 transition-all duration-300">
+                      <CardContent className="p-0">
+                        <div className="relative">
+                          <img 
+                            src={plan.image} 
+                            alt={plan.name} 
+                            className="w-full h-48 object-cover rounded-t-lg"
+                          />
+                          {plan.isBundle && (
+                            <div className="absolute top-3 right-3 bg-apex-red text-white text-xs font-bold px-3 py-1 rounded-full">
+                              BEST VALUE
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-6">
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-xl font-bold">{plan.name}</h3>
+                            <span className="text-2xl">{plan.icon}</span>
+                          </div>
+                          <p className="text-apex-darkgray/70 mb-4">{plan.description}</p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-apex-red font-bold">${plan.price.toFixed(2)}</span>
+                            <Link 
+                              to={`/checkout?plan=${plan.id}&isBundle=${plan.isBundle ? 'true' : 'false'}`}
+                              className="inline-flex items-center gap-2 bg-apex-red/10 hover:bg-apex-red/20 text-apex-red px-3 py-2 rounded-lg transition-colors"
+                            >
+                              <ShoppingCart size={16} />
+                              <span className="font-medium">Get Now</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8">
+              <CarouselPrevious className="relative static translate-y-0 mr-2" />
+              <CarouselNext className="relative static translate-y-0 ml-2" />
+            </div>
+          </Carousel>
+        </div>
+      </section>
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

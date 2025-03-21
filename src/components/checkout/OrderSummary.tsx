@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Shield } from 'lucide-react';
 
 interface OrderSummaryProps {
@@ -14,6 +14,22 @@ interface OrderSummaryProps {
 }
 
 export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = false }: OrderSummaryProps) => {
+  const [displayName, setDisplayName] = useState(userName);
+  
+  // Listen for form updates to update the certificate preview in real-time
+  useEffect(() => {
+    const handleFormUpdate = (e: CustomEvent) => {
+      if (e.detail && e.detail.fullName) {
+        setDisplayName(e.detail.fullName);
+      }
+    };
+    
+    document.addEventListener('formUpdate', handleFormUpdate as EventListener);
+    return () => {
+      document.removeEventListener('formUpdate', handleFormUpdate as EventListener);
+    };
+  }, []);
+
   return (
     <div className="sticky top-24">
       <div className="bg-[#222222] rounded-xl p-6 border border-white/10">
@@ -57,7 +73,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
               {/* Certificate Preview */}
               <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
                 <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-                <p className="mb-2">Issued to: {userName || "Your Name Here"}</p>
+                <p className="mb-2">Issued to: {displayName}</p>
                 <p className="text-sm text-apex-red">$50,000 Accidental Death Benefit</p>
               </div>
             </div>

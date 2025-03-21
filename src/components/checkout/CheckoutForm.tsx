@@ -31,20 +31,14 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
     },
   });
 
-  // This will update the parent component with the form values as they change
+  // Update the certificate preview in real-time as the user types
   useEffect(() => {
     const subscription = form.watch((data) => {
-      // Only update if both fields have values
-      if (data.fullName && data.email) {
-        // We don't call onSuccess here as that would navigate away
-        // Just providing the current form values for real-time preview
-        const currentValues = form.getValues();
-        // This is just to update the certificate preview
-        setTimeout(() => {
-          document.dispatchEvent(new CustomEvent('formUpdate', { 
-            detail: { fullName: currentValues.fullName }
-          }));
-        }, 0);
+      if (data.fullName) {
+        // Dispatch a custom event to update the certificate preview
+        document.dispatchEvent(new CustomEvent('formUpdate', { 
+          detail: { fullName: data.fullName }
+        }));
       }
     });
     return () => subscription.unsubscribe();
@@ -53,7 +47,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
   const handleSubmitForm = (data: CheckoutFormValues) => {
     // Form data is valid, now handle payment in the PaymentForm component
     console.log("Form data is valid:", data);
-    // We don't call onSuccess here, it will be called from PaymentForm after payment succeeds
+    // Don't call onSuccess here, it will be called from PaymentForm after payment succeeds
   };
 
   return (
