@@ -3,8 +3,12 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// Force HTTPS
-if (window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
+// Force HTTPS - only on production environments, not localhost or Vercel preview URLs
+if (
+  window.location.protocol === 'http:' && 
+  !window.location.hostname.includes('localhost') && 
+  !window.location.hostname.includes('vercel.app')
+) {
   window.location.href = window.location.href.replace('http:', 'https:');
 }
 
