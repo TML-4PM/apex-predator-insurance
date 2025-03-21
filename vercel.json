@@ -4,11 +4,6 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "routes": [
-    {
-      "src": "^/(?:(.+)/)?index(?:\\.html)?/?$",
-      "headers": { "Location": "/$1" },
-      "status": 308
-    },
     { 
       "handle": "filesystem"
     },

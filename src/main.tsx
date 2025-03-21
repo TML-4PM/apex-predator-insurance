@@ -3,12 +3,17 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// Force HTTPS - only on production environments, not localhost or Vercel preview URLs
-if (
-  window.location.protocol === 'http:' && 
-  !window.location.hostname.includes('localhost') && 
-  !window.location.hostname.includes('vercel.app')
-) {
+// Only apply HTTPS redirect in production and not on localhost or preview URLs
+const shouldRedirectToHttps = () => {
+  const hostname = window.location.hostname;
+  const isLocalhost = hostname.includes('localhost') || hostname === '127.0.0.1';
+  const isPreviewUrl = hostname.includes('vercel.app');
+  
+  return window.location.protocol === 'http:' && !isLocalhost && !isPreviewUrl;
+};
+
+// Apply HTTPS redirect if needed
+if (shouldRedirectToHttps()) {
   window.location.href = window.location.href.replace('http:', 'https:');
 }
 
