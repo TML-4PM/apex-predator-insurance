@@ -19,6 +19,9 @@ const ZoneMarker: React.FC<ZoneMarkerProps> = ({
   onClick, 
   onHover 
 }) => {
+  // Use the zone's color directly instead of using a template literal which was causing the React.Fragment warning
+  const markerColor = isActive ? zone.color : isHovered ? 'white' : '#df4949';
+  
   return (
     <motion.button
       initial={{ scale: 0 }}
@@ -40,9 +43,8 @@ const ZoneMarker: React.FC<ZoneMarkerProps> = ({
         backdrop-blur-sm transition-all duration-300 shadow-lg border border-white/20`}
       >
         <AlertTriangle 
-          className={`h-7 w-7 
-            ${isActive ? `text-[${zone.color}]` : isHovered ? 'text-white' : 'text-apex-red'} 
-            transition-all duration-300`}
+          className="h-7 w-7 transition-all duration-300"
+          style={{ color: markerColor }}
         />
         
         {isHovered && !isActive && (
@@ -57,8 +59,11 @@ const ZoneMarker: React.FC<ZoneMarkerProps> = ({
       </div>
       
       <div 
-        className={`absolute -inset-1 rounded-full animate-pulse ${isActive ? `bg-[${zone.color}]/20` : 'bg-apex-red/20'} blur-sm transition-all duration-300`} 
-        style={{ animationDelay: `${zone.id * 0.2}s` }}
+        className="absolute -inset-1 rounded-full animate-pulse blur-sm transition-all duration-300"
+        style={{ 
+          animationDelay: `${zone.id * 0.2}s`,
+          backgroundColor: isActive ? `${zone.color}20` : 'rgba(223, 73, 73, 0.2)' 
+        }}
       ></div>
     </motion.button>
   );

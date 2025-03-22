@@ -55,7 +55,7 @@ const Plans = () => {
               <span className="hidden sm:inline">•</span>
               <span>25 predators: $59.99</span>
               <span className="hidden sm:inline">•</span>
-              <span>All predators: $99.99</span>
+              <span>All 60 predators: $99.99</span>
             </div>
           </div>
           

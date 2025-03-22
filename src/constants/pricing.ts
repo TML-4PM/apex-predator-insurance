@@ -83,8 +83,8 @@ export const PRICING_PLANS: PricingPlan[] = [
     ]
   },
   {
-    id: "bundle",
-    name: "Complete Bundle",
+    id: "bundle60",
+    name: "Complete Bundle (60 Predators)",
     description: "Our best value! Get covered for all 60 apex predators.",
     price: 99.99,
     image: "https://images.unsplash.com/photo-1501793123636-75796c6c03b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
