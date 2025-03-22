@@ -13,28 +13,38 @@ interface RecentlyViewedPlan {
   icon: string;
 }
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  icon: string;
+}
+
 const Plans = () => {
   const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewedPlan[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const bundlePlans = getBundlePlans();
   
   useEffect(() => {
     console.log("Plans page mounted");
     window.scrollTo(0, 0);
     
-    // Get recently viewed plans from localStorage
+    // Get recently viewed plans and cart items from localStorage
     try {
       const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
-      console.log("Attempting to retrieve recently viewed plans from localStorage");
+      const storedCartItems = localStorage.getItem('cartItems');
       
       if (storedRecentlyViewed) {
         const parsedData = JSON.parse(storedRecentlyViewed);
         setRecentlyViewed(parsedData);
-        console.log("Retrieved recently viewed plans:", parsedData);
-      } else {
-        console.log("No recently viewed plans found in localStorage");
+      }
+      
+      if (storedCartItems) {
+        const parsedCartItems = JSON.parse(storedCartItems);
+        setCartItems(parsedCartItems);
       }
     } catch (error) {
-      console.error("Error retrieving recently viewed plans:", error);
+      console.error("Error retrieving data from localStorage:", error);
     }
   }, []);
 
@@ -59,6 +69,14 @@ const Plans = () => {
               <span className="hidden sm:inline">•</span>
               <span>All 60 predators: ${bundlePlans[1]?.price.toFixed(2) || '99.99'}</span>
             </div>
+            
+            {cartItems.length > 0 && (
+              <div className="mt-4 animate-pulse">
+                <Badge className="bg-apex-red">
+                  <ShoppingCart size={14} className="mr-1" /> {cartItems.length} item{cartItems.length > 1 ? 's' : ''} in cart
+                </Badge>
+              </div>
+            )}
           </div>
           
           {/* Recently Viewed Section */}

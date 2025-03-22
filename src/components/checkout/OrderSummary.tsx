@@ -29,7 +29,7 @@ export const OrderSummary = ({
   
   // Determine plan type based on ID
   const isMidTier = plan.id === 'bundle25';
-  const isCompleteBundle = plan.id === 'bundle';
+  const isCompleteBundle = plan.id === 'bundle60';
   
   // Calculate total if multiple items exist in cart
   const hasMultipleItems = cartItems && cartItems.length > 0;
@@ -62,15 +62,20 @@ export const OrderSummary = ({
         {hasMultipleItems ? (
           // Display multiple items if cart has items
           <>
-            {cartItems.map(item => (
-              <div className="flex items-center justify-between mb-4" key={item.id}>
-                <div className="flex items-center">
-                  <span className="text-2xl mr-2">{item.icon}</span>
-                  <span className="font-medium text-white">{item.name}</span>
+            <div className="mb-4">
+              <p className="text-white/80 mb-2 text-sm">
+                {cartItems.length} item{cartItems.length > 1 ? 's' : ''} in your cart:
+              </p>
+              {cartItems.map(item => (
+                <div className="flex items-center justify-between mb-3" key={item.id}>
+                  <div className="flex items-center">
+                    <span className="text-2xl mr-2">{item.icon}</span>
+                    <span className="font-medium text-white text-sm">{item.name}</span>
+                  </div>
+                  <span className="font-medium text-white text-sm">${item.price.toFixed(2)}</span>
                 </div>
-                <span className="font-medium text-white">${item.price.toFixed(2)}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </>
         ) : (
           // Display single plan if no cart items
@@ -147,10 +152,28 @@ export const OrderSummary = ({
               {/* Certificate Preview */}
               <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
                 <h3 className="text-xl font-semibold mb-2">
-                  {hasMultipleItems ? "Multiple Predator Coverage" : plan.name}
+                  {hasMultipleItems 
+                    ? `Multiple Predator Coverage (${cartItems.length})`
+                    : plan.name
+                  }
                 </h3>
                 <p className="mb-2">Issued to: {displayName}</p>
                 <p className="text-sm text-apex-red">$50,000 Accidental Death Benefit</p>
+                {hasMultipleItems && cartItems.length > 0 && (
+                  <div className="mt-4 text-xs text-white/70">
+                    <p>Includes coverage for:</p>
+                    <div className="flex flex-wrap justify-center gap-2 mt-1">
+                      {cartItems.slice(0, 5).map(item => (
+                        <span key={item.id} className="inline-flex items-center">
+                          {item.icon} {item.name}
+                        </span>
+                      ))}
+                      {cartItems.length > 5 && (
+                        <span>+{cartItems.length - 5} more</span>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

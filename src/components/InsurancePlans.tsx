@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Shield, ShoppingCart, Check, Globe, MapPin, Search, Trophy, Star, Filter } from 'lucide-react';
+import { Shield, ShoppingCart, Check, Globe, MapPin, Search, Trophy, Star, Filter, Trash2, Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -18,6 +18,16 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { PRICING_PLANS, PricingPlan } from '@/constants/pricing';
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetDescription, 
+  SheetHeader, 
+  SheetTitle, 
+  SheetTrigger,
+  SheetFooter,
+  SheetClose
+} from "@/components/ui/sheet";
 
 const fullInsurancePlans = PRICING_PLANS.map(plan => ({
   id: plan.id,
@@ -43,6 +53,13 @@ interface InsurancePlan {
   funFact: string;
 }
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  icon: string;
+}
+
 const popularPlanIds = ['shark', 'lion', 'bear', 'crocodile'];
 
 const bundlePlanIds = ['bundle25', 'bundle60'];
@@ -58,18 +75,35 @@ const InsurancePlans = () => {
   const [sortBy, setSortBy] = useState('default');
   const [showFilters, setShowFilters] = useState(false);
   const [recentlyViewed, setRecentlyViewed] = useState<{id: string, name: string, icon: string}[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const plansPerPage = 9;
 
+  const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  
   useEffect(() => {
+    const storedCart = localStorage.getItem('cartItems');
+    if (storedCart) {
+      try {
+        setCartItems(JSON.parse(storedCart));
+      } catch (e) {
+        console.error("Error parsing cart from localStorage:", e);
+      }
+    }
+    
     const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
     if (storedRecentlyViewed) {
       setRecentlyViewed(JSON.parse(storedRecentlyViewed));
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   useEffect(() => {
     let filtered = fullInsurancePlans;
@@ -150,17 +184,86 @@ const InsurancePlans = () => {
     localStorage.setItem('recentlyViewed', JSON.stringify(updatedRecent));
   };
 
-  const handleAddToCart = (plan: InsurancePlan) => {
+  const addToCart = (plan: InsurancePlan) => {
     addToRecentlyViewed(plan);
-    localStorage.setItem('selectedPlan', JSON.stringify(plan));
+    
+    if (bundlePlanIds.includes(plan.id) && cartItems.some(item => !bundlePlanIds.includes(item.id))) {
+      toast({
+        title: "Cannot add bundle with individual plans",
+        description: "Please remove individual plans before adding a bundle.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!bundlePlanIds.includes(plan.id) && cartItems.some(item => bundlePlanIds.includes(item.id))) {
+      toast({
+        title: "Cannot add individual plans with bundle",
+        description: "Please remove the bundle before adding individual plans.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (cartItems.some(item => item.id === plan.id)) {
+      toast({
+        title: "Already in cart",
+        description: `${plan.name} is already in your cart.`,
+        variant: "default",
+      });
+      return;
+    }
+    
+    const newCartItem = {
+      id: plan.id,
+      name: plan.name,
+      price: plan.price,
+      icon: plan.icon,
+    };
+    
+    setCartItems([...cartItems, newCartItem]);
+    
     toast({
-      title: "Plan Added to Cart",
+      title: "Added to Cart",
       description: `${plan.name} has been added to your cart.`,
       variant: "default",
     });
-    setTimeout(() => {
-      navigate('/checkout');
-    }, 1000);
+    
+    setIsCartOpen(true);
+  };
+
+  const removeFromCart = (itemId: string) => {
+    setCartItems(cartItems.filter(item => item.id !== itemId));
+    
+    toast({
+      title: "Removed from Cart",
+      description: "Item has been removed from your cart.",
+      variant: "default",
+    });
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    toast({
+      title: "Cart Cleared",
+      description: "All items have been removed from your cart.",
+      variant: "default",
+    });
+  };
+
+  const proceedToCheckout = () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Cart is empty",
+        description: "Please add items to your cart before checking out.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    navigate('/checkout', { state: { cartItems } });
   };
 
   const handlePlanClick = (plan: InsurancePlan) => {
@@ -185,6 +288,99 @@ const InsurancePlans = () => {
   return (
     <section id="plans-section" className="py-10 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-end mb-4">
+          <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+            <SheetTrigger asChild>
+              <Button 
+                variant="outline" 
+                className="relative"
+                onClick={() => setIsCartOpen(true)}
+              >
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                <span>Cart</span>
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-apex-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Your Cart</SheetTitle>
+                <SheetDescription>
+                  {cartItems.length === 0 
+                    ? "Your cart is empty" 
+                    : `You have ${cartItems.length} item${cartItems.length > 1 ? 's' : ''} in your cart`}
+                </SheetDescription>
+              </SheetHeader>
+              
+              {cartItems.length > 0 ? (
+                <>
+                  <div className="py-4">
+                    {cartItems.map((item) => (
+                      <div key={item.id} className="flex justify-between items-center py-2 border-b">
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">{item.icon}</span>
+                          <div>
+                            <p className="font-medium">{item.name}</p>
+                            <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+                          </div>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="py-4 border-t">
+                    <div className="flex justify-between items-center py-2">
+                      <span className="font-medium">Total:</span>
+                      <span className="font-bold text-apex-red">${cartTotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  
+                  <SheetFooter className="flex flex-col sm:flex-row gap-2 pt-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={clearCart}
+                      className="w-full sm:w-auto"
+                    >
+                      Clear Cart
+                    </Button>
+                    <SheetClose asChild>
+                      <Button 
+                        onClick={proceedToCheckout}
+                        className="w-full sm:w-auto bg-apex-red hover:bg-apex-red/90"
+                      >
+                        Checkout
+                      </Button>
+                    </SheetClose>
+                  </SheetFooter>
+                </>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <ShoppingCart className="h-12 w-12 text-gray-300 mb-4" />
+                  <p className="text-gray-500 mb-4">Your cart is empty</p>
+                  <SheetClose asChild>
+                    <Button 
+                      variant="outline"
+                      onClick={() => setIsCartOpen(false)}
+                    >
+                      Continue Shopping
+                    </Button>
+                  </SheetClose>
+                </div>
+              )}
+            </SheetContent>
+          </Sheet>
+        </div>
+        
         <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-3 lg:w-1/2 mx-auto mb-6">
             <TabsTrigger value="all">All Plans</TabsTrigger>
@@ -321,7 +517,7 @@ const InsurancePlans = () => {
               </Badge>
             )}
           </div>
-          
+
           <TabsContent value="all">
             {currentPlans.length > 0 ? (
               <>
@@ -402,14 +598,17 @@ const InsurancePlans = () => {
                           </div>
                           
                           <Button 
-                            onClick={() => handleAddToCart(plan)} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(plan);
+                            }} 
                             className={cn(
                               "flex items-center gap-2",
                               bundlePlanIds.includes(plan.id) ? "bg-apex-red hover:bg-apex-red/90" : ""
                             )}
                           >
-                            <ShoppingCart size={16} />
-                            <span>Get Protected</span>
+                            <Plus size={16} className="mr-1" />
+                            <span>Add to Cart</span>
                           </Button>
                         </div>
                       </div>
@@ -509,11 +708,14 @@ const InsurancePlans = () => {
                           </div>
                           
                           <Button 
-                            onClick={() => handleAddToCart(plan)} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(plan);
+                            }}
                             className="flex items-center gap-2"
                           >
-                            <ShoppingCart size={16} />
-                            <span>Get Protected</span>
+                            <Plus size={16} className="mr-1" />
+                            <span>Add to Cart</span>
                           </Button>
                         </div>
                       </div>
@@ -615,12 +817,15 @@ const InsurancePlans = () => {
                       </div>
                       
                       <Button 
-                        onClick={() => handleAddToCart(plan)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(plan);
+                        }}
                         size="lg"
                         className="bg-apex-red hover:bg-apex-red/90 flex items-center gap-2 px-6"
                       >
-                        <ShoppingCart size={18} />
-                        <span>Get This Bundle</span>
+                        <Plus size={18} className="mr-1" />
+                        <span>Add to Cart</span>
                       </Button>
                     </div>
                   </div>
