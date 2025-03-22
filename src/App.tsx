@@ -13,6 +13,8 @@ import Checkout from "./pages/Checkout";
 import CertificatePage from "./pages/CertificatePage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
 
 // Create a shared QueryClient instance
 const queryClient = new QueryClient({
@@ -39,6 +41,8 @@ const App = () => (
           <Route path="/certificate" element={<CertificatePage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/blog" element={<Navigate to="/" state={{ scrollToSection: 'blog' }} />} />
           <Route path="/contact" element={<Navigate to="/" state={{ scrollToSection: 'contact' }} />} />
           <Route path="*" element={<NotFound />} />

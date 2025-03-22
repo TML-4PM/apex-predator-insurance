@@ -15,6 +15,7 @@ const blogPosts = [
     readTime: '5 min read',
     category: 'Shark Safety',
     image: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?q=80&w=1000',
+    slug: 'how-to-survive-shark-encounter'
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ const blogPosts = [
     readTime: '7 min read',
     category: 'Bear Safety',
     image: 'https://images.unsplash.com/photo-1525869916826-972885c91c1e?q=80&w=1000',
+    slug: 'hiking-bear-country-ultimate-guide'
   },
   {
     id: 3,
@@ -35,12 +37,13 @@ const blogPosts = [
     readTime: '6 min read',
     category: 'Big Cat Facts',
     image: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=1000',
+    slug: 'why-you-shouldnt-pet-lions'
   }
 ];
 
 const Blog = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white" id="blog">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
@@ -53,7 +56,7 @@ const Blog = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {blogPosts.map((post) => (
-            <Card key={post.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-none">
+            <Card key={post.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-none flex flex-col">
               <div className="aspect-[4/3] overflow-hidden">
                 <img 
                   src={post.image} 
@@ -62,7 +65,7 @@ const Blog = () => {
                 />
               </div>
               
-              <CardContent className="p-6">
+              <CardContent className="p-6 flex-grow">
                 <div className="flex items-center gap-3 text-sm text-apex-darkgray/60 mb-3">
                   <div className="flex items-center gap-1">
                     <CalendarDays size={14} />
@@ -96,25 +99,28 @@ const Blog = () => {
               </CardContent>
               
               <CardFooter className="bg-apex-lightgray/50 p-4">
-                <a href="mailto:info@apexpredatorinsurance.com" className="ml-auto">
-                  <Button variant="ghost" className="text-apex-red p-0 hover:bg-transparent hover:text-apex-red/80">
+                <Link to={`/articles/${post.slug}`} className="w-full">
+                  <Button 
+                    variant="ghost" 
+                    className="text-apex-red p-0 hover:bg-transparent hover:text-apex-red/80 w-full flex justify-center items-center"
+                  >
                     Read More <ArrowRight size={16} className="ml-2" />
                   </Button>
-                </a>
+                </Link>
               </CardFooter>
             </Card>
           ))}
         </div>
         
         <div className="text-center">
-          <a href="mailto:info@apexpredatorinsurance.com">
+          <Link to="/articles">
             <Button 
               variant="outline" 
               className="border-apex-red text-apex-red hover:bg-apex-red/10"
             >
               View All Articles
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
