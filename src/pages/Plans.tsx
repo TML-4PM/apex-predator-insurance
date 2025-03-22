@@ -47,9 +47,15 @@ const Plans = () => {
             <p className="text-lg text-apex-darkgray/70 mb-4 animate-fade-up animate-delay-100">
               Each plan comes with a personalized certificate to commemorate your adventurous spirit.
             </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
-              <ShoppingCart size={16} />
-              <span>All plans start at just $9.99</span>
+            <div className="inline-flex flex-col sm:flex-row items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
+              <div className="flex items-center gap-2">
+                <ShoppingCart size={16} />
+                <span>Individual plans: $9.99</span>
+              </div>
+              <span className="hidden sm:inline">•</span>
+              <span>25 predators: $59.99</span>
+              <span className="hidden sm:inline">•</span>
+              <span>All predators: $99.99</span>
             </div>
           </div>
           

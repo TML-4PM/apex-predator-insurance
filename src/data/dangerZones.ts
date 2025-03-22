@@ -36,7 +36,7 @@ export const dangerZones: DangerZone[] = [
     threat: 'Crocodiles',
     description: 'Saltwater crocodiles here are among the largest and most aggressive in the world',
     color: '#8B5CF6',
-    image: 'https://images.unsplash.com/photo-1610052178570-97bc8e3a0a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+    image: 'https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
   },
   { 
     id: 5, 

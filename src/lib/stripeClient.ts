@@ -1,3 +1,4 @@
+
 import { loadStripe } from '@stripe/stripe-js';
 
 // You should replace this with your actual Stripe publishable key
@@ -26,6 +27,13 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
     
     paymentInProgress = true;
     console.log('Creating payment intent with amount:', amount, 'metadata:', metadata);
+    
+    // Validate the metadata to ensure we have necessary information
+    if (!metadata.fullName || !metadata.email) {
+      console.error('Missing required metadata for payment:', metadata);
+      paymentInProgress = false;
+      return { error: 'Missing required information. Please fill in all fields.' };
+    }
     
     // Call the actual API endpoint
     const response = await fetch(createPaymentIntentUrl, {
@@ -62,6 +70,13 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
     try {
       const data = await response.json();
       console.log('Payment intent created successfully');
+      
+      // Send a confirmation email in production
+      if (metadata.email && metadata.fullName) {
+        console.log(`In production, an email would be sent to ${metadata.email} for ${metadata.fullName}`);
+        // This would normally send an email via a backend service
+      }
+      
       return data;
     } catch (e) {
       console.error('Error parsing payment intent response:', e);

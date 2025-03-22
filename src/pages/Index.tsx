@@ -19,8 +19,9 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Compass, Route, Camera, Shield, Mail, ShoppingCart } from 'lucide-react';
+import { MapPin, Compass, Route, Camera, Shield, Mail, ShoppingCart, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const adventureTips = [
   {
@@ -64,32 +65,66 @@ const popularPlans = [
     name: "Saltwater Crocodile",
     description: "For those brave souls venturing into murky waters. Don't be a snack!",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1610052178570-97bc8e3a0a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "🐊"
   },
   {
-    id: "bundle",
-    name: "Predator Pack Bundle",
-    description: "Our best value! Get covered for 10 apex predators for the price of 5.",
-    price: 49.99,
+    id: "bundle25",
+    name: "25 Predator Bundle",
+    description: "Our mid-tier value! Get covered for 25 apex predators at a great price.",
+    price: 59.99,
     image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    icon: "🛡️",
+    icon: "🏅",
     isBundle: true
   },
   {
-    id: "bear",
-    name: "Grizzly Bear",
-    description: "For hikers and campers who want to be prepared for the worst.",
-    price: 9.99,
-    image: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    icon: "🐻"
+    id: "bundle",
+    name: "Complete Bundle",
+    description: "Our best value! Get covered for all 60 apex predators.",
+    price: 99.99,
+    image: "https://images.unsplash.com/photo-1501793123636-75796c6c03b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🏆",
+    isBundle: true
   }
 ];
 
 const Index = () => {
+  const { toast } = useToast();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleShareAdventure = () => {
+    const url = window.location.href;
+    const text = "Check out my adventure with Apex Predator Insurance!";
+    
+    if (navigator.share) {
+      navigator.share({
+        title: "Apex Predator Insurance Adventure",
+        text: text,
+        url: url,
+      })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing:', error));
+    } else {
+      navigator.clipboard.writeText(`${text} ${url}`)
+        .then(() => {
+          toast({
+            title: "Link copied!",
+            description: "Share link has been copied to your clipboard.",
+          });
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+          toast({
+            title: "Sharing failed",
+            description: "Could not copy the share link.",
+            variant: "destructive"
+          });
+        });
+    }
+  };
 
   return (
     <Layout>
@@ -170,7 +205,7 @@ const Index = () => {
                   <h3 className="text-2xl font-bold text-apex-black">Get Protected From All Predators</h3>
                 </div>
                 <p className="text-lg text-apex-darkgray/80 mb-4">
-                  Our best value! The complete Predator Pack Bundle includes protection against 10 deadly predators for just $49.99.
+                  Our best value! The complete Predator Pack Bundle includes protection against all 60 predators for just $99.99.
                 </p>
                 <ul className="grid grid-cols-2 gap-2 text-sm mb-6">
                   <li className="flex items-center"><span className="mr-2">🦈</span> Sharks</li>
@@ -184,7 +219,7 @@ const Index = () => {
                   <li className="flex items-center"><span className="mr-2">🦛</span> Hippos</li>
                   <li className="flex items-center"><span className="mr-2">🐺</span> Wolves</li>
                 </ul>
-                <p className="text-apex-red font-bold">Save over 50% compared to individual plans!</p>
+                <p className="text-apex-red font-bold">Save over 80% compared to individual plans!</p>
               </div>
               <div>
                 <Link 
@@ -192,7 +227,7 @@ const Index = () => {
                   className="bg-apex-red hover:bg-apex-red/90 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  <span>Get All Animals Bundle - $49.99</span>
+                  <span>Get All Predators Bundle - $99.99</span>
                 </Link>
               </div>
             </div>
@@ -346,7 +381,7 @@ const Index = () => {
             </p>
             <div className="inline-flex items-center justify-center gap-2 text-apex-red font-medium mb-12">
               <Mail className="h-5 w-5" />
-              <span>Messages will be sent to: troy.latter@4pm.net.au</span>
+              <span>Messages will be sent to: info@apexpredatorinsurance.com</span>
             </div>
             <ContactForm />
           </div>

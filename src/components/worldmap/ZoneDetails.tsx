@@ -3,7 +3,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { DangerZone } from '@/models/DangerZone';
 import { getThreatIcon } from '@/utils/threatIcons';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Share2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface ZoneDetailsProps {
   zone: DangerZone;
@@ -11,6 +13,40 @@ interface ZoneDetailsProps {
 }
 
 const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
+  const { toast } = useToast();
+  
+  const handleShare = () => {
+    const url = window.location.href;
+    const text = `Check out the danger zone "${zone.name}" with ${zone.threat} on Apex Predator Insurance!`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: `Apex Predator Insurance - ${zone.name}`,
+        text: text,
+        url: url,
+      })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing:', error));
+    } else {
+      // Fallback for browsers that don't support navigator.share
+      navigator.clipboard.writeText(`${text} ${url}`)
+        .then(() => {
+          toast({
+            title: "Link copied!",
+            description: "Share link has been copied to your clipboard.",
+          });
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+          toast({
+            title: "Sharing failed",
+            description: "Could not copy the share link.",
+            variant: "destructive"
+          });
+        });
+    }
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.9 }}
@@ -42,12 +78,24 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
       
       <p className="text-white/80 text-sm">{zone.description}</p>
       
-      <button 
-        onClick={onClose}
-        className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-white/60 hover:text-white transition-colors"
-      >
-        Close
-      </button>
+      <div className="mt-4 flex items-center justify-between">
+        <button 
+          onClick={onClose}
+          className="text-xs font-medium text-white/60 hover:text-white transition-colors"
+        >
+          Close
+        </button>
+        
+        <Button 
+          size="sm" 
+          variant="outline" 
+          className="border-white/20 text-white hover:bg-white/10"
+          onClick={handleShare}
+        >
+          <Share2 className="h-3.5 w-3.5 mr-1" />
+          Share
+        </Button>
+      </div>
     </motion.div>
   );
 };

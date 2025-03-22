@@ -17,13 +17,13 @@ const blogPosts = [
   },
   {
     id: 2,
-    title: 'Hiking in Bear Country: A Comedy of Errors',
-    excerpt: 'Stories from naive hikers who thought bear bells actually work. Spoiler: They don\'t.',
+    title: 'Hiking in Bear Country: The Ultimate Guide',
+    excerpt: 'Essential strategies for hiking in areas populated by bears, and what to do if you encounter one.',
     author: 'Sarah Johnson',
     date: 'May 28, 2023',
     readTime: '7 min read',
     category: 'Bear Safety',
-    image: 'https://images.unsplash.com/photo-1588167056547-c733701ecaa1?q=80&w=1000',
+    image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?q=80&w=1000',
   },
   {
     id: 3,
@@ -104,7 +104,11 @@ const Blog = () => {
         </div>
         
         <div className="text-center">
-          <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10">
+          <Button 
+            variant="outline" 
+            className="border-apex-red text-apex-red hover:bg-apex-red/10"
+            onClick={() => window.alert("Coming soon! Our full blog will be available in the next update.")}
+          >
             View All Articles
           </Button>
         </div>

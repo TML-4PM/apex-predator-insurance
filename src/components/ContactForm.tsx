@@ -37,7 +37,7 @@ const ContactForm = () => {
     // For now we'll just show a success message
     toast({
       title: "Message sent!",
-      description: "We'll get back to you at " + data.email,
+      description: "We'll get back to you at " + data.email + ". Your message will be forwarded to info@apexpredatorinsurance.com",
     });
     
     form.reset();
@@ -48,7 +48,7 @@ const ContactForm = () => {
       <Alert className="mb-6 bg-apex-red/10 border-apex-red/20">
         <AlertTitle className="font-semibold text-apex-red">Contact Form Demo</AlertTitle>
         <AlertDescription>
-          Messages will be forwarded to troy.latter@4pm.net.au in a production environment.
+          Messages will be forwarded to info@apexpredatorinsurance.com in a production environment.
           Currently in demo mode.
         </AlertDescription>
       </Alert>

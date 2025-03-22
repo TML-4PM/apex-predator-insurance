@@ -49,7 +49,7 @@ const Hero = () => {
             alt="Shark" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
         </div>
         <div className="floating stagger-3 absolute top-1/3 right-[20%] opacity-20">
-          <img src="https://images.unsplash.com/photo-1566159196870-743187b11219?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+          <img src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
             alt="Crocodile" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
         </div>
         <div className="floating stagger-2 absolute bottom-1/4 left-[25%] opacity-20">
@@ -67,7 +67,7 @@ const Hero = () => {
           <div 
             className="inline-block mb-6 px-4 py-1 rounded-full bg-apex-yellow text-apex-black text-sm font-medium animate-fade-in"
           >
-            Because You Never Know... But You Probably Do.
+            Adventure Now, Worry Never
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight animate-fade-up text-shadow-lg">
@@ -75,7 +75,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-white opacity-90 mb-8 animate-fade-up animate-delay-100">
-            $9.99 per certificate – or get the full Apex Predator Pack for $49.99!
+            $9.99 per certificate – or get all predators for just $99.99!
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
