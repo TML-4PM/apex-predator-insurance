@@ -33,6 +33,12 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
       return { error: 'Missing required information. Please fill in all fields.' };
     }
     
+    // Add a timestamp to metadata to ensure uniqueness
+    const enhancedMetadata = {
+      ...metadata,
+      timestamp: new Date().toISOString(),
+    };
+    
     // Call the actual API endpoint
     const response = await fetch(createPaymentIntentUrl, {
       method: 'POST',
@@ -41,7 +47,7 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
       },
       body: JSON.stringify({
         amount: Math.round(amount * 100), // Convert to cents for Stripe
-        metadata,
+        metadata: enhancedMetadata,
       }),
     });
 
@@ -68,12 +74,6 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
     try {
       const data = await response.json();
       console.log('Payment intent created successfully');
-      
-      // Send a confirmation email in production
-      if (metadata.email && metadata.fullName) {
-        console.log(`In production, an email would be sent to ${metadata.email} for ${metadata.fullName}`);
-        // This would normally send an email via a backend service
-      }
       
       return data;
     } catch (e) {

@@ -78,7 +78,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     features: [
       "25 Different Predator Certificates",
       "Digital downloads available instantly",
-      "Save 40% compared to individual plans",
+      "Save 75% compared to individual plans",
       "Great for adventure enthusiasts"
     ]
   },
@@ -93,7 +93,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     features: [
       "All 60 Predator Certificates",
       "Digital downloads available instantly",
-      "Save 80% compared to individual plans",
+      "Save 83% compared to individual plans",
       "Ultimate bragging rights"
     ]
   }
@@ -105,4 +105,14 @@ export const getPlanById = (id: string): PricingPlan => {
     return PRICING_PLANS[0]; // Default to first plan if not found
   }
   return plan;
+};
+
+// Add function to get bundle plans
+export const getBundlePlans = (): PricingPlan[] => {
+  return PRICING_PLANS.filter(plan => plan.isBundle);
+};
+
+// Add function to get individual plans
+export const getIndividualPlans = (): PricingPlan[] => {
+  return PRICING_PLANS.filter(plan => !plan.isBundle);
 };

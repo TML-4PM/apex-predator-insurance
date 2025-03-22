@@ -19,7 +19,7 @@ const ZoneMarker: React.FC<ZoneMarkerProps> = ({
   onClick, 
   onHover 
 }) => {
-  // Use the zone's color directly instead of using a template literal which was causing the React.Fragment warning
+  // Use the zone's color directly
   const markerColor = isActive ? zone.color : isHovered ? 'white' : '#df4949';
   
   return (

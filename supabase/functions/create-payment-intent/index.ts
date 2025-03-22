@@ -1,18 +1,4 @@
 
-// Follow these steps to set up the Edge Function in Supabase:
-// 1. Install Supabase CLI if you haven't already:
-//    npm install -g supabase
-// 2. Login to Supabase:
-//    supabase login
-// 3. Link your project (if not already done):
-//    supabase link --project-ref your-project-ref
-// 4. Add your Stripe secret key to Supabase secrets:
-//    supabase secrets set STRIPE_SECRET_KEY=your_stripe_secret_key
-// 5. Deploy the function: 
-//    supabase functions deploy create-payment-intent --no-verify-jwt
-// 6. Check deployment status:
-//    supabase functions list
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
@@ -21,7 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Set to true for production - we're enabling this now
+// We're now enabling payments for real
 const ENABLE_PAYMENTS = true;
 
 serve(async (req) => {
@@ -63,6 +49,14 @@ serve(async (req) => {
       );
     }
 
+    // Validate required metadata
+    if (!metadata || !metadata.fullName || !metadata.email) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required customer information' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Log payment attempt for monitoring (but don't log full card details)
     console.log(`Payment intent created for ${amount} cents, plan: ${metadata?.plan_name || 'unknown'}`);
 
@@ -71,6 +65,7 @@ serve(async (req) => {
       amount: amount,
       currency: 'usd',
       metadata: metadata || {},
+      receipt_email: metadata.email,
       automatic_payment_methods: {
         enabled: true,
       },

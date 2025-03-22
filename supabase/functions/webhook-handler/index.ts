@@ -1,20 +1,3 @@
-
-// Follow these steps to set up the Stripe Webhook handler Edge Function:
-// 1. Install Supabase CLI if you haven't already:
-//    npm install -g supabase
-// 2. Login to Supabase:
-//    supabase login
-// 3. Link your project (if not already done):
-//    supabase link --project-ref your-project-ref
-// 4. Add your Stripe secret key and webhook secret to Supabase secrets:
-//    supabase secrets set STRIPE_SECRET_KEY=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
-//    supabase secrets set STRIPE_WEBHOOK_SECRET=your_webhook_signing_secret
-//    supabase secrets set EMAIL_SERVICE_API_KEY=your_email_service_api_key
-// 5. Deploy the function: 
-//    supabase functions deploy webhook-handler --no-verify-jwt
-// 6. Setup webhook in Stripe dashboard pointing to:
-//    https://your-project-ref.supabase.co/functions/v1/webhook-handler
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
@@ -23,41 +6,52 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Simple mock email function - in production, you would use a real email service
+// Use a real email sending function with SendGrid
 async function sendEmail(to: string, subject: string, body: string) {
-  // For demo purposes, we'll just log the email
-  console.log(`EMAIL SENT TO: ${to}`);
-  console.log(`SUBJECT: ${subject}`);
-  console.log(`BODY: ${body}`);
+  const SENDGRID_API_KEY = Deno.env.get('SENDGRID_API_KEY');
   
-  // In production, uncomment and use a real email service API
-  // const emailServiceApiKey = Deno.env.get('EMAIL_SERVICE_API_KEY');
-  // 
-  // if (!emailServiceApiKey) {
-  //   throw new Error('Missing email service API key');
-  // }
-  // 
-  // const response = await fetch('https://api.youremailservice.com/send', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${emailServiceApiKey}`
-  //   },
-  //   body: JSON.stringify({
-  //     to,
-  //     subject,
-  //     html: body
-  //   })
-  // });
-  // 
-  // if (!response.ok) {
-  //   throw new Error(`Failed to send email: ${await response.text()}`);
-  // }
-  // 
-  // return await response.json();
+  if (!SENDGRID_API_KEY) {
+    console.log(`[MOCK EMAIL] TO: ${to}`);
+    console.log(`[MOCK EMAIL] SUBJECT: ${subject}`);
+    console.log(`[MOCK EMAIL] BODY: ${body.substring(0, 100)}...`);
+    return { success: true, id: `mock_email_${Date.now()}` };
+  }
   
-  // For the demo, just return success
-  return { success: true, id: `mock_email_${Date.now()}` };
+  try {
+    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SENDGRID_API_KEY}`
+      },
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [{ email: to }],
+            subject: subject,
+          }
+        ],
+        from: { email: 'info@apexpredatorinsurance.com', name: 'Apex Predator Insurance' },
+        content: [
+          {
+            type: 'text/html',
+            value: body
+          }
+        ]
+      })
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`SendGrid API error: ${response.status} ${errorText}`);
+      throw new Error(`Email sending failed: ${response.status}`);
+    }
+    
+    return { success: true, id: `email_${Date.now()}` };
+  } catch (error) {
+    console.error('SendGrid error:', error);
+    throw error;
+  }
 }
 
 serve(async (req) => {
@@ -146,7 +140,7 @@ serve(async (req) => {
                   <p>Your certificate for <strong>${plan_name}</strong> is ready to download from your account.</p>
                   <p>You can access your certificate by logging into our website or clicking the button below:</p>
                   <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://apexpredatorinsurance.com/certificate?plan=${plan_id}" 
+                    <a href="https://apex-predator-insurance.lovable.app/certificate?plan=${plan_id}" 
                       style="background-color: #f42424; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">
                       Download Your Certificate
                     </a>
@@ -227,7 +221,7 @@ serve(async (req) => {
                   </ul>
                   <p>Please try again with a different payment method or contact your bank for more details.</p>
                   <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://apexpredatorinsurance.com/plans" 
+                    <a href="https://apex-predator-insurance.lovable.app/plans" 
                       style="background-color: #f42424; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">
                       Try Again
                     </a>
