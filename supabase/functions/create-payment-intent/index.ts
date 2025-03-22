@@ -17,12 +17,12 @@ serve(async (req) => {
   }
 
   try {
-    // Get Stripe key from environment
-    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY') || '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';
+    // Get Stripe key from environment - use a fallback only if not in production
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     
-    // If no key is set or payments are disabled, return demo mode response
+    // Check if we have a valid key for processing payments
     if (!stripeKey || !ENABLE_PAYMENTS) {
-      console.log('Payment processing in demo mode');
+      console.log('Payment processing in demo mode - no valid Stripe key found');
       return new Response(
         JSON.stringify({ 
           demoMode: true,

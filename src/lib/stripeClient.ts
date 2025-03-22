@@ -1,8 +1,8 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 
-// Use real Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51QdfYbD6fFdhmypRdytRqfBJKJ6QlNMHsbagEFdNwdZOtgNM5g3e4Qw3qV7GgCjNv9MVxSNkXQnWvCPuoNGO1jvF00WD7vxLHO';
+// Use the publishable key from environment if available, or fallback to the test key
+const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51QdfYbD6fFdhmypRdytRqfBJKJ6QlNMHsbagEFdNwdZOtgNM5g3e4Qw3qV7GgCjNv9MVxSNkXQnWvCPuoNGO1jvF00WD7vxLHO';
 
 // Initialize Stripe with the appropriate key
 export const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
