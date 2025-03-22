@@ -5,6 +5,7 @@ import InsurancePlans from '@/components/InsurancePlans';
 import { ShoppingCart } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { getBundlePlans } from '@/constants/pricing';
 
 interface RecentlyViewedPlan {
   id: string;
@@ -14,6 +15,7 @@ interface RecentlyViewedPlan {
 
 const Plans = () => {
   const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewedPlan[]>([]);
+  const bundlePlans = getBundlePlans();
   
   useEffect(() => {
     console.log("Plans page mounted");
@@ -53,9 +55,9 @@ const Plans = () => {
                 <span>Individual plans: $9.99</span>
               </div>
               <span className="hidden sm:inline">•</span>
-              <span>25 predators: $59.99</span>
+              <span>25 predators: ${bundlePlans[0]?.price.toFixed(2) || '59.99'}</span>
               <span className="hidden sm:inline">•</span>
-              <span>All 60 predators: $99.99</span>
+              <span>All 60 predators: ${bundlePlans[1]?.price.toFixed(2) || '99.99'}</span>
             </div>
           </div>
           
