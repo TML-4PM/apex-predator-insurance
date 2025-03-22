@@ -14,8 +14,14 @@ export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL
 // Keep track of payment status to prevent duplicate submissions
 let paymentInProgress = false;
 
+// Define the return type for createPaymentIntent
+export type PaymentIntentResponse = 
+  | { clientSecret: string; demoMode?: boolean }
+  | { demoMode: true; message: string; error?: undefined }
+  | { error: string; demoMode?: boolean };
+
 // Function to call our Supabase Edge Function
-export const createPaymentIntent = async (amount: number, metadata: any) => {
+export const createPaymentIntent = async (amount: number, metadata: any): Promise<PaymentIntentResponse> => {
   try {
     // Prevent duplicate payment submissions
     if (paymentInProgress) {

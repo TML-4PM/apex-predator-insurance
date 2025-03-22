@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
-import { createPaymentIntent } from '@/lib/stripeClient';
+import { createPaymentIntent, PaymentIntentResponse } from '@/lib/stripeClient';
 import { CheckoutFormValues } from './CheckoutForm';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 
@@ -76,7 +76,7 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
       }
 
       // Call our backend API to create a payment intent
-      const paymentIntentResponse = await createPaymentIntent(
+      const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
         plan.price,
         { 
           plan_id: plan.id,
@@ -91,8 +91,13 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
 
       console.log('Payment intent response:', paymentIntentResponse);
 
+      // Check if there was an error from payment intent creation
+      if ('error' in paymentIntentResponse && paymentIntentResponse.error) {
+        throw new Error(paymentIntentResponse.error);
+      }
+
       // Check if running in demo mode (response from backend indicates this)
-      if (paymentIntentResponse.demoMode) {
+      if ('demoMode' in paymentIntentResponse && paymentIntentResponse.demoMode) {
         console.log('Demo mode active: Simulating successful payment');
         setIsDemoMode(true);
         
@@ -110,74 +115,70 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         return;
       }
       
-      // Handle error from payment intent creation
-      if (paymentIntentResponse.error) {
-        throw new Error(paymentIntentResponse.error);
-      }
-      
       // For real payments, get the client secret
-      const { clientSecret } = paymentIntentResponse;
-      
-      if (!clientSecret) {
-        throw new Error("No client secret returned from the server");
-      }
+      if ('clientSecret' in paymentIntentResponse && paymentIntentResponse.clientSecret) {
+        const clientSecret = paymentIntentResponse.clientSecret;
+        
+        console.log("Confirming card payment with secret");
 
-      console.log("Confirming card payment with secret");
-
-      // Confirm the card payment with the client secret from our backend
-      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: formData.fullName,
-            email: formData.email,
+        // Confirm the card payment with the client secret from our backend
+        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: formData.fullName,
+              email: formData.email,
+            },
           },
-        },
-      });
-
-      if (confirmError) {
-        console.error('Payment confirmation error:', confirmError);
-        throw new Error(confirmError.message);
-      }
-
-      console.log('Payment intent result:', paymentIntent);
-
-      if (paymentIntent.status === 'succeeded') {
-        setIsProcessed(true);
-        toast({
-          title: "Payment successful!",
-          description: "Your certificate is ready to download.",
         });
-        
-        // Add a small delay to show the success state before redirecting
-        setTimeout(() => {
-          resetCardElement(); // Reset the card element
-          onSuccess(formData);
-        }, 1500);
-      } else if (paymentIntent.status === 'requires_action') {
-        // Handle 3D Secure authentication if required
-        const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(clientSecret);
-        
-        if (error) {
-          throw new Error(`Authentication failed: ${error.message}`);
+
+        if (confirmError) {
+          console.error('Payment confirmation error:', confirmError);
+          throw new Error(confirmError.message);
         }
-        
-        if (updatedIntent.status === 'succeeded') {
+
+        console.log('Payment intent result:', paymentIntent);
+
+        if (paymentIntent.status === 'succeeded') {
           setIsProcessed(true);
           toast({
             title: "Payment successful!",
             description: "Your certificate is ready to download.",
           });
           
+          // Add a small delay to show the success state before redirecting
           setTimeout(() => {
-            resetCardElement();
+            resetCardElement(); // Reset the card element
             onSuccess(formData);
           }, 1500);
+        } else if (paymentIntent.status === 'requires_action') {
+          // Handle 3D Secure authentication if required
+          const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(clientSecret);
+          
+          if (error) {
+            throw new Error(`Authentication failed: ${error.message}`);
+          }
+          
+          if (updatedIntent.status === 'succeeded') {
+            setIsProcessed(true);
+            toast({
+              title: "Payment successful!",
+              description: "Your certificate is ready to download.",
+            });
+            
+            setTimeout(() => {
+              resetCardElement();
+              onSuccess(formData);
+            }, 1500);
+          } else {
+            throw new Error(`Payment failed with status: ${updatedIntent.status}`);
+          }
         } else {
-          throw new Error(`Payment failed with status: ${updatedIntent.status}`);
+          throw new Error(`Payment failed with status: ${paymentIntent.status}`);
         }
       } else {
-        throw new Error(`Payment failed with status: ${paymentIntent.status}`);
+        // If we reach here and we're not in demo mode and there's no client secret, something went wrong
+        throw new Error("No client secret returned from the server");
       }
     } catch (error) {
       console.error('Payment error:', error);
