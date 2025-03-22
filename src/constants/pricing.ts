@@ -30,7 +30,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Saltwater Crocodile",
     description: "For those brave souls venturing into murky waters. Don't be a snack!",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
     icon: "🐊",
     features: [
       "Certificate of Crocodile Encounter Survival",
@@ -72,7 +72,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "25 Predator Bundle",
     description: "Our mid-tier value! Get covered for 25 apex predators at a great price.",
     price: 59.99,
-    image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "📦",
     isBundle: true,
     features: [

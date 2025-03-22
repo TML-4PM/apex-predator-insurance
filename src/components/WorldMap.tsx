@@ -72,7 +72,7 @@ const WorldMap = () => {
           </motion.p>
         </div>
         
-        <div className="relative w-full aspect-[2/1] max-w-5xl mx-auto rounded-xl overflow-hidden shadow-xl">
+        <div className="relative w-full aspect-[2/1] max-w-5xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-white/20">
           {!isMapLoaded ? (
             <div className="absolute inset-0 flex items-center justify-center bg-[#1A1F2C]">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-apex-red"></div>
@@ -84,14 +84,28 @@ const WorldMap = () => {
               transition={{ duration: 0.8 }}
               className="relative w-full h-full"
             >
-              {/* Enhanced map container with depth and texture */}
-              <div className="absolute inset-0 bg-[#1A1F2C]/80 backdrop-blur-sm"></div>
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')] bg-no-repeat bg-cover opacity-60 mix-blend-overlay"></div>
-              <div className="absolute inset-0 opacity-10" style={{ 
-                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)`,
-                backgroundSize: '30px 30px' 
+              {/* Improved map container with higher contrast and clearer visualization */}
+              <div className="absolute inset-0 bg-[#0D1117]/80"></div>
+              
+              {/* Clearer world map background */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover opacity-40 mix-blend-soft-light"></div>
+              
+              {/* Enhanced grid pattern */}
+              <div className="absolute inset-0 opacity-20" style={{ 
+                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.3) 1px, transparent 0)`,
+                backgroundSize: '20px 20px' 
               }}></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/70 to-[#1A1F2C]/40"></div>
+              
+              {/* Map overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/40 to-[#1A1F2C]/20"></div>
+              
+              {/* Continents overlay silhouette */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover opacity-50 mix-blend-overlay"></div>
+              
+              {/* Add a subtle glow effect */}
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#33C3F0]/10 opacity-30"></div>
+              </div>
               
               <ZoneConnections zones={dangerZones} />
               

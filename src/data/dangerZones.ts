@@ -54,6 +54,6 @@ export const dangerZones: DangerZone[] = [
     threat: 'Komodo Dragons',
     description: 'These massive lizards have a venomous bite and can take down large prey. Their saliva contains multiple toxins that can cause bleeding, pain, and paralysis.',
     color: '#33C3F0',
-    image: 'https://images.unsplash.com/photo-1583336598573-4d917e2ab0c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+    image: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
   },
 ];
