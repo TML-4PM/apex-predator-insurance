@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -18,6 +17,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { PRICING_PLANS } from '@/constants/pricing';
 
 // Complete list of 60 deadly animal insurance plans with their respective countries
 const fullInsurancePlans = [
@@ -876,6 +876,38 @@ const fullInsurancePlans = [
       '$50K Death Benefit per Certificate'
     ],
     funFact: 'Combined, the animals in this pack represent the deadliest creatures on Earth across all continents and habitats!'
+  },
+  {
+    id: 'bundle25',
+    name: 'Bundle Deal 25',
+    icon: '📦',
+    price: 99.90,
+    description: '25% off on all plans',
+    location: 'Global',
+    features: [
+      'All 60 Digital Certificates',
+      'Shareable on Social Media',
+      'All Fun Animal Facts',
+      'Ultimate Bragging Rights',
+      '$50K Death Benefit per Certificate'
+    ],
+    funFact: '25% off on all plans'
+  },
+  {
+    id: 'bundle60',
+    name: 'Bundle Deal 60',
+    icon: '📦',
+    price: 599.40,
+    description: '60% off on all plans',
+    location: 'Global',
+    features: [
+      'All 60 Digital Certificates',
+      'Shareable on Social Media',
+      'All Fun Animal Facts',
+      'Ultimate Bragging Rights',
+      '$50K Death Benefit per Certificate'
+    ],
+    funFact: '60% off on all plans'
   }
 ];
 
@@ -893,6 +925,9 @@ interface InsurancePlan {
 
 // Define popular plans
 const popularPlanIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
+
+// Define bundle plans
+const bundlePlanIds = ['bundle25', 'bundle60'];
 
 // Component implementation
 const InsurancePlans = () => {
@@ -949,7 +984,7 @@ const InsurancePlans = () => {
     
     // Apply tab filter
     if (activeTab === 'bundle') {
-      filtered = filtered.filter(plan => plan.id === 'apex-pack');
+      filtered = filtered.filter(plan => bundlePlanIds.includes(plan.id) || plan.id === 'apex-pack');
     } else if (activeTab === 'popular') {
       filtered = filtered.filter(plan => popularPlanIds.includes(plan.id));
     }
@@ -1064,7 +1099,7 @@ const InsurancePlans = () => {
           <TabsList className="grid w-full grid-cols-3 lg:w-1/2 mx-auto mb-6">
             <TabsTrigger value="all">All Plans</TabsTrigger>
             <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="bundle">Bundle Deal</TabsTrigger>
+            <TabsTrigger value="bundle">Bundle Deals</TabsTrigger>
           </TabsList>
           
           <div className="flex flex-col lg:flex-row items-center gap-4 mb-4">
@@ -1444,103 +1479,77 @@ const InsurancePlans = () => {
           
           <TabsContent value="bundle">
             {currentPlans.length > 0 ? (
-              <div className="border-2 border-apex-red rounded-xl overflow-hidden shadow-md bg-gradient-to-r from-apex-red/10 to-apex-black/5 p-8">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="flex items-center gap-4">
-                    <span className="text-4xl">🏆</span>
-                    <div>
-                      <h3 className="text-2xl font-bold text-apex-red mb-2">
-                        Apex Predator Pack
-                      </h3>
-                      <p className="text-apex-darkgray/70 max-w-xl">
-                        The ultimate protection package with $50K death benefit for the ultimate adventurer.
-                        All sixty certificates for the price of twenty-five!
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <span className="px-4 py-2 bg-apex-red text-white text-sm font-semibold rounded-full">
-                    Save 60%
-                  </span>
-                </div>
-                
-                <div className="bg-white rounded-lg p-6 mb-6">
-                  <h4 className="text-lg font-semibold mb-4 text-apex-black">All 60 Predators Included:</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    {fullInsurancePlans
-                      .filter(plan => plan.id !== 'apex-pack')
-                      .map((plan) => (
-                        <div key={plan.id} className="flex items-center gap-2 text-sm">
-                          <span>{plan.icon}</span>
-                          <span className="text-apex-darkgray truncate">{plan.name.replace(' Insurance', '')}</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {currentPlans.map((plan) => (
+                  <div
+                    key={plan.id}
+                    className="border-2 border-apex-red rounded-xl overflow-hidden shadow-md bg-gradient-to-r from-apex-red/10 to-apex-black/5 p-6"
+                  >
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="flex items-center gap-4">
+                        <span className="text-4xl">{plan.icon}</span>
+                        <div>
+                          <h3 className="text-2xl font-bold text-apex-red mb-2">
+                            {plan.name}
+                          </h3>
+                          <p className="text-apex-darkgray/70 max-w-xl">
+                            {plan.description}
+                          </p>
                         </div>
-                      ))}
-                  </div>
-                </div>
-                
-                <div className="bg-white rounded-lg p-6 mb-6">
-                  <h4 className="text-lg font-semibold mb-4 text-apex-black">Bundle Benefits:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      {currentPlans[0]?.features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-apex-darkgray/80">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-apex-darkgray/80">Coverage for multiple continents and habitats</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-apex-darkgray/80">Complete Wildlife Shield - no predator left behind</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-apex-darkgray/80">60% savings compared to individual plans</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-apex-darkgray/80">Premium bundle certificate design</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex flex-col md:flex-row items-center justify-between bg-white rounded-lg p-6">
-                  <div className="mb-4 md:mb-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg text-apex-darkgray/70 line-through">$599.40</span>
-                      <span className="bg-apex-red/10 text-apex-red text-xs px-2 py-1 rounded">
-                        Save $349.41
+                      
+                      <span className="px-4 py-2 bg-apex-red text-white text-sm font-semibold rounded-full">
+                        {plan.id === 'bundle25' ? 'Save 40%' : 'Save 60%'}
                       </span>
                     </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-apex-black">$249.99</span>
-                      <span className="text-apex-darkgray/70">/ year</span>
+                    
+                    <div className="bg-white rounded-lg p-4 mb-4">
+                      <h4 className="text-lg font-semibold mb-3 text-apex-black">Bundle Includes:</h4>
+                      <div className="space-y-2">
+                        {plan.features?.map((feature, index) => (
+                          <div key={index} className="flex items-start gap-2">
+                            <Check size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
+                            <span className="text-apex-darkgray/80">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <p className="text-sm text-apex-darkgray/60 mt-1">
-                      Just $4.17 per predator
-                    </p>
+                    
+                    <div className="flex flex-col sm:flex-row items-center justify-between bg-white rounded-lg p-4">
+                      <div className="mb-4 sm:mb-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-lg text-apex-darkgray/70 line-through">
+                            ${plan.id === 'bundle25' ? '99.90' : '599.40'}
+                          </span>
+                          <span className="bg-apex-red/10 text-apex-red text-xs px-2 py-1 rounded">
+                            Save ${plan.id === 'bundle25' ? '39.91' : '349.41'}
+                          </span>
+                        </div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl font-bold text-apex-black">${plan.price}</span>
+                          <span className="text-apex-darkgray/70">/ year</span>
+                        </div>
+                        <p className="text-sm text-apex-darkgray/60 mt-1">
+                          Just ${plan.id === 'bundle25' ? '2.40' : '1.67'} per predator
+                        </p>
+                      </div>
+                      
+                      <Button 
+                        onClick={() => handleAddToCart(plan)}
+                        size="lg"
+                        className="bg-apex-red hover:bg-apex-red/90 flex items-center gap-2 px-6"
+                      >
+                        <ShoppingCart size={18} />
+                        <span>Get This Bundle</span>
+                      </Button>
+                    </div>
                   </div>
-                  
-                  <Button 
-                    onClick={() => handleAddToCart(currentPlans[0])}
-                    size="lg"
-                    className="bg-apex-red hover:bg-apex-red/90 flex items-center gap-2 px-8"
-                  >
-                    <ShoppingCart size={18} />
-                    <span>Get The Bundle</span>
-                  </Button>
-                </div>
+                ))}
               </div>
             ) : (
               <div className="text-center py-16">
                 <Shield className="mx-auto h-16 w-16 text-apex-darkgray/30 mb-4" />
-                <h3 className="text-xl font-medium text-apex-black mb-2">Bundle not available</h3>
+                <h3 className="text-xl font-medium text-apex-black mb-2">No bundle deals found</h3>
                 <p className="text-apex-darkgray/70">Please try clearing your search filters</p>
               </div>
             )}
