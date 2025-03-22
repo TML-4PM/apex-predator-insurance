@@ -17,11 +17,23 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { PRICING_PLANS } from '@/constants/pricing';
+import { PRICING_PLANS, PricingPlan } from '@/constants/pricing';
 
 const fullInsurancePlans = [
-  // ... (fullInsurancePlans array remains unchanged)
+  // ... keep existing code (fullInsurancePlans array remains unchanged)
 ];
+
+// Define the InsurancePlan interface
+interface InsurancePlan {
+  id: string;
+  name: string;
+  icon: string;
+  price: number;
+  description: string;
+  location: string;
+  features: string[];
+  funFact: string;
+}
 
 const popularPlanIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
 
@@ -30,7 +42,7 @@ const bundlePlanIds = ['bundle25', 'bundle60'];
 const InsurancePlans = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [filteredPlans, setFilteredPlans] = useState(fullInsurancePlans);
+  const [filteredPlans, setFilteredPlans] = useState<InsurancePlan[]>(fullInsurancePlans);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState('all');
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
