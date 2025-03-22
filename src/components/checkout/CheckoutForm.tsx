@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { z } from "zod";
@@ -28,6 +28,8 @@ interface CheckoutFormProps {
 
 export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutFormProps) => {
   const navigate = useNavigate();
+  const [mounted, setMounted] = useState(false);
+  
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,14 +41,26 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
   
   const elementsRef = useRef<any>(null);
 
-  // Reset form when plan changes
+  // Set mounted state after component mounts
   useEffect(() => {
-    form.reset({
-      fullName: "",
-      email: "",
-    });
-    resetCardElement();
-  }, [plan.id, form]);
+    setMounted(true);
+    
+    // Clean up function to prevent state updates after unmount
+    return () => {
+      setMounted(false);
+    };
+  }, []);
+
+  // Reset form when plan changes or component mounts
+  useEffect(() => {
+    if (mounted) {
+      form.reset({
+        fullName: "",
+        email: "",
+      });
+      resetCardElement();
+    }
+  }, [plan.id, mounted, form]);
 
   // Function to reset the Stripe card element
   const resetCardElement = () => {
@@ -60,6 +74,8 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
 
   // Handle successful form submission and payment
   const handleSuccessfulPayment = (data: CheckoutFormValues) => {
+    if (!mounted) return;
+    
     // Reset form fields
     form.reset({
       fullName: "",
@@ -72,6 +88,8 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
 
   // Update the certificate preview in real-time as the user types
   useEffect(() => {
+    if (!mounted) return;
+    
     const subscription = form.watch((data) => {
       if (data.fullName) {
         // Dispatch a custom event to update the certificate preview
@@ -81,7 +99,14 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
       }
     });
     return () => subscription.unsubscribe();
-  }, [form, form.watch]);
+  }, [form, form.watch, mounted]);
+
+  // Prevent form submission with Enter key
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
 
   return (
     <Form {...form}>
@@ -97,7 +122,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
         </Button>
       </div>
       
-      <form className="space-y-4">
+      <form className="space-y-4" onKeyDown={handleKeyDown}>
         <div>
           <FormField
             control={form.control}
@@ -110,6 +135,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                     placeholder="Your name (as it will appear on the certificate)" 
                     {...field} 
                     autoComplete="off"
+                    value={field.value || ""}
                   />
                 </FormControl>
                 <FormMessage />
@@ -131,6 +157,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                     placeholder="Where to send your certificate" 
                     {...field} 
                     autoComplete="off"
+                    value={field.value || ""}
                   />
                 </FormControl>
                 <FormMessage />

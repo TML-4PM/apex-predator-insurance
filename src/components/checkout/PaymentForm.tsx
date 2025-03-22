@@ -75,17 +75,24 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         throw new Error("Card element not found");
       }
 
+      // Create a fresh copy of form data to avoid reference issues
+      const paymentFormData = {
+        fullName: formData.fullName,
+        email: formData.email
+      };
+
       // Call our backend API to create a payment intent
       const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
         plan.price,
         { 
           plan_id: plan.id,
           plan_name: plan.name,
-          fullName: formData.fullName,
-          customer_name: formData.fullName,
-          customer_email: formData.email,
-          email: formData.email,
-          is_bundle: isBundle
+          fullName: paymentFormData.fullName,
+          customer_name: paymentFormData.fullName,
+          customer_email: paymentFormData.email,
+          email: paymentFormData.email,
+          is_bundle: isBundle,
+          timestamp: new Date().toISOString() // Add timestamp to ensure uniqueness
         }
       );
 
@@ -111,7 +118,7 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
           setIsProcessed(true);
           setTimeout(() => {
             resetCardElement(); // Reset the card element
-            onSuccess(formData);
+            onSuccess(paymentFormData);
           }, 1500);
         }, 1000);
         

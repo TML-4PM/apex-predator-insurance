@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -17,6 +18,8 @@ const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  
+  // Initialize with empty form data
   const [formData, setFormData] = useState<CheckoutFormValues>({
     fullName: '',
     email: '',
@@ -32,8 +35,17 @@ const Checkout = () => {
 
   const isBundle = selectedPlan.id === 'bundle' || selectedPlan.id === 'medium-bundle';
 
-  // Ensure we're at the top of the page when component mounts
+  // Clear any persisted data from session or local storage
   useEffect(() => {
+    // Clear any previous form data from session storage
+    sessionStorage.clear();
+    localStorage.removeItem('formData');
+    localStorage.removeItem('lastSelectedPlan');
+    
+    // Reset form data
+    setFormData({ fullName: '', email: '' });
+    
+    // Scroll to top
     window.scrollTo(0, 0);
   }, []);
 
@@ -186,6 +198,7 @@ const Checkout = () => {
                   </h2>
                   
                   <CheckoutForm 
+                    key={`checkout-form-${selectedPlan.id}`} // Force re-render on plan change
                     plan={selectedPlan} 
                     onSuccess={handlePaymentSuccess} 
                     isBundle={isBundle}
