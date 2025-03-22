@@ -6,10 +6,11 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Add hardcoded SendGrid API key directly in the code
+const SENDGRID_API_KEY = "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";
+
 // Use a real email sending function with SendGrid
 async function sendEmail(to: string, subject: string, body: string) {
-  const SENDGRID_API_KEY = Deno.env.get('SENDGRID_API_KEY');
-  
   if (!SENDGRID_API_KEY) {
     console.log(`[MOCK EMAIL] TO: ${to}`);
     console.log(`[MOCK EMAIL] SUBJECT: ${subject}`);
