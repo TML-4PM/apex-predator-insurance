@@ -7,7 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Heart, MessageCircle, Share2 } from 'lucide-react';
+import { Heart, MessageCircle } from 'lucide-react';
+import ShareAdventure from '@/components/ShareAdventure';
 
 const galleryItems = [
   {
@@ -18,7 +19,7 @@ const galleryItems = [
     insurance: 'Shark Insurance',
     likes: 247,
     comments: 42,
-    imageUrl: 'https://images.unsplash.com/photo-1564731071754-001b53a902fb?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?q=80&w=1000',
   },
   {
     id: 2,
@@ -153,10 +154,11 @@ const PhotoGallery = () => {
                     <span>{selectedPhoto.comments}</span>
                   </button>
                   
-                  <button className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-darkgray transition-colors">
-                    <Share2 size={18} />
-                    <span>Share</span>
-                  </button>
+                  <ShareAdventure 
+                    compact={true} 
+                    predatorType={selectedPhoto.insurance.replace(' Insurance', '')}
+                    text={`Check out this ${selectedPhoto.insurance.replace(' Insurance', '')} adventure!`}
+                  />
                 </div>
               </div>
             </div>
