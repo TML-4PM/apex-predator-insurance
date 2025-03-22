@@ -1,4 +1,3 @@
-
 import { loadStripe } from '@stripe/stripe-js';
 
 // You should replace this with your actual Stripe publishable key
@@ -13,9 +12,19 @@ export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment-intent`
   : 'http://localhost:54321/functions/v1/create-payment-intent';
 
+// Keep track of payment status to prevent duplicate submissions
+let paymentInProgress = false;
+
 // Function to call our Supabase Edge Function
 export const createPaymentIntent = async (amount: number, metadata: any) => {
   try {
+    // Prevent duplicate payment submissions
+    if (paymentInProgress) {
+      console.log('Payment already in progress, preventing duplicate submission');
+      return { error: 'Payment already in progress. Please wait.' };
+    }
+    
+    paymentInProgress = true;
     console.log('Creating payment intent with amount:', amount, 'metadata:', metadata);
     
     // Call the actual API endpoint
@@ -45,6 +54,7 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
       }
       
       console.error('Payment intent error:', errorMessage);
+      paymentInProgress = false;
       return { error: errorMessage };
     }
 
@@ -62,5 +72,10 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
     return {
       error: error instanceof Error ? error.message : 'An unknown error occurred',
     };
+  } finally {
+    // Reset payment flag after a short delay to prevent accidental double-clicks
+    setTimeout(() => {
+      paymentInProgress = false;
+    }, 2000);
   }
 };

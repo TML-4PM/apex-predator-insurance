@@ -9,6 +9,9 @@ import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '@/lib/stripeClient';
 import { PaymentForm } from './PaymentForm';
 import { CardElement, useElements } from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,6 +27,7 @@ interface CheckoutFormProps {
 }
 
 export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutFormProps) => {
+  const navigate = useNavigate();
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,6 +37,15 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
   });
   
   const elementsRef = useRef<any>(null);
+
+  // Reset form when plan changes
+  useEffect(() => {
+    form.reset({
+      fullName: "",
+      email: "",
+    });
+    resetCardElement();
+  }, [plan.id, form]);
 
   // Function to reset the Stripe card element
   const resetCardElement = () => {
@@ -71,6 +84,18 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
 
   return (
     <Form {...form}>
+      <div className="mb-6">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-white/70 hover:text-white"
+          onClick={() => navigate('/plans')}
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Plans
+        </Button>
+      </div>
+      
       <form className="space-y-4">
         <div>
           <FormField
