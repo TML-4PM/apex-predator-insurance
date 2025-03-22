@@ -1,9 +1,7 @@
-
 import { loadStripe } from '@stripe/stripe-js';
 
-// You should replace this with your actual Stripe publishable key
 // This is a publishable key which is safe to include in client-side code
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_mockedkeyforyourdevandstagingenvironments';
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51QdfYbD6fFdhmypR798NoSCJ4G9TGCkqw9QTuiDTkyvmn9tSrhey2n3cTHxjFG6GYDlcoBClLWsDN5Mgjb0tIfII00oVKQ67in';
 
 // Initialize Stripe with the appropriate key
 export const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);

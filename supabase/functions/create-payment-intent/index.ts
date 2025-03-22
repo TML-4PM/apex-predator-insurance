@@ -21,7 +21,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Set to true for production
+// Set to true for production - we're enabling this now
 const ENABLE_PAYMENTS = true;
 
 serve(async (req) => {

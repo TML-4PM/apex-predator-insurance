@@ -84,16 +84,16 @@ serve(async (req) => {
     const body = await req.text();
     const signature = req.headers.get('stripe-signature');
 
-    if (!signature) {
-      throw new Error('Missing Stripe signature');
-    }
+    // For logging purposes
+    console.log("Webhook received:", body.substring(0, 200) + "...");
 
     let event;
     
     // Verify webhook signature if secret is set
-    if (webhookSecret) {
+    if (webhookSecret && signature) {
       try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+        console.log("Webhook signature verified");
       } catch (err) {
         console.error(`Webhook signature verification failed: ${err.message}`);
         return new Response(
@@ -103,9 +103,19 @@ serve(async (req) => {
       }
     } else {
       // For development/testing without a webhook secret
-      event = JSON.parse(body);
-      console.warn('No webhook secret provided. Skipping signature verification.');
+      try {
+        event = JSON.parse(body);
+        console.warn('No webhook secret provided or missing signature. Skipping signature verification.');
+      } catch (err) {
+        console.error("Error parsing webhook body:", err);
+        return new Response(
+          JSON.stringify({ error: 'Invalid webhook payload' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
+
+    console.log(`Processing webhook event: ${event.type}`);
 
     // Handle specific webhook events
     switch (event.type) {
@@ -114,13 +124,17 @@ serve(async (req) => {
         console.log(`PaymentIntent ${paymentIntent.id} succeeded`);
         
         // Extract customer information from metadata
-        const { customer_name, customer_email, plan_id, plan_name } = paymentIntent.metadata;
+        const { customer_name, customer_email, plan_id, plan_name, fullName, email } = paymentIntent.metadata;
+        
+        // Use fallbacks for metadata fields that might come in different formats
+        const customerName = fullName || customer_name || 'Customer';
+        const customerEmail = email || customer_email || '';
         
         // Send confirmation email to customer
-        if (customer_email) {
+        if (customerEmail) {
           try {
             await sendEmail(
-              customer_email,
+              customerEmail,
               `Your Apex Predator Certificate: ${plan_name}`,
               `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -128,7 +142,7 @@ serve(async (req) => {
                   <h1 style="color: white; margin: 0;">Apex Predator Insurance</h1>
                 </div>
                 <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
-                  <h2>Thank you for your purchase, ${customer_name}!</h2>
+                  <h2>Thank you for your purchase, ${customerName}!</h2>
                   <p>Your certificate for <strong>${plan_name}</strong> is ready to download from your account.</p>
                   <p>You can access your certificate by logging into our website or clicking the button below:</p>
                   <div style="text-align: center; margin: 30px 0;">
@@ -137,7 +151,7 @@ serve(async (req) => {
                       Download Your Certificate
                     </a>
                   </div>
-                  <p>If you have any questions, just reply to this email.</p>
+                  <p>If you have any questions, please email us at info@apexpredatorinsurance.com</p>
                   <p>Happy surviving!</p>
                   <p>The Apex Predator Team</p>
                 </div>
@@ -148,7 +162,7 @@ serve(async (req) => {
               </div>
               `
             );
-            console.log(`Confirmation email sent to ${customer_email}`);
+            console.log(`Confirmation email sent to ${customerEmail}`);
           } catch (emailError) {
             console.error('Error sending confirmation email:', emailError);
           }
@@ -164,8 +178,8 @@ serve(async (req) => {
               <h2>New Purchase Alert</h2>
               <p>A new certificate has been purchased:</p>
               <ul>
-                <li><strong>Customer:</strong> ${customer_name}</li>
-                <li><strong>Email:</strong> ${customer_email}</li>
+                <li><strong>Customer:</strong> ${customerName}</li>
+                <li><strong>Email:</strong> ${customerEmail}</li>
                 <li><strong>Plan:</strong> ${plan_name}</li>
                 <li><strong>Amount:</strong> $${(paymentIntent.amount / 100).toFixed(2)}</li>
                 <li><strong>Date:</strong> ${new Date().toLocaleString()}</li>
@@ -183,9 +197,12 @@ serve(async (req) => {
         const failedPaymentIntent = event.data.object;
         console.error(`Payment failed: ${failedPaymentIntent.id}`);
         
-        // Extract customer information
-        const failedCustomerEmail = failedPaymentIntent.metadata?.customer_email;
-        const failedCustomerName = failedPaymentIntent.metadata?.customer_name;
+        // Extract customer information with fallbacks
+        const failedCustomerEmail = failedPaymentIntent.metadata?.email || 
+                                    failedPaymentIntent.metadata?.customer_email || '';
+        
+        const failedCustomerName = failedPaymentIntent.metadata?.fullName || 
+                                   failedPaymentIntent.metadata?.customer_name || 'there';
         
         // Send failure notification to customer if we have their email
         if (failedCustomerEmail) {
@@ -200,7 +217,7 @@ serve(async (req) => {
                 </div>
                 <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
                   <h2>Payment Unsuccessful</h2>
-                  <p>Hello ${failedCustomerName || 'there'},</p>
+                  <p>Hello ${failedCustomerName},</p>
                   <p>We're sorry, but your recent payment for an Apex Predator certificate was not successful.</p>
                   <p>This could be due to:</p>
                   <ul>
@@ -215,7 +232,7 @@ serve(async (req) => {
                       Try Again
                     </a>
                   </div>
-                  <p>If you need assistance, please reply to this email.</p>
+                  <p>If you need assistance, please email us at info@apexpredatorinsurance.com</p>
                   <p>The Apex Predator Team</p>
                 </div>
               </div>

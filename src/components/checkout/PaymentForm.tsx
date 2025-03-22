@@ -46,6 +46,11 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
     event.preventDefault();
     
     if (!stripe || !elements) {
+      toast({
+        title: "Stripe not loaded",
+        description: "Please wait a moment and try again",
+        variant: "destructive"
+      });
       return;
     }
 
@@ -76,11 +81,15 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         { 
           plan_id: plan.id,
           plan_name: plan.name,
+          fullName: formData.fullName,
           customer_name: formData.fullName,
           customer_email: formData.email,
+          email: formData.email,
           is_bundle: isBundle
         }
       );
+
+      console.log('Payment intent response:', paymentIntentResponse);
 
       // Check if running in demo mode (response from backend indicates this)
       if (paymentIntentResponse.demoMode) {
@@ -113,6 +122,8 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         throw new Error("No client secret returned from the server");
       }
 
+      console.log("Confirming card payment with secret");
+
       // Confirm the card payment with the client secret from our backend
       const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -125,8 +136,11 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
       });
 
       if (confirmError) {
+        console.error('Payment confirmation error:', confirmError);
         throw new Error(confirmError.message);
       }
+
+      console.log('Payment intent result:', paymentIntent);
 
       if (paymentIntent.status === 'succeeded') {
         setIsProcessed(true);
@@ -140,6 +154,30 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
           resetCardElement(); // Reset the card element
           onSuccess(formData);
         }, 1500);
+      } else if (paymentIntent.status === 'requires_action') {
+        // Handle 3D Secure authentication if required
+        const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(clientSecret);
+        
+        if (error) {
+          throw new Error(`Authentication failed: ${error.message}`);
+        }
+        
+        if (updatedIntent.status === 'succeeded') {
+          setIsProcessed(true);
+          toast({
+            title: "Payment successful!",
+            description: "Your certificate is ready to download.",
+          });
+          
+          setTimeout(() => {
+            resetCardElement();
+            onSuccess(formData);
+          }, 1500);
+        } else {
+          throw new Error(`Payment failed with status: ${updatedIntent.status}`);
+        }
+      } else {
+        throw new Error(`Payment failed with status: ${paymentIntent.status}`);
       }
     } catch (error) {
       console.error('Payment error:', error);
