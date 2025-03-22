@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -12,6 +11,7 @@ const PopularPlans = [
   { id: 'shark', name: 'Shark Insurance', price: 9.99, icon: '🦈', description: 'Our most popular choice for ocean adventurers!' },
   { id: 'crocodile', name: 'Crocodile Insurance', price: 9.99, icon: '🐊', description: 'Essential protection for tropical explorers.' },
   { id: 'lion', name: 'Lion Insurance', price: 9.99, icon: '🦁', description: 'Top pick for safari enthusiasts!' },
+  { id: 'spider', name: 'Spider Insurance', price: 9.99, icon: '🕷️', description: 'Must-have protection from arachnids!' },
 ];
 
 const Checkout = () => {
@@ -33,6 +33,14 @@ const Checkout = () => {
     price: 9.99,
     icon: '🦈'
   });
+  
+  // Support for multiple items in cart
+  const [cartItems, setCartItems] = useState<Array<{
+    id: string;
+    name: string;
+    price: number;
+    icon: string;
+  }>>(state?.cartItems || []);
 
   const isBundle = selectedPlan.id === 'bundle' || selectedPlan.id === 'medium-bundle';
 
@@ -52,9 +60,19 @@ const Checkout = () => {
     // Generate a new form key to force re-render
     setFormKey(Date.now());
     
+    // Initialize cart items from state or keep empty
+    if (state?.cartItems) {
+      setCartItems(state.cartItems);
+    } else if (state?.plan) {
+      // If no cart items but a plan is selected, use the plan as a single cart item
+      setCartItems([state.plan]);
+    } else {
+      setCartItems([]);
+    }
+    
     // Scroll to top
     window.scrollTo(0, 0);
-  }, []);
+  }, [state]);
 
   // Listen for form data updates to update the certificate preview
   useEffect(() => {
@@ -84,11 +102,15 @@ const Checkout = () => {
       // Generate a new form key to force re-render on return
       setFormKey(Date.now());
       
+      // For multiple items, pass the primary item as plan with cart items for reference
+      const primaryPlan = cartItems.length > 0 ? cartItems[0] : selectedPlan;
+      
       // Navigate to certificate page with user data
       navigate('/certificate', { 
         state: { 
-          plan: selectedPlan,
+          plan: primaryPlan,
           user: freshUserData,
+          cartItems: cartItems.length > 0 ? cartItems : [selectedPlan],
           timestamp: new Date().getTime() // Add timestamp to ensure freshness
         },
         replace: true // Replace history to avoid navigation issues
@@ -106,6 +128,9 @@ const Checkout = () => {
   const handleSwitchPlan = (plan: any) => {
     setSelectedPlan(plan);
     
+    // Update cart items with the new plan
+    setCartItems([plan]);
+    
     // Clear form data when switching plans
     setFormData({ fullName: '', email: '' });
     
@@ -116,9 +141,72 @@ const Checkout = () => {
     navigate('/checkout', { 
       state: { 
         plan,
+        cartItems: [plan],
         timestamp: new Date().getTime() // Add timestamp to ensure freshness
       },
       replace: true // Replace history to avoid navigation issues
+    });
+  };
+  
+  // Function to add an item to the cart
+  const addToCart = (item: any) => {
+    // Check if item already exists in cart
+    const exists = cartItems.some(cartItem => cartItem.id === item.id);
+    
+    if (!exists) {
+      const newCartItems = [...cartItems, item];
+      setCartItems(newCartItems);
+      
+      // Update navigation state
+      navigate('/checkout', { 
+        state: { 
+          plan: selectedPlan,
+          cartItems: newCartItems,
+          timestamp: new Date().getTime()
+        },
+        replace: true
+      });
+      
+      toast({
+        title: "Item Added",
+        description: `${item.name} has been added to your cart.`,
+      });
+    } else {
+      toast({
+        title: "Already in Cart",
+        description: `${item.name} is already in your cart.`,
+      });
+    }
+  };
+  
+  // Function to remove an item from the cart
+  const removeFromCart = (itemId: string) => {
+    const newCartItems = cartItems.filter(item => item.id !== itemId);
+    
+    // If cart would be empty, keep at least one item
+    if (newCartItems.length === 0) {
+      toast({
+        title: "Cannot Remove",
+        description: "You must have at least one item in your cart.",
+      });
+      return;
+    }
+    
+    setCartItems(newCartItems);
+    
+    // Update navigation state
+    navigate('/checkout', { 
+      state: { 
+        plan: newCartItems[0], // Use first item as primary plan
+        cartItems: newCartItems,
+        timestamp: new Date().getTime()
+      },
+      replace: true
+    });
+    
+    toast({
+      title: "Item Removed",
+      description: "Item has been removed from your cart.",
     });
   };
 
@@ -147,8 +235,8 @@ const Checkout = () => {
                     {PopularPlans.map((plan) => (
                       <CarouselItem key={plan.id} className="md:basis-1/2 lg:basis-1/3">
                         <div 
-                          className={`h-full p-4 rounded-xl border ${selectedPlan.id === plan.id ? 'border-apex-red bg-white/5' : 'border-white/10 hover:border-white/30'} transition-all cursor-pointer`}
-                          onClick={() => handleSwitchPlan(plan)}
+                          className={`h-full p-4 rounded-xl border ${cartItems.some(item => item.id === plan.id) ? 'border-apex-red bg-white/5' : 'border-white/10 hover:border-white/30'} transition-all cursor-pointer`}
+                          onClick={() => cartItems.some(item => item.id === plan.id) ? removeFromCart(plan.id) : addToCart(plan)}
                         >
                           <div className="flex items-center mb-2">
                             <span className="text-3xl mr-2">{plan.icon}</span>
@@ -156,6 +244,9 @@ const Checkout = () => {
                           </div>
                           <p className="text-sm text-white/70 mb-2">{plan.description}</p>
                           <p className="text-apex-red font-bold">${plan.price.toFixed(2)}</p>
+                          <div className="mt-2 text-xs text-white/70">
+                            {cartItems.some(item => item.id === plan.id) ? 'In cart - click to remove' : 'Click to add to cart'}
+                          </div>
                         </div>
                       </CarouselItem>
                     ))}
@@ -226,6 +317,7 @@ const Checkout = () => {
                     onSuccess={handlePaymentSuccess} 
                     isBundle={isBundle}
                     formKey={formKey} // Pass the key as a prop as well
+                    cartItems={cartItems}
                   />
                 </div>
               </div>
@@ -235,6 +327,7 @@ const Checkout = () => {
                   plan={selectedPlan} 
                   userName={formData.fullName || "Your Name Here"} 
                   isBundle={isBundle}
+                  cartItems={cartItems}
                 />
               </div>
             </div>

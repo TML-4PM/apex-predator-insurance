@@ -15,9 +15,19 @@ interface PaymentFormProps {
   onSuccess: (data: CheckoutFormValues) => void;
   isBundle?: boolean;
   resetCardElement: () => void;
+  cartItems?: Array<{ id: string; name: string; price: number; icon: string }>;
+  totalPrice?: number;
 }
 
-export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, resetCardElement }: PaymentFormProps) => {
+export const PaymentForm = ({ 
+  plan, 
+  formData, 
+  onSuccess, 
+  isBundle = false, 
+  resetCardElement,
+  cartItems = [],
+  totalPrice
+}: PaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +36,11 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
   const { toast } = useToast();
+
+  // Calculate the final price based on cart items or plan
+  const finalPrice = totalPrice ?? (cartItems && cartItems.length > 0 
+    ? cartItems.reduce((sum, item) => sum + item.price, 0) 
+    : plan.price);
 
   // Reset payment error when formData changes
   useEffect(() => {
@@ -81,12 +96,25 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         email: formData.email
       };
 
+      // Prepare metadata with all purchased items
+      const itemsMetadata = cartItems && cartItems.length > 0 
+        ? {
+            items: cartItems.map(item => item.id).join(','),
+            items_count: cartItems.length,
+            items_description: cartItems.map(item => item.name).join(', '),
+            primary_plan_id: cartItems[0].id,
+            primary_plan_name: cartItems[0].name,
+          }
+        : {
+            plan_id: plan.id,
+            plan_name: plan.name,
+          };
+
       // Call our backend API to create a payment intent
       const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
-        plan.price,
+        finalPrice,
         { 
-          plan_id: plan.id,
-          plan_name: plan.name,
+          ...itemsMetadata,
           fullName: paymentFormData.fullName,
           customer_name: paymentFormData.fullName,
           customer_email: paymentFormData.email,
@@ -299,7 +327,7 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
             </div>
           ) : (
             <>
-              Pay ${plan.price.toFixed(2)}
+              Pay ${finalPrice.toFixed(2)}
             </>
           )}
         </Button>

@@ -9,6 +9,7 @@ type CertificateProps = {
   country?: string;
   date?: string;
   uniqueId?: string;
+  multipleItems?: Array<{ id: string; name: string; icon: string }>;
 };
 
 const Certificate: React.FC<CertificateProps> = ({ 
@@ -16,7 +17,8 @@ const Certificate: React.FC<CertificateProps> = ({
   name = "John Adventurer",
   country = "Australia",
   date = new Date().toISOString().split('T')[0],
-  uniqueId = Math.random().toString(36).substring(2, 10).toUpperCase()
+  uniqueId = Math.random().toString(36).substring(2, 10).toUpperCase(),
+  multipleItems
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
@@ -125,8 +127,21 @@ const Certificate: React.FC<CertificateProps> = ({
         pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E94444' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         gradientOverlay: "bg-gradient-to-br from-apex-red/5 to-apex-yellow/10",
         funFact: "Humans are technically apex predators with a trophic level of 2.21, higher than even some sharks and big cats."
+      },
+      "Multiple Predator": {
+        icon: "🦌",
+        text: "across various habitats",
+        color: "from-indigo-500/20 to-blue-500/20",
+        pattern: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234F46E5' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E\")",
+        gradientOverlay: "bg-gradient-to-br from-indigo-500/5 to-blue-500/10",
+        funFact: "A combination of predator defenses is the most effective survival strategy in the wild - just like this multi-predator insurance package!"
       }
     };
+    
+    // Check for multiple predators
+    if (type.includes("Multiple") || (multipleItems && multipleItems.length > 1)) {
+      return info["Multiple Predator"];
+    }
     
     for (const [key, value] of Object.entries(info)) {
       if (type.includes(key)) {
@@ -146,6 +161,14 @@ const Certificate: React.FC<CertificateProps> = ({
     else if (type.includes('Bear')) result.icon = '🐻';
     
     return result;
+  };
+  
+  const getPredatorIcons = () => {
+    if (multipleItems && multipleItems.length > 1) {
+      // Return up to 6 icons for visual appeal
+      return multipleItems.slice(0, 6).map(item => item.icon).join(' ');
+    }
+    return info.icon;
   };
   
   const info = getInsuranceInfo(insuranceType);
@@ -182,7 +205,10 @@ const Certificate: React.FC<CertificateProps> = ({
           <div className={`relative ${info.gradientOverlay} backdrop-blur-[1px]`}>
             <div className="absolute top-0 left-0 w-full h-full opacity-10 z-0">
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl opacity-10">
-                {info.icon}
+                {multipleItems && multipleItems.length > 1 
+                  ? multipleItems.slice(0, 3).map(item => item.icon).join(' ')
+                  : info.icon
+                }
               </div>
             </div>
             
@@ -200,13 +226,23 @@ const Certificate: React.FC<CertificateProps> = ({
               <div className="text-center my-8">
                 <div className="text-sm uppercase tracking-wider text-apex-black/60">Certificate of</div>
                 <div className="text-4xl font-bold text-apex-red mb-2">{insuranceType}</div>
-                <div className="text-6xl my-6 animate-pulse">{info.icon}</div>
+                <div className="text-6xl my-6 animate-pulse flex justify-center items-center space-x-1">
+                  {multipleItems && multipleItems.length > 1 
+                    ? multipleItems.slice(0, 5).map((item, index) => (
+                        <span key={index} className="inline-block">{item.icon}</span>
+                      ))
+                    : <span>{info.icon}</span>
+                  }
+                </div>
                 <div className="text-lg text-apex-black/80">
                   This certifies that
                 </div>
                 <div className="text-3xl font-bold text-apex-black my-3">{name}</div>
                 <div className="text-lg text-apex-black/80 max-w-md mx-auto">
-                  is now covered for {insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')} encounters {info.text}.
+                  {multipleItems && multipleItems.length > 1 
+                    ? `is now covered for encounters with ${multipleItems.length} different predators across multiple environments.`
+                    : `is now covered for ${insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')} encounters ${info.text}.`
+                  }
                 </div>
                 <div className="text-lg font-bold text-apex-red mt-4">
                   $50,000 Virtual Certificate Value
@@ -219,6 +255,21 @@ const Certificate: React.FC<CertificateProps> = ({
                   <p className="text-apex-black/90 text-sm italic text-center">
                     <span className="font-semibold text-apex-red">Fun Fact:</span> {info.funFact}
                   </p>
+                </div>
+              )}
+              
+              {/* Multiple predators list */}
+              {multipleItems && multipleItems.length > 1 && (
+                <div className="bg-white/70 backdrop-blur-sm p-4 rounded-lg my-6 border border-apex-black/10">
+                  <p className="text-sm font-medium text-apex-black mb-2">Coverage includes protection against:</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {multipleItems.map((item, index) => (
+                      <div key={index} className="flex items-center">
+                        <span className="mr-2">{item.icon}</span>
+                        <span className="text-sm">{item.name.replace(' Insurance', '')}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
               
@@ -250,7 +301,7 @@ const Certificate: React.FC<CertificateProps> = ({
               
               <div className="mt-8 pt-6 border-t border-apex-black/10 text-center">
                 <p className="text-sm text-apex-black/60">
-                  Virtual certificate value of $50,000 for encounters with {insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')}
+                  Virtual certificate value of $50,000 for encounters with dangerous predators
                 </p>
                 <p className="text-xs text-apex-black/40 mt-1">
                   Certificate valid for 12 months. This is a novelty item only, not actual coverage of any kind.

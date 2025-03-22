@@ -11,14 +11,31 @@ interface OrderSummaryProps {
   };
   userName?: string;
   isBundle?: boolean;
+  cartItems?: Array<{ 
+    id: string;
+    name: string;
+    price: number;
+    icon: string;
+  }>;
 }
 
-export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = false }: OrderSummaryProps) => {
+export const OrderSummary = ({ 
+  plan, 
+  userName = "Your Name Here", 
+  isBundle = false,
+  cartItems = [] 
+}: OrderSummaryProps) => {
   const [displayName, setDisplayName] = useState(userName);
   
   // Determine plan type based on ID
   const isMidTier = plan.id === 'bundle25';
   const isCompleteBundle = plan.id === 'bundle';
+  
+  // Calculate total if multiple items exist in cart
+  const hasMultipleItems = cartItems && cartItems.length > 0;
+  const totalPrice = hasMultipleItems 
+    ? cartItems.reduce((sum, item) => sum + item.price, 0)
+    : plan.price;
   
   // Listen for form updates to update the certificate preview in real-time
   useEffect(() => {
@@ -42,13 +59,29 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
           Order Summary
         </h2>
         
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center">
-            <span className="text-2xl mr-2">{plan.icon}</span>
-            <span className="font-medium text-white">{plan.name}</span>
+        {hasMultipleItems ? (
+          // Display multiple items if cart has items
+          <>
+            {cartItems.map(item => (
+              <div className="flex items-center justify-between mb-4" key={item.id}>
+                <div className="flex items-center">
+                  <span className="text-2xl mr-2">{item.icon}</span>
+                  <span className="font-medium text-white">{item.name}</span>
+                </div>
+                <span className="font-medium text-white">${item.price.toFixed(2)}</span>
+              </div>
+            ))}
+          </>
+        ) : (
+          // Display single plan if no cart items
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <span className="text-2xl mr-2">{plan.icon}</span>
+              <span className="font-medium text-white">{plan.name}</span>
+            </div>
+            <span className="font-medium text-white">${plan.price.toFixed(2)}</span>
           </div>
-          <span className="font-medium text-white">${plan.price.toFixed(2)}</span>
-        </div>
+        )}
         
         {isMidTier && (
           <div className="bg-apex-red/20 rounded p-3 mb-4">
@@ -101,7 +134,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
         <div className="border-t border-white/10 my-4 pt-4">
           <div className="flex justify-between font-bold">
             <span className="text-white">Total</span>
-            <span className="text-apex-red">${plan.price.toFixed(2)}</span>
+            <span className="text-apex-red">${totalPrice.toFixed(2)}</span>
           </div>
         </div>
         
@@ -113,7 +146,9 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
             <div className="flex justify-center items-center h-full">
               {/* Certificate Preview */}
               <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
-                <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
+                <h3 className="text-xl font-semibold mb-2">
+                  {hasMultipleItems ? "Multiple Predator Coverage" : plan.name}
+                </h3>
                 <p className="mb-2">Issued to: {displayName}</p>
                 <p className="text-sm text-apex-red">$50,000 Accidental Death Benefit</p>
               </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -45,7 +46,16 @@ const CertificatePage = () => {
     return null;
   }
   
-  const { plan, user } = state;
+  const { plan, user, cartItems } = state;
+  
+  // Generate a certificate name based on cart items or plan
+  const getCertificateName = () => {
+    if (cartItems && cartItems.length > 1) {
+      return "Multiple Predator Insurance";
+    } else {
+      return plan.name;
+    }
+  };
   
   const handleDownload = async () => {
     if (certificateRef.current) {
@@ -54,7 +64,7 @@ const CertificatePage = () => {
         
         // Create a link element
         const link = document.createElement('a');
-        link.download = `${user.fullName.replace(/\s+/g, '-')}-${plan.name.replace(/\s+/g, '-')}-certificate.png`;
+        link.download = `${user.fullName.replace(/\s+/g, '-')}-${getCertificateName().replace(/\s+/g, '-')}-certificate.png`;
         link.href = dataUrl;
         link.click();
         
@@ -92,7 +102,7 @@ const CertificatePage = () => {
   
   const shareOnPlatform = (platform: string) => {
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(`I just got $50K insurance against ${plan.name.replace(' Insurance', '')} attacks! Will I survive my next adventure? #WildlifeShield #SurviveTheWild`);
+    const text = encodeURIComponent(`I just got $50K insurance against ${getCertificateName().replace(' Insurance', '')} attacks! Will I survive my next adventure? #WildlifeShield #SurviveTheWild`);
     
     let shareUrl = '';
     
@@ -107,7 +117,7 @@ const CertificatePage = () => {
         shareUrl = `https://wa.me/?text=${text} ${url}`;
         break;
       case 'email':
-        shareUrl = `mailto:?subject=My ${plan.name} protection&body=${text} ${decodeURIComponent(url)}`;
+        shareUrl = `mailto:?subject=My ${getCertificateName()} protection&body=${text} ${decodeURIComponent(url)}`;
         break;
       default:
         break;
@@ -121,7 +131,7 @@ const CertificatePage = () => {
   // Generate a unique certificate ID based on name and plan
   const generateUniqueId = () => {
     const nameHash = user.fullName.split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
-    const planHash = plan.name.split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
+    const planHash = getCertificateName().split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
     return `APX-${nameHash * planHash % 10000}-${Date.now().toString().slice(-4)}`;
   };
   
@@ -140,10 +150,11 @@ const CertificatePage = () => {
             
             <div className="mb-12" ref={certificateRef}>
               <Certificate 
-                insuranceType={plan.name}
+                insuranceType={getCertificateName()}
                 name={user.fullName}
                 country={plan.location || "Worldwide"}
                 uniqueId={generateUniqueId()}
+                multipleItems={cartItems && cartItems.length > 1 ? cartItems : undefined}
               />
             </div>
             

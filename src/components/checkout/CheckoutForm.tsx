@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { z } from "zod";
@@ -25,9 +25,10 @@ interface CheckoutFormProps {
   onSuccess: (data: CheckoutFormValues) => void;
   isBundle?: boolean;
   formKey?: string | number;
+  cartItems?: Array<{ id: string; name: string; price: number; icon: string }>;
 }
 
-export const CheckoutForm = ({ plan, onSuccess, isBundle = false, formKey }: CheckoutFormProps) => {
+export const CheckoutForm = ({ plan, onSuccess, isBundle = false, formKey, cartItems = [] }: CheckoutFormProps) => {
   const navigate = useNavigate();
   const elementsRef = useRef<any>(null);
   
@@ -39,6 +40,11 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false, formKey }: Che
     },
     mode: "onChange"
   });
+  
+  // Use the total price from all cart items if available, otherwise use the single plan price
+  const totalPrice = cartItems && cartItems.length > 0 
+    ? cartItems.reduce((sum, item) => sum + item.price, 0)
+    : plan.price;
   
   // Clear form on mount to prevent old data from appearing
   useEffect(() => {
@@ -197,6 +203,8 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false, formKey }: Che
                   onSuccess={handleSuccessfulPayment}
                   isBundle={isBundle}
                   resetCardElement={resetCardElement}
+                  cartItems={cartItems}
+                  totalPrice={totalPrice}
                 />
               );
             }}
