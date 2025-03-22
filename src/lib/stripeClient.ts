@@ -45,9 +45,12 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
       timestamp: new Date().toISOString(),
     };
     
-    // For testing/demo purposes, bypass the actual API call
-    // This will force demo mode to be true
-    return { demoMode: true, message: 'Running in demo mode for testing' };
+    // For testing/demo purposes - always return success in demo mode
+    console.log('Running in demo mode - simulating successful payment intent creation');
+    return { 
+      demoMode: true, 
+      message: 'Running in demo mode for testing. This is a simulated payment.' 
+    };
     
     /* Commenting out the actual API call for now to ensure demo mode works
     // Call the actual API endpoint

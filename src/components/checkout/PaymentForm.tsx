@@ -101,16 +101,19 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         console.log('Demo mode active: Simulating successful payment');
         setIsDemoMode(true);
         
-        toast({
-          title: "Demo Mode",
-          description: "This is a simulated payment. Your certificate is ready to download.",
-        });
-        
-        setIsProcessed(true);
+        // In demo mode, process the "payment" after a short delay to simulate processing
         setTimeout(() => {
-          resetCardElement(); // Reset the card element
-          onSuccess(formData);
-        }, 1500);
+          toast({
+            title: "Demo Mode",
+            description: "This is a simulated payment. Your certificate is ready to download.",
+          });
+          
+          setIsProcessed(true);
+          setTimeout(() => {
+            resetCardElement(); // Reset the card element
+            onSuccess(formData);
+          }, 1500);
+        }, 1000);
         
         return;
       }
@@ -250,6 +253,9 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
               }}
             />
           </div>
+          <p className="text-xs text-gray-400 mt-1">
+            For testing, you can use card number: 4242 4242 4242 4242, any future date, any CVC.
+          </p>
         </div>
 
         <Button
@@ -286,3 +292,4 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
     </form>
   );
 };
+
