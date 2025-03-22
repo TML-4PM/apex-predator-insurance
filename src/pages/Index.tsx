@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -61,12 +60,12 @@ const popularPlans = [
     icon: "🦈"
   },
   {
-    id: "crocodile",
-    name: "Saltwater Crocodile",
-    description: "For those brave souls venturing into murky waters. Don't be a snack!",
+    id: "spider",
+    name: "Giant Spider",
+    description: "For those who dare to venture where eight-legged monsters lurk.",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    icon: "🐊"
+    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🕷️"
   },
   {
     id: "bundle25",
@@ -196,37 +195,36 @@ const Index = () => {
             </div>
           </Carousel>
           
-          {/* Featured Crocodile Section */}
+          {/* Featured Spider Section */}
           <div className="mt-16 bg-gradient-to-r from-apex-red/20 to-apex-red/10 rounded-xl p-6 max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="mb-6 md:mb-0 md:mr-6">
                 <div className="flex items-center mb-3">
                   <Shield className="h-6 w-6 text-apex-red mr-2" />
-                  <h3 className="text-2xl font-bold text-apex-black">Featured: Saltwater Crocodile Insurance</h3>
+                  <h3 className="text-2xl font-bold text-apex-black">Featured: Giant Spider Insurance</h3>
                 </div>
                 <p className="text-lg text-apex-darkgray/80 mb-4">
-                  Over 1,000 people every year face saltwater crocodiles in the wild. Get our popular certificate for just $9.99.
+                  Over 2,000 people every year encounter dangerous spiders in the wild. Get our popular certificate for just $9.99.
                 </p>
                 <div className="grid grid-cols-1 gap-3 text-sm mb-6">
                   <img 
-                    src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                    alt="Saltwater Crocodile"
+                    src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                    alt="Giant Spider"
                     className="w-full h-48 object-cover rounded-lg mb-4"
                   />
                   <p className="text-apex-darkgray/80">
-                    Saltwater crocodiles are the largest reptiles on Earth, reaching lengths of over 20 feet. 
-                    Their bite force is the strongest of any animal at 3,700 PSI - enough to crush a human skull with ease!
+                    Some spider species are among the most venomous creatures on Earth. Their bite can cause severe pain, tissue damage, and in some cases, can be lethal if not treated quickly!
                   </p>
                 </div>
                 <p className="text-apex-red font-bold">Limited time offer - Get your certificate today!</p>
               </div>
               <div>
                 <Link 
-                  to="/checkout?plan=crocodile"
+                  to="/checkout?plan=spider"
                   className="bg-apex-red hover:bg-apex-red/90 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  <span>Get Crocodile Certificate - $9.99</span>
+                  <span>Get Spider Certificate - $9.99</span>
                 </Link>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 export type PricingPlan = {
   id: string;
   name: string;
@@ -25,16 +26,16 @@ export const PRICING_PLANS: PricingPlan[] = [
     ]
   },
   {
-    id: "crocodile",
-    name: "Saltwater Crocodile",
-    description: "For those brave souls venturing into murky waters. Don't be a snack!",
+    id: "spider",
+    name: "Giant Spider",
+    description: "For those who dare to venture where eight-legged monsters lurk.",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
-    icon: "🐊",
+    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    icon: "🕷️",
     features: [
-      "Certificate of Crocodile Encounter Survival",
+      "Certificate of Spider Encounter Survival",
       "Digital download available instantly",
-      "Perfect for tropical adventurers",
+      "Perfect for forest adventurers",
       "Makes a hilarious gift"
     ]
   },

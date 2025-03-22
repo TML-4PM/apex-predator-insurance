@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -9,9 +10,9 @@ import { useToast } from '@/hooks/use-toast';
 
 const PopularPlans = [
   { id: 'shark', name: 'Shark Insurance', price: 9.99, icon: '🦈', description: 'Our most popular choice for ocean adventurers!' },
-  { id: 'crocodile', name: 'Crocodile Insurance', price: 9.99, icon: '🐊', description: 'Essential protection for tropical explorers.' },
+  { id: 'spider', name: 'Spider Insurance', price: 9.99, icon: '🕷️', description: 'Essential protection from eight-legged nightmares.' },
   { id: 'lion', name: 'Lion Insurance', price: 9.99, icon: '🦁', description: 'Top pick for safari enthusiasts!' },
-  { id: 'spider', name: 'Spider Insurance', price: 9.99, icon: '🕷️', description: 'Must-have protection from arachnids!' },
+  { id: 'bear', name: 'Bear Insurance', price: 9.99, icon: '🐻', description: 'Must-have protection for mountain hikers!' },
 ];
 
 const Checkout = () => {
