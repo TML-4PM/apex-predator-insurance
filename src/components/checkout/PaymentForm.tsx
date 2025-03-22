@@ -14,9 +14,10 @@ interface PaymentFormProps {
   formData: CheckoutFormValues;
   onSuccess: (data: CheckoutFormValues) => void;
   isBundle?: boolean;
+  resetCardElement: () => void;
 }
 
-export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false }: PaymentFormProps) => {
+export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, resetCardElement }: PaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,11 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false }: Pay
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
   const { toast } = useToast();
+
+  // Reset payment error when formData changes
+  useEffect(() => {
+    setPaymentError(null);
+  }, [formData]);
 
   // Validate form fields whenever formData changes
   useEffect(() => {
@@ -88,10 +94,16 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false }: Pay
         
         setIsProcessed(true);
         setTimeout(() => {
+          resetCardElement(); // Reset the card element
           onSuccess(formData);
         }, 1500);
         
         return;
+      }
+      
+      // Handle error from payment intent creation
+      if (paymentIntentResponse.error) {
+        throw new Error(paymentIntentResponse.error);
       }
       
       // For real payments, get the client secret
@@ -125,6 +137,7 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false }: Pay
         
         // Add a small delay to show the success state before redirecting
         setTimeout(() => {
+          resetCardElement(); // Reset the card element
           onSuccess(formData);
         }, 1500);
       }

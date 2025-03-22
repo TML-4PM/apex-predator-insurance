@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -30,11 +29,17 @@ const CertificatePage = () => {
   
   useEffect(() => {
     if (!state?.plan || !state?.user) {
-      navigate('/plans');
+      console.error('Missing required state data for certificate page');
+      toast({
+        title: "Error",
+        description: "Certificate information is missing. Please complete checkout first.",
+        variant: "destructive"
+      });
+      navigate('/checkout', { replace: true });
     }
     
     window.scrollTo(0, 0);
-  }, [state, navigate]);
+  }, [state, navigate, toast]);
   
   if (!state?.plan || !state?.user) {
     return null;

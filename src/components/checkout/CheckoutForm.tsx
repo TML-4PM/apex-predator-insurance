@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '@/lib/stripeClient';
 import { PaymentForm } from './PaymentForm';
+import { CardElement, useElements } from '@stripe/react-stripe-js';
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -30,6 +31,30 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
       email: "",
     },
   });
+  
+  const elementsRef = useRef<any>(null);
+
+  // Function to reset the Stripe card element
+  const resetCardElement = () => {
+    if (elementsRef.current) {
+      const cardElement = elementsRef.current.getElement(CardElement);
+      if (cardElement) {
+        cardElement.clear();
+      }
+    }
+  };
+
+  // Handle successful form submission and payment
+  const handleSuccessfulPayment = (data: CheckoutFormValues) => {
+    // Reset form fields
+    form.reset({
+      fullName: "",
+      email: "",
+    });
+    
+    // Call the parent's onSuccess handler
+    onSuccess(data);
+  };
 
   // Update the certificate preview in real-time as the user types
   useEffect(() => {
@@ -44,15 +69,9 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
     return () => subscription.unsubscribe();
   }, [form, form.watch]);
 
-  const handleSubmitForm = (data: CheckoutFormValues) => {
-    // Form data is valid, now handle payment in the PaymentForm component
-    console.log("Form data is valid:", data);
-    // Don't call onSuccess here, it will be called from PaymentForm after payment succeeds
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmitForm)} className="space-y-4">
+      <form className="space-y-4">
         <div>
           <FormField
             control={form.control}
@@ -93,14 +112,27 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
         </div>
         
         <Elements stripe={stripePromise}>
-          <PaymentForm 
-            plan={plan} 
-            formData={form.getValues()} 
-            onSuccess={onSuccess}
-            isBundle={isBundle}
-          />
+          <ElementsConsumer>
+            {({ elements }) => {
+              // Store elements instance in ref
+              elementsRef.current = elements;
+              
+              return (
+                <PaymentForm 
+                  plan={plan} 
+                  formData={form.getValues()} 
+                  onSuccess={handleSuccessfulPayment}
+                  isBundle={isBundle}
+                  resetCardElement={resetCardElement}
+                />
+              );
+            }}
+          </ElementsConsumer>
         </Elements>
       </form>
     </Form>
   );
 };
+
+// This is needed to access the Elements context
+import { ElementsConsumer } from '@stripe/react-stripe-js';

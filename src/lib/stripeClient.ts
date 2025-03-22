@@ -16,6 +16,8 @@ export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL
 // Function to call our Supabase Edge Function
 export const createPaymentIntent = async (amount: number, metadata: any) => {
   try {
+    console.log('Creating payment intent with amount:', amount, 'metadata:', metadata);
+    
     // Call the actual API endpoint
     const response = await fetch(createPaymentIntentUrl, {
       method: 'POST',
@@ -28,12 +30,33 @@ export const createPaymentIntent = async (amount: number, metadata: any) => {
       }),
     });
 
+    // Log the response status
+    console.log('Payment intent response status:', response.status);
+    
+    // Handle network errors and non-JSON responses
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to create payment intent');
+      let errorMessage = 'Failed to create payment intent';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (e) {
+        // If the response is not JSON, use the status text
+        errorMessage = `Payment service error: ${response.status} ${response.statusText}`;
+      }
+      
+      console.error('Payment intent error:', errorMessage);
+      return { error: errorMessage };
     }
 
-    return await response.json();
+    // Parse the JSON response
+    try {
+      const data = await response.json();
+      console.log('Payment intent created successfully');
+      return data;
+    } catch (e) {
+      console.error('Error parsing payment intent response:', e);
+      return { error: 'Invalid response from payment service' };
+    }
   } catch (error) {
     console.error('Error creating payment intent:', error);
     return {

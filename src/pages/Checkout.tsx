@@ -6,6 +6,7 @@ import { ShoppingCart, TrendingUp } from 'lucide-react';
 import { CheckoutForm, CheckoutFormValues } from '@/components/checkout/CheckoutForm';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useToast } from '@/hooks/use-toast';
 
 const PopularPlans = [
   { id: 'shark', name: 'Shark Insurance', price: 9.99, icon: '🦈', description: 'Our most popular choice for ocean adventurers!' },
@@ -16,6 +17,7 @@ const PopularPlans = [
 const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [formData, setFormData] = useState<CheckoutFormValues>({
     fullName: '',
     email: '',
@@ -30,6 +32,11 @@ const Checkout = () => {
   };
 
   const isBundle = selectedPlan.id === 'bundle';
+
+  // Ensure we're at the top of the page when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Listen for form data updates to update the certificate preview
   useEffect(() => {
@@ -46,18 +53,32 @@ const Checkout = () => {
   }, []);
 
   const handlePaymentSuccess = (data: CheckoutFormValues) => {
-    // Navigate to certificate page with user data
-    setFormData(data);
-    navigate('/certificate', { 
-      state: { 
-        plan: selectedPlan,
-        user: data
-      } 
-    });
+    try {
+      // Clear any previous data
+      setFormData({ fullName: '', email: '' });
+      
+      // Navigate to certificate page with user data
+      navigate('/certificate', { 
+        state: { 
+          plan: selectedPlan,
+          user: data
+        } 
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem generating your certificate. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleSwitchPlan = (plan: any) => {
-    navigate('/checkout', { state: { plan } });
+    navigate('/checkout', { 
+      state: { plan },
+      replace: true // Replace history to avoid navigation issues
+    });
   };
 
   return (
