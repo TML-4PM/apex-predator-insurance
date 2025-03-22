@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import { Camera, Heart, MessageCircle, Share2 } from 'lucide-react';
+import { Camera, Heart, MessageCircle } from 'lucide-react';
+import ShareAdventure from '@/components/ShareAdventure';
 
 const galleryItems = [
   {
@@ -12,7 +13,7 @@ const galleryItems = [
     insurance: 'Shark Insurance',
     likes: 247,
     comments: 42,
-    imageUrl: 'https://images.unsplash.com/photo-1564731071754-001b53a902fb?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?q=80&w=1000',
   },
   {
     id: 2,
@@ -52,7 +53,7 @@ const galleryItems = [
     insurance: 'Scorpion Insurance',
     likes: 156,
     comments: 29,
-    imageUrl: 'https://images.unsplash.com/photo-1582559934353-2e47511c95c9?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1557036915-e2a1c397ad85?q=80&w=1000',
   },
   {
     id: 6,
@@ -165,10 +166,11 @@ const Gallery = () => {
                         <span>{item.comments}</span>
                       </button>
                       
-                      <button className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-darkgray transition-colors">
-                        <Share2 size={18} />
-                        <span>Share</span>
-                      </button>
+                      <ShareAdventure 
+                        compact={true} 
+                        predatorType={item.insurance.replace(' Insurance', '')}
+                        text={`Check out this ${item.insurance.replace(' Insurance', '')} adventure!`}
+                      />
                     </div>
                   </div>
                 </div>
