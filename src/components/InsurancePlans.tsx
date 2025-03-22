@@ -1499,7 +1499,7 @@ const InsurancePlans = () => {
                       </div>
                       
                       <span className="px-4 py-2 bg-apex-red text-white text-sm font-semibold rounded-full">
-                        {plan.id === 'bundle25' ? 'Save 40%' : 'Save 60%'}
+                        {plan.id === 'bundle25' ? 'Save 75%' : 'Save 83%'}
                       </span>
                     </div>
                     
@@ -1519,10 +1519,10 @@ const InsurancePlans = () => {
                       <div className="mb-4 sm:mb-0">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-lg text-apex-darkgray/70 line-through">
-                            ${plan.id === 'bundle25' ? '99.90' : '599.40'}
+                            ${plan.id === 'bundle25' ? '249.75' : '599.40'}
                           </span>
                           <span className="bg-apex-red/10 text-apex-red text-xs px-2 py-1 rounded">
-                            Save ${plan.id === 'bundle25' ? '39.91' : '349.41'}
+                            Save ${plan.id === 'bundle25' ? '189.76' : '499.41'}
                           </span>
                         </div>
                         <div className="flex items-baseline gap-2">
@@ -1530,7 +1530,7 @@ const InsurancePlans = () => {
                           <span className="text-apex-darkgray/70">/ year</span>
                         </div>
                         <p className="text-sm text-apex-darkgray/60 mt-1">
-                          Just ${plan.id === 'bundle25' ? '2.40' : '1.67'} per predator
+                          Just ${plan.id === 'bundle25' ? (plan.price / 25).toFixed(2) : (plan.price / 60).toFixed(2)} per predator
                         </p>
                       </div>
                       
