@@ -36,7 +36,7 @@ export const dangerZones: DangerZone[] = [
     threat: 'Crocodiles',
     description: 'Saltwater crocodiles here are among the largest and most aggressive in the world',
     color: '#8B5CF6',
-    image: 'https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+    image: 'https://images.unsplash.com/photo-1597138760662-9387048cf192?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
   },
   { 
     id: 5, 
@@ -54,6 +54,6 @@ export const dangerZones: DangerZone[] = [
     threat: 'Komodo Dragons',
     description: 'These massive lizards have a venomous bite and can take down large prey',
     color: '#33C3F0',
-    image: 'https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+    image: 'https://images.unsplash.com/photo-1583336598573-4d917e2ab0c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
   },
 ];

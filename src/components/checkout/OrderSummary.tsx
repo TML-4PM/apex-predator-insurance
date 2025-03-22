@@ -17,6 +17,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
   const [displayName, setDisplayName] = useState(userName);
   
   // Set isBundle based on plan ID
+  const isMidTier = plan.id === 'mid-tier-pack';
   isBundle = plan.id === 'apex-pack';
   
   // Listen for form updates to update the certificate preview in real-time
@@ -48,6 +49,30 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
           </div>
           <span className="font-medium text-white">${plan.price.toFixed(2)}</span>
         </div>
+        
+        {isMidTier && (
+          <div className="bg-apex-red/20 rounded p-3 mb-4">
+            <p className="text-sm text-white font-medium">
+              Mid-Tier Package: Protection against 25 predators
+            </p>
+            <div className="mt-2 grid grid-cols-2 gap-1 text-xs text-white/80">
+              <div className="flex items-center"><span className="mr-1">🦈</span> Sharks</div>
+              <div className="flex items-center"><span className="mr-1">🐊</span> Crocodiles</div>
+              <div className="flex items-center"><span className="mr-1">🐆</span> Big Cats</div>
+              <div className="flex items-center"><span className="mr-1">🐻</span> Bears</div>
+              <div className="flex items-center"><span className="mr-1">🐍</span> Snakes</div>
+              <div className="flex items-center"><span className="mr-1">🦂</span> Scorpions</div>
+              <div className="flex items-center"><span className="mr-1">🐘</span> Elephants</div>
+              <div className="flex items-center"><span className="mr-1">🦏</span> Rhinos</div>
+              <div className="flex items-center"><span className="mr-1">🦛</span> Hippos</div>
+              <div className="flex items-center"><span className="mr-1">🐺</span> Wolves</div>
+              <div className="flex items-center"><span className="mr-1">+15</span> more predators</div>
+            </div>
+            <p className="text-xs text-white/80 mt-2">
+              Save 40% compared to individual plans!
+            </p>
+          </div>
+        )}
         
         {isBundle && (
           <div className="bg-apex-red/20 rounded p-3 mb-4">

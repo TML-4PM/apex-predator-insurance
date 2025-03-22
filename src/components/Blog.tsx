@@ -23,7 +23,7 @@ const blogPosts = [
     date: 'May 28, 2023',
     readTime: '7 min read',
     category: 'Bear Safety',
-    image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?q=80&w=1000',
+    image: 'https://images.unsplash.com/photo-1525869916826-972885c91c1e?q=80&w=1000',
   },
   {
     id: 3,
@@ -95,22 +95,25 @@ const Blog = () => {
               </CardContent>
               
               <CardFooter className="bg-apex-lightgray/50 p-4">
-                <Button variant="ghost" className="ml-auto text-apex-red p-0 hover:bg-transparent hover:text-apex-red/80">
-                  Read More <ArrowRight size={16} className="ml-2" />
-                </Button>
+                <a href="mailto:info@apexpredatorinsurance.com" className="ml-auto">
+                  <Button variant="ghost" className="text-apex-red p-0 hover:bg-transparent hover:text-apex-red/80">
+                    Read More <ArrowRight size={16} className="ml-2" />
+                  </Button>
+                </a>
               </CardFooter>
             </Card>
           ))}
         </div>
         
         <div className="text-center">
-          <Button 
-            variant="outline" 
-            className="border-apex-red text-apex-red hover:bg-apex-red/10"
-            onClick={() => window.alert("Coming soon! Our full blog will be available in the next update.")}
-          >
-            View All Articles
-          </Button>
+          <a href="mailto:info@apexpredatorinsurance.com">
+            <Button 
+              variant="outline" 
+              className="border-apex-red text-apex-red hover:bg-apex-red/10"
+            >
+              View All Articles
+            </Button>
+          </a>
         </div>
       </div>
     </section>

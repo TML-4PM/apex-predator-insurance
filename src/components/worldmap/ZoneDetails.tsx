@@ -3,9 +3,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { DangerZone } from '@/models/DangerZone';
 import { getThreatIcon } from '@/utils/threatIcons';
-import { AlertTriangle, Share2 } from 'lucide-react';
+import { AlertTriangle, Share2, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ZoneDetailsProps {
   zone: DangerZone;
@@ -15,35 +21,64 @@ interface ZoneDetailsProps {
 const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
   const { toast } = useToast();
   
-  const handleShare = () => {
+  const handleShare = (platform?: string) => {
     const url = window.location.href;
     const text = `Check out the danger zone "${zone.name}" with ${zone.threat} on Apex Predator Insurance!`;
     
-    if (navigator.share) {
-      navigator.share({
-        title: `Apex Predator Insurance - ${zone.name}`,
-        text: text,
-        url: url,
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.log('Error sharing:', error));
-    } else {
-      // Fallback for browsers that don't support navigator.share
-      navigator.clipboard.writeText(`${text} ${url}`)
-        .then(() => {
-          toast({
-            title: "Link copied!",
-            description: "Share link has been copied to your clipboard.",
+    let shareUrl = '';
+    
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`Apex Predator Insurance - ${zone.name}`)}&summary=${encodeURIComponent(text)}`;
+        break;
+      case 'instagram':
+        // Instagram doesn't have a direct share URL API, so we'll just copy to clipboard
+        navigator.clipboard.writeText(`${text} ${url}`)
+          .then(() => {
+            toast({
+              title: "Link copied!",
+              description: "Open Instagram and paste this link in your story or post.",
+            });
           });
-        })
-        .catch(err => {
-          console.error('Failed to copy: ', err);
-          toast({
-            title: "Sharing failed",
-            description: "Could not copy the share link.",
-            variant: "destructive"
-          });
-        });
+        return;
+      default:
+        // Default share or copy to clipboard
+        if (navigator.share) {
+          navigator.share({
+            title: `Apex Predator Insurance - ${zone.name}`,
+            text: text,
+            url: url,
+          })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing:', error));
+          return;
+        } else {
+          // Fallback for browsers that don't support navigator.share
+          navigator.clipboard.writeText(`${text} ${url}`)
+            .then(() => {
+              toast({
+                title: "Link copied!",
+                description: "Share link has been copied to your clipboard.",
+              });
+            })
+            .catch(err => {
+              console.error('Failed to copy: ', err);
+              toast({
+                title: "Sharing failed",
+                description: "Could not copy the share link.",
+                variant: "destructive"
+              });
+            });
+          return;
+        }
+    }
+    
+    // Open share URL in a new window
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=400');
     }
   };
 
@@ -86,15 +121,36 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
           Close
         </button>
         
-        <Button 
-          size="sm" 
-          variant="outline" 
-          className="border-white/20 text-white hover:bg-white/10"
-          onClick={handleShare}
-        >
-          <Share2 className="h-3.5 w-3.5 mr-1" />
-          Share
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="border-white/20 text-white hover:bg-white/10"
+            >
+              <Share2 className="h-3.5 w-3.5 mr-1" />
+              Share
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48 bg-[#1A1F2C] border border-white/10">
+            <DropdownMenuItem onClick={() => handleShare('facebook')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+              <Facebook className="h-4 w-4 text-blue-500" />
+              <span>Facebook</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare('instagram')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+              <Instagram className="h-4 w-4 text-pink-500" />
+              <span>Instagram</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare('linkedin')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+              <Linkedin className="h-4 w-4 text-blue-600" />
+              <span>LinkedIn</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare()} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+              <Share2 className="h-4 w-4" />
+              <span>Copy Link</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </motion.div>
   );

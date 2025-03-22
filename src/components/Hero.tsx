@@ -49,7 +49,7 @@ const Hero = () => {
             alt="Shark" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
         </div>
         <div className="floating stagger-3 absolute top-1/3 right-[20%] opacity-20">
-          <img src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+          <img src="https://images.unsplash.com/photo-1597138760662-9387048cf192?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
             alt="Crocodile" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
         </div>
         <div className="floating stagger-2 absolute bottom-1/4 left-[25%] opacity-20">
@@ -75,7 +75,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-white opacity-90 mb-8 animate-fade-up animate-delay-100">
-            $9.99 per certificate – or get all predators for just $99.99!
+            $9.99 for a single predator – $59.99 for 25 – or all predators for just $99.99!
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
@@ -87,13 +87,13 @@ const Hero = () => {
               <span className="font-medium">Buy Your Certificate Now</span>
             </Link>
             
-            <Link 
-              to="/gallery" 
+            <a 
+              href="mailto:info@apexpredatorinsurance.com"
               className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               <Camera size={20} />
-              <span className="font-medium">Post Your Adventure</span>
-            </Link>
+              <span className="font-medium">Contact Us</span>
+            </a>
           </div>
         </div>
         
