@@ -23,17 +23,6 @@ const fullInsurancePlans = [
   // ... (fullInsurancePlans array remains unchanged)
 ];
 
-interface InsurancePlan {
-  id: string;
-  name: string;
-  icon: string;
-  price: number;
-  description: string;
-  location: string;
-  features: string[];
-  funFact: string;
-}
-
 const popularPlanIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
 
 const bundlePlanIds = ['bundle25', 'bundle60'];
@@ -41,7 +30,7 @@ const bundlePlanIds = ['bundle25', 'bundle60'];
 const InsurancePlans = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [filteredPlans, setFilteredPlans] = useState<InsurancePlan[]>(fullInsurancePlans);
+  const [filteredPlans, setFilteredPlans] = useState(fullInsurancePlans);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState('all');
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
@@ -388,7 +377,7 @@ const InsurancePlans = () => {
                         
                         <div className="flex items-center justify-between">
                           <div className="flex items-baseline gap-1">
-                            <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
+                            <span className="text-2xl font-bold text-apex-black">${plan.price.toFixed(2)}</span>
                             <span className="text-sm text-apex-darkgray/70">/ year</span>
                           </div>
                           
@@ -495,7 +484,7 @@ const InsurancePlans = () => {
                         
                         <div className="flex items-center justify-between">
                           <div className="flex items-baseline gap-1">
-                            <span className="text-2xl font-bold text-apex-black">${plan.price}</span>
+                            <span className="text-2xl font-bold text-apex-black">${plan.price.toFixed(2)}</span>
                             <span className="text-sm text-apex-darkgray/70">/ year</span>
                           </div>
                           
@@ -593,7 +582,7 @@ const InsurancePlans = () => {
                             ${plan.id === 'bundle25' ? '249.75' : '599.40'}
                           </span>
                           <span className="bg-apex-red/10 text-apex-red text-xs px-2 py-1 rounded">
-                            Save ${plan.id === 'bundle25' ? '0.00' : '0.00'}
+                            Save ${plan.id === 'bundle25' ? '189.76' : '499.41'}
                           </span>
                         </div>
                         <div className="flex items-baseline gap-2">
