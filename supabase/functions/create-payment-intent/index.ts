@@ -7,8 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// We're setting to demo mode for troubleshooting
-const ENABLE_PAYMENTS = false;
+// Enable payments for real transactions
+const ENABLE_PAYMENTS = true;
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -18,7 +18,7 @@ serve(async (req) => {
 
   try {
     // Get Stripe key from environment
-    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY') || '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';
     
     // If no key is set or payments are disabled, return demo mode response
     if (!stripeKey || !ENABLE_PAYMENTS) {
@@ -83,7 +83,6 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        demoMode: true // Fallback to demo mode on error
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

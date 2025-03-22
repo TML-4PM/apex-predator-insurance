@@ -1,4 +1,3 @@
-
 export type PricingPlan = {
   id: string;
   name: string;
@@ -72,7 +71,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "25 Predator Bundle",
     description: "Our mid-tier value! Get covered for 25 apex predators at a great price.",
     price: 59.99,
-    image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "📦",
     isBundle: true,
     features: [
@@ -87,7 +86,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Complete Bundle (60 Predators)",
     description: "Our best value! Get covered for all 60 apex predators.",
     price: 99.99,
-    image: "https://images.unsplash.com/photo-1501793123636-75796c6c03b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "📦",
     isBundle: true,
     features: [
@@ -107,12 +106,10 @@ export const getPlanById = (id: string): PricingPlan => {
   return plan;
 };
 
-// Add function to get bundle plans
 export const getBundlePlans = (): PricingPlan[] => {
   return PRICING_PLANS.filter(plan => plan.isBundle);
 };
 
-// Add function to get individual plans
 export const getIndividualPlans = (): PricingPlan[] => {
   return PRICING_PLANS.filter(plan => !plan.isBundle);
 };

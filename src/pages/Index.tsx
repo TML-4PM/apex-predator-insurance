@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -5,7 +6,6 @@ import InsurancePlans from '@/components/InsurancePlans';
 import Certificate from '@/components/Certificate';
 import FAQ from '@/components/FAQ';
 import Testimonials from '@/components/Testimonials';
-import WorldMap from '@/components/WorldMap';
 import PhotoGallery from '@/components/PhotoGallery';
 import MobileApp from '@/components/MobileApp';
 import Community from '@/components/Community';
@@ -73,7 +73,7 @@ const popularPlans = [
     name: "25 Predator Bundle",
     description: "Our mid-tier value! Get covered for 25 apex predators at a great price.",
     price: 59.99,
-    image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "🏅",
     isBundle: true
   },
@@ -82,7 +82,7 @@ const popularPlans = [
     name: "Complete Bundle",
     description: "Our best value! Get covered for all 60 apex predators.",
     price: 99.99,
-    image: "https://images.unsplash.com/photo-1501793123636-75796c6c03b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "🏆",
     isBundle: true
   }
@@ -196,6 +196,42 @@ const Index = () => {
             </div>
           </Carousel>
           
+          {/* Featured Crocodile Section */}
+          <div className="mt-16 bg-gradient-to-r from-apex-red/20 to-apex-red/10 rounded-xl p-6 max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-6 md:mb-0 md:mr-6">
+                <div className="flex items-center mb-3">
+                  <Shield className="h-6 w-6 text-apex-red mr-2" />
+                  <h3 className="text-2xl font-bold text-apex-black">Featured: Saltwater Crocodile Insurance</h3>
+                </div>
+                <p className="text-lg text-apex-darkgray/80 mb-4">
+                  Over 1,000 people every year face saltwater crocodiles in the wild. Get our popular certificate for just $9.99.
+                </p>
+                <div className="grid grid-cols-1 gap-3 text-sm mb-6">
+                  <img 
+                    src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                    alt="Saltwater Crocodile"
+                    className="w-full h-48 object-cover rounded-lg mb-4"
+                  />
+                  <p className="text-apex-darkgray/80">
+                    Saltwater crocodiles are the largest reptiles on Earth, reaching lengths of over 20 feet. 
+                    Their bite force is the strongest of any animal at 3,700 PSI - enough to crush a human skull with ease!
+                  </p>
+                </div>
+                <p className="text-apex-red font-bold">Limited time offer - Get your certificate today!</p>
+              </div>
+              <div>
+                <Link 
+                  to="/checkout?plan=crocodile"
+                  className="bg-apex-red hover:bg-apex-red/90 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  <span>Get Crocodile Certificate - $9.99</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+          
           {/* Special Bundle Call-to-Action */}
           <div className="mt-16 bg-gradient-to-r from-apex-red/20 to-apex-red/10 rounded-xl p-6 max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between">
@@ -235,8 +271,6 @@ const Index = () => {
         </div>
       </section>
       
-      <WorldMap />
-      
       <PhotoGallery />
       
       <section className="py-20 bg-[#1A1F2C]">
@@ -268,8 +302,8 @@ const Index = () => {
       <section className="py-20 bg-[#221F26] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <img 
-            src="https://images.unsplash.com/photo-1518599807935-37015b9cefcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
-            alt="Shark background"
+            src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+            alt="Crocodile background"
             className="w-full h-full object-cover"
             style={{ filter: 'brightness(0.3) contrast(1.2)' }}
           />
@@ -298,7 +332,7 @@ const Index = () => {
               
               <div className="bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-white/10 transform hover:scale-105 transition-all duration-300">
                 <img 
-                  src="https://images.unsplash.com/photo-1610052178570-97bc8e3a0a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
                   alt="Saltwater Crocodile"
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
@@ -310,13 +344,13 @@ const Index = () => {
               
               <div className="bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-white/10 transform hover:scale-105 transition-all duration-300">
                 <img 
-                  src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                  alt="African Lion"
+                  src="https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  alt="Crocodile Attack"
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
-                <h3 className="text-xl font-bold text-white mb-2">African Lion</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Crocodile Attack</h3>
                 <p className="text-white/70">
-                  Lions can leap up to 36 feet and their roar can be heard up to 5 miles away.
+                  Crocodiles can remain motionless for hours before launching a lightning-fast attack.
                 </p>
               </div>
             </div>

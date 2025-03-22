@@ -1,8 +1,8 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 
-// This is a publishable key which is safe to include in client-side code
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51QdfYbD6fFdhmypR798NoSCJ4G9TGCkqw9QTuiDTkyvmn9tSrhey2n3cTHxjFG6GYDlcoBClLWsDN5Mgjb0tIfII00oVKQ67in';
+// Use real Stripe publishable key
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51QdfYbD6fFdhmypRdytRqfBJKJ6QlNMHsbagEFdNwdZOtgNM5g3e4Qw3qV7GgCjNv9MVxSNkXQnWvCPuoNGO1jvF00WD7vxLHO';
 
 // Initialize Stripe with the appropriate key
 export const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
@@ -35,14 +35,6 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
       timestamp: new Date().toISOString(),
     };
     
-    // For testing/demo purposes - always return success in demo mode
-    console.log('Running in demo mode - simulating successful payment intent creation');
-    return { 
-      demoMode: true, 
-      message: 'Running in demo mode for testing. This is a simulated payment.' 
-    };
-    
-    /* Commenting out the actual API call for now to ensure demo mode works
     // Call the actual API endpoint
     const response = await fetch(createPaymentIntentUrl, {
       method: 'POST',
@@ -83,12 +75,10 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
       console.error('Error parsing payment intent response:', e);
       return { error: 'Invalid response from payment service' };
     }
-    */
   } catch (error) {
     console.error('Error creating payment intent:', error);
     return {
       error: error instanceof Error ? error.message : 'An unknown error occurred',
-      demoMode: true // Fallback to demo mode on error
     };
   }
 };
