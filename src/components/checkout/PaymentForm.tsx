@@ -191,6 +191,7 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
         description: error instanceof Error ? error.message : "Please try again or contact support.",
         variant: "destructive"
       });
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -292,4 +293,3 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
     </form>
   );
 };
-

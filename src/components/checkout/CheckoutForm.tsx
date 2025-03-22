@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '@/lib/stripeClient';
 import { PaymentForm } from './PaymentForm';
-import { CardElement, useElements } from '@stripe/react-stripe-js';
+import { CardElement } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -34,6 +34,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
       fullName: "",
       email: "",
     },
+    mode: "onChange"
   });
   
   const elementsRef = useRef<any>(null);
@@ -108,6 +109,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                   <Input 
                     placeholder="Your name (as it will appear on the certificate)" 
                     {...field} 
+                    autoComplete="off"
                   />
                 </FormControl>
                 <FormMessage />
@@ -128,6 +130,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                     type="email"
                     placeholder="Where to send your certificate" 
                     {...field} 
+                    autoComplete="off"
                   />
                 </FormControl>
                 <FormMessage />

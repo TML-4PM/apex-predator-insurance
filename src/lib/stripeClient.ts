@@ -99,7 +99,7 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
     console.error('Error creating payment intent:', error);
     return {
       error: error instanceof Error ? error.message : 'An unknown error occurred',
-      demoMode: true, // Fallback to demo mode on error
+      demoMode: true // Fallback to demo mode on error
     };
   } finally {
     // Reset payment flag after a short delay to prevent accidental double-clicks

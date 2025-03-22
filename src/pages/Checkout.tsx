@@ -1,13 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import { ShoppingCart, TrendingUp, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, TrendingUp } from 'lucide-react';
 import { CheckoutForm, CheckoutFormValues } from '@/components/checkout/CheckoutForm';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
 
 const PopularPlans = [
   { id: 'shark', name: 'Shark Insurance', price: 9.99, icon: '🦈', description: 'Our most popular choice for ocean adventurers!' },
@@ -34,35 +32,6 @@ const Checkout = () => {
 
   const isBundle = selectedPlan.id === 'bundle' || selectedPlan.id === 'medium-bundle';
 
-  // Redirect to plans page if accessed directly without a plan selection
-  useEffect(() => {
-    if (!state?.plan && !sessionStorage.getItem('lastSelectedPlan')) {
-      toast({
-        title: "No plan selected",
-        description: "Please select an insurance plan first.",
-      });
-      
-      // Give the toast time to appear before redirecting
-      const timer = setTimeout(() => {
-        navigate('/plans');
-      }, 2000);
-      
-      return () => clearTimeout(timer);
-    } else if (state?.plan) {
-      // Store the selected plan in session storage as a backup
-      sessionStorage.setItem('lastSelectedPlan', JSON.stringify(state.plan));
-      setSelectedPlan(state.plan);
-    } else if (!state?.plan && sessionStorage.getItem('lastSelectedPlan')) {
-      // Recover from session storage if needed
-      try {
-        const savedPlan = JSON.parse(sessionStorage.getItem('lastSelectedPlan') || '');
-        setSelectedPlan(savedPlan);
-      } catch (e) {
-        console.error('Error retrieving saved plan:', e);
-      }
-    }
-  }, [state, navigate, toast]);
-
   // Ensure we're at the top of the page when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -87,9 +56,6 @@ const Checkout = () => {
       // Clear any previous data
       setFormData({ fullName: '', email: '' });
       
-      // Remove stored plan from session storage
-      sessionStorage.removeItem('lastSelectedPlan');
-      
       // Navigate to certificate page with user data
       navigate('/certificate', { 
         state: { 
@@ -109,9 +75,6 @@ const Checkout = () => {
   };
 
   const handleSwitchPlan = (plan: any) => {
-    // Store the updated plan in session storage
-    sessionStorage.setItem('lastSelectedPlan', JSON.stringify(plan));
-    
     setSelectedPlan(plan);
     
     // Clear form data when switching plans
