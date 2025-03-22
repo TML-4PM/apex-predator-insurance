@@ -7,8 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// We're now enabling payments for real
-const ENABLE_PAYMENTS = true;
+// We're setting to demo mode for troubleshooting
+const ENABLE_PAYMENTS = false;
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -22,11 +22,11 @@ serve(async (req) => {
     
     // If no key is set or payments are disabled, return demo mode response
     if (!stripeKey || !ENABLE_PAYMENTS) {
-      console.log('Payment processing disabled or missing Stripe key');
+      console.log('Payment processing in demo mode');
       return new Response(
         JSON.stringify({ 
           demoMode: true,
-          message: 'Payment processing is disabled or not configured' 
+          message: 'Payment processing is in demo mode' 
         }),
         { 
           status: 200, 
