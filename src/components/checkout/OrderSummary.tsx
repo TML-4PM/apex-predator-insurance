@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield } from 'lucide-react';
 
 interface OrderSummaryProps {
@@ -16,9 +16,9 @@ interface OrderSummaryProps {
 export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = false }: OrderSummaryProps) => {
   const [displayName, setDisplayName] = useState(userName);
   
-  // Set isBundle based on plan ID
-  const isMidTier = plan.id === 'mid-tier-pack';
-  isBundle = plan.id === 'apex-pack';
+  // Determine plan type based on ID
+  const isMidTier = plan.id === 'bundle25';
+  const isCompleteBundle = plan.id === 'bundle';
   
   // Listen for form updates to update the certificate preview in real-time
   useEffect(() => {
@@ -74,7 +74,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
           </div>
         )}
         
-        {isBundle && (
+        {isCompleteBundle && (
           <div className="bg-apex-red/20 rounded p-3 mb-4">
             <p className="text-sm text-white font-medium">
               Premium Bundle: Protection against all 60 predators
@@ -93,7 +93,7 @@ export const OrderSummary = ({ plan, userName = "Your Name Here", isBundle = fal
               <div className="flex items-center"><span className="mr-1">+50</span> more predators</div>
             </div>
             <p className="text-xs text-white/80 mt-2">
-              Save 60% compared to individual plans!
+              Save 80% compared to individual plans!
             </p>
           </div>
         )}

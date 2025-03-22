@@ -9,6 +9,7 @@
 // 4. Add your Stripe secret key and webhook secret to Supabase secrets:
 //    supabase secrets set STRIPE_SECRET_KEY=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
 //    supabase secrets set STRIPE_WEBHOOK_SECRET=your_webhook_signing_secret
+//    supabase secrets set EMAIL_SERVICE_API_KEY=your_email_service_api_key
 // 5. Deploy the function: 
 //    supabase functions deploy webhook-handler --no-verify-jwt
 // 6. Setup webhook in Stripe dashboard pointing to:
@@ -21,6 +22,43 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Simple mock email function - in production, you would use a real email service
+async function sendEmail(to: string, subject: string, body: string) {
+  // For demo purposes, we'll just log the email
+  console.log(`EMAIL SENT TO: ${to}`);
+  console.log(`SUBJECT: ${subject}`);
+  console.log(`BODY: ${body}`);
+  
+  // In production, uncomment and use a real email service API
+  // const emailServiceApiKey = Deno.env.get('EMAIL_SERVICE_API_KEY');
+  // 
+  // if (!emailServiceApiKey) {
+  //   throw new Error('Missing email service API key');
+  // }
+  // 
+  // const response = await fetch('https://api.youremailservice.com/send', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${emailServiceApiKey}`
+  //   },
+  //   body: JSON.stringify({
+  //     to,
+  //     subject,
+  //     html: body
+  //   })
+  // });
+  // 
+  // if (!response.ok) {
+  //   throw new Error(`Failed to send email: ${await response.text()}`);
+  // }
+  // 
+  // return await response.json();
+  
+  // For the demo, just return success
+  return { success: true, id: `mock_email_${Date.now()}` };
+}
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -78,13 +116,66 @@ serve(async (req) => {
         // Extract customer information from metadata
         const { customer_name, customer_email, plan_id, plan_name } = paymentIntent.metadata;
         
-        // Here you would typically:
-        // 1. Record the successful payment in your database
-        // 2. Send confirmation email to customer
-        // 3. Generate certificate or digital goods
-        // 4. Update inventory or subscription status
+        // Send confirmation email to customer
+        if (customer_email) {
+          try {
+            await sendEmail(
+              customer_email,
+              `Your Apex Predator Certificate: ${plan_name}`,
+              `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background-color: #f42424; padding: 20px; text-align: center;">
+                  <h1 style="color: white; margin: 0;">Apex Predator Insurance</h1>
+                </div>
+                <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
+                  <h2>Thank you for your purchase, ${customer_name}!</h2>
+                  <p>Your certificate for <strong>${plan_name}</strong> is ready to download from your account.</p>
+                  <p>You can access your certificate by logging into our website or clicking the button below:</p>
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://apexpredatorinsurance.com/certificate?plan=${plan_id}" 
+                      style="background-color: #f42424; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                      Download Your Certificate
+                    </a>
+                  </div>
+                  <p>If you have any questions, just reply to this email.</p>
+                  <p>Happy surviving!</p>
+                  <p>The Apex Predator Team</p>
+                </div>
+                <div style="background-color: #f8f8f8; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+                  <p>This is a novelty certificate and does not provide any actual insurance coverage.</p>
+                  <p>&copy; ${new Date().getFullYear()} Apex Predator Insurance. All rights reserved.</p>
+                </div>
+              </div>
+              `
+            );
+            console.log(`Confirmation email sent to ${customer_email}`);
+          } catch (emailError) {
+            console.error('Error sending confirmation email:', emailError);
+          }
+        }
         
-        console.log(`Payment received from ${customer_name} (${customer_email}) for ${plan_name}`);
+        // Also send notification to admins
+        try {
+          await sendEmail(
+            'info@apexpredatorinsurance.com',
+            'New Certificate Purchase!',
+            `
+            <div style="font-family: Arial, sans-serif;">
+              <h2>New Purchase Alert</h2>
+              <p>A new certificate has been purchased:</p>
+              <ul>
+                <li><strong>Customer:</strong> ${customer_name}</li>
+                <li><strong>Email:</strong> ${customer_email}</li>
+                <li><strong>Plan:</strong> ${plan_name}</li>
+                <li><strong>Amount:</strong> $${(paymentIntent.amount / 100).toFixed(2)}</li>
+                <li><strong>Date:</strong> ${new Date().toLocaleString()}</li>
+              </ul>
+            </div>
+            `
+          );
+        } catch (emailError) {
+          console.error('Error sending admin notification email:', emailError);
+        }
         
         break;
         
@@ -92,7 +183,50 @@ serve(async (req) => {
         const failedPaymentIntent = event.data.object;
         console.error(`Payment failed: ${failedPaymentIntent.id}`);
         
-        // Handle failed payment - notify admins, update database, etc.
+        // Extract customer information
+        const failedCustomerEmail = failedPaymentIntent.metadata?.customer_email;
+        const failedCustomerName = failedPaymentIntent.metadata?.customer_name;
+        
+        // Send failure notification to customer if we have their email
+        if (failedCustomerEmail) {
+          try {
+            await sendEmail(
+              failedCustomerEmail,
+              'Your Apex Predator Payment Was Not Successful',
+              `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background-color: #f42424; padding: 20px; text-align: center;">
+                  <h1 style="color: white; margin: 0;">Apex Predator Insurance</h1>
+                </div>
+                <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
+                  <h2>Payment Unsuccessful</h2>
+                  <p>Hello ${failedCustomerName || 'there'},</p>
+                  <p>We're sorry, but your recent payment for an Apex Predator certificate was not successful.</p>
+                  <p>This could be due to:</p>
+                  <ul>
+                    <li>Insufficient funds</li>
+                    <li>Expired card details</li>
+                    <li>Card declined by your bank</li>
+                  </ul>
+                  <p>Please try again with a different payment method or contact your bank for more details.</p>
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://apexpredatorinsurance.com/plans" 
+                      style="background-color: #f42424; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                      Try Again
+                    </a>
+                  </div>
+                  <p>If you need assistance, please reply to this email.</p>
+                  <p>The Apex Predator Team</p>
+                </div>
+              </div>
+              `
+            );
+            console.log(`Payment failure email sent to ${failedCustomerEmail}`);
+          } catch (emailError) {
+            console.error('Error sending payment failure email:', emailError);
+          }
+        }
+        
         break;
         
       default:
