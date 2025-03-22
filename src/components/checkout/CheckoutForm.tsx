@@ -76,14 +76,20 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
   const handleSuccessfulPayment = (data: CheckoutFormValues) => {
     if (!mounted) return;
     
+    // Create a fresh copy of the data to avoid reference issues
+    const freshData = {
+      fullName: data.fullName || "",
+      email: data.email || ""
+    };
+    
     // Reset form fields
     form.reset({
       fullName: "",
       email: "",
     });
     
-    // Call the parent's onSuccess handler
-    onSuccess(data);
+    // Call the parent's onSuccess handler with fresh data
+    onSuccess(freshData);
   };
 
   // Update the certificate preview in real-time as the user types

@@ -1,3 +1,4 @@
+
 import { loadStripe } from '@stripe/stripe-js';
 
 // This is a publishable key which is safe to include in client-side code
@@ -11,9 +12,6 @@ export const createPaymentIntentUrl = import.meta.env.VITE_SUPABASE_URL
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment-intent`
   : 'http://localhost:54321/functions/v1/create-payment-intent';
 
-// Keep track of payment status to prevent duplicate submissions
-let paymentInProgress = false;
-
 // Define the return type for createPaymentIntent
 export type PaymentIntentResponse = 
   | { clientSecret: string; demoMode?: boolean }
@@ -23,19 +21,11 @@ export type PaymentIntentResponse =
 // Function to call our Supabase Edge Function
 export const createPaymentIntent = async (amount: number, metadata: any): Promise<PaymentIntentResponse> => {
   try {
-    // Prevent duplicate payment submissions
-    if (paymentInProgress) {
-      console.log('Payment already in progress, preventing duplicate submission');
-      return { error: 'Payment already in progress. Please wait.' };
-    }
-    
-    paymentInProgress = true;
     console.log('Creating payment intent with amount:', amount, 'metadata:', metadata);
     
     // Validate the metadata to ensure we have necessary information
     if (!metadata.fullName || !metadata.email) {
       console.error('Missing required metadata for payment:', metadata);
-      paymentInProgress = false;
       return { error: 'Missing required information. Please fill in all fields.' };
     }
     
@@ -80,7 +70,6 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
       }
       
       console.error('Payment intent error:', errorMessage);
-      paymentInProgress = false;
       return { error: errorMessage };
     }
 
@@ -101,10 +90,5 @@ export const createPaymentIntent = async (amount: number, metadata: any): Promis
       error: error instanceof Error ? error.message : 'An unknown error occurred',
       demoMode: true // Fallback to demo mode on error
     };
-  } finally {
-    // Reset payment flag after a short delay to prevent accidental double-clicks
-    setTimeout(() => {
-      paymentInProgress = false;
-    }, 2000);
   }
 };

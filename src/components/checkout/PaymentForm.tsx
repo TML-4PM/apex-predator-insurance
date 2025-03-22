@@ -118,7 +118,14 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
           setIsProcessed(true);
           setTimeout(() => {
             resetCardElement(); // Reset the card element
-            onSuccess(paymentFormData);
+            
+            // Use a fresh copy of the form data
+            const freshData = {
+              fullName: paymentFormData.fullName,
+              email: paymentFormData.email
+            };
+            
+            onSuccess(freshData);
           }, 1500);
         }, 1000);
         
@@ -136,8 +143,8 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
           payment_method: {
             card: cardElement,
             billing_details: {
-              name: formData.fullName,
-              email: formData.email,
+              name: paymentFormData.fullName,
+              email: paymentFormData.email,
             },
           },
         });
@@ -159,7 +166,14 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
           // Add a small delay to show the success state before redirecting
           setTimeout(() => {
             resetCardElement(); // Reset the card element
-            onSuccess(formData);
+            
+            // Use a fresh copy of the form data
+            const freshData = {
+              fullName: paymentFormData.fullName,
+              email: paymentFormData.email
+            };
+            
+            onSuccess(freshData);
           }, 1500);
         } else if (paymentIntent.status === 'requires_action') {
           // Handle 3D Secure authentication if required
@@ -178,7 +192,14 @@ export const PaymentForm = ({ plan, formData, onSuccess, isBundle = false, reset
             
             setTimeout(() => {
               resetCardElement();
-              onSuccess(formData);
+              
+              // Use a fresh copy of the form data
+              const freshData = {
+                fullName: paymentFormData.fullName,
+                email: paymentFormData.email
+              };
+              
+              onSuccess(freshData);
             }, 1500);
           } else {
             throw new Error(`Payment failed with status: ${updatedIntent.status}`);

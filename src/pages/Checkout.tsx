@@ -37,10 +37,13 @@ const Checkout = () => {
 
   // Clear any persisted data from session or local storage
   useEffect(() => {
-    // Clear any previous form data from session storage
+    // Clear ALL storage to ensure no data persistence
     sessionStorage.clear();
     localStorage.removeItem('formData');
     localStorage.removeItem('lastSelectedPlan');
+    localStorage.removeItem('checkoutFormData');
+    localStorage.removeItem('paymentData');
+    localStorage.removeItem('certificateData');
     
     // Reset form data
     setFormData({ fullName: '', email: '' });
@@ -65,6 +68,12 @@ const Checkout = () => {
 
   const handlePaymentSuccess = (data: CheckoutFormValues) => {
     try {
+      // Create a fresh copy to avoid reference issues
+      const freshUserData = {
+        fullName: data.fullName || '',
+        email: data.email || ''
+      };
+      
       // Clear any previous data
       setFormData({ fullName: '', email: '' });
       
@@ -72,7 +81,8 @@ const Checkout = () => {
       navigate('/certificate', { 
         state: { 
           plan: selectedPlan,
-          user: data
+          user: freshUserData,
+          timestamp: new Date().getTime() // Add timestamp to ensure freshness
         },
         replace: true // Replace history to avoid navigation issues
       });
@@ -94,7 +104,10 @@ const Checkout = () => {
     
     // Update navigation state
     navigate('/checkout', { 
-      state: { plan },
+      state: { 
+        plan,
+        timestamp: new Date().getTime() // Add timestamp to ensure freshness
+      },
       replace: true // Replace history to avoid navigation issues
     });
   };
@@ -198,7 +211,7 @@ const Checkout = () => {
                   </h2>
                   
                   <CheckoutForm 
-                    key={`checkout-form-${selectedPlan.id}`} // Force re-render on plan change
+                    key={`checkout-form-${selectedPlan.id}-${Date.now()}`} // Force re-render with timestamp
                     plan={selectedPlan} 
                     onSuccess={handlePaymentSuccess} 
                     isBundle={isBundle}
