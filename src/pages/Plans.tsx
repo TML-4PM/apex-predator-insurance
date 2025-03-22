@@ -55,9 +55,9 @@ const Plans = () => {
                 <span>Individual plans: $9.99</span>
               </div>
               <span className="hidden sm:inline">•</span>
-              <span>25 predators: ${bundlePlans[0]?.price.toFixed(2) || '59.99'}</span>
+              <span>25 predators: ${bundlePlans[0]?.price.toFixed(2) || '249.99'}</span>
               <span className="hidden sm:inline">•</span>
-              <span>All 60 predators: ${bundlePlans[1]?.price.toFixed(2) || '99.99'}</span>
+              <span>All 60 predators: ${bundlePlans[1]?.price.toFixed(2) || '599.40'}</span>
             </div>
           </div>
           
