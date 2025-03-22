@@ -64,7 +64,7 @@ const popularPlans = [
     name: "Giant Spider",
     description: "For those who dare to venture where eight-legged monsters lurk.",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "public/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png",
     icon: "🕷️"
   },
   {
@@ -208,7 +208,7 @@ const Index = () => {
                 </p>
                 <div className="grid grid-cols-1 gap-3 text-sm mb-6">
                   <img 
-                    src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                    src="public/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png" 
                     alt="Giant Spider"
                     className="w-full h-48 object-cover rounded-lg mb-4"
                   />
