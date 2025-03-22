@@ -18,6 +18,7 @@ const Checkout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [formKey, setFormKey] = useState<number>(Date.now());
   
   // Initialize with empty form data
   const [formData, setFormData] = useState<CheckoutFormValues>({
@@ -45,8 +46,11 @@ const Checkout = () => {
     localStorage.removeItem('paymentData');
     localStorage.removeItem('certificateData');
     
-    // Reset form data
+    // Reset form data to empty values
     setFormData({ fullName: '', email: '' });
+    
+    // Generate a new form key to force re-render
+    setFormKey(Date.now());
     
     // Scroll to top
     window.scrollTo(0, 0);
@@ -77,6 +81,9 @@ const Checkout = () => {
       // Clear any previous data
       setFormData({ fullName: '', email: '' });
       
+      // Generate a new form key to force re-render on return
+      setFormKey(Date.now());
+      
       // Navigate to certificate page with user data
       navigate('/certificate', { 
         state: { 
@@ -101,6 +108,9 @@ const Checkout = () => {
     
     // Clear form data when switching plans
     setFormData({ fullName: '', email: '' });
+    
+    // Generate a new form key to force re-render
+    setFormKey(Date.now());
     
     // Update navigation state
     navigate('/checkout', { 
@@ -211,10 +221,11 @@ const Checkout = () => {
                   </h2>
                   
                   <CheckoutForm 
-                    key={`checkout-form-${selectedPlan.id}-${Date.now()}`} // Force re-render with timestamp
+                    key={`checkout-form-${selectedPlan.id}-${formKey}`} // Force re-render with unique key
                     plan={selectedPlan} 
                     onSuccess={handlePaymentSuccess} 
                     isBundle={isBundle}
+                    formKey={formKey} // Pass the key as a prop as well
                   />
                 </div>
               </div>

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { z } from "zod";
@@ -24,11 +24,12 @@ interface CheckoutFormProps {
   plan: { id: string; name: string; price: number; icon: string };
   onSuccess: (data: CheckoutFormValues) => void;
   isBundle?: boolean;
+  formKey?: string | number;
 }
 
-export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutFormProps) => {
+export const CheckoutForm = ({ plan, onSuccess, isBundle = false, formKey }: CheckoutFormProps) => {
   const navigate = useNavigate();
-  const [mounted, setMounted] = useState(false);
+  const elementsRef = useRef<any>(null);
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(formSchema),
@@ -39,28 +40,30 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
     mode: "onChange"
   });
   
-  const elementsRef = useRef<any>(null);
-
-  // Set mounted state after component mounts
+  // Clear form on mount to prevent old data from appearing
   useEffect(() => {
-    setMounted(true);
+    // Clear form fields
+    form.reset({
+      fullName: "",
+      email: "",
+    });
     
-    // Clean up function to prevent state updates after unmount
+    // Clear any stored data that might affect the form
+    sessionStorage.clear();
+    localStorage.removeItem('formData');
+    localStorage.removeItem('lastSelectedPlan');
+    localStorage.removeItem('checkoutFormData');
+    localStorage.removeItem('paymentData');
+    localStorage.removeItem('certificateData');
+    
+    // Reset card element if it exists
+    resetCardElement();
+    
     return () => {
-      setMounted(false);
+      // This will run on unmount to ensure cleanup
+      sessionStorage.clear();
     };
-  }, []);
-
-  // Reset form when plan changes or component mounts
-  useEffect(() => {
-    if (mounted) {
-      form.reset({
-        fullName: "",
-        email: "",
-      });
-      resetCardElement();
-    }
-  }, [plan.id, mounted, form]);
+  }, [form, formKey, plan.id]);
 
   // Function to reset the Stripe card element
   const resetCardElement = () => {
@@ -74,8 +77,6 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
 
   // Handle successful form submission and payment
   const handleSuccessfulPayment = (data: CheckoutFormValues) => {
-    if (!mounted) return;
-    
     // Create a fresh copy of the data to avoid reference issues
     const freshData = {
       fullName: data.fullName || "",
@@ -88,14 +89,15 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
       email: "",
     });
     
+    // Reset card element
+    resetCardElement();
+    
     // Call the parent's onSuccess handler with fresh data
     onSuccess(freshData);
   };
 
   // Update the certificate preview in real-time as the user types
   useEffect(() => {
-    if (!mounted) return;
-    
     const subscription = form.watch((data) => {
       if (data.fullName) {
         // Dispatch a custom event to update the certificate preview
@@ -105,7 +107,7 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
       }
     });
     return () => subscription.unsubscribe();
-  }, [form, form.watch, mounted]);
+  }, [form, form.watch]);
 
   // Prevent form submission with Enter key
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -142,6 +144,11 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                     {...field} 
                     autoComplete="off"
                     value={field.value || ""}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      // Prevent propagation to avoid issues with other event listeners
+                      e.stopPropagation();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -164,6 +171,11 @@ export const CheckoutForm = ({ plan, onSuccess, isBundle = false }: CheckoutForm
                     {...field} 
                     autoComplete="off"
                     value={field.value || ""}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      // Prevent propagation to avoid issues with other event listeners
+                      e.stopPropagation();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
