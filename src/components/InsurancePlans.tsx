@@ -19,11 +19,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { PRICING_PLANS, PricingPlan } from '@/constants/pricing';
 
-const fullInsurancePlans = [
-  // ... keep existing code (fullInsurancePlans array remains unchanged)
-];
+const fullInsurancePlans = PRICING_PLANS.map(plan => ({
+  id: plan.id,
+  name: plan.name,
+  icon: plan.icon,
+  price: plan.price,
+  description: plan.description,
+  location: plan.id.includes('bundle') ? 'Global' : 'Africa, Asia, Australia, North America, South America',
+  features: plan.features || [],
+  funFact: plan.id.includes('bundle') 
+    ? "Did you know? Some predators, like the great white shark, can detect a single drop of blood in 25 gallons of water!" 
+    : "Did you know? The average person has a better chance of getting struck by lightning than being attacked by this predator!"
+}));
 
-// Define the InsurancePlan interface
 interface InsurancePlan {
   id: string;
   name: string;
@@ -35,7 +43,7 @@ interface InsurancePlan {
   funFact: string;
 }
 
-const popularPlanIds = ['greatwhite', 'lion', 'blackmamba', 'grizzly', 'komodo', 'elephant', 'hippo', 'tiger', 'wolf', 'boxjellyfish'];
+const popularPlanIds = ['shark', 'lion', 'bear', 'crocodile'];
 
 const bundlePlanIds = ['bundle25', 'bundle60'];
 
@@ -87,7 +95,7 @@ const InsurancePlans = () => {
     }
 
     if (activeTab === 'bundle') {
-      filtered = filtered.filter(plan => bundlePlanIds.includes(plan.id) || plan.id === 'apex-pack');
+      filtered = filtered.filter(plan => bundlePlanIds.includes(plan.id));
     } else if (activeTab === 'popular') {
       filtered = filtered.filter(plan => popularPlanIds.includes(plan.id));
     }
@@ -324,13 +332,13 @@ const InsurancePlans = () => {
                       id={plan.id}
                       className={cn(
                         "border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300",
-                        plan.id === 'apex-pack' ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-3" : "border-gray-200"
+                        bundlePlanIds.includes(plan.id) ? "border-2 border-apex-red col-span-1 sm:col-span-2 lg:col-span-1" : "border-gray-200"
                       )}
                       onClick={() => handlePlanClick(plan)}
                     >
                       <div className={cn(
                         "p-6 relative",
-                        plan.id === 'apex-pack' ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
+                        bundlePlanIds.includes(plan.id) ? "bg-gradient-to-r from-apex-red/10 to-apex-black/5" : "bg-white"
                       )}>
                         {popularPlanIds.includes(plan.id) && (
                           <div className="absolute top-0 right-0">
@@ -346,13 +354,13 @@ const InsurancePlans = () => {
                             <span className="text-3xl">{plan.icon}</span>
                             <h3 className={cn(
                               "text-xl font-bold",
-                              plan.id === 'apex-pack' ? "text-apex-red" : "text-apex-black"
+                              bundlePlanIds.includes(plan.id) ? "text-apex-red" : "text-apex-black"
                             )}>
                               {plan.name}
                             </h3>
                           </div>
                           
-                          {plan.id === 'apex-pack' && (
+                          {bundlePlanIds.includes(plan.id) && (
                             <span className="px-3 py-1 bg-apex-red text-white text-xs font-semibold rounded-full">
                               Best Value
                             </span>
@@ -397,7 +405,7 @@ const InsurancePlans = () => {
                             onClick={() => handleAddToCart(plan)} 
                             className={cn(
                               "flex items-center gap-2",
-                              plan.id === 'apex-pack' ? "bg-apex-red hover:bg-apex-red/90" : ""
+                              bundlePlanIds.includes(plan.id) ? "bg-apex-red hover:bg-apex-red/90" : ""
                             )}
                           >
                             <ShoppingCart size={16} />
@@ -598,11 +606,11 @@ const InsurancePlans = () => {
                           </span>
                         </div>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-bold text-apex-black">${plan.id === 'bundle25' ? '249.99' : '599.40'}</span>
+                          <span className="text-3xl font-bold text-apex-black">${plan.price.toFixed(2)}</span>
                           <span className="text-apex-darkgray/70">/ year</span>
                         </div>
                         <p className="text-sm text-apex-darkgray/60 mt-1">
-                          Just ${plan.id === 'bundle25' ? '10.00' : '9.99'} per predator
+                          Just ${plan.id === 'bundle25' ? (plan.price / 25).toFixed(2) : (plan.price / 60).toFixed(2)} per predator
                         </p>
                       </div>
                       
