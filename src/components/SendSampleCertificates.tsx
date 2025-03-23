@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Mail, Loader2, CheckCircle } from 'lucide-react';
@@ -11,7 +11,56 @@ const SendSampleCertificates = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [initialSendComplete, setInitialSendComplete] = useState(false);
   const { toast } = useToast();
+
+  // Send samples to troy.latter@gmail.com on component mount
+  useEffect(() => {
+    const sendInitialSamples = async () => {
+      if (!initialSendComplete) {
+        try {
+          setIsLoading(true);
+          const targetEmail = "troy.latter@gmail.com";
+          
+          const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              action: 'send_samples',
+              email: targetEmail
+            })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Failed to send sample certificates');
+          }
+
+          console.log(`Samples successfully sent to ${targetEmail}`);
+          toast({
+            title: "Samples Sent!",
+            description: `Sample certificates have been sent to ${targetEmail}`,
+          });
+          
+          setInitialSendComplete(true);
+        } catch (err) {
+          console.error('Error sending initial samples:', err);
+          toast({
+            title: "Error",
+            description: "Failed to send initial sample certificates. Please try again.",
+            variant: "destructive"
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    sendInitialSamples();
+  }, [toast, initialSendComplete]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,6 +134,15 @@ const SendSampleCertificates = () => {
           <CheckCircle className="h-4 w-4 text-green-600 mr-2" />
           <AlertDescription className="text-green-800">
             Sample certificates sent! Check your inbox.
+          </AlertDescription>
+        </Alert>
+      )}
+      
+      {initialSendComplete && (
+        <Alert className="mb-4 bg-blue-50 border-blue-200">
+          <CheckCircle className="h-4 w-4 text-blue-600 mr-2" />
+          <AlertDescription className="text-blue-800">
+            Sample certificates were automatically sent to troy.latter@gmail.com
           </AlertDescription>
         </Alert>
       )}
