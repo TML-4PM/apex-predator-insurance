@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Camera } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -78,7 +78,7 @@ const Hero = () => {
             $9.99 for a single predator – $59.99 for 25 – or all predators for just $99.99!
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animate-delay-200">
+          <div className="flex justify-center animate-fade-up animate-delay-200">
             <Link 
               to="/plans" 
               className="inline-flex items-center justify-center gap-2 bg-apex-red text-white px-8 py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg"
@@ -86,14 +86,6 @@ const Hero = () => {
               <ShoppingCart size={20} />
               <span className="font-medium">Buy Your Certificate Now</span>
             </Link>
-            
-            <a 
-              href="mailto:info@apexpredatorinsurance.com"
-              className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              <Camera size={20} />
-              <span className="font-medium">Contact Us</span>
-            </a>
           </div>
         </div>
         

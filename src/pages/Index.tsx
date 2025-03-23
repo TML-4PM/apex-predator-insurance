@@ -8,6 +8,7 @@ import Testimonials from '@/components/Testimonials';
 import ContactForm from '@/components/ContactForm';
 import WorldMap from '@/components/WorldMap';
 import SendSampleCertificates from '@/components/SendSampleCertificates';
+import MobileApp from '@/components/MobileApp';
 
 const Index = () => (
   <Layout>
@@ -33,6 +34,7 @@ const Index = () => (
         <SendSampleCertificates />
       </div>
     </div>
+    <MobileApp />
     <div className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <Testimonials />
