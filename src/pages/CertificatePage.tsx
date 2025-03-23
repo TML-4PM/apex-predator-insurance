@@ -15,10 +15,12 @@ import {
   Facebook, 
   Instagram,
   MessageCircle,
-  Mail
+  Mail,
+  Info
 } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { toPng } from 'html-to-image';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CertificatePage = () => {
   const { state } = useLocation();
@@ -37,6 +39,12 @@ const CertificatePage = () => {
         variant: "destructive"
       });
       navigate('/checkout', { replace: true });
+    } else {
+      // Show success toast when certificate page loads successfully
+      toast({
+        title: "Purchase Complete!",
+        description: "Your certificate has been generated successfully. You can download it below.",
+      });
     }
     
     window.scrollTo(0, 0);
@@ -146,6 +154,14 @@ const CertificatePage = () => {
                 Congratulations on your Wildlife Shield protection! <br />
                 <span className="text-apex-red font-semibold">$50,000 accidental death benefit</span>
               </p>
+              
+              <Alert className="mt-6 mb-4 bg-green-50 border-green-200">
+                <Info className="h-4 w-4 text-green-600 mr-2" />
+                <AlertDescription className="text-green-800 text-sm">
+                  <p className="font-medium">Payment Successful!</p>
+                  <p>Your certificate has been generated and a confirmation email has been sent to {user.email}</p>
+                </AlertDescription>
+              </Alert>
             </div>
             
             <div className="mb-12" ref={certificateRef}>

@@ -139,8 +139,8 @@ export const PaymentForm = ({
         // In demo mode, process the "payment" after a short delay to simulate processing
         setTimeout(() => {
           toast({
-            title: "Demo Mode",
-            description: "This is a simulated payment. Your certificate is ready to download.",
+            title: "Payment Successful!",
+            description: "Your certificate has been generated and can be viewed on the next page.",
           });
           
           setIsProcessed(true);
@@ -188,7 +188,7 @@ export const PaymentForm = ({
           setIsProcessed(true);
           toast({
             title: "Payment successful!",
-            description: "Your certificate is ready to download.",
+            description: "Your certificate is ready to download on the next page.",
           });
           
           // Add a small delay to show the success state before redirecting
@@ -215,7 +215,7 @@ export const PaymentForm = ({
             setIsProcessed(true);
             toast({
               title: "Payment successful!",
-              description: "Your certificate is ready to download.",
+              description: "Your certificate is ready to download on the next page.",
             });
             
             setTimeout(() => {
@@ -310,9 +310,6 @@ export const PaymentForm = ({
               }}
             />
           </div>
-          <p className="text-xs text-gray-400 mt-1">
-            For testing, you can use card number: 4242 4242 4242 4242, any future date, any CVC.
-          </p>
         </div>
 
         <Button
