@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Mail, Loader2, CheckCircle } from 'lucide-react';
+import { Mail, Loader2, CheckCircle, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription } from './ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
@@ -12,55 +12,110 @@ const SendSampleCertificates = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [initialSendComplete, setInitialSendComplete] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
+
+  // Function to send samples that can be reused
+  const sendSamples = async (targetEmail) => {
+    try {
+      setIsSending(true);
+      console.log(`Attempting to send samples to ${targetEmail}...`);
+      
+      const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send_samples',
+          email: targetEmail
+        })
+      });
+
+      // Log full response for debugging
+      console.log('Response status:', response.status);
+      
+      // Try to parse the response
+      let data;
+      try {
+        data = await response.json();
+        console.log('Response data:', data);
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        throw new Error('Failed to parse server response');
+      }
+
+      if (!response.ok) {
+        throw new Error(data?.error || `Failed with status: ${response.status}`);
+      }
+
+      console.log(`Samples successfully sent to ${targetEmail}`);
+      return { success: true, data };
+    } catch (err) {
+      console.error('Error sending samples:', err);
+      return { success: false, error: err.message };
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   // Send samples to troy.latter@gmail.com on component mount
   useEffect(() => {
     const sendInitialSamples = async () => {
       if (!initialSendComplete) {
-        try {
-          setIsLoading(true);
-          const targetEmail = "troy.latter@gmail.com";
-          
-          const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              action: 'send_samples',
-              email: targetEmail
-            })
-          });
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.error || 'Failed to send sample certificates');
-          }
-
-          console.log(`Samples successfully sent to ${targetEmail}`);
+        setIsLoading(true);
+        const targetEmail = "troy.latter@gmail.com";
+        
+        const result = await sendSamples(targetEmail);
+        
+        if (result.success) {
           toast({
             title: "Samples Sent!",
             description: `Sample certificates have been sent to ${targetEmail}`,
           });
-          
           setInitialSendComplete(true);
-        } catch (err) {
-          console.error('Error sending initial samples:', err);
+        } else {
           toast({
             title: "Error",
-            description: "Failed to send initial sample certificates. Please try again.",
+            description: `Failed to send samples: ${result.error}`,
             variant: "destructive"
           });
-        } finally {
-          setIsLoading(false);
         }
+        
+        setIsLoading(false);
       }
     };
 
     sendInitialSamples();
   }, [toast, initialSendComplete]);
+
+  // Manual retry function
+  const handleRetry = async () => {
+    setIsLoading(true);
+    const targetEmail = "troy.latter@gmail.com";
+    
+    const result = await sendSamples(targetEmail);
+    
+    if (result.success) {
+      toast({
+        title: "Samples Sent!",
+        description: `Sample certificates have been sent to ${targetEmail}`,
+      });
+      setInitialSendComplete(true);
+      setSuccess(true);
+      setError('');
+    } else {
+      setError(`Failed to send samples: ${result.error}`);
+      toast({
+        title: "Error",
+        description: `Failed to send samples: ${result.error}`,
+        variant: "destructive"
+      });
+    }
+    
+    setIsLoading(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,24 +129,9 @@ const SendSampleCertificates = () => {
       return;
     }
 
-    try {
-      const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'send_samples',
-          email: email.trim()
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send sample certificates');
-      }
-
+    const result = await sendSamples(email.trim());
+    
+    if (result.success) {
       setSuccess(true);
       toast({
         title: "Samples Sent!",
@@ -100,16 +140,16 @@ const SendSampleCertificates = () => {
       
       // Reset email after successful submission
       setEmail('');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } else {
+      setError(result.error);
       toast({
         title: "Error",
-        description: "Failed to send sample certificates. Please try again.",
+        description: `Failed to send samples: ${result.error}`,
         variant: "destructive"
       });
-    } finally {
-      setIsLoading(false);
     }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -125,7 +165,19 @@ const SendSampleCertificates = () => {
       
       {error && (
         <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription className="flex items-center">
+            <AlertTriangle className="h-4 w-4 mr-2" />
+            {error}
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="ml-auto" 
+              onClick={handleRetry}
+              disabled={isLoading || isSending}
+            >
+              {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Retry"}
+            </Button>
+          </AlertDescription>
         </Alert>
       )}
       
@@ -176,6 +228,27 @@ const SendSampleCertificates = () => {
       <p className="text-xs text-gray-500 mt-3">
         We respect your privacy. Your email will only be used to send the sample certificates.
       </p>
+
+      {!initialSendComplete && !isLoading && (
+        <div className="mt-4">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={handleRetry}
+            disabled={isSending}
+            className="w-full"
+          >
+            {isSending ? (
+              <>
+                <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                Sending samples to troy.latter@gmail.com...
+              </>
+            ) : (
+              "Try sending samples to troy.latter@gmail.com again"
+            )}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
