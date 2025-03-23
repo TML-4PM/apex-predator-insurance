@@ -37,28 +37,28 @@ const Hero = () => {
         <div 
           className="absolute inset-0 bg-center bg-cover z-0"
           style={{ 
-            backgroundImage: `url('https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')`,
-            filter: 'brightness(0.4) contrast(1.2)'
+            backgroundImage: `url('https://images.unsplash.com/photo-1504472478235-9bc48ba4d60f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')`,
+            filter: 'brightness(0.3) contrast(1.4)'
           }} 
         />
       </div>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-        <div className="floating stagger-1 absolute top-1/4 left-[15%] opacity-20">
+        <div className="floating stagger-1 absolute top-1/4 left-[15%] opacity-30">
           <img src="https://images.unsplash.com/photo-1504472478235-9bc48ba4d60f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-            alt="Shark" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
+            alt="Shark" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(20%) brightness(0.9)' }} />
         </div>
-        <div className="floating stagger-3 absolute top-1/3 right-[20%] opacity-20">
+        <div className="floating stagger-3 absolute top-1/3 right-[20%] opacity-30">
           <img src="https://images.unsplash.com/photo-1597138760662-9387048cf192?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-            alt="Crocodile" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
+            alt="Crocodile" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(20%) brightness(0.9)' }} />
         </div>
-        <div className="floating stagger-2 absolute bottom-1/4 left-[25%] opacity-20">
+        <div className="floating stagger-2 absolute bottom-1/4 left-[25%] opacity-30">
           <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-            alt="Lion" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
+            alt="Lion" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(20%) brightness(0.9)' }} />
         </div>
-        <div className="floating stagger-4 absolute bottom-1/3 right-[15%] opacity-20">
+        <div className="floating stagger-4 absolute bottom-1/3 right-[15%] opacity-30">
           <img src="https://images.unsplash.com/photo-1525869916826-972885c91c1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-            alt="Bear" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(70%) brightness(0.7)' }} />
+            alt="Bear" className="w-48 h-48 object-cover rounded-full" style={{ filter: 'grayscale(20%) brightness(0.9)' }} />
         </div>
       </div>
       
@@ -71,7 +71,7 @@ const Hero = () => {
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight animate-fade-up text-shadow-lg">
-            Get Covered for the <span className="text-apex-red">Wildest</span> Ways to Go Out
+            Get Covered for the <span className="text-apex-red">Deadliest</span> Ways to Go Out
           </h1>
           
           <p className="text-xl md:text-2xl text-white opacity-90 mb-8 animate-fade-up animate-delay-100">

@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { DangerZone } from '@/models/DangerZone';
 import { getThreatIcon } from '@/utils/threatIcons';
-import { AlertTriangle, Share2, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Skull, Share2, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { 
@@ -107,7 +107,7 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
       </div>
       
       <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-apex-black/50 rounded-full mb-3">
-        <AlertTriangle className="h-3.5 w-3.5 text-apex-red" />
+        <Skull className="h-3.5 w-3.5 text-apex-red" />
         <p className="text-sm font-semibold text-apex-red">Threat: {zone.threat}</p>
       </div>
       

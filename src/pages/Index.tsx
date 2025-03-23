@@ -8,6 +8,8 @@ import Testimonials from '@/components/Testimonials';
 import ContactForm from '@/components/ContactForm';
 import WorldMap from '@/components/WorldMap';
 import MobileApp from '@/components/MobileApp';
+import Blog from '@/components/Blog';
+import PhotoGallery from '@/components/PhotoGallery';
 
 const Index = () => (
   <Layout>
@@ -31,6 +33,8 @@ const Index = () => (
         <Testimonials />
       </div>
     </div>
+    <PhotoGallery />
+    <Blog />
     <div className="py-16 bg-slate-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <FAQ />
