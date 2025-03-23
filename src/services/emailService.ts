@@ -3,6 +3,8 @@
  * Service for handling email-related functionality
  */
 
+const API_BASE_URL = 'https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1';
+
 /**
  * Sends sample certificates to the provided email address
  * @param email The email address to send samples to
@@ -20,7 +22,7 @@ export const sendSampleCertificates = async (email: string): Promise<{
     // Add timestamp to prevent browser caching
     const timestamp = new Date().getTime();
     
-    const response = await fetch(`https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler?t=${timestamp}`, {
+    const response = await fetch(`${API_BASE_URL}/webhook-handler?t=${timestamp}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +31,10 @@ export const sendSampleCertificates = async (email: string): Promise<{
       body: JSON.stringify({
         action: 'send_samples',
         email
-      })
+      }),
+      // Add longer timeout and credentials
+      credentials: 'omit',
+      mode: 'cors'
     });
 
     // Log full response for debugging
@@ -53,10 +58,18 @@ export const sendSampleCertificates = async (email: string): Promise<{
     return { success: true, data };
   } catch (err: any) {
     console.error('Error sending samples:', err);
+    
+    // Check for different network error types
+    const isNetworkError = 
+      err.message.includes('Failed to fetch') || 
+      err.message.includes('NetworkError') || 
+      err.message.includes('Network request failed') ||
+      err.name === 'TypeError';
+    
     return { 
       success: false, 
       error: err.message,
-      isNetworkError: err.message.includes('Failed to fetch')
+      isNetworkError
     };
   }
 };

@@ -2,9 +2,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
+// Improve CORS headers with explicit methods
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Max-Age': '86400',
 };
 
 // Add hardcoded SendGrid API key directly in the code
@@ -20,6 +23,8 @@ async function sendEmail(to: string, subject: string, body: string) {
   }
   
   try {
+    console.log(`Sending email to ${to} with subject "${subject}"`);
+    
     const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
@@ -49,6 +54,7 @@ async function sendEmail(to: string, subject: string, body: string) {
       throw new Error(`Email sending failed: ${response.status}`);
     }
     
+    console.log(`Successfully sent email to ${to}`);
     return { success: true, id: `email_${Date.now()}` };
   } catch (error) {
     console.error('SendGrid error:', error);
@@ -58,6 +64,8 @@ async function sendEmail(to: string, subject: string, body: string) {
 
 // Function to send sample certificates
 async function sendSampleCertificates(email: string) {
+  console.log(`Preparing sample certificates for ${email}`);
+  
   const predatorTypes = [
     { name: "Shark Insurance", icon: "🦈" },
     { name: "Crocodile Insurance", icon: "🐊" },
@@ -124,9 +132,15 @@ async function sendSampleCertificates(email: string) {
 }
 
 serve(async (req) => {
+  console.log(`Received ${req.method} request to webhook-handler`);
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    console.log("Responding to OPTIONS request with CORS headers");
+    return new Response('ok', { 
+      headers: corsHeaders,
+      status: 200
+    });
   }
 
   try {
@@ -139,16 +153,35 @@ serve(async (req) => {
         
         // Handle sample certificates request
         if (requestData.action === 'send_samples' && requestData.email) {
-          console.log(`Sending sample certificates to ${requestData.email}`);
-          const result = await sendSampleCertificates(requestData.email);
+          console.log(`Processing send_samples request for email: ${requestData.email}`);
           
-          return new Response(
-            JSON.stringify({ 
-              success: true, 
-              message: `Sample certificates sent to ${requestData.email}` 
-            }),
-            { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
+          try {
+            const result = await sendSampleCertificates(requestData.email);
+            
+            console.log(`Sample certificates sent successfully to ${requestData.email}`);
+            return new Response(
+              JSON.stringify({ 
+                success: true, 
+                message: `Sample certificates sent to ${requestData.email}` 
+              }),
+              { 
+                status: 200, 
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+              }
+            );
+          } catch (emailError) {
+            console.error(`Error sending sample certificates: ${emailError.message}`);
+            return new Response(
+              JSON.stringify({ 
+                success: false, 
+                error: `Failed to send sample certificates: ${emailError.message}` 
+              }),
+              { 
+                status: 500, 
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+              }
+            );
+          }
         }
       }
     }
