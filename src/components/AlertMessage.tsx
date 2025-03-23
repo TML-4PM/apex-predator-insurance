@@ -32,6 +32,16 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
     info: "text-blue-800"
   };
   
+  // Determine if this is likely a network error message
+  const isNetworkError = message.toLowerCase().includes('network') || 
+                         message.toLowerCase().includes('connection') ||
+                         message.toLowerCase().includes('unavailable');
+  
+  // Provide a more helpful message for network errors
+  const displayMessage = isNetworkError ? 
+    "Network connection error. We're having trouble reaching our servers. This could be due to your internet connection or our services might be temporarily down." :
+    message;
+  
   const getIcon = () => {
     switch (variant) {
       case "error": 
@@ -47,7 +57,7 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
     <Alert className={`mb-4 ${alertStyles[variant]}`}>
       <AlertDescription className="flex items-center">
         {getIcon()}
-        <span className={textStyles[variant]}>{message}</span>
+        <span className={textStyles[variant]}>{displayMessage}</span>
         {showRetry && onRetry && (
           <Button
             onClick={onRetry}

@@ -19,22 +19,31 @@ const EmailSubmitForm: React.FC<EmailSubmitFormProps> = ({
   isLoading,
   placeholder = "Enter your email"
 }) => {
+  // Validate email as user types
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+  
+  // Determine if email is valid
+  const isValidEmail = email && email.includes('@') && email.includes('.');
+  
   return (
     <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3">
       <Input
         type="email"
         placeholder={placeholder}
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="flex-grow"
+        onChange={handleEmailChange}
+        className={`flex-grow ${!isValidEmail && email ? 'border-orange-300' : ''}`}
         disabled={isLoading}
         required
         aria-label="Email address"
+        autoComplete="email"
       />
       <Button 
         type="submit" 
         className="bg-apex-red hover:bg-apex-red/90 transition-colors"
-        disabled={isLoading}
+        disabled={isLoading || (email.length > 0 && !isValidEmail)}
         aria-label={isLoading ? "Sending..." : "Get Samples"}
       >
         {isLoading ? (

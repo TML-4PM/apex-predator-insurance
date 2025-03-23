@@ -1,142 +1,68 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sendSampleCertificates } from '@/services/emailService';
 import EmailSubmitForm from './EmailSubmitForm';
 import AlertMessage from './AlertMessage';
 
-// Constants
-const DEFAULT_TARGET_EMAIL = "troy.latter@gmail.com";
-const THROTTLE_DELAY = 2000; // 2 seconds
-const STATUS_DISPLAY_TIME = 5000; // 5 seconds
-
 const SendSampleCertificates = () => {
-  // State management
+  // Simplified state management
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [initialStatus, setInitialStatus] = useState<'pending' | 'success' | 'error' | null>(null);
-  const [lastRequestTime, setLastRequestTime] = useState(0);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const { toast } = useToast();
 
-  // Clear success message after timeout
-  useEffect(() => {
-    if (success) {
-      const timeout = setTimeout(() => setSuccess(false), STATUS_DISPLAY_TIME);
-      return () => clearTimeout(timeout);
+  // Simplified submit handler
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      setErrorMessage('Please enter a valid email address');
+      setStatus('error');
+      return;
     }
-  }, [success]);
-
-  // Clear error message after timeout
-  useEffect(() => {
-    if (error) {
-      const timeout = setTimeout(() => setError(''), STATUS_DISPLAY_TIME);
-      return () => clearTimeout(timeout);
-    }
-  }, [error]);
-
-  // Throttle checks
-  const isThrottled = useCallback(() => {
-    const now = Date.now();
-    if (now - lastRequestTime < THROTTLE_DELAY) {
-      toast({
-        title: "Please wait",
-        description: "Please wait a moment before trying again",
-      });
-      return true;
-    }
-    return false;
-  }, [lastRequestTime, toast]);
-
-  // Handle sending samples
-  const sendSamples = useCallback(async (targetEmail: string, isInitial = false) => {
-    if (isThrottled()) return;
     
     setIsLoading(true);
-    setLastRequestTime(Date.now());
-    
-    if (!isInitial) {
-      setError('');
-      setSuccess(false);
-    }
+    setStatus('idle');
+    setErrorMessage('');
     
     try {
-      const result = await sendSampleCertificates(targetEmail);
+      const result = await sendSampleCertificates(email.trim());
       
       if (result.success) {
-        if (isInitial) {
-          setInitialStatus('success');
-          toast({
-            title: "Initial Samples Sent!",
-            description: `Sample certificates sent to ${targetEmail}`,
-          });
-        } else {
-          setSuccess(true);
-          toast({
-            title: "Samples Sent!",
-            description: `Sample certificates sent to ${targetEmail}`,
-          });
-        }
-      } else {
-        let errorMessage = result.error || 'Unknown error occurred';
-        
-        if (result.isNetworkError) {
-          errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
-        }
-        
-        if (isInitial) {
-          setInitialStatus('error');
-        } else {
-          setError(errorMessage);
-        }
-        
+        setStatus('success');
         toast({
-          title: "Error",
-          description: `Failed to send samples: ${errorMessage}`,
+          title: "Request Sent!",
+          description: "Check your inbox for sample certificates soon.",
+        });
+      } else {
+        setStatus('error');
+        setErrorMessage(result.error || 'Failed to send samples. Please try again later.');
+        toast({
+          title: "Request Failed",
+          description: result.error || "Please try again later",
           variant: "destructive"
         });
       }
     } catch (err: any) {
-      const errorMessage = err.message || 'Unknown error occurred';
-      
-      if (isInitial) {
-        setInitialStatus('error');
-      } else {
-        setError(errorMessage);
-      }
-      
+      setStatus('error');
+      setErrorMessage(err.message || 'An unexpected error occurred');
       toast({
         title: "Error",
-        description: `Exception: ${errorMessage}`,
+        description: err.message || "An unexpected error occurred",
         variant: "destructive"
       });
     } finally {
       setIsLoading(false);
     }
-  }, [isThrottled, toast]);
-
-  // Send initial samples on component mount
-  useEffect(() => {
-    if (initialStatus === null) {
-      setInitialStatus('pending');
-      sendSamples(DEFAULT_TARGET_EMAIL, true);
-    }
-  }, [initialStatus, sendSamples]);
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address');
-      return;
-    }
-    await sendSamples(email.trim());
   };
 
-  // Handle retry for default email
-  const handleRetryDefault = () => sendSamples(DEFAULT_TARGET_EMAIL);
+  // Handler for retry
+  const handleRetry = useCallback(() => {
+    if (email) handleSubmit(new Event('submit') as unknown as React.FormEvent);
+  }, [email]);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
@@ -150,39 +76,21 @@ const SendSampleCertificates = () => {
       </p>
       
       {/* Error messaging */}
-      {error && (
+      {status === 'error' && (
         <AlertMessage
           variant="error"
-          message={error}
+          message={errorMessage}
           showRetry={true}
-          onRetry={() => sendSamples(email || DEFAULT_TARGET_EMAIL)}
+          onRetry={handleRetry}
           isRetrying={isLoading}
         />
       )}
       
       {/* Success messaging */}
-      {success && (
+      {status === 'success' && (
         <AlertMessage
           variant="success"
-          message="Sample certificates sent! Check your inbox."
-        />
-      )}
-      
-      {/* Initial send status */}
-      {initialStatus === 'success' && (
-        <AlertMessage
-          variant="info"
-          message={`Sample certificates were automatically sent to ${DEFAULT_TARGET_EMAIL}`}
-        />
-      )}
-      
-      {initialStatus === 'error' && (
-        <AlertMessage
-          variant="error"
-          message={`Failed to send initial samples to ${DEFAULT_TARGET_EMAIL}`}
-          showRetry={true}
-          onRetry={handleRetryDefault}
-          isRetrying={isLoading}
+          message="Your request for sample certificates has been received. Please check your inbox shortly."
         />
       )}
       
@@ -192,6 +100,7 @@ const SendSampleCertificates = () => {
         setEmail={setEmail}
         onSubmit={handleSubmit}
         isLoading={isLoading}
+        placeholder="Your email address"
       />
       
       <p className="text-xs text-gray-500 mt-3">
