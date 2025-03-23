@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -64,7 +65,7 @@ const popularPlans = [
     name: "Giant Spider",
     description: "For those who dare to venture where eight-legged monsters lurk.",
     price: 9.99,
-    image: "public/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png",
+    image: "/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png",
     icon: "🕷️"
   },
   {
@@ -208,7 +209,7 @@ const Index = () => {
                 </p>
                 <div className="grid grid-cols-1 gap-3 text-sm mb-6">
                   <img 
-                    src="public/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png" 
+                    src="/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png" 
                     alt="Giant Spider"
                     className="w-full h-48 object-cover rounded-lg mb-4"
                   />

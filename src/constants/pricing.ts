@@ -30,7 +30,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Giant Spider",
     description: "For those who dare to venture where eight-legged monsters lurk.",
     price: 9.99,
-    image: "public/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png", 
+    image: "/lovable-uploads/d1166d04-c1e3-4dc2-9acb-f8dc895eae30.png", 
     icon: "🕷️",
     features: [
       "Certificate of Spider Encounter Survival",
