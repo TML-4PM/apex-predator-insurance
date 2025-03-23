@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Alert, AlertDescription } from './ui/alert';
-import { AlertTriangle, CheckCircle, Info } from 'lucide-react';
-import RetryButton from './RetryButton';
+import { AlertTriangle, CheckCircle, Info, RefreshCw } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface AlertMessageProps {
   variant: "error" | "success" | "info";
@@ -19,6 +19,7 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
   onRetry,
   isRetrying = false
 }) => {
+  // Modern styling with improved contrast for accessibility
   const alertStyles = {
     error: "bg-destructive/15 border-destructive/30 text-destructive",
     success: "bg-green-50 border-green-200",
@@ -48,13 +49,25 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
         {getIcon()}
         <span className={textStyles[variant]}>{message}</span>
         {showRetry && onRetry && (
-          <RetryButton 
+          <Button
             onClick={onRetry}
-            isLoading={isRetrying}
             variant={variant === "error" ? "outline" : "secondary"}
             size="sm"
             className="ml-auto"
-          />
+            disabled={isRetrying}
+          >
+            {isRetrying ? (
+              <>
+                <RefreshCw className="h-3 w-3 mr-2 animate-spin" />
+                Retrying...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="h-3 w-3 mr-2" />
+                Retry
+              </>
+            )}
+          </Button>
         )}
       </AlertDescription>
     </Alert>

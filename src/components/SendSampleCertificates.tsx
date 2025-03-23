@@ -1,31 +1,46 @@
 
-import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sendSampleCertificates } from '@/services/emailService';
 import EmailSubmitForm from './EmailSubmitForm';
 import AlertMessage from './AlertMessage';
-import RetryButton from './RetryButton';
 
+// Constants
 const DEFAULT_TARGET_EMAIL = "troy.latter@gmail.com";
 const THROTTLE_DELAY = 2000; // 2 seconds
+const STATUS_DISPLAY_TIME = 5000; // 5 seconds
 
 const SendSampleCertificates = () => {
+  // State management
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [initialSendComplete, setInitialSendComplete] = useState(false);
-  const [initialSendAttempted, setInitialSendAttempted] = useState(false);
-  const [isSending, setIsSending] = useState(false);
-  const [lastAttemptTime, setLastAttemptTime] = useState(0);
+  const [initialStatus, setInitialStatus] = useState<'pending' | 'success' | 'error' | null>(null);
+  const [lastRequestTime, setLastRequestTime] = useState(0);
   const { toast } = useToast();
 
-  // Throttle function to prevent too many requests
-  const isThrottled = () => {
+  // Clear success message after timeout
+  useEffect(() => {
+    if (success) {
+      const timeout = setTimeout(() => setSuccess(false), STATUS_DISPLAY_TIME);
+      return () => clearTimeout(timeout);
+    }
+  }, [success]);
+
+  // Clear error message after timeout
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => setError(''), STATUS_DISPLAY_TIME);
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
+
+  // Throttle checks
+  const isThrottled = useCallback(() => {
     const now = Date.now();
-    if (now - lastAttemptTime < THROTTLE_DELAY) {
+    if (now - lastRequestTime < THROTTLE_DELAY) {
       toast({
         title: "Please wait",
         description: "Please wait a moment before trying again",
@@ -33,125 +48,95 @@ const SendSampleCertificates = () => {
       return true;
     }
     return false;
-  };
+  }, [lastRequestTime, toast]);
 
-  // Send samples to troy.latter@gmail.com on component mount
-  useEffect(() => {
-    const sendInitialSamples = async () => {
-      if (!initialSendAttempted) {
-        setInitialSendAttempted(true);
-        setIsLoading(true);
-        setLastAttemptTime(Date.now());
-        
-        const result = await sendSampleCertificates(DEFAULT_TARGET_EMAIL);
-        
-        if (result.success) {
+  // Handle sending samples
+  const sendSamples = useCallback(async (targetEmail: string, isInitial = false) => {
+    if (isThrottled()) return;
+    
+    setIsLoading(true);
+    setLastRequestTime(Date.now());
+    
+    if (!isInitial) {
+      setError('');
+      setSuccess(false);
+    }
+    
+    try {
+      const result = await sendSampleCertificates(targetEmail);
+      
+      if (result.success) {
+        if (isInitial) {
+          setInitialStatus('success');
+          toast({
+            title: "Initial Samples Sent!",
+            description: `Sample certificates sent to ${targetEmail}`,
+          });
+        } else {
+          setSuccess(true);
           toast({
             title: "Samples Sent!",
-            description: `Sample certificates have been sent to ${DEFAULT_TARGET_EMAIL}`,
+            description: `Sample certificates sent to ${targetEmail}`,
           });
-          setInitialSendComplete(true);
+        }
+      } else {
+        let errorMessage = result.error || 'Unknown error occurred';
+        
+        if (result.isNetworkError) {
+          errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
+        }
+        
+        if (isInitial) {
+          setInitialStatus('error');
         } else {
-          let errorMessage = result.error;
-          
-          if (result.isNetworkError) {
-            errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
-          }
-          
-          toast({
-            title: "Error",
-            description: `Failed to send samples: ${errorMessage}`,
-            variant: "destructive"
-          });
-          
           setError(errorMessage);
         }
         
-        setIsLoading(false);
+        toast({
+          title: "Error",
+          description: `Failed to send samples: ${errorMessage}`,
+          variant: "destructive"
+        });
       }
-    };
-
-    sendInitialSamples();
-  }, [toast, initialSendAttempted]);
-
-  // Manual retry function
-  const handleRetry = async () => {
-    if (isThrottled()) return;
-    
-    setIsLoading(true);
-    setLastAttemptTime(Date.now());
-    
-    const result = await sendSampleCertificates(DEFAULT_TARGET_EMAIL);
-    
-    if (result.success) {
-      toast({
-        title: "Samples Sent!",
-        description: `Sample certificates have been sent to ${DEFAULT_TARGET_EMAIL}`,
-      });
-      setInitialSendComplete(true);
-      setSuccess(true);
-      setError('');
-    } else {
-      let errorMessage = result.error;
+    } catch (err: any) {
+      const errorMessage = err.message || 'Unknown error occurred';
       
-      if (result.isNetworkError) {
-        errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
+      if (isInitial) {
+        setInitialStatus('error');
+      } else {
+        setError(errorMessage);
       }
       
-      setError(errorMessage);
       toast({
         title: "Error",
-        description: `Failed to send samples: ${errorMessage}`,
+        description: `Exception: ${errorMessage}`,
         variant: "destructive"
       });
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
-  };
+  }, [isThrottled, toast]);
 
+  // Send initial samples on component mount
+  useEffect(() => {
+    if (initialStatus === null) {
+      setInitialStatus('pending');
+      sendSamples(DEFAULT_TARGET_EMAIL, true);
+    }
+  }, [initialStatus, sendSamples]);
+
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (isThrottled()) return;
-    
-    setIsLoading(true);
-    setLastAttemptTime(Date.now());
-    setError('');
-    setSuccess(false);
-
     if (!email || !email.includes('@')) {
       setError('Please enter a valid email address');
-      setIsLoading(false);
       return;
     }
-
-    const result = await sendSampleCertificates(email.trim());
-    
-    if (result.success) {
-      setSuccess(true);
-      toast({
-        title: "Samples Sent!",
-        description: `Sample certificates have been sent to ${email}`,
-      });
-      
-      setEmail('');
-    } else {
-      let errorMessage = result.error;
-      
-      if (result.isNetworkError) {
-        errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
-      }
-      
-      setError(errorMessage);
-      toast({
-        title: "Error",
-        description: `Failed to send samples: ${errorMessage}`,
-        variant: "destructive"
-      });
-    }
-    
-    setIsLoading(false);
+    await sendSamples(email.trim());
   };
+
+  // Handle retry for default email
+  const handleRetryDefault = () => sendSamples(DEFAULT_TARGET_EMAIL);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
@@ -164,16 +149,18 @@ const SendSampleCertificates = () => {
         Want to see all our certificate designs? Enter your email below and we'll send you samples of each predator certificate.
       </p>
       
+      {/* Error messaging */}
       {error && (
         <AlertMessage
           variant="error"
           message={error}
           showRetry={true}
-          onRetry={handleRetry}
+          onRetry={() => sendSamples(email || DEFAULT_TARGET_EMAIL)}
           isRetrying={isLoading}
         />
       )}
       
+      {/* Success messaging */}
       {success && (
         <AlertMessage
           variant="success"
@@ -181,13 +168,25 @@ const SendSampleCertificates = () => {
         />
       )}
       
-      {initialSendComplete && (
+      {/* Initial send status */}
+      {initialStatus === 'success' && (
         <AlertMessage
           variant="info"
           message={`Sample certificates were automatically sent to ${DEFAULT_TARGET_EMAIL}`}
         />
       )}
       
+      {initialStatus === 'error' && (
+        <AlertMessage
+          variant="error"
+          message={`Failed to send initial samples to ${DEFAULT_TARGET_EMAIL}`}
+          showRetry={true}
+          onRetry={handleRetryDefault}
+          isRetrying={isLoading}
+        />
+      )}
+      
+      {/* Email submission form */}
       <EmailSubmitForm
         email={email}
         setEmail={setEmail}
@@ -198,18 +197,6 @@ const SendSampleCertificates = () => {
       <p className="text-xs text-gray-500 mt-3">
         We respect your privacy. Your email will only be used to send the sample certificates.
       </p>
-
-      {!initialSendComplete && (
-        <div className="mt-4">
-          <RetryButton
-            onClick={handleRetry}
-            isLoading={isSending || isLoading}
-            variant="secondary"
-            className="w-full"
-            targetEmail={DEFAULT_TARGET_EMAIL}
-          />
-        </div>
-      )}
     </div>
   );
 };
