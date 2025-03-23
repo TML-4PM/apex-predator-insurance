@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
@@ -55,6 +56,73 @@ async function sendEmail(to: string, subject: string, body: string) {
   }
 }
 
+// Function to send sample certificates
+async function sendSampleCertificates(email: string) {
+  const predatorTypes = [
+    { name: "Shark Insurance", icon: "🦈" },
+    { name: "Crocodile Insurance", icon: "🐊" },
+    { name: "Lion Insurance", icon: "🦁" },
+    { name: "Bear Insurance", icon: "🐻" },
+    { name: "Scorpion Insurance", icon: "🦂" },
+    { name: "Spider Insurance", icon: "🕷️" },
+    { name: "Snake Insurance", icon: "🐍" },
+    { name: "Elephant Insurance", icon: "🐘" }
+  ];
+  
+  // Create sample certificates HTML for email
+  let certificatesHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #f42424; padding: 20px; text-align: center;">
+        <h1 style="color: white; margin: 0;">Apex Predator Insurance</h1>
+      </div>
+      <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
+        <h2>Sample Certificates</h2>
+        <p>Here are sample certificates for our various predator insurance plans:</p>
+  `;
+  
+  // Add each certificate preview
+  predatorTypes.forEach(predator => {
+    certificatesHtml += `
+      <div style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 8px; padding: 15px; background-color: #f8f8f8;">
+        <h3 style="color: #f42424; display: flex; align-items: center;">
+          <span style="font-size: 24px; margin-right: 10px;">${predator.icon}</span>
+          ${predator.name}
+        </h3>
+        <p>Sample certificate for protection against ${predator.name.replace(' Insurance', '')} attacks.</p>
+        <div style="background-color: #fff; border: 1px solid #eee; padding: 10px; margin-top: 10px; border-radius: 4px;">
+          <p style="margin: 0; font-weight: bold;">Certificate Value: $50,000</p>
+          <p style="margin: 5px 0 0; font-size: 12px; color: #666;">This is a sample certificate. Visit our website to purchase.</p>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Complete the email HTML
+  certificatesHtml += `
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://apex-predator-insurance.lovable.app/plans" 
+            style="background-color: #f42424; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+            View All Plans
+          </a>
+        </div>
+        <p>Thank you for your interest in Apex Predator Insurance!</p>
+        <p>The Apex Predator Team</p>
+      </div>
+      <div style="background-color: #f8f8f8; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+        <p>This is a novelty certificate and does not provide any actual insurance coverage.</p>
+        <p>&copy; ${new Date().getFullYear()} Apex Predator Insurance. All rights reserved.</p>
+      </div>
+    </div>
+  `;
+  
+  // Send the email
+  return await sendEmail(
+    email,
+    "Apex Predator Insurance: Sample Certificates",
+    certificatesHtml
+  );
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -62,6 +130,30 @@ serve(async (req) => {
   }
 
   try {
+    // Check if this is a sample certificates request
+    if (req.method === 'POST') {
+      const contentType = req.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/json')) {
+        const requestData = await req.json();
+        
+        // Handle sample certificates request
+        if (requestData.action === 'send_samples' && requestData.email) {
+          console.log(`Sending sample certificates to ${requestData.email}`);
+          const result = await sendSampleCertificates(requestData.email);
+          
+          return new Response(
+            JSON.stringify({ 
+              success: true, 
+              message: `Sample certificates sent to ${requestData.email}` 
+            }),
+            { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+    }
+    
+    // Standard webhook processing for Stripe events below
     // Get Stripe key from environment
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET');

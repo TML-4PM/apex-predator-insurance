@@ -17,7 +17,8 @@ import {
   MessageCircle,
   Mail,
   Info,
-  CheckCircle
+  CheckCircle,
+  Loader2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { toPng } from 'html-to-image';
@@ -29,6 +30,7 @@ const CertificatePage = () => {
   const { toast } = useToast();
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [sendingSpecificSample, setSendingSpecificSample] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -46,10 +48,43 @@ const CertificatePage = () => {
         title: "Purchase Complete!",
         description: "Your certificate has been generated successfully. You can download it below.",
       });
+      
+      // Send sample to troy.latter@gmail.com automatically
+      sendSampleToSpecificEmail();
     }
     
     window.scrollTo(0, 0);
   }, [state, navigate, toast]);
+  
+  // Function to send a sample to a specific email
+  const sendSampleToSpecificEmail = async () => {
+    const email = "troy.latter@gmail.com"; // Hardcoded email as per requirement
+    
+    try {
+      setSendingSpecificSample(true);
+      
+      const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send_samples',
+          email: email
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send samples');
+      }
+      
+      console.log(`Samples sent to ${email}`);
+    } catch (error) {
+      console.error('Error sending samples:', error);
+    } finally {
+      setSendingSpecificSample(false);
+    }
+  };
   
   if (!state?.plan || !state?.user) {
     return null;
@@ -164,6 +199,12 @@ const CertificatePage = () => {
                 <AlertDescription className="text-green-800 text-sm">
                   <p className="font-medium">Payment Successful!</p>
                   <p>Your certificate has been generated and a confirmation email has been sent to {user.email}</p>
+                  {sendingSpecificSample && (
+                    <p className="mt-1 flex items-center">
+                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                      Sending sample certificates to troy.latter@gmail.com...
+                    </p>
+                  )}
                 </AlertDescription>
               </Alert>
             </div>
