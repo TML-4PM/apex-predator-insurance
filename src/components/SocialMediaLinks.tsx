@@ -2,20 +2,37 @@
 import React from 'react';
 import { Facebook, Instagram, Linkedin, Youtube, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 interface SocialMediaLinksProps {
   className?: string;
   iconSize?: number;
   color?: string;
   showText?: boolean;
+  onClickAction?: () => void;
 }
 
 const SocialMediaLinks = ({ 
   className = '', 
   iconSize = 20, 
   color = 'text-white', 
-  showText = false 
+  showText = false,
+  onClickAction
 }: SocialMediaLinksProps) => {
+  const { toast } = useToast();
+
+  const handleClick = (e: React.MouseEvent, name: string) => {
+    if (onClickAction) {
+      e.preventDefault();
+      onClickAction();
+      toast({
+        title: `Connect ${name}`,
+        description: `To share directly to ${name}, connect your account in settings.`,
+        duration: 3000,
+      });
+    }
+  };
+
   const socialLinks = [
     { 
       name: 'Facebook', 
@@ -59,6 +76,7 @@ const SocialMediaLinks = ({
           rel="noopener noreferrer"
           aria-label={social.ariaLabel}
           className={`${color} hover:text-apex-red transition-colors duration-300 flex items-center gap-2`}
+          onClick={(e) => handleClick(e, social.name)}
         >
           {social.icon}
           {showText && <span>{social.name}</span>}

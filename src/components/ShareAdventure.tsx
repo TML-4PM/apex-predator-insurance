@@ -101,6 +101,13 @@ const ShareAdventure = ({
           title: "Copy for Instagram",
           description: "Link copied! Open Instagram and paste this in your bio or story.",
         });
+        
+        // Show social authentication prompt for direct sharing
+        toast({
+          title: "Instagram Sharing",
+          description: "For direct Instagram sharing, connect your account in settings.",
+          duration: 5000,
+        });
         return;
       case 'whatsapp':
         shareUrl = `https://wa.me/?text=${encodedText} ${encodedUrl}`;
@@ -116,6 +123,14 @@ const ShareAdventure = ({
         description: "Your adventure is being shared!",
       });
     }
+  };
+
+  const promptSocialAuth = () => {
+    toast({
+      title: "Connect Social Accounts",
+      description: "To share directly to social media, connect your accounts first.",
+      duration: 5000,
+    });
   };
 
   return (
@@ -181,6 +196,7 @@ const ShareAdventure = ({
               iconSize={18} 
               color="text-apex-darkgray/70" 
               className="justify-start"
+              onClickAction={promptSocialAuth}
             />
           </div>
         </>

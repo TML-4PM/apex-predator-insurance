@@ -7,29 +7,31 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Heart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle, Share2 } from 'lucide-react';
 import ShareAdventure from '@/components/ShareAdventure';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 
 const galleryItems = [
   {
     id: 1,
     username: 'SharkDiver23',
     location: 'Great Barrier Reef, Australia',
-    caption: 'Just got my Shark Insurance! Ready for tomorrow\'s cage dive!',
+    caption: 'Just got my Shark Insurance! Ready for tomorrow\'s cage dive with these monsters!',
     insurance: 'Shark Insurance',
     likes: 247,
     comments: 42,
-    imageUrl: 'https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 2,
     username: 'SafariKing',
     location: 'Serengeti National Park, Tanzania',
-    caption: 'Lion watching at dawn. Good thing I\'m covered!',
+    caption: 'Lion watching at dawn. This beast came within 10 feet of our vehicle! Good thing I\'m covered!',
     insurance: 'Lion Insurance',
     likes: 352,
     comments: 26,
-    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 3,
@@ -39,29 +41,55 @@ const galleryItems = [
     insurance: 'Crocodile Insurance',
     likes: 189,
     comments: 37,
-    imageUrl: 'https://images.unsplash.com/photo-1610058908279-b8ef27153f5e?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1610058497388-5d1e6fcbb56c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 4,
     username: 'WildernessWanderer',
     location: 'Yellowstone National Park, USA',
-    caption: 'Bear country! Thankfully I\'ve got my bear "insurance"!',
+    caption: 'Bear country! This grizzly was searching for food near our campsite. Thankfully I\'ve got my bear "insurance"!',
     insurance: 'Bear Insurance',
     likes: 274,
     comments: 18,
-    imageUrl: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?q=80&w=1000',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   }
 ];
 
 const PhotoGallery = () => {
   const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
   const [openPhotoId, setOpenPhotoId] = useState<number | null>(null);
+  const [showSocialAuthPrompt, setShowSocialAuthPrompt] = useState(false);
+  const { toast } = useToast();
   
   const toggleLike = (id: number) => {
     setLikedPosts(prev => ({
       ...prev,
       [id]: !prev[id]
     }));
+    
+    toast({
+      title: likedPosts[id] ? "Removed like" : "Added like",
+      description: likedPosts[id] ? "You unliked this adventure" : "You liked this adventure",
+      duration: 1500
+    });
+  };
+
+  const handleSocialAuth = (platform: string) => {
+    toast({
+      title: `Connecting to ${platform}`,
+      description: `Authenticating with ${platform} to share your adventure...`,
+      duration: 3000
+    });
+    
+    // Simulate authentication process
+    setTimeout(() => {
+      toast({
+        title: "Authentication Successful",
+        description: `Connected to ${platform}. Now you can share directly!`,
+        duration: 3000
+      });
+      setShowSocialAuthPrompt(false);
+    }, 1500);
   };
   
   const selectedPhoto = galleryItems.find(item => item.id === openPhotoId);
@@ -90,6 +118,10 @@ const PhotoGallery = () => {
                   src={item.imageUrl}
                   alt={item.caption}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+                  }}
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
@@ -119,6 +151,10 @@ const PhotoGallery = () => {
                   src={selectedPhoto.imageUrl}
                   alt={selectedPhoto.caption}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+                  }}
                 />
               </div>
               <div className="flex flex-col">
@@ -154,15 +190,74 @@ const PhotoGallery = () => {
                     <span>{selectedPhoto.comments}</span>
                   </button>
                   
-                  <ShareAdventure 
-                    compact={true} 
-                    predatorType={selectedPhoto.insurance.replace(' Insurance', '')}
-                    text={`Check out this ${selectedPhoto.insurance.replace(' Insurance', '')} adventure!`}
-                  />
+                  <button
+                    className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-red transition-colors"
+                    onClick={() => setShowSocialAuthPrompt(true)}
+                  >
+                    <Share2 size={18} />
+                    <span>Share</span>
+                  </button>
                 </div>
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+      
+      {/* Social Auth Dialog */}
+      <Dialog open={showSocialAuthPrompt} onOpenChange={setShowSocialAuthPrompt}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Connect Social Media</DialogTitle>
+            <DialogDescription>
+              Connect your social media accounts to share adventures directly
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <p className="text-sm text-muted-foreground">
+              Choose a platform to authenticate with to share your adventure:
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <Button onClick={() => handleSocialAuth('Instagram')} variant="outline" className="justify-start">
+                <img 
+                  src="https://cdn.cdnlogo.com/logos/i/4/instagram.svg" 
+                  alt="Instagram" 
+                  className="h-5 w-5 mr-2" 
+                />
+                Instagram
+              </Button>
+              <Button onClick={() => handleSocialAuth('Facebook')} variant="outline" className="justify-start">
+                <img 
+                  src="https://cdn.cdnlogo.com/logos/f/83/facebook.svg" 
+                  alt="Facebook" 
+                  className="h-5 w-5 mr-2" 
+                />
+                Facebook
+              </Button>
+              <Button onClick={() => handleSocialAuth('Twitter')} variant="outline" className="justify-start">
+                <img 
+                  src="https://cdn.cdnlogo.com/logos/t/96/twitter-icon.svg" 
+                  alt="Twitter" 
+                  className="h-5 w-5 mr-2" 
+                />
+                Twitter
+              </Button>
+              <Button onClick={() => handleSocialAuth('TikTok')} variant="outline" className="justify-start">
+                <img 
+                  src="https://cdn.cdnlogo.com/logos/t/6/tiktok-logo.svg" 
+                  alt="TikTok" 
+                  className="h-5 w-5 mr-2" 
+                />
+                TikTok
+              </Button>
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <Button variant="ghost" onClick={() => setShowSocialAuthPrompt(false)}>
+              Cancel
+            </Button>
+            <ShareAdventure compact={true} />
+          </div>
         </DialogContent>
       </Dialog>
     </section>
