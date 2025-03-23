@@ -16,7 +16,8 @@ import {
   Instagram,
   MessageCircle,
   Mail,
-  Info
+  Info,
+  CheckCircle
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { toPng } from 'html-to-image';
@@ -149,7 +150,10 @@ const CertificatePage = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-10">
-              <h1 className="text-3xl md:text-4xl font-bold text-apex-black mb-4">Your Certificate is Ready!</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-apex-black mb-4">
+                <CheckCircle className="inline-block text-green-500 mr-2" size={28} />
+                Your Certificate is Ready!
+              </h1>
               <p className="text-xl text-apex-darkgray/70">
                 Congratulations on your Wildlife Shield protection! <br />
                 <span className="text-apex-red font-semibold">$50,000 accidental death benefit</span>

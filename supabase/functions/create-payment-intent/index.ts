@@ -7,8 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Enable payments for real transactions
-const ENABLE_PAYMENTS = true;
+// Enable payments for real transactions - set to true when connected to a real Stripe account
+const ENABLE_PAYMENTS = false;
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -26,7 +26,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           demoMode: true,
-          message: 'Payment processing is in demo mode' 
+          message: 'Payment processing is in demo mode. Your certificate will be generated without real payment.' 
         }),
         { 
           status: 200, 

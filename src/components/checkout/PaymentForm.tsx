@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { createPaymentIntent, PaymentIntentResponse } from '@/lib/stripeClient';
 import { CheckoutFormValues } from './CheckoutForm';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
@@ -284,6 +284,7 @@ export const PaymentForm = ({
         
         {paymentError && (
           <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4 mr-2" />
             <AlertDescription>
               {paymentError}
             </AlertDescription>
@@ -320,7 +321,7 @@ export const PaymentForm = ({
           {isLoading ? (
             <div className="flex items-center">
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Processing...
+              Processing Payment...
             </div>
           ) : (
             <>
