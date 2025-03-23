@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Mail, Loader2, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Mail, Loader2, CheckCircle, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Alert, AlertDescription } from './ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
@@ -12,7 +12,9 @@ const SendSampleCertificates = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [initialSendComplete, setInitialSendComplete] = useState(false);
+  const [initialSendAttempted, setInitialSendAttempted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [lastAttemptTime, setLastAttemptTime] = useState(0);
   const { toast } = useToast();
 
   // Function to send samples that can be reused
@@ -21,7 +23,10 @@ const SendSampleCertificates = () => {
       setIsSending(true);
       console.log(`Attempting to send samples to ${targetEmail}...`);
       
-      const response = await fetch('https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler', {
+      // Add timestamp to prevent browser caching
+      const timestamp = new Date().getTime();
+      
+      const response = await fetch(`https://vwqnfnpnuatrfizrttrb.supabase.co/functions/v1/webhook-handler?t=${timestamp}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +59,11 @@ const SendSampleCertificates = () => {
       return { success: true, data };
     } catch (err) {
       console.error('Error sending samples:', err);
-      return { success: false, error: err.message };
+      return { 
+        success: false, 
+        error: err.message,
+        isNetworkError: err.message.includes('Failed to fetch')
+      };
     } finally {
       setIsSending(false);
     }
@@ -63,9 +72,11 @@ const SendSampleCertificates = () => {
   // Send samples to troy.latter@gmail.com on component mount
   useEffect(() => {
     const sendInitialSamples = async () => {
-      if (!initialSendComplete) {
+      if (!initialSendAttempted) {
+        setInitialSendAttempted(true);
         setIsLoading(true);
         const targetEmail = "troy.latter@gmail.com";
+        setLastAttemptTime(Date.now());
         
         const result = await sendSamples(targetEmail);
         
@@ -76,11 +87,20 @@ const SendSampleCertificates = () => {
           });
           setInitialSendComplete(true);
         } else {
+          let errorMessage = result.error;
+          
+          if (result.isNetworkError) {
+            errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
+          }
+          
           toast({
             title: "Error",
-            description: `Failed to send samples: ${result.error}`,
+            description: `Failed to send samples: ${errorMessage}`,
             variant: "destructive"
           });
+          
+          // Don't set initialSendComplete to true if there was an error
+          setError(errorMessage);
         }
         
         setIsLoading(false);
@@ -88,11 +108,21 @@ const SendSampleCertificates = () => {
     };
 
     sendInitialSamples();
-  }, [toast, initialSendComplete]);
+  }, [toast, initialSendAttempted]);
 
-  // Manual retry function
+  // Manual retry function with throttling
   const handleRetry = async () => {
+    // Prevent rapid clicking
+    if (Date.now() - lastAttemptTime < 2000) {
+      toast({
+        title: "Please wait",
+        description: "Please wait a moment before trying again",
+      });
+      return;
+    }
+    
     setIsLoading(true);
+    setLastAttemptTime(Date.now());
     const targetEmail = "troy.latter@gmail.com";
     
     const result = await sendSamples(targetEmail);
@@ -106,10 +136,16 @@ const SendSampleCertificates = () => {
       setSuccess(true);
       setError('');
     } else {
-      setError(`Failed to send samples: ${result.error}`);
+      let errorMessage = result.error;
+      
+      if (result.isNetworkError) {
+        errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
+      }
+      
+      setError(errorMessage);
       toast({
         title: "Error",
-        description: `Failed to send samples: ${result.error}`,
+        description: `Failed to send samples: ${errorMessage}`,
         variant: "destructive"
       });
     }
@@ -119,7 +155,18 @@ const SendSampleCertificates = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent rapid submissions
+    if (Date.now() - lastAttemptTime < 2000) {
+      toast({
+        title: "Please wait",
+        description: "Please wait a moment before submitting again",
+      });
+      return;
+    }
+    
     setIsLoading(true);
+    setLastAttemptTime(Date.now());
     setError('');
     setSuccess(false);
 
@@ -141,10 +188,16 @@ const SendSampleCertificates = () => {
       // Reset email after successful submission
       setEmail('');
     } else {
-      setError(result.error);
+      let errorMessage = result.error;
+      
+      if (result.isNetworkError) {
+        errorMessage = "Network connection error. The server might be unreachable or CORS might be blocking the request.";
+      }
+      
+      setError(errorMessage);
       toast({
         title: "Error",
-        description: `Failed to send samples: ${result.error}`,
+        description: `Failed to send samples: ${errorMessage}`,
         variant: "destructive"
       });
     }
@@ -229,22 +282,25 @@ const SendSampleCertificates = () => {
         We respect your privacy. Your email will only be used to send the sample certificates.
       </p>
 
-      {!initialSendComplete && !isLoading && (
+      {!initialSendComplete && (
         <div className="mt-4">
           <Button
             variant="secondary"
             size="sm"
             onClick={handleRetry}
-            disabled={isSending}
-            className="w-full"
+            disabled={isSending || isLoading}
+            className="w-full flex items-center justify-center"
           >
-            {isSending ? (
+            {isSending || isLoading ? (
               <>
                 <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                 Sending samples to troy.latter@gmail.com...
               </>
             ) : (
-              "Try sending samples to troy.latter@gmail.com again"
+              <>
+                <RefreshCw className="mr-2 h-3 w-3" />
+                Try sending samples to troy.latter@gmail.com again
+              </>
             )}
           </Button>
         </div>
