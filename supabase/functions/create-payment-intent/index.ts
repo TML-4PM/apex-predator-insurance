@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
@@ -9,7 +8,7 @@ const corsHeaders = {
 };
 
 // Enable payments for real transactions - set to true when connected to a real Stripe account
-const ENABLE_PAYMENTS = false;
+const ENABLE_PAYMENTS = true;
 
 serve(async (req) => {
   // Handle CORS preflight requests

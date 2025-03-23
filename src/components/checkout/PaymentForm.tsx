@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
@@ -37,17 +36,14 @@ export const PaymentForm = ({
   const [formComplete, setFormComplete] = useState(false);
   const { toast } = useToast();
 
-  // Calculate the final price based on cart items or plan
   const finalPrice = totalPrice ?? (cartItems && cartItems.length > 0 
     ? cartItems.reduce((sum, item) => sum + item.price, 0) 
     : plan.price);
 
-  // Reset payment error when formData changes
   useEffect(() => {
     setPaymentError(null);
   }, [formData]);
 
-  // Validate form fields whenever formData changes
   useEffect(() => {
     if (formData.fullName && formData.fullName.length >= 2 && 
         formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -69,7 +65,6 @@ export const PaymentForm = ({
       return;
     }
 
-    // Validate form data
     if (!formData.fullName || !formData.email) {
       setPaymentError("Please complete all required fields");
       toast({
@@ -90,13 +85,11 @@ export const PaymentForm = ({
         throw new Error("Card element not found");
       }
 
-      // Create a fresh copy of form data to avoid reference issues
       const paymentFormData = {
         fullName: formData.fullName,
         email: formData.email
       };
 
-      // Prepare metadata with all purchased items
       const itemsMetadata = cartItems && cartItems.length > 0 
         ? {
             items: cartItems.map(item => item.id).join(','),
@@ -110,7 +103,6 @@ export const PaymentForm = ({
             plan_name: plan.name,
           };
 
-      // Call our backend API to create a payment intent
       const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
         finalPrice,
         { 
@@ -120,23 +112,20 @@ export const PaymentForm = ({
           customer_email: paymentFormData.email,
           email: paymentFormData.email,
           is_bundle: isBundle,
-          timestamp: new Date().toISOString() // Add timestamp to ensure uniqueness
+          timestamp: new Date().toISOString()
         }
       );
 
       console.log('Payment intent response:', paymentIntentResponse);
 
-      // Check if there was an error from payment intent creation
       if ('error' in paymentIntentResponse && paymentIntentResponse.error) {
         throw new Error(paymentIntentResponse.error);
       }
 
-      // Check if running in demo mode (response from backend indicates this)
       if ('demoMode' in paymentIntentResponse && paymentIntentResponse.demoMode) {
         console.log('Demo mode active: Simulating successful payment');
         setIsDemoMode(true);
         
-        // In demo mode, process the "payment" after a short delay to simulate processing
         setTimeout(() => {
           toast({
             title: "Payment Successful!",
@@ -145,9 +134,8 @@ export const PaymentForm = ({
           
           setIsProcessed(true);
           setTimeout(() => {
-            resetCardElement(); // Reset the card element
+            resetCardElement();
             
-            // Use a fresh copy of the form data
             const freshData = {
               fullName: paymentFormData.fullName,
               email: paymentFormData.email
@@ -160,13 +148,11 @@ export const PaymentForm = ({
         return;
       }
       
-      // For real payments, get the client secret
       if ('clientSecret' in paymentIntentResponse && paymentIntentResponse.clientSecret) {
         const clientSecret = paymentIntentResponse.clientSecret;
         
         console.log("Confirming card payment with secret");
 
-        // Confirm the card payment with the client secret from our backend
         const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: cardElement,
@@ -191,11 +177,9 @@ export const PaymentForm = ({
             description: "Your certificate is ready to download on the next page.",
           });
           
-          // Add a small delay to show the success state before redirecting
           setTimeout(() => {
-            resetCardElement(); // Reset the card element
+            resetCardElement();
             
-            // Use a fresh copy of the form data
             const freshData = {
               fullName: paymentFormData.fullName,
               email: paymentFormData.email
@@ -204,7 +188,6 @@ export const PaymentForm = ({
             onSuccess(freshData);
           }, 1500);
         } else if (paymentIntent.status === 'requires_action') {
-          // Handle 3D Secure authentication if required
           const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(clientSecret);
           
           if (error) {
@@ -221,7 +204,6 @@ export const PaymentForm = ({
             setTimeout(() => {
               resetCardElement();
               
-              // Use a fresh copy of the form data
               const freshData = {
                 fullName: paymentFormData.fullName,
                 email: paymentFormData.email
@@ -236,7 +218,6 @@ export const PaymentForm = ({
           throw new Error(`Payment failed with status: ${paymentIntent.status}`);
         }
       } else {
-        // If we reach here and we're not in demo mode and there's no client secret, something went wrong
         throw new Error("No client secret returned from the server");
       }
     } catch (error) {
@@ -253,7 +234,6 @@ export const PaymentForm = ({
     }
   };
 
-  // Show success state after payment is processed
   if (isProcessed) {
     return (
       <div className="flex flex-col items-center justify-center py-8">
@@ -261,7 +241,7 @@ export const PaymentForm = ({
           <CheckCircle2 size={64} />
         </div>
         <h3 className="text-xl font-medium text-white mb-2">Payment Successful!</h3>
-        <p className="text-white/70 mb-4">Your insurance certificate is being prepared...</p>
+        <p className="text-white/70 mb-4">Your certificate is being prepared...</p>
         <div className="animate-pulse">
           <Loader2 className="h-8 w-8 text-apex-red animate-spin" />
         </div>
