@@ -2,23 +2,23 @@
 import React, { useState, useCallback } from 'react';
 import { Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { sendSampleCertificates } from '@/services/emailService';
 import EmailSubmitForm from './EmailSubmitForm';
 import AlertMessage from './AlertMessage';
 
 const SendSampleCertificates = () => {
-  // Simplified state management
+  // State management
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const { toast } = useToast();
 
-  // Simplified submit handler
+  // Direct method to send email through a reliable service
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !email.includes('@')) {
+    // Validate email
+    if (!email || !email.includes('@') || !email.includes('.')) {
       setErrorMessage('Please enter a valid email address');
       setStatus('error');
       return;
@@ -29,29 +29,35 @@ const SendSampleCertificates = () => {
     setErrorMessage('');
     
     try {
-      const result = await sendSampleCertificates(email.trim());
+      // Use Formspree for reliable email sending without backend dependencies
+      const response = await fetch("https://formspree.io/f/moqgwrwg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          subject: "Apex Predator Insurance - Sample Certificate Request",
+          message: `User has requested sample certificates. Email: ${email.trim()}`
+        }),
+      });
       
-      if (result.success) {
+      if (response.ok) {
         setStatus('success');
         toast({
           title: "Request Sent!",
           description: "Check your inbox for sample certificates soon.",
         });
       } else {
-        setStatus('error');
-        setErrorMessage(result.error || 'Failed to send samples. Please try again later.');
-        toast({
-          title: "Request Failed",
-          description: result.error || "Please try again later",
-          variant: "destructive"
-        });
+        throw new Error("Failed to send request. Please try again later.");
       }
     } catch (err: any) {
+      console.error("Email submission error:", err);
       setStatus('error');
       setErrorMessage(err.message || 'An unexpected error occurred');
       toast({
         title: "Error",
-        description: err.message || "An unexpected error occurred",
+        description: "We couldn't process your request right now. Please try again later.",
         variant: "destructive"
       });
     } finally {
@@ -94,18 +100,22 @@ const SendSampleCertificates = () => {
         />
       )}
       
-      {/* Email submission form */}
-      <EmailSubmitForm
-        email={email}
-        setEmail={setEmail}
-        onSubmit={handleSubmit}
-        isLoading={isLoading}
-        placeholder="Your email address"
-      />
-      
-      <p className="text-xs text-gray-500 mt-3">
-        We respect your privacy. Your email will only be used to send the sample certificates.
-      </p>
+      {/* Only show form if not already successfully submitted */}
+      {status !== 'success' && (
+        <>
+          <EmailSubmitForm
+            email={email}
+            setEmail={setEmail}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            placeholder="Your email address"
+          />
+          
+          <p className="text-xs text-gray-500 mt-3">
+            We respect your privacy. Your email will only be used to send the sample certificates.
+          </p>
+        </>
+      )}
     </div>
   );
 };

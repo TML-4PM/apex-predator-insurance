@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Loader2 } from 'lucide-react';
@@ -19,13 +19,15 @@ const EmailSubmitForm: React.FC<EmailSubmitFormProps> = ({
   isLoading,
   placeholder = "Enter your email"
 }) => {
-  // Validate email as user types
+  // Simple validation as user types
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
   
-  // Determine if email is valid
-  const isValidEmail = email && email.includes('@') && email.includes('.');
+  // Basic email validation using regex
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
   
   return (
     <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -34,7 +36,7 @@ const EmailSubmitForm: React.FC<EmailSubmitFormProps> = ({
         placeholder={placeholder}
         value={email}
         onChange={handleEmailChange}
-        className={`flex-grow ${!isValidEmail && email ? 'border-orange-300' : ''}`}
+        className={`flex-grow ${!isValidEmail(email) && email ? 'border-orange-300' : ''}`}
         disabled={isLoading}
         required
         aria-label="Email address"
@@ -43,7 +45,7 @@ const EmailSubmitForm: React.FC<EmailSubmitFormProps> = ({
       <Button 
         type="submit" 
         className="bg-apex-red hover:bg-apex-red/90 transition-colors"
-        disabled={isLoading || (email.length > 0 && !isValidEmail)}
+        disabled={isLoading || (email.length > 0 && !isValidEmail(email))}
         aria-label={isLoading ? "Sending..." : "Get Samples"}
       >
         {isLoading ? (

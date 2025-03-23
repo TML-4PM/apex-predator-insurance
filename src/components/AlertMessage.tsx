@@ -32,14 +32,14 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
     info: "text-blue-800"
   };
   
-  // Determine if this is likely a network error message
+  // Provide a simpler, more direct error message for network errors
   const isNetworkError = message.toLowerCase().includes('network') || 
                          message.toLowerCase().includes('connection') ||
+                         message.toLowerCase().includes('failed to fetch') ||
                          message.toLowerCase().includes('unavailable');
   
-  // Provide a more helpful message for network errors
   const displayMessage = isNetworkError ? 
-    "Network connection error. We're having trouble reaching our servers. This could be due to your internet connection or our services might be temporarily down." :
+    "We're having trouble connecting to our service. Please check your internet connection or try again later." :
     message;
   
   const getIcon = () => {
