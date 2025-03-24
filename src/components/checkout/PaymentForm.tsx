@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,14 @@ import { Label } from '@/components/ui/label';
 import { createPaymentIntent, PaymentIntentResponse } from '@/lib/stripeClient';
 import { CheckoutFormValues } from './CheckoutForm';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import WalletPaymentButtons from './WalletPaymentButtons';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
@@ -17,6 +26,22 @@ interface PaymentFormProps {
   cartItems?: Array<{ id: string; name: string; price: number; icon: string }>;
   totalPrice?: number;
 }
+
+// List of countries for the country selector
+const countries = [
+  { code: 'US', name: 'United States' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+  { code: 'NL', name: 'Netherlands' },
+  { code: 'BE', name: 'Belgium' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'CN', name: 'China' },
+];
 
 export const PaymentForm = ({ 
   plan, 
@@ -34,6 +59,8 @@ export const PaymentForm = ({
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
+  const [countryCode, setCountryCode] = useState('US');
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const { toast } = useToast();
 
   const finalPrice = totalPrice ?? (cartItems && cartItems.length > 0 
@@ -53,6 +80,101 @@ export const PaymentForm = ({
     }
   }, [formData]);
 
+  // Function to handle payment errors
+  const handlePaymentError = (error: any) => {
+    console.error('Payment error:', error);
+    setPaymentError(error instanceof Error ? error.message : "An unknown error occurred");
+    toast({
+      title: "Payment failed",
+      description: error instanceof Error ? error.message : "Please try again or contact support.",
+      variant: "destructive"
+    });
+    setIsLoading(false);
+  };
+
+  // Function to handle successful payment
+  const handlePaymentSuccess = (paymentData: any) => {
+    setIsProcessed(true);
+    toast({
+      title: "Payment successful!",
+      description: "Your certificate is ready to download on the next page.",
+    });
+    
+    setTimeout(() => {
+      resetCardElement();
+      
+      const freshData = {
+        fullName: formData.fullName,
+        email: formData.email
+      };
+      
+      onSuccess(freshData);
+    }, 1500);
+  };
+
+  // Function to create a payment intent and get client secret
+  const createIntent = async () => {
+    if (!formData.fullName || !formData.email) {
+      setPaymentError("Please complete all required fields");
+      toast({
+        title: "Form incomplete",
+        description: "Please fill in all required information",
+        variant: "destructive"
+      });
+      return null;
+    }
+
+    const paymentFormData = {
+      fullName: formData.fullName,
+      email: formData.email
+    };
+
+    const itemsMetadata = cartItems && cartItems.length > 0 
+      ? {
+          items: cartItems.map(item => item.id).join(','),
+          items_count: cartItems.length,
+          items_description: cartItems.map(item => item.name).join(', '),
+          primary_plan_id: cartItems[0].id,
+          primary_plan_name: cartItems[0].name,
+        }
+      : {
+          plan_id: plan.id,
+          plan_name: plan.name,
+        };
+
+    const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
+      finalPrice,
+      { 
+        ...itemsMetadata,
+        fullName: paymentFormData.fullName,
+        customer_name: paymentFormData.fullName,
+        customer_email: paymentFormData.email,
+        email: paymentFormData.email,
+        is_bundle: isBundle,
+        timestamp: new Date().toISOString()
+      },
+      countryCode
+    );
+
+    console.log('Payment intent response:', paymentIntentResponse);
+
+    if ('error' in paymentIntentResponse && paymentIntentResponse.error) {
+      throw new Error(paymentIntentResponse.error);
+    }
+
+    if ('demoMode' in paymentIntentResponse && paymentIntentResponse.demoMode) {
+      console.log('Demo mode active: Simulating successful payment');
+      setIsDemoMode(true);
+      return null; // No client secret in demo mode
+    }
+    
+    if ('clientSecret' in paymentIntentResponse && paymentIntentResponse.clientSecret) {
+      return paymentIntentResponse.clientSecret;
+    }
+    
+    throw new Error("No client secret returned from the server");
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
@@ -60,16 +182,6 @@ export const PaymentForm = ({
       toast({
         title: "Stripe not loaded",
         description: "Please wait a moment and try again",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (!formData.fullName || !formData.email) {
-      setPaymentError("Please complete all required fields");
-      toast({
-        title: "Form incomplete",
-        description: "Please fill in all required information",
         variant: "destructive"
       });
       return;
@@ -85,47 +197,16 @@ export const PaymentForm = ({
         throw new Error("Card element not found");
       }
 
-      const paymentFormData = {
-        fullName: formData.fullName,
-        email: formData.email
-      };
-
-      const itemsMetadata = cartItems && cartItems.length > 0 
-        ? {
-            items: cartItems.map(item => item.id).join(','),
-            items_count: cartItems.length,
-            items_description: cartItems.map(item => item.name).join(', '),
-            primary_plan_id: cartItems[0].id,
-            primary_plan_name: cartItems[0].name,
-          }
-        : {
-            plan_id: plan.id,
-            plan_name: plan.name,
-          };
-
-      const paymentIntentResponse: PaymentIntentResponse = await createPaymentIntent(
-        finalPrice,
-        { 
-          ...itemsMetadata,
-          fullName: paymentFormData.fullName,
-          customer_name: paymentFormData.fullName,
-          customer_email: paymentFormData.email,
-          email: paymentFormData.email,
-          is_bundle: isBundle,
-          timestamp: new Date().toISOString()
-        }
-      );
-
-      console.log('Payment intent response:', paymentIntentResponse);
-
-      if ('error' in paymentIntentResponse && paymentIntentResponse.error) {
-        throw new Error(paymentIntentResponse.error);
+      // Create or get client secret
+      const secret = clientSecret || await createIntent();
+      
+      // Set client secret in state for reuse
+      if (secret && !clientSecret) {
+        setClientSecret(secret);
       }
 
-      if ('demoMode' in paymentIntentResponse && paymentIntentResponse.demoMode) {
-        console.log('Demo mode active: Simulating successful payment');
-        setIsDemoMode(true);
-        
+      // Handle demo mode
+      if (isDemoMode) {
         setTimeout(() => {
           toast({
             title: "Payment Successful!",
@@ -137,8 +218,8 @@ export const PaymentForm = ({
             resetCardElement();
             
             const freshData = {
-              fullName: paymentFormData.fullName,
-              email: paymentFormData.email
+              fullName: formData.fullName,
+              email: formData.email
             };
             
             onSuccess(freshData);
@@ -148,17 +229,16 @@ export const PaymentForm = ({
         return;
       }
       
-      if ('clientSecret' in paymentIntentResponse && paymentIntentResponse.clientSecret) {
-        const clientSecret = paymentIntentResponse.clientSecret;
-        
+      // Process payment if not in demo mode and we have a client secret
+      if (secret) {
         console.log("Confirming card payment with secret");
 
-        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(secret, {
           payment_method: {
             card: cardElement,
             billing_details: {
-              name: paymentFormData.fullName,
-              email: paymentFormData.email,
+              name: formData.fullName,
+              email: formData.email,
             },
           },
         });
@@ -171,64 +251,27 @@ export const PaymentForm = ({
         console.log('Payment intent result:', paymentIntent);
 
         if (paymentIntent.status === 'succeeded') {
-          setIsProcessed(true);
-          toast({
-            title: "Payment successful!",
-            description: "Your certificate is ready to download on the next page.",
-          });
-          
-          setTimeout(() => {
-            resetCardElement();
-            
-            const freshData = {
-              fullName: paymentFormData.fullName,
-              email: paymentFormData.email
-            };
-            
-            onSuccess(freshData);
-          }, 1500);
+          handlePaymentSuccess(paymentIntent);
         } else if (paymentIntent.status === 'requires_action') {
-          const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(clientSecret);
+          const { error, paymentIntent: updatedIntent } = await stripe.confirmCardPayment(secret);
           
           if (error) {
             throw new Error(`Authentication failed: ${error.message}`);
           }
           
           if (updatedIntent.status === 'succeeded') {
-            setIsProcessed(true);
-            toast({
-              title: "Payment successful!",
-              description: "Your certificate is ready to download on the next page.",
-            });
-            
-            setTimeout(() => {
-              resetCardElement();
-              
-              const freshData = {
-                fullName: paymentFormData.fullName,
-                email: paymentFormData.email
-              };
-              
-              onSuccess(freshData);
-            }, 1500);
+            handlePaymentSuccess(updatedIntent);
           } else {
             throw new Error(`Payment failed with status: ${updatedIntent.status}`);
           }
         } else {
           throw new Error(`Payment failed with status: ${paymentIntent.status}`);
         }
-      } else {
-        throw new Error("No client secret returned from the server");
+      } else if (!isDemoMode) {
+        throw new Error("Could not create payment intent");
       }
     } catch (error) {
-      console.error('Payment error:', error);
-      setPaymentError(error instanceof Error ? error.message : "An unknown error occurred");
-      toast({
-        title: "Payment failed",
-        description: error instanceof Error ? error.message : "Please try again or contact support.",
-        variant: "destructive"
-      });
-      setIsLoading(false);
+      handlePaymentError(error);
     } finally {
       setIsLoading(false);
     }
@@ -269,6 +312,47 @@ export const PaymentForm = ({
               {paymentError}
             </AlertDescription>
           </Alert>
+        )}
+        
+        <div className="mb-4">
+          <Label>Country</Label>
+          <Select 
+            value={countryCode} 
+            onValueChange={(value) => {
+              setCountryCode(value);
+              // Reset client secret when country changes
+              setClientSecret(null);
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select your country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countries.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  {country.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-gray-500 mt-1">
+            Available payment methods will be determined by your country
+          </p>
+        </div>
+
+        {/* Digital Wallet Payment Buttons */}
+        {stripe && elements && formComplete && (
+          <WalletPaymentButtons
+            amount={finalPrice}
+            currency="usd"
+            onPaymentSuccess={handlePaymentSuccess}
+            onPaymentError={handlePaymentError}
+            clientSecret={clientSecret}
+            metadata={{
+              fullName: formData.fullName,
+              email: formData.email
+            }}
+          />
         )}
         
         <div className="mb-4">
@@ -319,6 +403,15 @@ export const PaymentForm = ({
             </AlertDescription>
           </Alert>
         )}
+        
+        <div className="mt-4 flex flex-wrap gap-2 justify-center">
+          <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal and Credit Card" className="h-6" />
+          <img src="https://www.mastercard.us/content/dam/mccom/global/logos/logo-mastercard-mobile.svg" alt="Mastercard" className="h-6" />
+          <img src="https://www.visa.com.au/dam/VCOM/regional/ap/australia/global-elements/images/au-visa-gold-badge.png" alt="Visa" className="h-6" />
+          <img src="https://www.americanexpress.com/content/dam/amex/us/merchant/supplies-uplift/logos/amex-logo-color-small.png" alt="American Express" className="h-6" />
+          <img src="https://cdn.worldvectorlogo.com/logos/apple-pay.svg" alt="Apple Pay" className="h-6" />
+          <img src="https://developers.google.com/static/pay/api/images/brand-guidelines/google-pay-mark.png" alt="Google Pay" className="h-6" />
+        </div>
         
         <p className="text-xs text-gray-500 mt-4 text-center">
           * This is a real insurance product with a $50,000 accidental death benefit.

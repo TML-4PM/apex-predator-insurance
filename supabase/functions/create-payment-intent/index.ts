@@ -43,7 +43,7 @@ serve(async (req) => {
         httpClient: Stripe.createFetchHttpClient(),
       });
 
-      const { amount, metadata } = await req.json();
+      const { amount, metadata, paymentMethodOptions, countryCode = 'US' } = await req.json();
 
       if (!amount || amount <= 0) {
         return new Response(
@@ -63,6 +63,9 @@ serve(async (req) => {
       // Log payment attempt for monitoring (but don't log full card details)
       console.log(`Payment intent created for ${amount} cents, plan: ${metadata?.plan_name || 'unknown'}`);
 
+      // Configure payment method options based on country
+      const paymentMethodsConfig = getPaymentMethodOptions(countryCode);
+
       // Create a PaymentIntent with the order amount and currency
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
@@ -72,6 +75,7 @@ serve(async (req) => {
         automatic_payment_methods: {
           enabled: true,
         },
+        payment_method_options: paymentMethodsConfig,
       });
 
       // Return the client secret to the client
@@ -106,3 +110,37 @@ serve(async (req) => {
     );
   }
 });
+
+// Helper function to get payment method options based on country code
+function getPaymentMethodOptions(countryCode = 'US') {
+  const options = {};
+  
+  if (countryCode === 'US') {
+    // For US customers, enable Apple Pay and Google Pay
+    options.card = {
+      request_three_d_secure: 'automatic',
+    };
+  } else if (['NL', 'nl'].includes(countryCode)) {
+    // For Netherlands, enable iDEAL
+    options.ideal = {};
+  } else if (['DE', 'AT', 'de', 'at'].includes(countryCode)) {
+    // For Germany and Austria, enable SOFORT
+    options.sofort = {
+      preferred_language: countryCode.toLowerCase() === 'de' ? 'de' : 'en',
+    };
+  } else if (['BE', 'be'].includes(countryCode)) {
+    // For Belgium, enable Bancontact
+    options.bancontact = {};
+  } else if (countryCode.toLowerCase().startsWith('eu')) {
+    // For EU countries, enable SEPA Direct Debit
+    options.sepa_debit = {};
+  } else if (['CN', 'cn'].includes(countryCode)) {
+    // For China, enable Alipay
+    options.alipay = {};
+  } else if (['DE', 'de'].includes(countryCode)) {
+    // For Germany, enable Giropay
+    options.giropay = {};
+  }
+  
+  return options;
+}
