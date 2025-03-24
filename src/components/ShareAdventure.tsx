@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Share2, Copy, Check, Twitter, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { Share2, Copy, Check, Facebook, Instagram, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import SocialMediaLinks from './SocialMediaLinks';
 import {
@@ -88,9 +88,6 @@ const ShareAdventure = ({
     let shareUrl = '';
     
     switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
-        break;
       case 'facebook':
         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
         break;
@@ -148,10 +145,6 @@ const ShareAdventure = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => shareOnPlatform('twitter')} className="flex items-center gap-2 cursor-pointer">
-              <Twitter className="h-4 w-4 text-[#1DA1F2]" />
-              <span>Twitter</span>
-            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => shareOnPlatform('facebook')} className="flex items-center gap-2 cursor-pointer">
               <Facebook className="h-4 w-4 text-[#1877F2]" />
               <span>Facebook</span>
