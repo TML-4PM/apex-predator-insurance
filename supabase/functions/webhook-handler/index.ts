@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 // Comprehensive CORS headers for broader compatibility
@@ -126,6 +125,71 @@ async function sendSampleCertificates(email: string) {
   );
 }
 
+// New function to send subscription confirmation
+async function sendSubscriptionNotification(email: string, type: string, subscription: any) {
+  console.log(`Sending ${type} notification to ${email}`);
+  
+  const planName = subscription?.plan?.name || "Apex Predator Insurance";
+  const amount = subscription?.plan?.amount ? (subscription.plan.amount / 100).toFixed(2) : "9.99";
+  const interval = subscription?.plan?.interval || "month";
+  const status = subscription?.status || "active";
+  
+  let title, description;
+  
+  switch (type) {
+    case "new":
+      title = "Subscription Confirmation";
+      description = `Thank you for subscribing to ${planName}`;
+      break;
+    case "updated":
+      title = "Subscription Updated";
+      description = `Your subscription to ${planName} has been updated`;
+      break;
+    case "cancelled":
+      title = "Subscription Cancelled";
+      description = `Your subscription to ${planName} has been cancelled`;
+      break;
+    case "reactivated":
+      title = "Subscription Reactivated";
+      description = `Your subscription to ${planName} has been reactivated`;
+      break;
+    default:
+      title = "Subscription Notification";
+      description = `Important information about your ${planName} subscription`;
+  }
+  
+  const emailHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #f42424; padding: 20px; text-align: center;">
+        <h1 style="color: white; margin: 0;">Apex Predator Insurance</h1>
+      </div>
+      <div style="padding: 20px; border: 1px solid #e0e0e0; border-top: none;">
+        <h2>${title}</h2>
+        <p>${description}</p>
+        
+        <div style="margin: 20px 0; padding: 15px; background-color: #f8f8f8; border-radius: 5px;">
+          <h3 style="margin-top: 0;">Subscription Details</h3>
+          <p><strong>Plan:</strong> ${planName}</p>
+          <p><strong>Price:</strong> $${amount}/${interval}</p>
+          <p><strong>Status:</strong> ${status}</p>
+        </div>
+        
+        <p>Thank you for choosing Apex Predator Insurance!</p>
+        <p>The Apex Predator Team</p>
+      </div>
+      <div style="background-color: #f8f8f8; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+        <p>&copy; ${new Date().getFullYear()} Apex Predator Insurance. All rights reserved.</p>
+      </div>
+    </div>
+  `;
+  
+  return await sendEmail(
+    email,
+    title,
+    emailHtml
+  );
+}
+
 serve(async (req) => {
   console.log(`Received ${req.method} request to webhook-handler`);
   
@@ -139,7 +203,7 @@ serve(async (req) => {
   }
 
   try {
-    // Check if this is a sample certificates request
+    // Handle webhook requests
     if (req.method === 'POST') {
       const contentType = req.headers.get('content-type');
       
@@ -178,12 +242,50 @@ serve(async (req) => {
             );
           }
         }
+        
+        // Handle subscription notifications
+        if (requestData.action === 'subscription_notification' && 
+            requestData.email && 
+            requestData.type) {
+          
+          console.log(`Processing subscription notification for email: ${requestData.email}`);
+          
+          try {
+            const result = await sendSubscriptionNotification(
+              requestData.email, 
+              requestData.type,
+              requestData.subscription
+            );
+            
+            console.log(`Subscription notification sent successfully to ${requestData.email}`);
+            return new Response(
+              JSON.stringify({ 
+                success: true, 
+                message: `Subscription notification sent to ${requestData.email}` 
+              }),
+              { 
+                status: 200, 
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+              }
+            );
+          } catch (emailError) {
+            console.error(`Error sending subscription notification: ${emailError.message}`);
+            return new Response(
+              JSON.stringify({ 
+                success: false, 
+                error: `Failed to send subscription notification: ${emailError.message}` 
+              }),
+              { 
+                status: 500, 
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+              }
+            );
+          }
+        }
       }
     }
     
-    // Standard webhook processing for Stripe events or other actions would go here
-    // Simplified for the current focus on email functionality
-    
+    // Default response for unsupported actions
     return new Response(
       JSON.stringify({ 
         success: false, 

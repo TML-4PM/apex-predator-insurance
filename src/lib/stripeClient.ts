@@ -21,6 +21,12 @@ export type PaymentIntentResponse =
   | { demoMode: true; message: string; error?: undefined }
   | { error: string; demoMode?: boolean };
 
+// Define type for payment method configuration
+type PaymentMethodConfig = {
+  enabled: boolean;
+  countries?: string[];
+};
+
 // Configure payment methods based on country code
 export const getAvailablePaymentMethods = (countryCode = 'US') => {
   const methodsConfig = configurePaymentMethodOptions();
@@ -33,7 +39,7 @@ export const getAvailablePaymentMethods = (countryCode = 'US') => {
 };
 
 // Configuration for payment method options
-export const configurePaymentMethodOptions = () => {
+export const configurePaymentMethodOptions = (): Record<string, PaymentMethodConfig> => {
   return {
     card: {
       enabled: true,
