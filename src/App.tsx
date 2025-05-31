@@ -21,6 +21,9 @@ import Wholesale from "./pages/Wholesale";
 import PartnerPortal from "./pages/PartnerPortal";
 import ContentHub from "./pages/ContentHub";
 import Store from "./pages/Store";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import TestimonialsPage from "./pages/TestimonialsPage";
 
 // Create a shared QueryClient instance
 const queryClient = new QueryClient({
@@ -41,7 +44,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/plans" element={<Plans />} />
+          <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/testimonials" element={<TestimonialsPage />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/oopsies" element={<Oopsies />} />
           <Route path="/submit" element={<Submit />} />
           <Route path="/wholesale" element={<Wholesale />} />
@@ -56,7 +62,6 @@ const App = () => (
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/blog" element={<Navigate to="/" state={{ scrollToSection: 'blog' }} />} />
-          <Route path="/contact" element={<Navigate to="/" state={{ scrollToSection: 'contact' }} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

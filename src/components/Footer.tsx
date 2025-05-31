@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -51,7 +52,13 @@ const Footer = () => {
                 <Link to="/plans" className="text-white/60 hover:text-white transition-colors duration-300">Insurance Plans</Link>
               </li>
               <li>
+                <Link to="/about" className="text-white/60 hover:text-white transition-colors duration-300">About Us</Link>
+              </li>
+              <li>
                 <Link to="/gallery" className="text-white/60 hover:text-white transition-colors duration-300">Adventure Gallery</Link>
+              </li>
+              <li>
+                <Link to="/testimonials" className="text-white/60 hover:text-white transition-colors duration-300">Customer Stories</Link>
               </li>
               <li>
                 <Link to="/disclaimer" className="text-white/60 hover:text-white transition-colors duration-300">Legal Disclaimer</Link>
@@ -61,17 +68,26 @@ const Footer = () => {
           
           <div>
             <h3 className="text-white font-medium mb-4">Contact Us</h3>
-            <p className="text-white/60 mb-2">Have questions about our real insurance?</p>
-            <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
-              <Mail size={16} />
-              <a href="mailto:info@apexpredatorinsurance.com" className="hover:underline">
-                info@apexpredatorinsurance.com
-              </a>
+            <p className="text-white/60 mb-2">Have questions about our novelty certificates?</p>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
+                <Mail size={16} />
+                <a href="mailto:support@apexpredatorinsurance.com" className="hover:underline text-sm">
+                  support@apexpredatorinsurance.com
+                </a>
+              </div>
+              <div className="text-white/60 text-sm">
+                📱 +61 0424 882 136
+              </div>
             </div>
+            
+            <Link to="/contact" className="text-apex-red hover:text-apex-red/80 transition-colors text-sm font-medium">
+              Full Contact Information →
+            </Link>
             
             <div className="mt-6 flex items-center text-white/40 text-sm">
               <ShieldCheck size={14} className="mr-2" />
-              <span>$50,000 accidental death benefit</span>
+              <span>Novelty certificates only</span>
             </div>
           </div>
         </div>
@@ -82,8 +98,8 @@ const Footer = () => {
           </p>
           
           <div className="flex gap-4 text-sm text-white/40">
-            <a href="/privacy" className="hover:text-white transition-colors duration-300">Privacy Policy</a>
-            <a href="/terms" className="hover:text-white transition-colors duration-300">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-white transition-colors duration-300">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors duration-300">Terms of Service</Link>
           </div>
         </div>
       </div>
