@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -13,7 +12,7 @@ export interface AutomatedContent {
   confidence_score: number;
   image_url?: string;
   location?: string;
-  severity_level: number;
+  severity_level?: number;
   auto_generated: boolean;
   discovery_date: string;
   status: 'pending' | 'approved' | 'rejected';
@@ -35,7 +34,15 @@ export const useContentAutomation = () => {
         .limit(50);
 
       if (error) throw error;
-      setAutomatedContent(data || []);
+      
+      // Map the data to match our interface, adding default severity_level if missing
+      const mappedData = (data || []).map(item => ({
+        ...item,
+        severity_level: item.severity_level || 5, // Default severity level
+        discovery_date: item.discovery_date || item.created_at
+      }));
+      
+      setAutomatedContent(mappedData);
     } catch (error) {
       console.error('Error fetching automated content:', error);
       toast({
