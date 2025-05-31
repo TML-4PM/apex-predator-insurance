@@ -2,7 +2,26 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type { Oopsie, OopsieSubmission } from '@/types/oopsie';
+import type { Oopsie, OopsieSubmission, OopsieFromDB } from '@/types/oopsie';
+
+// Type guard to validate category
+const isValidCategory = (category: string): category is Oopsie['category'] => {
+  return ['ai_fail', 'adventure_gone_wrong', 'insurance_claim', 'wildlife_encounter', 'equipment_failure', 'other'].includes(category);
+};
+
+// Type guard to validate status
+const isValidStatus = (status: string): status is Oopsie['status'] => {
+  return ['pending', 'approved', 'rejected'].includes(status);
+};
+
+// Convert database response to typed Oopsie
+const convertToOopsie = (dbOopsie: OopsieFromDB): Oopsie => {
+  return {
+    ...dbOopsie,
+    category: isValidCategory(dbOopsie.category) ? dbOopsie.category : 'other',
+    status: isValidStatus(dbOopsie.status) ? dbOopsie.status : 'pending'
+  };
+};
 
 export const useOopsies = () => {
   const [oopsies, setOopsies] = useState<Oopsie[]>([]);
@@ -19,7 +38,10 @@ export const useOopsies = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setOopsies(data || []);
+      
+      // Convert database responses to properly typed Oopsies
+      const typedOopsies = (data || []).map(convertToOopsie);
+      setOopsies(typedOopsies);
     } catch (error) {
       console.error('Error fetching oopsies:', error);
       toast({

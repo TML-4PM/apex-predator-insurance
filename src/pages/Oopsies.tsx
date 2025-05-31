@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import OopsieGallery from '@/components/OopsieGallery';
 import YoutubeChannel from '@/components/YoutubeChannel';
+import SpottoMigrationPanel from '@/components/SpottoMigrationPanel';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Clock, Flame, Youtube, Plus } from 'lucide-react';
+import { TrendingUp, Clock, Flame, Youtube, Plus, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
@@ -19,6 +20,7 @@ const categories = [
 
 const Oopsies = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showMigrationPanel, setShowMigrationPanel] = useState(false);
 
   return (
     <Layout>
@@ -50,12 +52,29 @@ const Oopsies = () => {
                 })}
               </div>
               
-              <Link to="/submit">
-                <Button className="bg-apex-red hover:bg-apex-red/90 mb-8">
-                  <Plus size={16} className="mr-2" />
-                  Share Your Oopsie
+              <div className="flex flex-wrap gap-3 justify-center mb-8">
+                <Link to="/submit">
+                  <Button className="bg-apex-red hover:bg-apex-red/90">
+                    <Plus size={16} className="mr-2" />
+                    Share Your Oopsie
+                  </Button>
+                </Link>
+                
+                <Button
+                  variant="outline"
+                  onClick={() => setShowMigrationPanel(!showMigrationPanel)}
+                  className="border-apex-red text-apex-red hover:bg-apex-red/10"
+                >
+                  <Settings size={16} className="mr-2" />
+                  {showMigrationPanel ? 'Hide' : 'Show'} Migration Tools
                 </Button>
-              </Link>
+              </div>
+
+              {showMigrationPanel && (
+                <div className="mb-8 animate-fade-up">
+                  <SpottoMigrationPanel />
+                </div>
+              )}
             </div>
 
             <Tabs defaultValue="gallery" className="w-full">

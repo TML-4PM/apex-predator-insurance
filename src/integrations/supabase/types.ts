@@ -98,6 +98,125 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      spotto_likes: {
+        Row: {
+          created_at: string
+          id: string
+          spotto_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          spotto_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          spotto_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "spotto_likes_spotto_id_fkey"
+            columns: ["spotto_id"]
+            isOneToOne: false
+            referencedRelation: "spottos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      spottos: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_featured: boolean | null
+          latitude: number | null
+          likes_count: number | null
+          location_name: string | null
+          longitude: number | null
+          shares_count: number | null
+          status: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          latitude?: number | null
+          likes_count?: number | null
+          location_name?: string | null
+          longitude?: number | null
+          shares_count?: number | null
+          status?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          latitude?: number | null
+          likes_count?: number | null
+          location_name?: string | null
+          longitude?: number | null
+          shares_count?: number | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
