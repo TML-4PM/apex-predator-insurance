@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -7,6 +6,9 @@ import { CheckoutForm, CheckoutFormValues } from '@/components/checkout/Checkout
 import { OrderSummary } from '@/components/checkout/OrderSummary';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useToast } from '@/hooks/use-toast';
+import GroupPurchase from '@/components/GroupPurchase';
+import InfluencerPackage from '@/components/InfluencerPackage';
+import TravelerStories from '@/components/TravelerStories';
 
 const PopularPlans = [
   { id: 'shark', name: 'Shark Insurance', price: 9.99, icon: '🦈', description: 'Our most popular choice for ocean adventurers!' },
@@ -221,6 +223,15 @@ const Checkout = () => {
               <p className="text-lg text-white/70">You're just a few steps away from your Wildlife Shield certificate!</p>
             </div>
 
+            {/* Social Purchase Options */}
+            <div className="mb-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <GroupPurchase 
+                basePrice={selectedPlan.price} 
+                planName={selectedPlan.name}
+              />
+              <InfluencerPackage />
+            </div>
+
             {!isBundle && (
               <div className="mb-10">
                 <div className="flex items-center justify-between mb-4">
@@ -313,11 +324,11 @@ const Checkout = () => {
                   </h2>
                   
                   <CheckoutForm 
-                    key={`checkout-form-${selectedPlan.id}-${formKey}`} // Force re-render with unique key
+                    key={`checkout-form-${selectedPlan.id}-${formKey}`}
                     plan={selectedPlan} 
                     onSuccess={handlePaymentSuccess} 
                     isBundle={isBundle}
-                    formKey={formKey} // Pass the key as a prop as well
+                    formKey={formKey}
                     cartItems={cartItems}
                   />
                 </div>
@@ -331,6 +342,11 @@ const Checkout = () => {
                   cartItems={cartItems}
                 />
               </div>
+            </div>
+
+            {/* Social Proof Section */}
+            <div className="mt-12">
+              <TravelerStories />
             </div>
           </div>
         </div>
