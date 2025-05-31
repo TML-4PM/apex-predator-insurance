@@ -1,18 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { Menu, X, Shield, Camera, TrendingUp } from 'lucide-react';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  
+
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      setIsScrolled(offset > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -20,105 +18,119 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Plans', path: '/plans' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Disclaimer', path: '/disclaimer' },
+    { to: "/plans", label: "Insurance Plans", icon: Shield },
+    { to: "/oopsies", label: "Oopsies", icon: TrendingUp },
+    { to: "/submit", label: "Submit", icon: Camera },
+    { to: "/gallery", label: "Gallery" },
+    { to: "/articles", label: "Articles" },
+    { to: "/#contact", label: "Contact", isAnchor: true },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNavClick = (item: any) => {
+    setIsOpen(false);
+    if (item.isAnchor && location.pathname === '/') {
+      const sectionId = item.to.split('#')[1];
+      scrollToSection(sectionId);
+    }
+  };
 
   return (
-    <header 
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-10 py-4',
-        isScrolled ? 'bg-apex-black/90 backdrop-blur-md shadow-md' : 'bg-transparent'
-      )}
-    >
-      <div className="mx-auto max-w-7xl flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-full bg-apex-red flex items-center justify-center">
-            <span className="text-white font-bold text-lg">AP</span>
-          </div>
-          <span className={cn(
-            "font-bold tracking-tight transition-all duration-300",
-            isScrolled ? "text-white" : "text-apex-black"
-          )}>
-            Apex Predator Insurance
-          </span>
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "relative text-sm font-medium hover:text-apex-red transition-colors duration-300 py-2",
-                isActive(item.path) 
-                  ? isScrolled ? "text-apex-red" : "text-apex-red" 
-                  : isScrolled ? "text-white" : "text-apex-black"
-              )}
-            >
-              {item.name}
-              {isActive(item.path) && (
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-apex-red rounded-full" />
-              )}
-            </Link>
-          ))}
-          
-          <Link 
-            to="/plans" 
-            className="flex items-center gap-2 bg-apex-red text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all duration-300 ml-4"
-          >
-            <ShoppingCart size={16} />
-            <span>Shop Now</span>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-sm shadow-lg border-b border-apex-black/5' 
+        : 'bg-transparent'
+    }`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <Shield 
+                size={32} 
+                className={`transition-colors duration-300 ${
+                  isScrolled ? 'text-apex-red' : 'text-white group-hover:text-apex-lightgray'
+                }`} 
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className={`font-bold text-lg leading-tight transition-colors duration-300 ${
+                isScrolled ? 'text-apex-black' : 'text-white'
+              }`}>
+                Apex Predator
+              </span>
+              <span className={`text-sm leading-tight transition-colors duration-300 ${
+                isScrolled ? 'text-apex-darkgray/70' : 'text-white/80'
+              }`}>
+                Insurance
+              </span>
+            </div>
           </Link>
-        </nav>
-        
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-apex-black"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? (
-            <X size={24} className={isScrolled ? "text-white" : "text-apex-black"} />
-          ) : (
-            <Menu size={24} className={isScrolled ? "text-white" : "text-apex-black"} />
-          )}
-        </button>
-      </div>
-      
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg animate-fade-in">
-          <div className="flex flex-col p-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "py-3 px-4 text-apex-black hover:bg-apex-lightgray rounded-md transition-colors",
-                  isActive(item.path) && "text-apex-red font-medium"
-                )}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Link 
-              to="/plans" 
-              className="flex items-center justify-center gap-2 bg-apex-red text-white mt-4 px-4 py-3 rounded-md"
-              onClick={() => setIsMobileMenuOpen(false)}
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => handleNavClick(item)}
+                  className={`flex items-center gap-2 font-medium transition-colors duration-300 hover:text-apex-red ${
+                    isScrolled ? 'text-apex-darkgray' : 'text-white'
+                  } ${location.pathname === item.to ? 'text-apex-red' : ''}`}
+                >
+                  {IconComponent && <IconComponent size={16} />}
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`transition-colors duration-300 ${
+                isScrolled ? 'text-apex-black hover:text-apex-red' : 'text-white hover:text-apex-lightgray'
+              }`}
+              aria-label="Toggle mobile menu"
             >
-              <ShoppingCart size={18} />
-              <span>Shop Now</span>
-            </Link>
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-apex-black/10 shadow-lg">
+            <div className="px-4 py-6 space-y-4">
+              {navItems.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => handleNavClick(item)}
+                    className={`flex items-center gap-3 text-apex-darkgray hover:text-apex-red transition-colors py-2 ${
+                      location.pathname === item.to ? 'text-apex-red font-medium' : ''
+                    }`}
+                  >
+                    {IconComponent && <IconComponent size={18} />}
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 

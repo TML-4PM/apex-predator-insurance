@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
+import Oopsies from "./pages/Oopsies";
+import Submit from "./pages/Submit";
 
 // Create a shared QueryClient instance
 const queryClient = new QueryClient({
@@ -36,6 +37,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/oopsies" element={<Oopsies />} />
+          <Route path="/submit" element={<Submit />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/certificate" element={<CertificatePage />} />
