@@ -61,20 +61,29 @@ export const useOopsies = () => {
 
       // Upload image if file provided
       if (submission.image_file) {
-        const fileExt = submission.image_file.name.split('.').pop();
-        const fileName = `${Date.now()}.${fileExt}`;
-        
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('oopsies')
-          .upload(fileName, submission.image_file);
+        try {
+          const fileExt = submission.image_file.name.split('.').pop();
+          const fileName = `${Date.now()}.${fileExt}`;
+          
+          const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('oopsies')
+            .upload(fileName, submission.image_file);
 
-        if (uploadError) throw uploadError;
-
-        const { data: { publicUrl } } = supabase.storage
-          .from('oopsies')
-          .getPublicUrl(fileName);
-        
-        imageUrl = publicUrl;
+          if (uploadError) {
+            console.warn('Storage upload failed, continuing without image:', uploadError);
+            // Continue without image rather than failing completely
+            imageUrl = undefined;
+          } else {
+            const { data: { publicUrl } } = supabase.storage
+              .from('oopsies')
+              .getPublicUrl(fileName);
+            
+            imageUrl = publicUrl;
+          }
+        } catch (storageError) {
+          console.warn('Storage error, continuing without image:', storageError);
+          imageUrl = undefined;
+        }
       }
 
       const { data: user } = await supabase.auth.getUser();

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, MessageCircle, TrendingUp } from 'lucide-react';
+import { Heart, MessageCircle, TrendingUp, AlertCircle } from 'lucide-react';
 import { useOopsies } from '@/hooks/useOopsies';
 import EnhancedShareButton from './EnhancedShareButton';
 import { formatDistanceToNow } from 'date-fns';
@@ -53,7 +53,7 @@ const OopsieGallery = ({ showFeatured = false, category, limit }: OopsieGalleryP
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: limit || 6 }).map((_, i) => (
           <Card key={i} className="animate-pulse">
             <div className="aspect-square bg-gray-200 rounded-t-lg"></div>
             <CardContent className="p-4">
@@ -66,6 +66,18 @@ const OopsieGallery = ({ showFeatured = false, category, limit }: OopsieGalleryP
             </CardContent>
           </Card>
         ))}
+      </div>
+    );
+  }
+
+  if (filteredOopsies.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <AlertCircle className="mx-auto h-12 w-12 text-apex-darkgray/50 mb-4" />
+        <h3 className="text-lg font-semibold text-apex-black mb-2">No oopsies found</h3>
+        <p className="text-apex-darkgray/70">
+          {category ? `No oopsies in the ${categoryLabels[category as keyof typeof categoryLabels]} category yet.` : 'No oopsies to display yet.'}
+        </p>
       </div>
     );
   }
