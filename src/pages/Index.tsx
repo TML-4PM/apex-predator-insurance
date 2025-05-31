@@ -9,10 +9,9 @@ import ContactForm from '@/components/ContactForm';
 import WorldMap from '@/components/WorldMap';
 import MobileApp from '@/components/MobileApp';
 import Blog from '@/components/Blog';
-import OopsieGallery from '@/components/OopsieGallery';
 import FeaturedPredators from '@/components/FeaturedPredators';
 import { Button } from '@/components/ui/button';
-import { Camera, TrendingUp, Users, Target, Star, Shield, Globe, Award } from 'lucide-react';
+import { Camera, TrendingUp, Users, Target, Star, Shield, Globe, Award, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => (
@@ -96,42 +95,72 @@ const Index = () => (
     {/* Mobile App Section */}
     <MobileApp />
 
-    {/* Community Stories */}
+    {/* Community Support Section */}
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-purple-100 rounded-full px-4 py-2 mb-4">
-            <Award className="h-5 w-5 text-purple-600" />
-            <span className="text-purple-700 font-semibold">Community Stories</span>
+            <Heart className="h-5 w-5 text-purple-600" />
+            <span className="text-purple-700 font-semibold">Community Support</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6">
-            Epic Adventure Stories
+            Support Our Mission
           </h2>
           <p className="text-xl text-apex-darkgray/70 mb-8">
-            From close calls to certificate flexes - see what the community is sharing
+            Help us protect adventurers worldwide with innovative insurance solutions
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link to="/submit">
+            <Link to="/donate">
               <Button className="bg-apex-red hover:bg-apex-red/90">
-                <Camera size={16} className="mr-2" />
-                Share Your Story
+                <Heart size={16} className="mr-2" />
+                Make a Donation
               </Button>
             </Link>
-            <Link to="/oopsies">
+            <Link to="/about">
               <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10">
-                <TrendingUp size={16} className="mr-2" />
-                Trending Stories
+                <Shield size={16} className="mr-2" />
+                Learn Our Story
               </Button>
             </Link>
           </div>
         </div>
         
-        <OopsieGallery showFeatured={true} limit={6} />
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="text-center p-6 bg-apex-lightgray/20 rounded-xl">
+            <div className="bg-apex-red/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Shield className="text-apex-red" size={24} />
+            </div>
+            <h3 className="text-xl font-bold text-apex-black mb-3">Protection Innovation</h3>
+            <p className="text-apex-darkgray/70">
+              Developing cutting-edge insurance solutions for extreme adventures and dangerous wildlife encounters.
+            </p>
+          </div>
+          
+          <div className="text-center p-6 bg-apex-lightgray/20 rounded-xl">
+            <div className="bg-apex-red/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Users className="text-apex-red" size={24} />
+            </div>
+            <h3 className="text-xl font-bold text-apex-black mb-3">Global Community</h3>
+            <p className="text-apex-darkgray/70">
+              Building a worldwide network of adventurers who support each other through shared protection.
+            </p>
+          </div>
+          
+          <div className="text-center p-6 bg-apex-lightgray/20 rounded-xl">
+            <div className="bg-apex-red/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Award className="text-apex-red" size={24} />
+            </div>
+            <h3 className="text-xl font-bold text-apex-black mb-3">Recognition System</h3>
+            <p className="text-apex-darkgray/70">
+              Acknowledging our supporters with special badges, certificates, and community recognition.
+            </p>
+          </div>
+        </div>
         
         <div className="mt-12 text-center">
-          <Link to="/oopsies">
+          <Link to="/donate">
             <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10">
-              View All Adventures
+              View Donation Options
             </Button>
           </Link>
         </div>
