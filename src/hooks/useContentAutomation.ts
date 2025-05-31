@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -6,16 +7,22 @@ export interface AutomatedContent {
   id: string;
   title: string;
   description: string;
-  source_url: string;
-  source_platform: string;
+  source_url?: string;
+  source_platform?: string;
   category: string;
-  confidence_score: number;
+  confidence_score?: number;
   image_url?: string;
   location?: string;
-  severity_level?: number;
-  auto_generated: boolean;
-  discovery_date: string;
-  status: 'pending' | 'approved' | 'rejected';
+  auto_generated?: boolean;
+  discovery_date?: string;
+  status: string; // Changed from union type to string to match database
+  likes: number;
+  comments: number;
+  shares: number;
+  viral_score: number;
+  is_featured: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export const useContentAutomation = () => {
@@ -35,10 +42,9 @@ export const useContentAutomation = () => {
 
       if (error) throw error;
       
-      // Map the data to match our interface, adding default severity_level if missing
+      // Map the data to match our interface
       const mappedData = (data || []).map(item => ({
         ...item,
-        severity_level: item.severity_level || 5, // Default severity level
         discovery_date: item.discovery_date || item.created_at
       }));
       

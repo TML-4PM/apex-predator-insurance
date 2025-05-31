@@ -40,7 +40,8 @@ const ContentAutomationDashboard = () => {
     'other': 'bg-gray-100 text-gray-800'
   };
 
-  const confidenceColor = (score: number) => {
+  const confidenceColor = (score?: number) => {
+    if (!score) return 'text-gray-600';
     if (score >= 0.8) return 'text-green-600';
     if (score >= 0.6) return 'text-yellow-600';
     return 'text-red-600';
@@ -102,7 +103,7 @@ const ContentAutomationDashboard = () => {
                 <p className="text-sm text-apex-darkgray/70">Avg Confidence</p>
                 <p className="text-2xl font-bold text-apex-black">
                   {automatedContent.length > 0 
-                    ? Math.round(automatedContent.reduce((sum, c) => sum + c.confidence_score, 0) / automatedContent.length * 100)
+                    ? Math.round(automatedContent.reduce((sum, c) => sum + (c.confidence_score || 0), 0) / automatedContent.length * 100)
                     : 0}%
                 </p>
               </div>
@@ -155,23 +156,20 @@ const ContentAutomationDashboard = () => {
                         <div className="flex items-center gap-3 text-sm text-apex-darkgray/60">
                           <div className="flex items-center gap-1">
                             <Globe size={12} />
-                            <span>{content.source_platform}</span>
+                            <span>{content.source_platform || 'Unknown'}</span>
                           </div>
                           <span>•</span>
-                          <span>{formatDistanceToNow(new Date(content.discovery_date))} ago</span>
+                          <span>{content.discovery_date ? formatDistanceToNow(new Date(content.discovery_date)) + ' ago' : 'Unknown'}</span>
                           <span>•</span>
                           <span className={confidenceColor(content.confidence_score)}>
-                            {Math.round(content.confidence_score * 100)}% confidence
+                            {Math.round((content.confidence_score || 0) * 100)}% confidence
                           </span>
                         </div>
                       </div>
                       
                       <div className="flex flex-col gap-2 ml-4">
-                        <Badge className={categoryColors[content.category as keyof typeof categoryColors]}>
+                        <Badge className={categoryColors[content.category as keyof typeof categoryColors] || categoryColors.other}>
                           {content.category.replace('_', ' ')}
-                        </Badge>
-                        <Badge variant="outline">
-                          Severity: {content.severity_level}/10
                         </Badge>
                       </div>
                     </div>
@@ -180,7 +178,8 @@ const ContentAutomationDashboard = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => window.open(content.source_url, '_blank')}
+                        onClick={() => content.source_url && window.open(content.source_url, '_blank')}
+                        disabled={!content.source_url}
                       >
                         View Source
                       </Button>
@@ -225,7 +224,7 @@ const ContentAutomationDashboard = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge className="bg-green-500 text-white">Live</Badge>
-                      <Badge variant="outline">{content.source_platform}</Badge>
+                      <Badge variant="outline">{content.source_platform || 'Unknown'}</Badge>
                     </div>
                   </div>
                 </CardContent>
