@@ -35,6 +35,12 @@ const Navbar = () => {
               Home
             </Link>
             <Link 
+              to="/product" 
+              className={`font-medium transition-colors ${isActive('/product') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
+            >
+              Product
+            </Link>
+            <Link 
               to="/plans" 
               className={`font-medium transition-colors ${isActive('/plans') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
             >
@@ -98,6 +104,13 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Home
+              </Link>
+              <Link 
+                to="/product" 
+                className={`font-medium transition-colors ${isActive('/product') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
+                onClick={() => setIsOpen(false)}
+              >
+                Product
               </Link>
               <Link 
                 to="/plans" 

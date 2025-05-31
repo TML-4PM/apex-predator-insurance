@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,6 +23,7 @@ import Store from "./pages/Store";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import TestimonialsPage from "./pages/TestimonialsPage";
+import ProductPage from "./pages/ProductPage";
 
 // Create a shared QueryClient instance
 const queryClient = new QueryClient({
@@ -44,6 +44,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/plans" element={<Plans />} />
+          <Route path="/product" element={<ProductPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/testimonials" element={<TestimonialsPage />} />
