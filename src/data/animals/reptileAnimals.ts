@@ -12,7 +12,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Southeast Asia', 'India'],
     description: 'The largest living reptile and apex predator',
     facts: ['Bite force of 16,460 newtons', 'Can hold breath for 1 hour'],
-    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1610058497388-5d1e6fcbb56c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1000,
     rarity: 'mythic'
   },
@@ -26,7 +26,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Nile River', 'Sub-Saharan Africa'],
     description: 'Africa\'s largest freshwater predator',
     facts: ['Can grow up to 20 feet long', 'Ambush predator extraordinaire'],
-    imageUrl: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop&q=80',
     killsPerYear: 745,
     rarity: 'mythic'
   },

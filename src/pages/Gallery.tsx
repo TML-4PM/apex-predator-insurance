@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import { Camera, Heart, MessageCircle, Share2 } from 'lucide-react';
-import ShareAdventure from '@/components/ShareAdventure';
+import { Search, Filter, Heart, Eye, MapPin } from 'lucide-react';
+import { deadlyAnimals } from '@/data/animalUtils';
+import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
 import { 
   Dialog,
   DialogContent,
@@ -10,79 +11,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-
-const galleryItems = [
-  {
-    id: 1,
-    username: 'SharkDiver23',
-    location: 'Great Barrier Reef, Australia',
-    caption: 'Just got my Shark Insurance! Ready for tomorrow\'s cage dive with these monsters!',
-    insurance: 'Shark Insurance',
-    likes: 247,
-    comments: 42,
-    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 2,
-    username: 'SafariKing',
-    location: 'Serengeti National Park, Tanzania',
-    caption: 'Lion watching at dawn. This beast came within 10 feet of our vehicle! Good thing I\'m covered!',
-    insurance: 'Lion Insurance',
-    likes: 352,
-    comments: 26,
-    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    username: 'AdventureAmy',
-    location: 'Kakadu National Park, Australia',
-    caption: 'Spotted some crocs today! My certificate doesn\'t make me feel any safer...',
-    insurance: 'Crocodile Insurance',
-    likes: 189,
-    comments: 37,
-    imageUrl: 'https://images.unsplash.com/photo-1610058497388-5d1e6fcbb56c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 4,
-    username: 'WildernessWanderer',
-    location: 'Yellowstone National Park, USA',
-    caption: 'Bear country! This grizzly was searching for food near our campsite. Thankfully I\'ve got my bear "insurance"!',
-    insurance: 'Bear Insurance',
-    likes: 274,
-    comments: 18,
-    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 5,
-    username: 'DesertTrekker',
-    location: 'Mojave Desert, USA',
-    caption: 'Scorpion hunting at night. Bought insurance just in case!',
-    insurance: 'Scorpion Insurance',
-    likes: 156,
-    comments: 29,
-    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 6,
-    username: 'DeepSeaDiver',
-    location: 'Marianas Trench, Pacific Ocean',
-    caption: 'Descending to the abyss. My Kraken Insurance makes me feel... exactly the same!',
-    insurance: 'Kraken Insurance',
-    likes: 421,
-    comments: 62,
-    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  }
-];
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Gallery = () => {
-  const [likedPosts, setLikedPosts] = useState<Record<number, boolean>>({});
+  const [animals, setAnimals] = useState<DeadlyAnimal[]>(deadlyAnimals);
+  const [filteredAnimals, setFilteredAnimals] = useState<DeadlyAnimal[]>(deadlyAnimals);
+  const [selectedAnimal, setSelectedAnimal] = useState<DeadlyAnimal | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedRarity, setSelectedRarity] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
-  const [openPhotoId, setOpenPhotoId] = useState<number | null>(null);
-  const [showSocialAuthPrompt, setShowSocialAuthPrompt] = useState(false);
-  const { toast } = useToast();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     
@@ -93,54 +40,65 @@ const Gallery = () => {
     
     return () => clearTimeout(timer);
   }, []);
-  
-  const toggleLike = (id: number) => {
-    setLikedPosts(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-    
-    toast({
-      title: likedPosts[id] ? "Removed like" : "Added like",
-      description: likedPosts[id] ? "You unliked this adventure" : "You liked this adventure",
-      duration: 1500
-    });
+
+  useEffect(() => {
+    let filtered = animals;
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(animal =>
+        animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        animal.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        animal.locations.some(location => 
+          location.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(animal => animal.category === selectedCategory);
+    }
+
+    // Filter by rarity
+    if (selectedRarity !== 'all') {
+      filtered = filtered.filter(animal => animal.rarity === selectedRarity);
+    }
+
+    setFilteredAnimals(filtered);
+  }, [searchTerm, selectedCategory, selectedRarity, animals]);
+
+  const getRarityColor = (rarity: string) => {
+    switch (rarity) {
+      case 'common': return 'bg-gray-500';
+      case 'uncommon': return 'bg-green-500';
+      case 'rare': return 'bg-blue-500';
+      case 'legendary': return 'bg-purple-500';
+      case 'mythic': return 'bg-orange-500';
+      default: return 'bg-gray-500';
+    }
   };
 
-  const handleSocialAuth = (platform: string) => {
-    toast({
-      title: `Connecting to ${platform}`,
-      description: `Authenticating with ${platform} to share your adventure...`,
-      duration: 3000
-    });
-    
-    // Simulate authentication process
-    setTimeout(() => {
-      toast({
-        title: "Authentication Successful",
-        description: `Connected to ${platform}. Now you can share directly!`,
-        duration: 3000
-      });
-      setShowSocialAuthPrompt(false);
-    }, 1500);
+  const getDangerLevelColor = (level: number) => {
+    if (level <= 2) return 'text-yellow-600';
+    if (level <= 3) return 'text-orange-600';
+    return 'text-red-600';
   };
-  
-  const selectedPhoto = galleryItems.find(item => item.id === openPhotoId);
-  
+
   return (
     <Layout>
       <div className="pt-28 pb-16 bg-apex-lightgray">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-apex-black mb-6 animate-fade-up">
-              Adventure Gallery
+              Predator Gallery
             </h1>
             <p className="text-xl text-apex-darkgray/70 mb-6 animate-fade-up animate-delay-100">
-              See how our brave (or foolish) customers are putting their "insurance" to the test.
+              Explore all {deadlyAnimals.length} deadly predators from around the world
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
-              <Camera size={16} />
-              <span>Share your own adventure</span>
+              <Eye size={16} />
+              <span>Choose your next adventure</span>
             </div>
           </div>
         </div>
@@ -148,218 +106,219 @@ const Gallery = () => {
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Filters */}
+          <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:justify-between">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-apex-darkgray/60" size={20} />
+                <Input
+                  placeholder="Search predators..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 w-full md:w-64"
+                />
+              </div>
+              
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full md:w-48">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="marine">Marine</SelectItem>
+                  <SelectItem value="terrestrial">Terrestrial</SelectItem>
+                  <SelectItem value="reptile">Reptile</SelectItem>
+                  <SelectItem value="aerial">Aerial</SelectItem>
+                  <SelectItem value="insect">Insect</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedRarity} onValueChange={setSelectedRarity}>
+                <SelectTrigger className="w-full md:w-48">
+                  <SelectValue placeholder="Rarity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Rarities</SelectItem>
+                  <SelectItem value="common">Common</SelectItem>
+                  <SelectItem value="uncommon">Uncommon</SelectItem>
+                  <SelectItem value="rare">Rare</SelectItem>
+                  <SelectItem value="legendary">Legendary</SelectItem>
+                  <SelectItem value="mythic">Mythic</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="text-sm text-apex-darkgray/60">
+              Showing {filteredAnimals.length} of {deadlyAnimals.length} predators
+            </div>
+          </div>
+
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[...Array(6)].map((_, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[...Array(12)].map((_, i) => (
                 <div key={i} className="bg-apex-lightgray animate-pulse rounded-xl h-[400px]"></div>
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {galleryItems.map((item, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredAnimals.map((animal, index) => (
                 <div 
-                  key={item.id} 
-                  className="bg-white rounded-xl overflow-hidden shadow-card border border-apex-black/5 animate-fade-up cursor-pointer"
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
-                  onClick={() => setOpenPhotoId(item.id)}
+                  key={animal.id} 
+                  className="bg-white rounded-xl overflow-hidden shadow-card border border-apex-black/5 animate-fade-up cursor-pointer hover:shadow-lg transition-all duration-300"
+                  style={{ animationDelay: `${(index % 12) * 50}ms` }}
+                  onClick={() => setSelectedAnimal(animal)}
                 >
                   <div className="aspect-square relative overflow-hidden">
                     <img 
-                      src={item.imageUrl} 
-                      alt={item.caption} 
+                      src={animal.imageUrl} 
+                      alt={animal.name} 
                       className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
                       }}
                     />
+                    <div className="absolute top-4 left-4">
+                      <div className={`${getRarityColor(animal.rarity)} text-white text-xs font-medium px-3 py-1 rounded-full capitalize`}>
+                        {animal.rarity}
+                      </div>
+                    </div>
                     <div className="absolute top-4 right-4">
-                      <div className="bg-apex-red text-white text-xs font-medium px-3 py-1 rounded-full">
-                        {item.insurance}
+                      <div className="bg-black/70 text-white text-xs font-medium px-2 py-1 rounded-full">
+                        {animal.icon}
                       </div>
                     </div>
                   </div>
                   
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h3 className="font-bold text-apex-black">{item.username}</h3>
-                        <p className="text-sm text-apex-darkgray/60">{item.location}</p>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-bold text-apex-black text-lg">{animal.name}</h3>
+                      <div className={`text-sm font-bold ${getDangerLevelColor(animal.dangerLevel)}`}>
+                        Lv.{animal.dangerLevel}
                       </div>
                     </div>
                     
-                    <p className="text-apex-darkgray/80 mb-4">
-                      {item.caption}
+                    <p className="text-apex-darkgray/80 text-sm mb-3 line-clamp-2">
+                      {animal.description}
                     </p>
+
+                    <div className="flex items-center gap-1 text-xs text-apex-darkgray/60 mb-3">
+                      <MapPin size={12} />
+                      <span className="truncate">{animal.locations[0]}</span>
+                      {animal.locations.length > 1 && (
+                        <span>+{animal.locations.length - 1}</span>
+                      )}
+                    </div>
                     
-                    <div className="flex justify-between items-center pt-4 border-t border-apex-black/5">
-                      <button 
-                        className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-red transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleLike(item.id);
-                        }}
-                      >
-                        <Heart 
-                          size={18} 
-                          className={likedPosts[item.id] ? "fill-apex-red text-apex-red" : ""} 
-                        />
-                        <span>{likedPosts[item.id] ? item.likes + 1 : item.likes}</span>
-                      </button>
-                      
-                      <button 
-                        className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-darkgray transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <MessageCircle size={18} />
-                        <span>{item.comments}</span>
-                      </button>
-                      
-                      <button
-                        className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-red transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowSocialAuthPrompt(true);
-                        }}
-                      >
-                        <Share2 size={18} />
-                        <span>Share</span>
-                      </button>
+                    <div className="flex justify-between items-center pt-3 border-t border-apex-black/5">
+                      <div className="text-xs text-apex-darkgray/60">
+                        {animal.killsPerYear} kills/year
+                      </div>
+                      <div className="text-lg font-bold text-apex-red">
+                        ${animal.price}
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           )}
-          
-          <div className="mt-16 text-center">
-            <button className="inline-flex items-center justify-center px-6 py-3 bg-apex-lightgray text-apex-black rounded-lg hover:bg-apex-lightgray/70 transition-all duration-300">
-              <Camera size={18} className="mr-2" />
-              Upload Your Adventure
-            </button>
-          </div>
+
+          {filteredAnimals.length === 0 && !isLoading && (
+            <div className="text-center py-16">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-2xl font-bold text-apex-black mb-2">No predators found</h3>
+              <p className="text-apex-darkgray/70">Try adjusting your search or filter criteria</p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Photo Detail Dialog */}
-      <Dialog open={openPhotoId !== null} onOpenChange={(open) => !open && setOpenPhotoId(null)}>
-        <DialogContent className="sm:max-w-3xl">
-          {selectedPhoto && (
+      {/* Animal Detail Dialog */}
+      <Dialog open={selectedAnimal !== null} onOpenChange={(open) => !open && setSelectedAnimal(null)}>
+        <DialogContent className="sm:max-w-4xl max-h-[80vh] overflow-y-auto">
+          {selectedAnimal && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img
-                  src={selectedPhoto.imageUrl}
-                  alt={selectedPhoto.caption}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                  }}
-                />
+              <div className="space-y-4">
+                <div className="aspect-square overflow-hidden rounded-lg">
+                  <img
+                    src={selectedAnimal.imageUrl}
+                    alt={selectedAnimal.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="bg-apex-lightgray/50 p-3 rounded-lg">
+                    <div className="font-semibold text-apex-darkgray/60">Category</div>
+                    <div className="capitalize">{selectedAnimal.category}</div>
+                  </div>
+                  <div className="bg-apex-lightgray/50 p-3 rounded-lg">
+                    <div className="font-semibold text-apex-darkgray/60">Danger Level</div>
+                    <div className={getDangerLevelColor(selectedAnimal.dangerLevel)}>
+                      Level {selectedAnimal.dangerLevel}
+                    </div>
+                  </div>
+                  <div className="bg-apex-lightgray/50 p-3 rounded-lg">
+                    <div className="font-semibold text-apex-darkgray/60">Kills/Year</div>
+                    <div>{selectedAnimal.killsPerYear}</div>
+                  </div>
+                  <div className="bg-apex-lightgray/50 p-3 rounded-lg">
+                    <div className="font-semibold text-apex-darkgray/60">Price</div>
+                    <div className="text-apex-red font-bold">${selectedAnimal.price}</div>
+                  </div>
+                </div>
               </div>
+              
               <div className="flex flex-col">
                 <DialogHeader>
-                  <DialogTitle className="flex items-center justify-between">
-                    <span>{selectedPhoto.username}</span>
-                    <span className="bg-apex-red text-white text-xs px-2 py-1 rounded-full">{selectedPhoto.insurance}</span>
+                  <DialogTitle className="flex items-center justify-between text-2xl">
+                    <span>{selectedAnimal.name}</span>
+                    <span className="text-3xl">{selectedAnimal.icon}</span>
                   </DialogTitle>
-                  <DialogDescription className="text-sm text-muted-foreground">
-                    {selectedPhoto.location}
+                  <DialogDescription className="text-base">
+                    {selectedAnimal.description}
                   </DialogDescription>
                 </DialogHeader>
                 
-                <p className="my-4 text-apex-darkgray/80">{selectedPhoto.caption}</p>
-                
-                <div className="mt-auto pt-4 border-t flex justify-between items-center">
-                  <button 
-                    className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-red transition-colors"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleLike(selectedPhoto.id);
-                    }}
-                  >
-                    <Heart 
-                      size={18} 
-                      className={likedPosts[selectedPhoto.id] ? "fill-apex-red text-apex-red" : ""} 
-                    />
-                    <span>{likedPosts[selectedPhoto.id] ? selectedPhoto.likes + 1 : selectedPhoto.likes}</span>
-                  </button>
-                  
-                  <button className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-darkgray transition-colors">
-                    <MessageCircle size={18} />
-                    <span>{selectedPhoto.comments}</span>
-                  </button>
-                  
-                  <button
-                    className="flex items-center gap-1 text-apex-darkgray/60 hover:text-apex-red transition-colors"
-                    onClick={() => setShowSocialAuthPrompt(true)}
-                  >
-                    <Share2 size={18} />
-                    <span>Share</span>
-                  </button>
+                <div className="my-6">
+                  <h4 className="font-semibold mb-3">Locations</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedAnimal.locations.map((location, index) => (
+                      <span key={index} className="bg-apex-lightgray px-3 py-1 rounded-full text-sm">
+                        {location}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="font-semibold mb-3">Deadly Facts</h4>
+                  <ul className="space-y-2">
+                    {selectedAnimal.facts.map((fact, index) => (
+                      <li key={index} className="text-sm text-apex-darkgray/80 flex items-start gap-2">
+                        <span className="text-apex-red">•</span>
+                        <span>{fact}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-auto pt-4 border-t flex gap-3">
+                  <Button variant="outline" className="flex-1">
+                    View Details
+                  </Button>
+                  <Button className="flex-1 bg-apex-red hover:bg-apex-red/90">
+                    Get Insurance - ${selectedAnimal.price}
+                  </Button>
                 </div>
               </div>
             </div>
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Social Auth Dialog */}
-      <Dialog open={showSocialAuthPrompt} onOpenChange={setShowSocialAuthPrompt}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Connect Social Media</DialogTitle>
-            <DialogDescription>
-              Connect your social media accounts to share adventures directly
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <p className="text-sm text-muted-foreground">
-              Choose a platform to authenticate with to share your adventure:
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <Button onClick={() => handleSocialAuth('Instagram')} variant="outline" className="justify-start">
-                <img 
-                  src="https://cdn.cdnlogo.com/logos/i/4/instagram.svg" 
-                  alt="Instagram" 
-                  className="h-5 w-5 mr-2" 
-                />
-                Instagram
-              </Button>
-              <Button onClick={() => handleSocialAuth('Facebook')} variant="outline" className="justify-start">
-                <img 
-                  src="https://cdn.cdnlogo.com/logos/f/83/facebook.svg" 
-                  alt="Facebook" 
-                  className="h-5 w-5 mr-2" 
-                />
-                Facebook
-              </Button>
-              <Button onClick={() => handleSocialAuth('Twitter')} variant="outline" className="justify-start">
-                <img 
-                  src="https://cdn.cdnlogo.com/logos/t/96/twitter-icon.svg" 
-                  alt="Twitter" 
-                  className="h-5 w-5 mr-2" 
-                />
-                Twitter
-              </Button>
-              <Button onClick={() => handleSocialAuth('TikTok')} variant="outline" className="justify-start">
-                <img 
-                  src="https://cdn.cdnlogo.com/logos/t/6/tiktok-logo.svg" 
-                  alt="TikTok" 
-                  className="h-5 w-5 mr-2" 
-                />
-                TikTok
-              </Button>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <Button variant="ghost" onClick={() => setShowSocialAuthPrompt(false)}>
-              Cancel
-            </Button>
-            <ShareAdventure compact={true} />
-          </div>
         </DialogContent>
       </Dialog>
     </Layout>

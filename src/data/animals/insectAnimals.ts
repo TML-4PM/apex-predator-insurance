@@ -12,7 +12,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Brazil', 'Central America', 'South America'],
     description: 'World\'s most venomous spider',
     facts: ['Aggressive and fast-moving', 'Venom causes painful erections'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sydney', 'Australia'],
     description: 'Australia\'s most dangerous spider',
     facts: ['Male is more venomous than female', 'Can survive underwater for hours'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Australia'],
     description: 'The infamous red hourglass spider',
     facts: ['Female eats male after mating', 'Venom is 15x stronger than rattlesnake'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -54,7 +54,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Middle East', 'North Africa'],
     description: 'One of the most dangerous scorpions',
     facts: ['Venom contains neurotoxins', 'Glows under UV light'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -68,7 +68,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ant with the most painful sting',
     facts: ['Sting feels like being shot', 'Pain lasts up to 24 hours'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -82,7 +82,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The fly that carries sleeping sickness',
     facts: ['Transmits deadly parasites', 'Responsible for thousands of deaths annually'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10000,
     rarity: 'uncommon'
   },
@@ -96,7 +96,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The bug that kisses you to death',
     facts: ['Transmits Chagas disease', 'Feeds on blood at night'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1586861256632-52a3db3a26ff?w=800&h=600&fit=crop&q=80',
     killsPerYear: 7000,
     rarity: 'uncommon'
   }

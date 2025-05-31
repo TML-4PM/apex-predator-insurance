@@ -12,7 +12,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'South Africa', 'California', 'Mexico'],
     description: 'The apex predator of the ocean',
     facts: ['Can detect a drop of blood in 25 gallons of water', 'Reaches speeds of 35 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1571418920845-9cf0b919bfb7?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'legendary'
   },
@@ -26,7 +26,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: 'https://images.unsplash.com/photo-1580019542155-247062e19ce4?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&h=600&fit=crop&q=80',
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Oceans'],
     description: 'The ocean\'s apex predator',
     facts: ['Hunt in coordinated pods', 'Can beach themselves to catch prey'],
-    imageUrl: 'https://images.unsplash.com/photo-1580741569884-31d286af3ba0?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -138,7 +138,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Reefs Worldwide'],
     description: 'The serpent of the coral reef',
     facts: ['Has two sets of jaws', 'Can grow up to 10 feet long'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583721660056-c6db645c5e4c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },

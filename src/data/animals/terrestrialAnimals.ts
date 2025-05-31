@@ -95,7 +95,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Montana', 'Wyoming'],
     description: 'North America\'s apex predator',
     facts: ['Can run 35 mph', 'Sense of smell 7x stronger than bloodhound'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
