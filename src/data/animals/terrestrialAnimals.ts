@@ -1,4 +1,3 @@
-
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
 
 export const terrestrialAnimals: DeadlyAnimal[] = [
@@ -26,7 +25,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Russia', 'China', 'North Korea'],
     description: 'The largest living cat species',
     facts: ['Can reach speeds of 50 mph', 'Night vision 6x better than humans'],
-    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=800&h=600&fit=crop&q=80',
     killsPerYear: 50,
     rarity: 'mythic'
   },
@@ -40,7 +39,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Bangladesh', 'Nepal'],
     description: 'The most numerous tiger subspecies',
     facts: ['Excellent swimmers', 'Can consume 88 pounds of meat in one feeding'],
-    imageUrl: 'https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop&q=80',
     killsPerYear: 85,
     rarity: 'mythic'
   },
@@ -54,7 +53,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Asia', 'Middle East'],
     description: 'The stealthiest big cat',
     facts: ['Can carry prey twice their weight up trees', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=800&h=600&fit=crop&q=80',
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -110,7 +109,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Arctic Circle', 'Greenland', 'Canada', 'Alaska'],
     description: 'The Arctic\'s apex predator',
     facts: ['Can smell seals 20 miles away', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1518877593221-1f28583780b4?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'legendary'
   },

@@ -12,7 +12,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'South Africa', 'California', 'Mexico'],
     description: 'The apex predator of the ocean',
     facts: ['Can detect a drop of blood in 25 gallons of water', 'Reaches speeds of 35 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1544552866-d3ed42536cfd?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'legendary'
   },
@@ -26,7 +26,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: 'https://images.unsplash.com/photo-1588669411296-418de2560c5b?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1571418920845-9cf0b919bfb7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Coastal Waters', 'Rivers', 'Lakes'],
     description: 'The most aggressive shark species',
     facts: ['Can swim in fresh water', 'Highest testosterone levels of any animal'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 12,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Thailand', 'Malaysia', 'Philippines'],
     description: 'One of the most venomous creatures on Earth',
     facts: ['Venom can kill in 2-5 minutes', 'Nearly transparent in water'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 70,
     rarity: 'legendary'
   },
@@ -68,7 +68,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Japan', 'Indonesia'],
     description: 'Small but extremely venomous',
     facts: ['Size of golf ball but can kill 26 adults', 'No known antidote'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583721660056-c6db645c5e4c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 3,
     rarity: 'legendary'
   },
@@ -82,7 +82,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Indo-Pacific'],
     description: 'Most venomous fish in the world',
     facts: ['Perfectly camouflaged as rock', 'Venom causes excruciating pain'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -96,7 +96,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Indo-Pacific', 'Caribbean'],
     description: 'Beautiful but deadly mollusk',
     facts: ['Shoots venomous darts', 'No antivenom exists'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583721660056-c6db645c5e4c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Oceans'],
     description: 'The ocean\'s apex predator',
     facts: ['Hunt in coordinated pods', 'Can beach themselves to catch prey'],
-    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -124,7 +124,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Waters', 'Caribbean'],
     description: 'The torpedo of the sea',
     facts: ['Can reach speeds of 36 mph', 'Razor-sharp teeth'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -138,7 +138,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Reefs Worldwide'],
     description: 'The serpent of the coral reef',
     facts: ['Has two sets of jaws', 'Can grow up to 10 feet long'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -152,7 +152,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Amazon River Basin'],
     description: 'The living electric generator',
     facts: ['Can produce 600-volt electric shocks', 'Actually a type of knifefish'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   }
