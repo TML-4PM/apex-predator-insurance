@@ -155,5 +155,33 @@ export const reptileAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Micrurus_fulvius.jpg',
     killsPerYear: 2,
     rarity: 'rare'
+  },
+  {
+    id: 'russells-viper',
+    name: 'Russell\'s Viper',
+    category: 'reptile',
+    dangerLevel: 4,
+    icon: '🐍',
+    price: 23.99,
+    locations: ['India', 'Sri Lanka', 'Southeast Asia'],
+    description: 'The most dangerous snake in Asia',
+    facts: ['Causes more deaths than any other snake in India', 'Aggressive and fast-striking'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Russell%27s_viper_%28Daboia_russelii%29.jpg',
+    killsPerYear: 15000,
+    rarity: 'rare'
+  },
+  {
+    id: 'reticulated-python',
+    name: 'Reticulated Python',
+    category: 'reptile',
+    dangerLevel: 3,
+    icon: '🐍',
+    price: 25.99,
+    locations: ['Southeast Asia', 'Indonesia', 'Philippines'],
+    description: 'The world\'s longest snake',
+    facts: ['Can grow over 30 feet long', 'Excellent swimmers and climbers'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Malayopython_reticulatus_2.jpg',
+    killsPerYear: 3,
+    rarity: 'uncommon'
   }
 ];

@@ -43,6 +43,8 @@ export const animalWikipediaMapping: Record<string, string> = {
   'barracuda': 'Great barracuda',
   'moray-eel': 'Giant moray',
   'electric-eel': 'Electric eel',
+  'portuguese-man-o-war': 'Portuguese man o\' war',
+  'stingray': 'Southern stingray',
   
   // Big Cats
   'african-lion': 'Lion',
@@ -72,6 +74,8 @@ export const animalWikipediaMapping: Record<string, string> = {
   'caiman': 'Black caiman',
   'fer-de-lance': 'Bothrops asper',
   'coral-snake': 'Coral snake',
+  'russells-viper': 'Russell\'s viper',
+  'reticulated-python': 'Reticulated python',
   
   // Large Mammals
   'hippopotamus': 'Hippopotamus',
@@ -93,6 +97,7 @@ export const animalWikipediaMapping: Record<string, string> = {
   'golden-eagle': 'Golden eagle',
   'harpy-eagle': 'Harpy eagle',
   'great-horned-owl': 'Great horned owl',
+  'secretary-bird': 'Secretary bird',
   
   // Insects
   'brazilian-wandering-spider': 'Brazilian wandering spider',
@@ -101,5 +106,6 @@ export const animalWikipediaMapping: Record<string, string> = {
   'deathstalker-scorpion': 'Deathstalker',
   'bullet-ant': 'Paraponera clavata',
   'tsetse-fly': 'Tsetse fly',
-  'kissing-bug': 'Triatominae'
+  'kissing-bug': 'Triatominae',
+  'giant-asian-hornet': 'Asian giant hornet'
 };

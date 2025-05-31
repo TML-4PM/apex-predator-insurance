@@ -43,5 +43,19 @@ export const aerialAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Bubo_virginianus_06.jpg',
     killsPerYear: 0,
     rarity: 'common'
+  },
+  {
+    id: 'secretary-bird',
+    name: 'Secretary Bird',
+    category: 'aerial',
+    dangerLevel: 3,
+    icon: '🦅',
+    price: 22.99,
+    locations: ['Sub-Saharan Africa'],
+    description: 'The snake-killing bird of prey',
+    facts: ['Kicks with force of 5x its body weight', 'Can kill venomous snakes'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Secretary_bird_%28Sagittarius_serpentarius%29.jpg',
+    killsPerYear: 0,
+    rarity: 'uncommon'
   }
 ];

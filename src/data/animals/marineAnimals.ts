@@ -155,5 +155,33 @@ export const marineAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/60/Electric-eel.jpg',
     killsPerYear: 1,
     rarity: 'uncommon'
+  },
+  {
+    id: 'portuguese-man-o-war',
+    name: 'Portuguese Man o\' War',
+    category: 'marine',
+    dangerLevel: 4,
+    icon: '🪼',
+    price: 23.99,
+    locations: ['Atlantic Ocean', 'Pacific Ocean', 'Indian Ocean'],
+    description: 'The floating terror with deadly tentacles',
+    facts: ['Tentacles can extend 165 feet', 'Stings remain venomous after death'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Physalia_physalis.jpg',
+    killsPerYear: 15,
+    rarity: 'rare'
+  },
+  {
+    id: 'stingray',
+    name: 'Southern Stingray',
+    category: 'marine',
+    dangerLevel: 3,
+    icon: '🎣',
+    price: 18.99,
+    locations: ['Caribbean', 'Gulf of Mexico', 'Atlantic Coast'],
+    description: 'The graceful glider with a venomous barb',
+    facts: ['Barbed tail delivers painful venom', 'Can bury themselves in sand'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Dasyatis_americana.jpg',
+    killsPerYear: 2,
+    rarity: 'uncommon'
   }
 ];

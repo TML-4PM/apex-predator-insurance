@@ -99,5 +99,19 @@ export const insectAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Triatoma_infestans_PHIL_613_lores.jpg',
     killsPerYear: 7000,
     rarity: 'uncommon'
+  },
+  {
+    id: 'giant-asian-hornet',
+    name: 'Giant Asian Hornet',
+    category: 'insect',
+    dangerLevel: 3,
+    icon: '🐝',
+    price: 18.99,
+    locations: ['Japan', 'China', 'Korea'],
+    description: 'The murder hornet with a painful sting',
+    facts: ['Largest hornet species in the world', 'Can decimate entire bee colonies'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Vespa_mandarinia_japonica_01.JPG',
+    killsPerYear: 40,
+    rarity: 'uncommon'
   }
 ];
