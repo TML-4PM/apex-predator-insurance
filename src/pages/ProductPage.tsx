@@ -12,8 +12,6 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart, Star, Heart } from 'lucide-react';
 
 const ProductPage = () => {
-  const [selectedPredator, setSelectedPredator] = useState('Lion');
-
   return (
     <Layout>
       {/* Product Hero */}
@@ -27,7 +25,7 @@ const ProductPage = () => {
             <h2 className="text-3xl font-bold text-apex-black mb-8 text-center">
               What It Looks Like
             </h2>
-            <ProductPreview selectedPredator={selectedPredator} />
+            <ProductPreview />
           </section>
 
           {/* Delivery Options */}

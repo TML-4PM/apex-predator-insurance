@@ -10,8 +10,9 @@ import WorldMap from '@/components/WorldMap';
 import MobileApp from '@/components/MobileApp';
 import Blog from '@/components/Blog';
 import OopsieGallery from '@/components/OopsieGallery';
+import FeaturedPredators from '@/components/FeaturedPredators';
 import { Button } from '@/components/ui/button';
-import { Camera, TrendingUp, Users, Target, Star } from 'lucide-react';
+import { Camera, TrendingUp, Users, Target, Star, Shield, Globe, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => (
@@ -47,10 +48,17 @@ const Index = () => (
       </div>
     </section>
 
+    {/* Featured Predators Section */}
+    <FeaturedPredators />
+
     {/* Plans Section with Social Focus */}
     <div className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-green-100 rounded-full px-4 py-2 mb-4">
+            <Shield className="h-5 w-5 text-green-600" />
+            <span className="text-green-700 font-semibold">Coverage Plans</span>
+          </div>
           <h2 className="text-3xl font-bold text-apex-black mb-4">
             Choose Your Adventure Level
           </h2>
@@ -69,12 +77,18 @@ const Index = () => (
     {/* Interactive World Map */}
     <div className="py-16 bg-slate-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-apex-black text-center mb-4">
-          📍 Where Will You Adventure Next?
-        </h2>
-        <p className="text-xl text-apex-darkgray/70 text-center mb-12">
-          See where other adventurers are getting covered and planning their next thrill
-        </p>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-blue-100 rounded-full px-4 py-2 mb-4">
+            <Globe className="h-5 w-5 text-blue-600" />
+            <span className="text-blue-700 font-semibold">Global Coverage</span>
+          </div>
+          <h2 className="text-3xl font-bold text-apex-black mb-4">
+            📍 Where Will You Adventure Next?
+          </h2>
+          <p className="text-xl text-apex-darkgray/70 mb-12">
+            See where other adventurers are getting covered and planning their next thrill
+          </p>
+        </div>
         <WorldMap />
       </div>
     </div>
@@ -86,6 +100,10 @@ const Index = () => (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-purple-100 rounded-full px-4 py-2 mb-4">
+            <Award className="h-5 w-5 text-purple-600" />
+            <span className="text-purple-700 font-semibold">Community Stories</span>
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6">
             Epic Adventure Stories
           </h2>
