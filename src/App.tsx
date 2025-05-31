@@ -15,6 +15,10 @@ import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
+import Gallery from './pages/Gallery';
+import ProductPage from './pages/ProductPage';
+import Plans from './pages/Plans';
+import Articles from './pages/Articles';
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -30,6 +34,10 @@ const App = () => {
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/product" element={<ProductPage />} />
+                  <Route path="/plans" element={<Plans />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/articles" element={<Articles />} />
                   <Route path="/donate" element={<DonationPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
