@@ -27,7 +27,7 @@ export const usePredatorEncounters = () => {
   const fetchEncounters = async () => {
     try {
       const { data, error } = await supabase
-        .from('predator_encounters' as any)
+        .from('predator_encounters')
         .select(`
           *,
           animals (
@@ -40,7 +40,7 @@ export const usePredatorEncounters = () => {
         .limit(100);
 
       if (error) throw error;
-      setEncounters(data as PredatorEncounter[] || []);
+      setEncounters((data || []) as PredatorEncounter[]);
     } catch (error) {
       console.error('Error fetching encounters:', error);
       toast({
@@ -58,7 +58,7 @@ export const usePredatorEncounters = () => {
       const { data: user } = await supabase.auth.getUser();
       
       const { error } = await supabase
-        .from('predator_encounters' as any)
+        .from('predator_encounters')
         .insert({
           ...encounter,
           user_id: user.user?.id,
