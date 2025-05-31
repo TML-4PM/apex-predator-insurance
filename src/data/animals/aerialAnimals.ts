@@ -12,7 +12,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Europe', 'Asia'],
     description: 'The king of the sky',
     facts: ['Can dive at 150 mph', 'Excellent eyesight'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Golden_Eagle_in_flight_-_5.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -26,7 +26,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Rainforest'],
     description: 'The most powerful eagle in the Americas',
     facts: ['Talons larger than grizzly bear claws', 'Can snatch sloths from trees'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Harpia_harpyja_-Belize_Zoo-8a.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent hunter of the night',
     facts: ['Silent flight feathers', 'Can rotate head 270 degrees'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Bubo_virginianus_06.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'common'
   },
@@ -54,7 +54,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The snake-killing bird of prey',
     facts: ['Kicks with force of 5x its body weight', 'Can kill venomous snakes'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Secretary_bird_%28Sagittarius_serpentarius%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -68,7 +68,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['North America'],
     description: 'The symbol of American power',
     facts: ['Can dive at 100 mph', 'Builds largest bird nests'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/About_to_Launch_%2826075320352%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -82,7 +82,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Russia', 'Japan'],
     description: 'One of the heaviest eagles on Earth',
     facts: ['Weighs up to 20 pounds', 'Massive 8-foot wingspan'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Steller%27s_sea_eagle.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -96,7 +96,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Global Distribution'],
     description: 'The fastest animal on the planet',
     facts: ['Diving speed exceeds 240 mph', 'Found on every continent except Antarctica'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Peregrine_Falcon.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -110,7 +110,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Northern Hemisphere'],
     description: 'The fierce forest hunter',
     facts: ['Aggressive defender of territory', 'Can navigate dense forests at high speed'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Accipiter_gentilis_-_Northern_Goshawk.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'common'
   }

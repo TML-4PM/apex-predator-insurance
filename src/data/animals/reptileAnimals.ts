@@ -12,7 +12,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Southeast Asia', 'India'],
     description: 'The largest living reptile and apex predator',
     facts: ['Bite force of 16,460 newtons', 'Can hold breath for 1 hour'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Saltwater_Crocodile_%28Crocodylus_porosus%29_%288229169319%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1000,
     rarity: 'mythic'
   },
@@ -26,7 +26,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Nile River', 'Sub-Saharan Africa'],
     description: 'Africa\'s largest freshwater predator',
     facts: ['Can grow up to 20 feet long', 'Ambush predator extraordinaire'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Nile_crocodile_head.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 745,
     rarity: 'mythic'
   },
@@ -40,7 +40,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia'],
     description: 'The world\'s most venomous snake',
     facts: ['One bite can kill 100 adults', 'Venom is 50x more toxic than cobra'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Oxyuranus_microlepidotus.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'mythic'
   },
@@ -54,7 +54,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['South Africa', 'Botswana', 'Kenya'],
     description: 'Africa\'s deadliest snake',
     facts: ['Fastest snake in the world at 12.5 mph', '100% fatal without antivenom'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Black_mamba.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 20000,
     rarity: 'legendary'
   },
@@ -68,7 +68,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia', 'China'],
     description: 'The world\'s longest venomous snake',
     facts: ['Can grow up to 18 feet long', 'Can rear up to 6 feet high'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/12_-_The_Mystical_King_Cobra_and_Coffee_Forests.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516906736502-5d3feaba5c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5000,
     rarity: 'legendary'
   },
@@ -82,7 +82,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeastern USA'],
     description: 'The largest venomous snake in North America',
     facts: ['Can strike two-thirds of its body length', 'Rattle warns of danger'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Crotalus_adamanteus_CDC-a.png',
+    imageUrl: 'https://images.unsplash.com/photo-1516906736502-5d3feaba5c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -96,7 +96,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central Africa', 'West Africa'],
     description: 'The snake with the longest fangs',
     facts: ['Fangs can be 2 inches long', 'Perfectly camouflaged'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Bitis_gabonica_gabonica_1.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin', 'South America'],
     description: 'The heaviest snake in the world',
     facts: ['Can weigh over 550 pounds', 'Excellent swimmers'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Anaconda_Loreto_Peru.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -124,7 +124,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin'],
     description: 'The largest predator in the Amazon',
     facts: ['Can grow up to 20 feet long', 'Apex predator of the Amazon'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Melanosuchus_niger_1.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -138,7 +138,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ultimate pit viper',
     facts: ['Responsible for most snakebite deaths in Central America', 'Gives birth to live young'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/58/Bothrops_asper_-_Tortuguero1.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 100,
     rarity: 'rare'
   },
@@ -152,7 +152,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southern USA', 'Central America'],
     description: 'Beautiful but deadly with potent neurotoxin',
     facts: ['Red touches yellow, kills a fellow', 'Secretive and elusive'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Micrurus_fulvius.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516906736502-5d3feaba5c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -166,7 +166,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka', 'Southeast Asia'],
     description: 'The most dangerous snake in Asia',
     facts: ['Causes more deaths than any other snake in India', 'Aggressive and fast-striking'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Russell%27s_viper_%28Daboia_russelii%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 15000,
     rarity: 'rare'
   },
@@ -180,7 +180,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeast Asia', 'Indonesia', 'Philippines'],
     description: 'The world\'s longest snake',
     facts: ['Can grow over 30 feet long', 'Excellent swimmers and climbers'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Malayopython_reticulatus_2.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 3,
     rarity: 'uncommon'
   },
@@ -194,7 +194,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Indonesia'],
     description: 'The world\'s largest lizard',
     facts: ['Can run 13 mph', 'Venomous bite prevents blood clotting'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Komodo_dragon_%28Varanus_komodoensis%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'mythic'
   },
@@ -208,7 +208,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The aquatic giant lizard',
     facts: ['Can grow up to 9 feet long', 'Excellent swimmers'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/72/Water_Monitor_%28Varanus_salvator%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   }

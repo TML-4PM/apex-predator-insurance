@@ -12,7 +12,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Kenya', 'Tanzania', 'South Africa', 'Botswana'],
     description: 'The king of the savanna',
     facts: ['Can leap 36 feet horizontally', 'Roar can be heard 5 miles away'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 250,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Russia', 'China', 'North Korea'],
     description: 'The largest living cat species',
     facts: ['Can reach speeds of 50 mph', 'Night vision 6x better than humans'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Siberischer_tiger_de_edit02.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 50,
     rarity: 'mythic'
   },
@@ -40,7 +40,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['India', 'Bangladesh', 'Nepal'],
     description: 'The most numerous tiger subspecies',
     facts: ['Excellent swimmers', 'Can consume 88 pounds of meat in one feeding'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Bengal_Tiger_Karnataka.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 85,
     rarity: 'mythic'
   },
@@ -54,7 +54,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Africa', 'Asia', 'Middle East'],
     description: 'The stealthiest big cat',
     facts: ['Can carry prey twice their weight up trees', 'Excellent swimmers'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/70/African_leopard_male_%28cropped%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -68,7 +68,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Amazon', 'Central America', 'Mexico'],
     description: 'The powerhouse of the Americas',
     facts: ['Strongest bite force of any big cat', 'Can crush turtle shells'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Standing_jaguar.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -82,7 +82,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent stalker of the mountains',
     facts: ['Can jump 40 feet horizontally', 'Also known as puma or cougar'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Mountain_Lion_in_Glacier_National_Park.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -96,7 +96,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Africa', 'Iran'],
     description: 'The fastest land animal',
     facts: ['Can reach 70 mph in 3 seconds', 'Cannot retract claws'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/09/TheCheethcat.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -110,7 +110,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Central Asia', 'Himalayas'],
     description: 'The ghost of the mountains',
     facts: ['Can leap 50 feet', 'Thick fur protects from extreme cold'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Snow_leopard_portrait-2010-07-09.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   }

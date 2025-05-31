@@ -12,7 +12,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'South Africa', 'California', 'Mexico'],
     description: 'The apex predator of the ocean',
     facts: ['Can detect a drop of blood in 25 gallons of water', 'Reaches speeds of 35 mph'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/56/White_shark.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 10,
     rarity: 'legendary'
   },
@@ -26,7 +26,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Tiger_shark.png',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Coastal Waters', 'Rivers', 'Lakes'],
     description: 'The most aggressive shark species',
     facts: ['Can swim in fresh water', 'Highest testosterone levels of any animal'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/64/Carcharhinus_leucas_-_bull_shark.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 12,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Thailand', 'Malaysia', 'Philippines'],
     description: 'One of the most venomous creatures on Earth',
     facts: ['Venom can kill in 2-5 minutes', 'Nearly transparent in water'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Avispa_marina_cropped.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-77a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 70,
     rarity: 'legendary'
   },
@@ -68,7 +68,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Japan', 'Indonesia'],
     description: 'Small but extremely venomous',
     facts: ['Size of golf ball but can kill 26 adults', 'No known antidote'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Blue-ringed_octopus.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 3,
     rarity: 'legendary'
   },
@@ -82,7 +82,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Indo-Pacific'],
     description: 'Most venomous fish in the world',
     facts: ['Perfectly camouflaged as rock', 'Venom causes excruciating pain'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Stonefish_%28Synanceia_verrucosa%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -96,7 +96,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Indo-Pacific', 'Caribbean'],
     description: 'Beautiful but deadly mollusk',
     facts: ['Shoots venomous darts', 'No antivenom exists'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Textile_cone.JPG',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Oceans'],
     description: 'The ocean\'s apex predator',
     facts: ['Hunt in coordinated pods', 'Can beach themselves to catch prey'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/37/Killerwhales_jumping.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -124,7 +124,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Waters', 'Caribbean'],
     description: 'The torpedo of the sea',
     facts: ['Can reach speeds of 36 mph', 'Razor-sharp teeth'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Sphyraena_barracuda_Martinique.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -138,7 +138,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Reefs Worldwide'],
     description: 'The serpent of the coral reef',
     facts: ['Has two sets of jaws', 'Can grow up to 10 feet long'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Giant_moray_eel.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -152,7 +152,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Amazon River Basin'],
     description: 'The living electric generator',
     facts: ['Can produce 600-volt electric shocks', 'Actually a type of knifefish'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/60/Electric-eel.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -166,7 +166,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Atlantic Ocean', 'Pacific Ocean', 'Indian Ocean'],
     description: 'The floating terror with deadly tentacles',
     facts: ['Tentacles can extend 165 feet', 'Stings remain venomous after death'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Physalia_physalis.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-77a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -180,7 +180,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Caribbean', 'Gulf of Mexico', 'Atlantic Coast'],
     description: 'The graceful glider with a venomous barb',
     facts: ['Barbed tail delivers painful venom', 'Can bury themselves in sand'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Dasyatis_americana.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -194,7 +194,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Oceans Worldwide'],
     description: 'The hammer-headed apex predator',
     facts: ['360-degree vision', 'Can sense electrical fields'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Hammerhead_shark.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -208,7 +208,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Open Ocean Worldwide'],
     description: 'The elegant ocean wanderer',
     facts: ['Can migrate up to 5,500 miles', 'Excellent vision in low light'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/20/Blue_shark.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'uncommon'
   }

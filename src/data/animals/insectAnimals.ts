@@ -12,7 +12,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Brazil', 'Central America', 'South America'],
     description: 'World\'s most venomous spider',
     facts: ['Aggressive and fast-moving', 'Venom causes painful erections'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Brazilian_wandering_spider.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sydney', 'Australia'],
     description: 'Australia\'s most dangerous spider',
     facts: ['Male is more venomous than female', 'Can survive underwater for hours'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Atrax_robustus.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Australia'],
     description: 'The infamous red hourglass spider',
     facts: ['Female eats male after mating', 'Venom is 15x stronger than rattlesnake'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Latrodectus_mactans_adult_female.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -54,7 +54,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Middle East', 'North Africa'],
     description: 'One of the most dangerous scorpions',
     facts: ['Venom contains neurotoxins', 'Glows under UV light'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Leiurus_quinquestriatus.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -68,7 +68,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ant with the most painful sting',
     facts: ['Sting feels like being shot', 'Pain lasts up to 24 hours'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Paraponera_clavata_%28Bullet_ant%29_P1100135.JPG',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -82,7 +82,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The fly that carries sleeping sickness',
     facts: ['Transmits deadly parasites', 'Responsible for thousands of deaths annually'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/TsetseflyCDC.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 10000,
     rarity: 'uncommon'
   },
@@ -96,7 +96,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The bug that kisses you to death',
     facts: ['Transmits Chagas disease', 'Feeds on blood at night'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Triatoma_infestans_PHIL_613_lores.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 7000,
     rarity: 'uncommon'
   },
@@ -110,7 +110,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Japan', 'China', 'Korea'],
     description: 'The murder hornet with a painful sting',
     facts: ['Largest hornet species in the world', 'Can decimate entire bee colonies'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Vespa_mandarinia_japonica_01.JPG',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 40,
     rarity: 'uncommon'
   },
@@ -124,7 +124,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The unstoppable swarm',
     facts: ['Colonies can contain 2 million ants', 'Can take down animals much larger than themselves'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/27/Army_ants.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'common'
   },
@@ -138,7 +138,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The notorious killer bees',
     facts: ['Will chase victims for up to a mile', 'Attack in massive numbers'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Honey_bee_on_a_mallow_flower.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 20,
     rarity: 'uncommon'
   },
@@ -152,7 +152,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Worldwide Tropical Regions'],
     description: 'The burning invader',
     facts: ['Create living rafts during floods', 'Painful alkaloid venom'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/28/Solenopsis_invicta_fire_ant_worker.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'common'
   },
@@ -166,7 +166,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and East Africa'],
     description: 'The swarming terror of Africa',
     facts: ['Colonies can contain 20 million ants', 'Can consume animals unable to escape'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/54/Dorylus_driver_ant.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -180,7 +180,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and South America'],
     description: 'The parasitic hijacker',
     facts: ['Larvae develop under human skin', 'Can cause severe infections'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Human_bot_fly_%28Dermatobia_hominis%29%2C_emerged_female_%2830742624341%29.jpg/1200px-Human_bot_fly_%28Dermatobia_hominis%29%2C_emerged_female_%2830742624341%29.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   }
