@@ -85,5 +85,33 @@ export const bigCats: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Mountain_Lion_in_Glacier_National_Park.jpg',
     killsPerYear: 2,
     rarity: 'uncommon'
+  },
+  {
+    id: 'cheetah',
+    name: 'Cheetah',
+    category: 'terrestrial',
+    dangerLevel: 3,
+    icon: '🐆',
+    price: 24.99,
+    locations: ['Africa', 'Iran'],
+    description: 'The fastest land animal',
+    facts: ['Can reach 70 mph in 3 seconds', 'Cannot retract claws'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/09/TheCheethcat.jpg',
+    killsPerYear: 1,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'snow-leopard',
+    name: 'Snow Leopard',
+    category: 'terrestrial',
+    dangerLevel: 3,
+    icon: '🐆',
+    price: 26.99,
+    locations: ['Central Asia', 'Himalayas'],
+    description: 'The ghost of the mountains',
+    facts: ['Can leap 50 feet', 'Thick fur protects from extreme cold'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Snow_leopard_portrait-2010-07-09.jpg',
+    killsPerYear: 0,
+    rarity: 'rare'
   }
 ];

@@ -45,6 +45,8 @@ export const animalWikipediaMapping: Record<string, string> = {
   'electric-eel': 'Electric eel',
   'portuguese-man-o-war': 'Portuguese man o\' war',
   'stingray': 'Southern stingray',
+  'hammerhead-shark': 'Great hammerhead shark',
+  'blue-shark': 'Blue shark',
   
   // Big Cats
   'african-lion': 'Lion',
@@ -53,6 +55,8 @@ export const animalWikipediaMapping: Record<string, string> = {
   'leopard': 'Leopard',
   'jaguar': 'Jaguar',
   'mountain-lion': 'Cougar',
+  'cheetah': 'Cheetah',
+  'snow-leopard': 'Snow leopard',
   
   // Bears
   'grizzly-bear': 'Grizzly bear',
@@ -76,6 +80,8 @@ export const animalWikipediaMapping: Record<string, string> = {
   'coral-snake': 'Coral snake',
   'russells-viper': 'Russell\'s viper',
   'reticulated-python': 'Reticulated python',
+  'komodo-dragon': 'Komodo dragon',
+  'monitor-lizard': 'Water monitor',
   
   // Large Mammals
   'hippopotamus': 'Hippopotamus',
@@ -98,14 +104,32 @@ export const animalWikipediaMapping: Record<string, string> = {
   'harpy-eagle': 'Harpy eagle',
   'great-horned-owl': 'Great horned owl',
   'secretary-bird': 'Secretary bird',
+  'bald-eagle': 'Bald eagle',
+  'stellers-sea-eagle': 'Steller\'s sea eagle',
+  'peregrine-falcon': 'Peregrine falcon',
+  'goshawk': 'Northern goshawk',
   
   // Insects
   'brazilian-wandering-spider': 'Brazilian wandering spider',
-  'sydney-funnel-web': 'Australian funnel-web spider',
+  'sydney-funnel-web': 'Sydney funnel-web spider',
   'black-widow': 'Latrodectus',
   'deathstalker-scorpion': 'Deathstalker',
   'bullet-ant': 'Paraponera clavata',
   'tsetse-fly': 'Tsetse fly',
   'kissing-bug': 'Triatominae',
-  'giant-asian-hornet': 'Asian giant hornet'
+  'giant-asian-hornet': 'Asian giant hornet',
+  'army-ant': 'Army ant',
+  'africanized-bee': 'Africanized bee',
+  'fire-ant': 'Red imported fire ant',
+  'driver-ant': 'Dorylus',
+  'bot-fly': 'Dermatobia hominis'
+};
+
+// The fallback image list to use when Wikipedia images fail
+export const fallbackAnimalImages: Record<string, string> = {
+  'jaguar': 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Standing_jaguar.jpg',
+  'orca': 'https://upload.wikimedia.org/wikipedia/commons/3/37/Killerwhales_jumping.jpg',
+  'tiger-shark': 'https://upload.wikimedia.org/wikipedia/commons/7/77/Tiger_shark.png',
+  'snow-leopard': 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Snow_leopard_portrait-2010-07-09.jpg',
+  'bot-fly': 'https://upload.wikimedia.org/wikipedia/commons/1/1c/Human_bot_fly_%28Dermatobia_hominis%29%2C_emerged_female_%2830742624341%29.jpg'
 };

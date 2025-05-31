@@ -183,5 +183,33 @@ export const reptileAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Malayopython_reticulatus_2.jpg',
     killsPerYear: 3,
     rarity: 'uncommon'
+  },
+  {
+    id: 'komodo-dragon',
+    name: 'Komodo Dragon',
+    category: 'reptile',
+    dangerLevel: 5,
+    icon: '🦎',
+    price: 28.99,
+    locations: ['Indonesia'],
+    description: 'The world\'s largest lizard',
+    facts: ['Can run 13 mph', 'Venomous bite prevents blood clotting'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Komodo_dragon_%28Varanus_komodoensis%29.jpg',
+    killsPerYear: 5,
+    rarity: 'mythic'
+  },
+  {
+    id: 'monitor-lizard',
+    name: 'Water Monitor',
+    category: 'reptile',
+    dangerLevel: 3,
+    icon: '🦎',
+    price: 19.99,
+    locations: ['Southeast Asia'],
+    description: 'The aquatic giant lizard',
+    facts: ['Can grow up to 9 feet long', 'Excellent swimmers'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/72/Water_Monitor_%28Varanus_salvator%29.jpg',
+    killsPerYear: 1,
+    rarity: 'uncommon'
   }
 ];

@@ -57,5 +57,61 @@ export const aerialAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Secretary_bird_%28Sagittarius_serpentarius%29.jpg',
     killsPerYear: 0,
     rarity: 'uncommon'
+  },
+  {
+    id: 'bald-eagle',
+    name: 'Bald Eagle',
+    category: 'aerial',
+    dangerLevel: 3,
+    icon: '🦅',
+    price: 20.99,
+    locations: ['North America'],
+    description: 'The symbol of American power',
+    facts: ['Can dive at 100 mph', 'Builds largest bird nests'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/About_to_Launch_%2826075320352%29.jpg',
+    killsPerYear: 0,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'stellers-sea-eagle',
+    name: 'Steller\'s Sea Eagle',
+    category: 'aerial',
+    dangerLevel: 3,
+    icon: '🦅',
+    price: 24.99,
+    locations: ['Russia', 'Japan'],
+    description: 'One of the heaviest eagles on Earth',
+    facts: ['Weighs up to 20 pounds', 'Massive 8-foot wingspan'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Steller%27s_sea_eagle.jpg',
+    killsPerYear: 0,
+    rarity: 'rare'
+  },
+  {
+    id: 'peregrine-falcon',
+    name: 'Peregrine Falcon',
+    category: 'aerial',
+    dangerLevel: 3,
+    icon: '🦅',
+    price: 19.99,
+    locations: ['Global Distribution'],
+    description: 'The fastest animal on the planet',
+    facts: ['Diving speed exceeds 240 mph', 'Found on every continent except Antarctica'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Peregrine_Falcon.jpg',
+    killsPerYear: 0,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'goshawk',
+    name: 'Northern Goshawk',
+    category: 'aerial',
+    dangerLevel: 2,
+    icon: '🦅',
+    price: 18.99,
+    locations: ['Northern Hemisphere'],
+    description: 'The fierce forest hunter',
+    facts: ['Aggressive defender of territory', 'Can navigate dense forests at high speed'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Accipiter_gentilis_-_Northern_Goshawk.jpg',
+    killsPerYear: 0,
+    rarity: 'common'
   }
 ];

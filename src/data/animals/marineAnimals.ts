@@ -183,5 +183,33 @@ export const marineAnimals: DeadlyAnimal[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Dasyatis_americana.jpg',
     killsPerYear: 2,
     rarity: 'uncommon'
+  },
+  {
+    id: 'hammerhead-shark',
+    name: 'Great Hammerhead Shark',
+    category: 'marine',
+    dangerLevel: 4,
+    icon: '🦈',
+    price: 25.99,
+    locations: ['Tropical Oceans Worldwide'],
+    description: 'The hammer-headed apex predator',
+    facts: ['360-degree vision', 'Can sense electrical fields'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Hammerhead_shark.jpg',
+    killsPerYear: 3,
+    rarity: 'rare'
+  },
+  {
+    id: 'blue-shark',
+    name: 'Blue Shark',
+    category: 'marine',
+    dangerLevel: 3,
+    icon: '🦈',
+    price: 20.99,
+    locations: ['Open Ocean Worldwide'],
+    description: 'The elegant ocean wanderer',
+    facts: ['Can migrate up to 5,500 miles', 'Excellent vision in low light'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/20/Blue_shark.jpg',
+    killsPerYear: 2,
+    rarity: 'uncommon'
   }
 ];

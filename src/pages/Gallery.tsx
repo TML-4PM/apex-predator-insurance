@@ -94,7 +94,7 @@ const Gallery = () => {
               Predator Gallery
             </h1>
             <p className="text-xl text-apex-darkgray/70 mb-6 animate-fade-up animate-delay-100">
-              Explore all {deadlyAnimals.length} deadly predators from around the world
+              Explore all 60 deadly predators from around the world
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
               <Eye size={16} />
@@ -173,6 +173,7 @@ const Gallery = () => {
                       src={animal.imageUrl} 
                       alt={animal.name} 
                       className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+                      loading="lazy"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
@@ -245,6 +246,7 @@ const Gallery = () => {
                     src={selectedAnimal.imageUrl}
                     alt={selectedAnimal.name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
