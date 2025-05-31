@@ -12,7 +12,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Kenya', 'Tanzania', 'South Africa', 'Botswana'],
     description: 'The king of the savanna',
     facts: ['Can leap 36 feet horizontally', 'Roar can be heard 5 miles away'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&h=600&fit=crop&q=80',
     killsPerYear: 250,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Russia', 'China', 'North Korea'],
     description: 'The largest living cat species',
     facts: ['Can reach speeds of 50 mph', 'Night vision 6x better than humans'],
-    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop&q=80',
     killsPerYear: 50,
     rarity: 'mythic'
   },
@@ -40,7 +40,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Bangladesh', 'Nepal'],
     description: 'The most numerous tiger subspecies',
     facts: ['Excellent swimmers', 'Can consume 88 pounds of meat in one feeding'],
-    imageUrl: 'https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=800&h=600&fit=crop&q=80',
     killsPerYear: 85,
     rarity: 'mythic'
   },
@@ -54,7 +54,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Asia', 'Middle East'],
     description: 'The stealthiest big cat',
     facts: ['Can carry prey twice their weight up trees', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -68,7 +68,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Amazon', 'Central America', 'Mexico'],
     description: 'The powerhouse of the Americas',
     facts: ['Strongest bite force of any big cat', 'Can crush turtle shells'],
-    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -82,7 +82,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent stalker of the mountains',
     facts: ['Can jump 40 feet horizontally', 'Also known as puma or cougar'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&h=600&fit=crop&q=80',
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -96,7 +96,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Montana', 'Wyoming'],
     description: 'North America\'s apex predator',
     facts: ['Can run 35 mph', 'Sense of smell 7x stronger than bloodhound'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -110,7 +110,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Arctic Circle', 'Greenland', 'Canada', 'Alaska'],
     description: 'The Arctic\'s apex predator',
     facts: ['Can smell seals 20 miles away', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1518877593221-1f28583780b4?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1518877593221-1f28583780b4?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'legendary'
   },
@@ -124,7 +124,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Kodiak Island', 'Alaska'],
     description: 'The largest brown bear subspecies',
     facts: ['Can weigh up to 1,500 pounds', 'Omnivorous giants'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -138,7 +138,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Canada', 'USA'],
     description: 'The most common bear in North America',
     facts: ['Excellent climbers', 'Can run 30 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -152,7 +152,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'Africa\'s most dangerous large mammal',
     facts: ['Can run 30 mph on land', 'Kills more humans than any other large animal in Africa'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1595162265991-c9e603c0f2e7?w=800&h=600&fit=crop&q=80',
     killsPerYear: 500,
     rarity: 'rare'
   },
@@ -166,7 +166,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The largest land animal',
     facts: ['Can weigh up to 14,000 pounds', 'Excellent memory'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 100,
     rarity: 'uncommon'
   },
@@ -180,7 +180,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'One of Africa\'s Big Five',
     facts: ['Never been domesticated', 'Known to ambush hunters'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 200,
     rarity: 'rare'
   },
@@ -194,7 +194,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The laughing scavenger with powerful jaws',
     facts: ['Bite force of 1,100 PSI', 'Matriarchal society'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'uncommon'
   },
@@ -208,7 +208,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia'],
     description: 'The intelligent giant of Asia',
     facts: ['Smaller than African elephants', 'Highly intelligent'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 400,
     rarity: 'uncommon'
   },
@@ -222,7 +222,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka'],
     description: 'The shaggy bear of the Indian subcontinent',
     facts: ['Excellent climbers', 'Feed primarily on insects'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5,
     rarity: 'uncommon'
   },
@@ -236,7 +236,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The smallest bear species',
     facts: ['Excellent climbers', 'Long tongue for honey'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -250,7 +250,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Tasmania'],
     description: 'The feisty marsupial with powerful jaws',
     facts: ['Strongest bite relative to body size', 'Can eat 40% of body weight daily'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -264,7 +264,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Australia'],
     description: 'Australia\'s wild dog',
     facts: ['Pack hunters', 'Can rotate head 180 degrees'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -278,7 +278,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The apex predator of the northern wilderness',
     facts: ['Pack hunters with complex social structure', 'Can run 40 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -292,7 +292,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The fierce mustelid with incredible strength',
     facts: ['Can take down prey 5x their size', 'Incredible endurance'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -306,7 +306,7 @@ export const terrestrialAnimals: DeadlyAnimal[] = [
     locations: ['North America'],
     description: 'The stealthy wild cat of North America',
     facts: ['Excellent climbers and swimmers', 'Can leap 12 feet high'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'common'
   }

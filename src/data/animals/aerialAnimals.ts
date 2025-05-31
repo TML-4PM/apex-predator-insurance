@@ -12,7 +12,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Europe', 'Asia'],
     description: 'The king of the sky',
     facts: ['Can dive at 150 mph', 'Excellent eyesight'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -26,7 +26,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Rainforest'],
     description: 'The most powerful eagle in the Americas',
     facts: ['Talons larger than grizzly bear claws', 'Can snatch sloths from trees'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const aerialAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent hunter of the night',
     facts: ['Silent flight feathers', 'Can rotate head 270 degrees'],
-    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'common'
   }

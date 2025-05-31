@@ -12,7 +12,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Southeast Asia', 'India'],
     description: 'The largest living reptile and apex predator',
     facts: ['Bite force of 16,460 newtons', 'Can hold breath for 1 hour'],
-    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1000,
     rarity: 'mythic'
   },
@@ -26,7 +26,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Nile River', 'Sub-Saharan Africa'],
     description: 'Africa\'s largest freshwater predator',
     facts: ['Can grow up to 20 feet long', 'Ambush predator extraordinaire'],
-    imageUrl: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800&h=600&fit=crop&q=80',
     killsPerYear: 745,
     rarity: 'mythic'
   },
@@ -40,7 +40,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia'],
     description: 'The world\'s most venomous snake',
     facts: ['One bite can kill 100 adults', 'Venom is 50x more toxic than cobra'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'mythic'
   },
@@ -54,7 +54,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['South Africa', 'Botswana', 'Kenya'],
     description: 'Africa\'s deadliest snake',
     facts: ['Fastest snake in the world at 12.5 mph', '100% fatal without antivenom'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 20000,
     rarity: 'legendary'
   },
@@ -68,7 +68,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia', 'China'],
     description: 'The world\'s longest venomous snake',
     facts: ['Can grow up to 18 feet long', 'Can rear up to 6 feet high'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5000,
     rarity: 'legendary'
   },
@@ -82,7 +82,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeastern USA'],
     description: 'The largest venomous snake in North America',
     facts: ['Can strike two-thirds of its body length', 'Rattle warns of danger'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -96,7 +96,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central Africa', 'West Africa'],
     description: 'The snake with the longest fangs',
     facts: ['Fangs can be 2 inches long', 'Perfectly camouflaged'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin', 'South America'],
     description: 'The heaviest snake in the world',
     facts: ['Can weigh over 550 pounds', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -124,7 +124,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin'],
     description: 'The largest predator in the Amazon',
     facts: ['Can grow up to 20 feet long', 'Apex predator of the Amazon'],
-    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1487252665478-49b61b47f302?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -138,7 +138,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ultimate pit viper',
     facts: ['Responsible for most snakebite deaths in Central America', 'Gives birth to live young'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 100,
     rarity: 'rare'
   },
@@ -152,7 +152,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southern USA', 'Central America'],
     description: 'Beautiful but deadly with potent neurotoxin',
     facts: ['Red touches yellow, kills a fellow', 'Secretive and elusive'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=800&h=600&fit=crop&q=80',
     killsPerYear: 2,
     rarity: 'rare'
   }
