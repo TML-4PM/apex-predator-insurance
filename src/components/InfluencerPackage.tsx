@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Camera, Instagram, Youtube, TikTok, CheckCircle, Star } from 'lucide-react';
+import { Camera, Instagram, Youtube, Video, CheckCircle, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const InfluencerPackage = () => {
@@ -15,7 +14,7 @@ const InfluencerPackage = () => {
 
   const platforms = [
     { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'from-pink-500 to-purple-600' },
-    { id: 'tiktok', name: 'TikTok', icon: TikTok, color: 'from-black to-gray-800' },
+    { id: 'tiktok', name: 'TikTok', icon: Video, color: 'from-black to-gray-800' },
     { id: 'youtube', name: 'YouTube', icon: Youtube, color: 'from-red-500 to-red-600' }
   ];
 
