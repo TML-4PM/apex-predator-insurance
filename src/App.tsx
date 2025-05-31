@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,14 +8,12 @@ import { useState } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import MobileOptimization from "@/components/MobileOptimization";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
-import Home from './pages/Home';
 import Oopsies from './pages/Oopsies';
 import Submit from './pages/Submit';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Privacy from './pages/Privacy';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
-import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 
 const App = () => {
@@ -30,14 +29,13 @@ const App = () => {
               <Sonner />
               <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Oopsies />} />
                   <Route path="/oopsies" element={<Oopsies />} />
                   <Route path="/submit" element={<Submit />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<Terms />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
