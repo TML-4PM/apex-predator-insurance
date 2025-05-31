@@ -9,13 +9,104 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      oopsie_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          likes: number
+          oopsie_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          likes?: number
+          oopsie_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          likes?: number
+          oopsie_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oopsie_comments_oopsie_id_fkey"
+            columns: ["oopsie_id"]
+            isOneToOne: false
+            referencedRelation: "oopsies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oopsies: {
+        Row: {
+          category: string
+          comments: number
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          is_featured: boolean
+          likes: number
+          shares: number
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          video_url: string | null
+          viral_score: number
+        }
+        Insert: {
+          category: string
+          comments?: number
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          likes?: number
+          shares?: number
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          video_url?: string | null
+          viral_score?: number
+        }
+        Update: {
+          category?: string
+          comments?: number
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          likes?: number
+          shares?: number
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          video_url?: string | null
+          viral_score?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_oopsie_likes: {
+        Args: { oopsie_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

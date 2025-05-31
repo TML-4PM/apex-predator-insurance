@@ -6,15 +6,15 @@ import YoutubeChannel from '@/components/YoutubeChannel';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Clock, Fire, Youtube, Plus } from 'lucide-react';
+import { TrendingUp, Clock, Flame, Youtube, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
-  { value: 'all', label: 'All Oopsies', icon: Fire },
+  { value: 'all', label: 'All Oopsies', icon: Flame },
   { value: 'ai_fail', label: 'AI Fails', icon: TrendingUp },
   { value: 'adventure_gone_wrong', label: 'Adventure Gone Wrong', icon: Clock },
-  { value: 'insurance_claim', label: 'Insurance Claims', icon: Fire },
-  { value: 'wildlife_encounter', label: 'Wildlife Encounters', icon: Fire },
+  { value: 'insurance_claim', label: 'Insurance Claims', icon: Flame },
+  { value: 'wildlife_encounter', label: 'Wildlife Encounters', icon: Flame },
 ];
 
 const Oopsies = () => {
@@ -61,7 +61,7 @@ const Oopsies = () => {
             <Tabs defaultValue="gallery" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8">
                 <TabsTrigger value="gallery" className="flex items-center gap-2">
-                  <Fire size={16} />
+                  <Flame size={16} />
                   Community Gallery
                 </TabsTrigger>
                 <TabsTrigger value="youtube" className="flex items-center gap-2">

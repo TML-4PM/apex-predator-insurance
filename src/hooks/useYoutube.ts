@@ -22,7 +22,7 @@ export const useYoutube = () => {
     setUploading(true);
     try {
       // Call edge function to generate video and upload to YouTube
-      const { data, error } = await fetch('/api/youtube/upload-oopsie', {
+      const response = await fetch('/api/youtube/upload-oopsie', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,9 @@ export const useYoutube = () => {
         body: JSON.stringify(oopsieData)
       });
 
-      if (error) throw error;
+      if (!response.ok) throw new Error('Failed to generate video');
+
+      const data = await response.json();
 
       toast({
         title: "Video Generated!",
