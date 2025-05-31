@@ -12,7 +12,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'South Africa', 'California', 'Mexico'],
     description: 'The apex predator of the ocean',
     facts: ['Can detect a drop of blood in 25 gallons of water', 'Reaches speeds of 35 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=800&h=600&fit=crop&q=80',
     killsPerYear: 10,
     rarity: 'legendary'
   },
@@ -26,7 +26,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1588669411296-418de2560c5b?w=800&h=600&fit=crop&q=80',
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -40,7 +40,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Coastal Waters', 'Rivers', 'Lakes'],
     description: 'The most aggressive shark species',
     facts: ['Can swim in fresh water', 'Highest testosterone levels of any animal'],
-    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
     killsPerYear: 12,
     rarity: 'rare'
   },
@@ -110,7 +110,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Oceans'],
     description: 'The ocean\'s apex predator',
     facts: ['Hunt in coordinated pods', 'Can beach themselves to catch prey'],
-    imageUrl: 'https://images.unsplash.com/photo-1518877593221-1f28583780b4?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop&q=80',
     killsPerYear: 0,
     rarity: 'rare'
   },
