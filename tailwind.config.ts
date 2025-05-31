@@ -112,6 +112,10 @@ export default {
 				'slide-in-left': {
 					'0%': { transform: 'translateX(-100%)', opacity: '0' },
 					'100%': { transform: 'translateX(0)', opacity: '1' },
+				},
+				'scroll-x': {
+					'0%': { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(-50%)' },
 				}
 			},
 			animation: {
@@ -123,7 +127,8 @@ export default {
 				'scale-in': 'scale-in 0.7s ease-out forwards',
 				'blur-in': 'blur-in 0.7s ease-out forwards',
 				'slide-in-right': 'slide-in-right 0.7s ease-out forwards',
-				'slide-in-left': 'slide-in-left 0.7s ease-out forwards'
+				'slide-in-left': 'slide-in-left 0.7s ease-out forwards',
+				'scroll-x': 'scroll-x 30s linear infinite',
 			},
 			fontFamily: {
 				'sans': ['SF Pro Display', 'ui-sans-serif', 'system-ui', 'sans-serif'],
