@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Star, Zap, Eye } from 'lucide-react';
 import { getFeaturedAnimals } from '@/data/deadlyAnimals';
 import { Link } from 'react-router-dom';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 const FeaturedPredators = () => {
   const featuredAnimals = getFeaturedAnimals(8);
@@ -56,9 +57,10 @@ const FeaturedPredators = () => {
               className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
             >
               <div className="relative">
-                <img 
+                <ImageWithFallback
                   src={animal.imageUrl}
                   alt={animal.name}
+                  category={animal.category}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute top-3 left-3 flex gap-2">

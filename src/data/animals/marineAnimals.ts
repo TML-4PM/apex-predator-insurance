@@ -26,7 +26,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1594736797933-d0bd22d47a9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Thailand', 'Malaysia', 'Philippines'],
     description: 'One of the most venomous creatures on Earth',
     facts: ['Venom can kill in 2-5 minutes', 'Nearly transparent in water'],
-    imageUrl: 'https://images.unsplash.com/photo-1544551763-77a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 70,
     rarity: 'legendary'
   },

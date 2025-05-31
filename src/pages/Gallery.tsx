@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { Search, Filter, Heart, Eye, MapPin } from 'lucide-react';
 import { deadlyAnimals } from '@/data/animalUtils';
 import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { 
   Dialog,
   DialogContent,
@@ -169,15 +170,12 @@ const Gallery = () => {
                   onClick={() => setSelectedAnimal(animal)}
                 >
                   <div className="aspect-square relative overflow-hidden">
-                    <img 
-                      src={animal.imageUrl} 
-                      alt={animal.name} 
+                    <ImageWithFallback
+                      src={animal.imageUrl}
+                      alt={animal.name}
+                      category={animal.category}
                       className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                       loading="lazy"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                      }}
                     />
                     <div className="absolute top-4 left-4">
                       <div className={`${getRarityColor(animal.rarity)} text-white text-xs font-medium px-3 py-1 rounded-full capitalize`}>
@@ -242,15 +240,12 @@ const Gallery = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
+                  <ImageWithFallback
                     src={selectedAnimal.imageUrl}
                     alt={selectedAnimal.name}
+                    category={selectedAnimal.category}
                     className="w-full h-full object-cover"
                     loading="lazy"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                    }}
                   />
                 </div>
                 

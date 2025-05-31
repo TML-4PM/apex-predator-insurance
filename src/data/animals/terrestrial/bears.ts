@@ -12,7 +12,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Montana', 'Wyoming'],
     description: 'North America\'s apex predator',
     facts: ['Can run 35 mph', 'Sense of smell 7x stronger than bloodhound'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -26,7 +26,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Arctic Circle', 'Greenland', 'Canada', 'Alaska'],
     description: 'The Arctic\'s apex predator',
     facts: ['Can smell seals 20 miles away', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'legendary'
   },
@@ -40,7 +40,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Kodiak Island', 'Alaska'],
     description: 'The largest brown bear subspecies',
     facts: ['Can weigh up to 1,500 pounds', 'Omnivorous giants'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['North America', 'Canada', 'USA'],
     description: 'The most common bear in North America',
     facts: ['Excellent climbers', 'Can run 30 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -68,7 +68,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka'],
     description: 'The shaggy bear of the Indian subcontinent',
     facts: ['Excellent climbers', 'Feed primarily on insects'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 5,
     rarity: 'uncommon'
   },
@@ -82,7 +82,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The smallest bear species',
     facts: ['Excellent climbers', 'Long tongue for honey'],
-    imageUrl: 'https://images.unsplash.com/photo-1570198021104-1fa5ac5a9a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     killsPerYear: 1,
     rarity: 'uncommon'
   }

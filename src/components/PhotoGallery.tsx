@@ -11,6 +11,7 @@ import { Heart, MessageCircle, Share2 } from 'lucide-react';
 import ShareAdventure from '@/components/ShareAdventure';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 const galleryItems = [
   {
@@ -31,7 +32,7 @@ const galleryItems = [
     insurance: 'Lion Insurance',
     likes: 352,
     comments: 26,
-    imageUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 3,
@@ -41,7 +42,7 @@ const galleryItems = [
     insurance: 'Crocodile Insurance',
     likes: 189,
     comments: 37,
-    imageUrl: 'https://images.unsplash.com/photo-1610058497388-5d1e6fcbb56c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 4,
@@ -114,14 +115,11 @@ const PhotoGallery = () => {
               onClick={() => setOpenPhotoId(item.id)}
             >
               <div className="aspect-square overflow-hidden">
-                <img
+                <ImageWithFallback
                   src={item.imageUrl}
                   alt={item.caption}
+                  category="marine"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
-                  }}
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
@@ -147,14 +145,11 @@ const PhotoGallery = () => {
           {selectedPhoto && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="aspect-square overflow-hidden rounded-lg">
-                <img
+                <ImageWithFallback
                   src={selectedPhoto.imageUrl}
                   alt={selectedPhoto.caption}
+                  category="marine"
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
-                  }}
                 />
               </div>
               <div className="flex flex-col">
