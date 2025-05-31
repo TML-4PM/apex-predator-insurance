@@ -25,12 +25,12 @@ export const useAnimals = () => {
   const fetchAnimals = async () => {
     try {
       const { data, error } = await supabase
-        .from('animals')
+        .from('animals' as any)
         .select('*')
         .order('danger_level', { ascending: false });
 
       if (error) throw error;
-      setAnimals(data || []);
+      setAnimals(data as Animal[] || []);
     } catch (error) {
       console.error('Error fetching animals:', error);
       toast({

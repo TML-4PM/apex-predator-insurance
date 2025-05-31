@@ -26,13 +26,13 @@ export const useInsurancePolicies = () => {
   const fetchPolicies = async () => {
     try {
       const { data, error } = await supabase
-        .from('insurance_policies')
+        .from('insurance_policies' as any)
         .select('*')
         .eq('is_active', true)
         .order('price', { ascending: true });
 
       if (error) throw error;
-      setPolicies(data || []);
+      setPolicies(data as InsurancePolicy[] || []);
     } catch (error) {
       console.error('Error fetching policies:', error);
       toast({

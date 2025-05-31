@@ -3,8 +3,9 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import MerchandiseStore from '@/components/MerchandiseStore';
 import EnhancedCertificateSystem from '@/components/EnhancedCertificateSystem';
+import ApexPredatorInsurance from '@/components/ApexPredatorInsurance';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingCart, Award, Package, Zap } from 'lucide-react';
+import { ShoppingCart, Award, Package, Shield } from 'lucide-react';
 
 const Store = () => {
   return (
@@ -24,8 +25,12 @@ const Store = () => {
             </div>
 
             {/* Store Navigation */}
-            <Tabs defaultValue="certificates" className="w-full">
+            <Tabs defaultValue="insurance" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8">
+                <TabsTrigger value="insurance" className="flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Insurance
+                </TabsTrigger>
                 <TabsTrigger value="certificates" className="flex items-center gap-2">
                   <Award className="h-4 w-4" />
                   Certificates
@@ -38,11 +43,11 @@ const Store = () => {
                   <Package className="h-4 w-4" />
                   Bundles
                 </TabsTrigger>
-                <TabsTrigger value="premium" className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  Premium
-                </TabsTrigger>
               </TabsList>
+
+              <TabsContent value="insurance">
+                <ApexPredatorInsurance />
+              </TabsContent>
 
               <TabsContent value="certificates">
                 <EnhancedCertificateSystem />
@@ -57,15 +62,6 @@ const Store = () => {
                   <h3 className="text-2xl font-bold mb-4">Bundle Deals Coming Soon</h3>
                   <p className="text-muted-foreground">
                     Save big with our survival bundle packages combining certificates, gear, and training.
-                  </p>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="premium">
-                <div className="text-center py-16">
-                  <h3 className="text-2xl font-bold mb-4">Premium Experiences</h3>
-                  <p className="text-muted-foreground">
-                    VR experiences, guided tours, and exclusive survival training coming soon.
                   </p>
                 </div>
               </TabsContent>
