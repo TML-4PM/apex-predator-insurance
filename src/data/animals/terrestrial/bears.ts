@@ -12,7 +12,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Montana', 'Wyoming'],
     description: 'North America\'s apex predator',
     facts: ['Can run 35 mph', 'Sense of smell 7x stronger than bloodhound'],
-    imageUrl: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/GrizzlyBearJeanBeaufort.jpg',
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -26,7 +26,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Arctic Circle', 'Greenland', 'Canada', 'Alaska'],
     description: 'The Arctic\'s apex predator',
     facts: ['Can smell seals 20 miles away', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/66/Polar_Bear_-_Alaska_%28cropped%29.jpg',
     killsPerYear: 1,
     rarity: 'legendary'
   },
@@ -40,7 +40,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Kodiak Island', 'Alaska'],
     description: 'The largest brown bear subspecies',
     facts: ['Can weigh up to 1,500 pounds', 'Omnivorous giants'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Kodiak_Bear.jpg',
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['North America', 'Canada', 'USA'],
     description: 'The most common bear in North America',
     facts: ['Excellent climbers', 'Can run 30 mph'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/01_Schwarzb%C3%A4r.jpg',
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -68,7 +68,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka'],
     description: 'The shaggy bear of the Indian subcontinent',
     facts: ['Excellent climbers', 'Feed primarily on insects'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6c/Sloth_Bear_Washington_DC.JPG',
     killsPerYear: 5,
     rarity: 'uncommon'
   },
@@ -82,7 +82,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The smallest bear species',
     facts: ['Excellent climbers', 'Long tongue for honey'],
-    imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Sitting_sun_bear.jpg',
     killsPerYear: 1,
     rarity: 'uncommon'
   }

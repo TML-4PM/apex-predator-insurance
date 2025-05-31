@@ -293,6 +293,60 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_name: string
+          id: string
+          is_bundle: boolean
+          items: Json | null
+          plan_id: string
+          plan_name: string
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          customer_email: string
+          customer_name: string
+          id?: string
+          is_bundle?: boolean
+          items?: Json | null
+          plan_id: string
+          plan_name: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          customer_name?: string
+          id?: string
+          is_bundle?: boolean
+          items?: Json | null
+          plan_id?: string
+          plan_name?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       predator_encounters: {
         Row: {
           animal_id: string
@@ -467,6 +521,50 @@ export type Database = {
           views_count?: number | null
         }
         Relationships: []
+      }
+      user_certificates: {
+        Row: {
+          certificate_data: Json
+          certificate_name: string
+          certificate_type: string
+          created_at: string
+          download_count: number | null
+          id: string
+          last_downloaded_at: string | null
+          order_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          certificate_data: Json
+          certificate_name: string
+          certificate_type: string
+          created_at?: string
+          download_count?: number | null
+          id?: string
+          last_downloaded_at?: string | null
+          order_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          certificate_data?: Json
+          certificate_name?: string
+          certificate_type?: string
+          created_at?: string
+          download_count?: number | null
+          id?: string
+          last_downloaded_at?: string | null
+          order_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_certificates_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_challenge_progress: {
         Row: {

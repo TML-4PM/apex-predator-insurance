@@ -12,7 +12,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'Africa\'s most dangerous large mammal',
     facts: ['Can run 30 mph on land', 'Kills more humans than any other large animal in Africa'],
-    imageUrl: 'https://images.unsplash.com/photo-1595162265991-c9e603c0f2e7?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Hippo_pod_edit.jpg',
     killsPerYear: 500,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The largest land animal',
     facts: ['Can weigh up to 14,000 pounds', 'Excellent memory'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg',
     killsPerYear: 100,
     rarity: 'uncommon'
   },
@@ -40,7 +40,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'One of Africa\'s Big Five',
     facts: ['Never been domesticated', 'Known to ambush hunters'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/African_buffalo_Syncerus_caffer.jpg',
     killsPerYear: 200,
     rarity: 'rare'
   },
@@ -54,7 +54,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia'],
     description: 'The intelligent giant of Asia',
     facts: ['Smaller than African elephants', 'Highly intelligent'],
-    imageUrl: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Asian_Elephant_%28Elephas_maximus%29_female_and_calf.jpg',
     killsPerYear: 400,
     rarity: 'uncommon'
   }

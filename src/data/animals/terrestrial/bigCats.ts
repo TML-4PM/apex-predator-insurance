@@ -12,7 +12,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Kenya', 'Tanzania', 'South Africa', 'Botswana'],
     description: 'The king of the savanna',
     facts: ['Can leap 36 feet horizontally', 'Roar can be heard 5 miles away'],
-    imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg',
     killsPerYear: 250,
     rarity: 'rare'
   },
@@ -26,7 +26,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Russia', 'China', 'North Korea'],
     description: 'The largest living cat species',
     facts: ['Can reach speeds of 50 mph', 'Night vision 6x better than humans'],
-    imageUrl: 'https://images.unsplash.com/photo-1605790237683-4d86d9e1c28e?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Siberischer_tiger_de_edit02.jpg',
     killsPerYear: 50,
     rarity: 'mythic'
   },
@@ -40,7 +40,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['India', 'Bangladesh', 'Nepal'],
     description: 'The most numerous tiger subspecies',
     facts: ['Excellent swimmers', 'Can consume 88 pounds of meat in one feeding'],
-    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Bengal_Tiger_Karnataka.jpg',
     killsPerYear: 85,
     rarity: 'mythic'
   },
@@ -54,7 +54,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Africa', 'Asia', 'Middle East'],
     description: 'The stealthiest big cat',
     facts: ['Can carry prey twice their weight up trees', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1539066830844-29cb8c84e859?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/70/African_leopard_male_%28cropped%29.jpg',
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -68,7 +68,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Amazon', 'Central America', 'Mexico'],
     description: 'The powerhouse of the Americas',
     facts: ['Strongest bite force of any big cat', 'Can crush turtle shells'],
-    imageUrl: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Standing_jaguar.jpg',
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -82,7 +82,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent stalker of the mountains',
     facts: ['Can jump 40 feet horizontally', 'Also known as puma or cougar'],
-    imageUrl: 'https://images.unsplash.com/photo-1534567110043-1591d51e30c4?w=800&h=600&fit=crop&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Mountain_Lion_in_Glacier_National_Park.jpg',
     killsPerYear: 2,
     rarity: 'uncommon'
   }
