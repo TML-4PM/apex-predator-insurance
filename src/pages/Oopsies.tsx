@@ -4,10 +4,11 @@ import Layout from '@/components/Layout';
 import OopsieGallery from '@/components/OopsieGallery';
 import YoutubeChannel from '@/components/YoutubeChannel';
 import SpottoMigrationPanel from '@/components/SpottoMigrationPanel';
+import APIConfiguration from '@/components/admin/APIConfiguration';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Clock, Flame, Youtube, Plus, Settings } from 'lucide-react';
+import { TrendingUp, Clock, Flame, Youtube, Plus, Settings, Key } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
@@ -21,6 +22,7 @@ const categories = [
 const Oopsies = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showMigrationPanel, setShowMigrationPanel] = useState(false);
+  const [showAPIConfig, setShowAPIConfig] = useState(false);
 
   return (
     <Layout>
@@ -68,11 +70,26 @@ const Oopsies = () => {
                   <Settings size={16} className="mr-2" />
                   {showMigrationPanel ? 'Hide' : 'Show'} Migration Tools
                 </Button>
+
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAPIConfig(!showAPIConfig)}
+                  className="border-blue-500 text-blue-600 hover:bg-blue-50"
+                >
+                  <Key size={16} className="mr-2" />
+                  {showAPIConfig ? 'Hide' : 'Show'} API Config
+                </Button>
               </div>
 
               {showMigrationPanel && (
                 <div className="mb-8 animate-fade-up">
                   <SpottoMigrationPanel />
+                </div>
+              )}
+
+              {showAPIConfig && (
+                <div className="mb-8 animate-fade-up">
+                  <APIConfiguration />
                 </div>
               )}
             </div>
