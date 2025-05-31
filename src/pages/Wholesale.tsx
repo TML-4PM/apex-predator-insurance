@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -41,7 +40,8 @@ const Wholesale = () => {
         'Basic branding',
         'Email support'
       ],
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-blue-500 to-cyan-500',
+      cta: 'Start as Agent'
     },
     {
       name: 'Tour Operator',
@@ -54,7 +54,9 @@ const Wholesale = () => {
         'API integration',
         'Priority support'
       ],
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-purple-500 to-pink-500',
+      cta: 'Access Portal',
+      isPopular: true
     },
     {
       name: 'Hotel Chain',
@@ -67,7 +69,8 @@ const Wholesale = () => {
         'Custom integrations',
         'Dedicated account manager'
       ],
-      color: 'from-amber-500 to-red-500'
+      color: 'from-amber-500 to-red-500',
+      cta: 'Enterprise Setup'
     }
   ];
 
@@ -93,6 +96,15 @@ const Wholesale = () => {
       description: 'White-label with your branding and colors'
     }
   ];
+
+  const handlePartnerAccess = (tierName: string) => {
+    if (tierName === 'Tour Operator') {
+      window.open('/partner-portal', '_blank');
+    } else {
+      // Handle other tier access
+      console.log(`Accessing ${tierName} features`);
+    }
+  };
 
   return (
     <Layout>
@@ -148,6 +160,12 @@ const Wholesale = () => {
                 <Card key={index} className="p-6 relative overflow-hidden hover:shadow-xl transition-shadow">
                   <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${tier.color}`} />
                   
+                  {tier.isPopular && (
+                    <div className="absolute -top-3 -right-3">
+                      <Badge className="bg-apex-red text-white">Most Popular</Badge>
+                    </div>
+                  )}
+                  
                   <div className="text-center mb-6">
                     <div className={`bg-gradient-to-r ${tier.color} rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
                       <tier.icon className="text-white" size={24} />
@@ -176,8 +194,12 @@ const Wholesale = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full mt-6" variant={index === 1 ? "default" : "outline"}>
-                    {index === 1 ? "Most Popular" : "Get Started"}
+                  <Button 
+                    className="w-full mt-6" 
+                    variant={tier.isPopular ? "default" : "outline"}
+                    onClick={() => handlePartnerAccess(tier.name)}
+                  >
+                    {tier.cta}
                   </Button>
                 </Card>
               ))}

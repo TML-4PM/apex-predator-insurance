@@ -17,6 +17,7 @@ import ArticleDetail from "./pages/ArticleDetail";
 import Oopsies from "./pages/Oopsies";
 import Submit from "./pages/Submit";
 import Wholesale from "./pages/Wholesale";
+import PartnerPortal from "./pages/PartnerPortal";
 
 // Create a shared QueryClient instance
 const queryClient = new QueryClient({
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/oopsies" element={<Oopsies />} />
           <Route path="/submit" element={<Submit />} />
           <Route path="/wholesale" element={<Wholesale />} />
+          <Route path="/partner-portal" element={<PartnerPortal />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/certificate" element={<CertificatePage />} />
