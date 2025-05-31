@@ -8,8 +8,8 @@ import { useState } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import MobileOptimization from "@/components/MobileOptimization";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
-import Oopsies from './pages/Oopsies';
-import Submit from './pages/Submit';
+import Index from './pages/Index';
+import DonationPage from './pages/DonationPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -29,9 +29,8 @@ const App = () => {
               <Sonner />
               <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<Oopsies />} />
-                  <Route path="/oopsies" element={<Oopsies />} />
-                  <Route path="/submit" element={<Submit />} />
+                  <Route path="/" element={<Index />} />
+                  <Route path="/donate" element={<DonationPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />

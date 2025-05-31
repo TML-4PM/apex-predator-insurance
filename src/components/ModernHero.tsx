@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Play, Users, TrendingUp, Instagram, Camera } from 'lucide-react';
+import { ShoppingCart, Play, Users, TrendingUp, Instagram, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import CertificatePreview from './CertificatePreview';
@@ -18,29 +18,29 @@ const ModernHero = () => {
     { icon: TrendingUp, label: '#1', sublabel: 'Travel Trend' },
   ];
 
-  const survivorTestimonials = [
+  const supporterTestimonials = [
     {
       name: 'Jake',
       age: 24,
       location: 'Bali',
-      predator: '🦈',
-      text: 'Certificate looked sick on my Insta! Worth every penny',
+      donation: '$100',
+      text: 'Supporting real protection for adventurers like me!',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
     },
     {
       name: 'Emma',
       age: 27,
       location: 'Australia',
-      predator: '🐊',
-      text: 'Friends thought I was crazy until they saw the certificate',
+      donation: '$50',
+      text: 'Love knowing my adventures are covered properly',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
     },
     {
       name: 'Alex',
       age: 22,
       location: 'Kenya',
-      predator: '🦁',
-      text: 'Group challenge was epic! All 6 of us got covered',
+      donation: '$250',
+      text: 'This service gives me peace of mind on every trip',
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
     }
   ];
@@ -80,7 +80,7 @@ const ModernHero = () => {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-apex-red/20 backdrop-blur-sm border border-apex-red/30 rounded-full px-4 py-2 mb-6">
               <TrendingUp className="text-apex-red" size={16} />
-              <span className="text-white font-medium">Trending on TikTok & Instagram</span>
+              <span className="text-white font-medium">Supporting Real Adventure Protection</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
@@ -89,19 +89,19 @@ const ModernHero = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              The certificate that makes your friends jealous and your parents worry less 😎
+              Real protection for real adventurers. Support our mission to keep explorers safe worldwide.
             </p>
 
-            {/* Pricing Badges */}
+            {/* Donation Call-to-Action */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <Badge className="bg-white/10 text-white border-white/20 text-base px-4 py-2">
-                🦈 Single Predator $9.99
+                💝 Support from $5
               </Badge>
               <Badge className="bg-apex-red text-white text-base px-4 py-2">
-                🔥 25 Predators $59.99 (POPULAR)
+                🔥 Help Fund Protection (POPULAR)
               </Badge>
               <Badge className="bg-white/10 text-white border-white/20 text-base px-4 py-2">
-                👑 All Predators $99.99
+                👑 VIP Supporter Access
               </Badge>
             </div>
 
@@ -109,14 +109,16 @@ const ModernHero = () => {
               <Link to="/plans">
                 <Button size="lg" className="bg-apex-red hover:bg-apex-red/90 text-white px-8 py-4 text-lg">
                   <ShoppingCart className="mr-2" size={20} />
-                  Buy Certificate Now
+                  Buy Insurance Now
                 </Button>
               </Link>
               
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg">
-                <Play className="mr-2" size={20} />
-                See Certificates
-              </Button>
+              <Link to="/donate">
+                <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 text-lg">
+                  <Heart className="mr-2" size={20} />
+                  Support Our Mission
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -127,7 +129,7 @@ const ModernHero = () => {
               <Tabs defaultValue="preview" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-6">
                   <TabsTrigger value="preview" className="flex items-center gap-2">
-                    <Camera size={16} />
+                    <ShoppingCart size={16} />
                     Preview Certificate
                   </TabsTrigger>
                   <TabsTrigger value="templates" className="flex items-center gap-2">
@@ -153,29 +155,29 @@ const ModernHero = () => {
               </Tabs>
             </div>
 
-            {/* Survivor Stories */}
+            {/* Supporter Stories */}
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10">
               <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                🏆 Recent Survivors
+                🏆 Our Amazing Supporters
               </h3>
               
               <div className="space-y-4">
-                {survivorTestimonials.map((survivor, index) => (
+                {supporterTestimonials.map((supporter, index) => (
                   <div key={index} className="bg-white/10 rounded-lg p-4 border border-white/10">
                     <div className="flex items-start gap-3">
                       <img 
-                        src={survivor.image} 
-                        alt={survivor.name}
+                        src={supporter.image} 
+                        alt={supporter.name}
                         className="w-12 h-12 rounded-full object-cover"
                       />
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-semibold text-white">{survivor.name}</span>
-                          <span className="text-white/60 text-sm">({survivor.age})</span>
-                          <span className="text-xl">{survivor.predator}</span>
+                          <span className="font-semibold text-white">{supporter.name}</span>
+                          <span className="text-white/60 text-sm">({supporter.age})</span>
+                          <span className="text-apex-red font-bold">{supporter.donation}</span>
                         </div>
-                        <div className="text-sm text-white/60 mb-2">{survivor.location}</div>
-                        <p className="text-white/90 text-sm italic">"{survivor.text}"</p>
+                        <div className="text-sm text-white/60 mb-2">{supporter.location}</div>
+                        <p className="text-white/90 text-sm italic">"{supporter.text}"</p>
                       </div>
                     </div>
                   </div>
@@ -183,9 +185,10 @@ const ModernHero = () => {
               </div>
               
               <div className="text-center mt-6">
-                <Link to="/oopsies">
+                <Link to="/donate">
                   <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                    View All Stories
+                    <Heart className="mr-2" size={16} />
+                    Join Our Supporters
                   </Button>
                 </Link>
               </div>
@@ -205,7 +208,7 @@ const ModernHero = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">✓</Badge>
-                <span>Share Everywhere</span>
+                <span>Community Supported</span>
               </div>
             </div>
           </div>

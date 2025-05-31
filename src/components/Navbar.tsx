@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Menu, X, Shield, Camera } from 'lucide-react';
+import { Menu, X, Shield, Heart } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,28 +59,19 @@ const Navbar = () => {
               Gallery
             </Link>
             <Link 
-              to="/oopsies" 
-              className={`font-medium transition-colors flex items-center gap-2 ${isActive('/oopsies') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Oopsies
-              <Badge variant="secondary" className="bg-apex-red/10 text-apex-red text-xs">
-                New
-              </Badge>
-            </Link>
-            <Link 
               to="/articles" 
               className={`font-medium transition-colors ${isActive('/articles') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
             >
               Articles
             </Link>
             
-            <Link to="/submit">
+            <Link to="/donate">
               <Button 
                 size="sm" 
                 className="bg-apex-red hover:bg-apex-red/90"
               >
-                <Camera size={16} className="mr-2" />
-                Share Oopsie
+                <Heart size={16} className="mr-2" />
+                Donate
               </Button>
             </Link>
           </div>
@@ -134,16 +125,6 @@ const Navbar = () => {
                 Gallery
               </Link>
               <Link 
-                to="/oopsies" 
-                className={`font-medium transition-colors flex items-center gap-2 ${isActive('/oopsies') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Oopsies
-                <Badge variant="secondary" className="bg-apex-red/10 text-apex-red text-xs">
-                  New
-                </Badge>
-              </Link>
-              <Link 
                 to="/articles" 
                 className={`font-medium transition-colors ${isActive('/articles') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
                 onClick={() => setIsOpen(false)}
@@ -151,13 +132,13 @@ const Navbar = () => {
                 Articles
               </Link>
               
-              <Link to="/submit" onClick={() => setIsOpen(false)}>
+              <Link to="/donate" onClick={() => setIsOpen(false)}>
                 <Button 
                   size="sm" 
                   className="bg-apex-red hover:bg-apex-red/90 w-full justify-center"
                 >
-                  <Camera size={16} className="mr-2" />
-                  Share Oopsie
+                  <Heart size={16} className="mr-2" />
+                  Donate
                 </Button>
               </Link>
             </div>
