@@ -1,5 +1,6 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
+import { getAnimalImageUrl } from '../../utils/imageValidation';
 
 export const insectAnimals: DeadlyAnimal[] = [
   {
@@ -12,7 +13,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Brazil', 'Central America', 'South America'],
     description: 'World\'s most venomous spider',
     facts: ['Aggressive and fast-moving', 'Venom causes painful erections'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('brazilian-wandering-spider'),
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -26,7 +27,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sydney', 'Australia'],
     description: 'Australia\'s most dangerous spider',
     facts: ['Male is more venomous than female', 'Can survive underwater for hours'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('sydney-funnel-web'),
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -40,7 +41,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Australia'],
     description: 'The infamous red hourglass spider',
     facts: ['Female eats male after mating', 'Venom is 15x stronger than rattlesnake'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('black-widow'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -54,7 +55,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Middle East', 'North Africa'],
     description: 'One of the most dangerous scorpions',
     facts: ['Venom contains neurotoxins', 'Glows under UV light'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('deathstalker-scorpion'),
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -68,7 +69,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ant with the most painful sting',
     facts: ['Sting feels like being shot', 'Pain lasts up to 24 hours'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('bullet-ant'),
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -82,7 +83,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The fly that carries sleeping sickness',
     facts: ['Transmits deadly parasites', 'Responsible for thousands of deaths annually'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('tsetse-fly'),
     killsPerYear: 10000,
     rarity: 'uncommon'
   },
@@ -96,7 +97,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The bug that kisses you to death',
     facts: ['Transmits Chagas disease', 'Feeds on blood at night'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('kissing-bug'),
     killsPerYear: 7000,
     rarity: 'uncommon'
   },
@@ -110,7 +111,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Japan', 'China', 'Korea'],
     description: 'The murder hornet with a painful sting',
     facts: ['Largest hornet species in the world', 'Can decimate entire bee colonies'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('giant-asian-hornet'),
     killsPerYear: 40,
     rarity: 'uncommon'
   },
@@ -124,7 +125,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The unstoppable swarm',
     facts: ['Colonies can contain 2 million ants', 'Can take down animals much larger than themselves'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('army-ant'),
     killsPerYear: 0,
     rarity: 'common'
   },
@@ -138,7 +139,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The notorious killer bees',
     facts: ['Will chase victims for up to a mile', 'Attack in massive numbers'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('africanized-bee'),
     killsPerYear: 20,
     rarity: 'uncommon'
   },
@@ -152,7 +153,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Worldwide Tropical Regions'],
     description: 'The burning invader',
     facts: ['Create living rafts during floods', 'Painful alkaloid venom'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('fire-ant'),
     killsPerYear: 5,
     rarity: 'common'
   },
@@ -166,7 +167,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and East Africa'],
     description: 'The swarming terror of Africa',
     facts: ['Colonies can contain 20 million ants', 'Can consume animals unable to escape'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('driver-ant'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -180,7 +181,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and South America'],
     description: 'The parasitic hijacker',
     facts: ['Larvae develop under human skin', 'Can cause severe infections'],
-    imageUrl: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('bot-fly'),
     killsPerYear: 0,
     rarity: 'uncommon'
   }

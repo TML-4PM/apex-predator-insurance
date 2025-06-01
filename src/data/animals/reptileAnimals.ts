@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
-import { getAnimalImageUrl, getFallbackImageUrl } from '../../utils/imageValidation';
+import { getAnimalImageUrl } from '../../utils/imageValidation';
 
 export const reptileAnimals: DeadlyAnimal[] = [
   {

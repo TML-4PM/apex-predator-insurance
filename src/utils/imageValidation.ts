@@ -12,9 +12,9 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
-// Complete mapping of all animal IDs to actual bucket filenames
+// Complete mapping of system animal IDs to actual bucket filenames
 const imageMapping: Record<string, string> = {
-  // Big Cats - Using exact bucket matches
+  // Big Cats
   'african-lion': '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg',
   'siberian-tiger': '330px-Walking_tiger_female.jpg',
   'bengal-tiger': '250px-Adult_male_Royal_Bengal_tiger.jpg',
@@ -24,7 +24,7 @@ const imageMapping: Record<string, string> = {
   'cheetah': '250px-Male_cheetah_fa..._left_in_South_Africa.jpg',
   'snow-leopard': '250px-Snow_leopard_portrait-2010.jpg',
   
-  // Bears - Using existing mappings
+  // Bears
   'grizzly-bear': '250px-Grizzly_Bear_Yellowstone_2.jpg',
   'polar-bear': '250px-Polar_Bear_-_Alaska_%28cropped%29.jpg',
   'kodiak-bear': '250px-Kodiak_Brown_Bear.jpg',
@@ -32,7 +32,7 @@ const imageMapping: Record<string, string> = {
   'sloth-bear': '250px-Sloth_bear_with_young.jpg',
   'sun-bear': '250px-Sitting_sun_bear.jpg',
   
-  // Marine Animals - Using exact bucket matches where available
+  // Marine Animals
   'great-white-shark': '330px-White_shark.jpg',
   'tiger-shark': '250px-Tiger_shark.jpg',
   'bull-shark': '250px-Carcharhinus_leucas_TPWD.jpg',
@@ -49,24 +49,24 @@ const imageMapping: Record<string, string> = {
   'hammerhead-shark': '250px-Great_hammerhead_shark_off_Bimini.jpg',
   'blue-shark': '250px-Blue_shark.jpg',
   
-  // Reptiles - Using bucket matches and similar animals
+  // Reptiles
   'saltwater-crocodile': '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg',
   'nile-crocodile': '250px-NileCrocodile.jpg',
   'inland-taipan': '250px-Inland_Taipan.jpg',
-  'black-mamba': '250px-D%C3%BClmen...ark_--_2018_--_3762.jpg', // URL encoded filename
-  'king-cobra': '250px-Indian_Cobra%2C_crop.jpg', // Using Indian Cobra as close match
+  'black-mamba': '250px-D%C3%BClmen...ark_--_2018_--_3762.jpg',
+  'king-cobra': '250px-Indian_Cobra%2C_crop.jpg',
   'eastern-diamondback': '250px-Crotalus_adamanteus_CDC-a.jpg',
   'gaboon-viper': '250px-Bitis_gabonica_gabonica.jpg',
-  'anaconda': '250px-Sucuri_verde.jpg', // Green Anaconda match
+  'anaconda': '250px-Sucuri_verde.jpg',
   'caiman': '250px-Caiman_crocodilus_llanos.JPG',
   'fer-de-lance': '250px-Bothrops_asper_-_Tortuguero_01.jpg',
   'coral-snake': '250px-Micrurus_fulvius.jpg',
   'russells-viper': '250px-Russell\'s_viper_(Daboia_russelii).jpg',
-  'reticulated-python': '250px-Python_reticulatu...D0%BE%D0%BD-2.jpg', // URL encoded
+  'reticulated-python': '250px-Python_reticulatu...D0%BE%D0%BD-2.jpg',
   'komodo-dragon': '250px-Komodo_dragon_with_forked_tongue.jpg',
   'monitor-lizard': '250px-Water_monitor_lizard.jpg',
   
-  // Aerial Animals - Using exact matches
+  // Aerial Animals
   'golden-eagle': '250px-Golden_Eagle_in_flight_-_5.jpg',
   'harpy-eagle': '250px-Harpy_eagle_(Harpia_harpyja)_adult_female.jpg',
   'great-horned-owl': '250px-Bubo_virginianus_06.jpg',
@@ -76,35 +76,35 @@ const imageMapping: Record<string, string> = {
   'peregrine-falcon': '250px-Peregrine_falcon.jpg',
   'goshawk': '250px-Accipiter_gentilis_-_01.jpg',
   
-  // Large Mammals - Using bucket matches
-  'african-elephant': '250px-An_elephant_in_Kruger_National_Park.jpg', // African Bush Elephant
-  'rhinoceros': '250px-Black_Rhino_at_Working_with_Wildlife.jpg', // Using Black Rhino
-  'hippopotamus': '250px-Portrait_Hippopotamus_in_the_water.jpg', // Common Hippopotamus
-  'cape-buffalo': '250px-African_buffalo_...ale_with_cattle_egret.jpg', // Cape Buffalo match
+  // Large Mammals
+  'african-elephant': '250px-An_elephant_in_Kruger_National_Park.jpg',
+  'rhinoceros': '250px-Black_Rhino_at_Working_with_Wildlife.jpg',
+  'hippopotamus': '250px-Portrait_Hippopotamus_in_the_water.jpg',
+  'cape-buffalo': '250px-African_buffalo_...ale_with_cattle_egret.jpg',
+  'asian-elephant': '250px-Elephas_maximus_%28Bandipur%29.jpg',
   
-  // Carnivores - Using bucket matches
-  'hyena': '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
-  'wild-dog': '250px-African_painted_dog.jpg',
-  
-  // Small Carnivores - Using bucket matches
-  'honey-badger': '500px-Honey_Badger.jpg',
+  // Carnivores
+  'spotted-hyena': '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
+  'gray-wolf': '250px-Eurasian_wolf_2.jpg',
   'wolverine': '250px-Wolverine_on_rock.jpg',
   
-  // Insects and Arachnids - Using best available matches
+  // Small Carnivores
+  'honey-badger': '500px-Honey_Badger.jpg',
+  
+  // Insects and Arachnids
   'black-widow': '250px-Latrodectus_hesperus_adult_female.jpg',
   'brazilian-wandering-spider': '250px-Phoneutria_nigriventer_MHNT.jpg',
-  'funnel-web-spider': '250px-Sydney_funnel-web_spider_male.jpg',
-  'deathstalker-scorpion': '250px-Centruroides_sculpturatus_191624836.jpg', // Using Arizona Bark Scorpion as close match
+  'sydney-funnel-web': '250px-Sydney_funnel-web_spider_male.jpg',
+  'deathstalker-scorpion': '250px-Centruroides_sculpturatus_191624836.jpg',
   
-  // Additional animals from bucket that might be in the system
-  'asian-elephant': '250px-Elephas_maximus_%28Bandipur%29.jpg',
+  // Additional animals from your bucket list
   'sailfish': '250px-Two_men_holdin...reshly_caught_sailfish.jpg',
   'moose': '250px-Alaska_moose.jpg',
-  'gorilla': '250px-Male_Gorilla_%2818109130%29.jpg', // Eastern Gorilla
-  'octopus': '250px-Octopus2.jpg', // Common Octopus
+  'gorilla': '250px-Male_Gorilla_%2818109130%29.jpg',
+  'octopus': '250px-Octopus2.jpg',
   'giraffe': '250px-Giraffe_Mikumi_National_Park.jpg',
-  'wolf': '250px-Eurasian_wolf_2.jpg', // Grey Wolf
-  'zebra': '250px-Equus_quagga_b...i_-_Etosha%2C_2014.jpg', // Plains Zebra
+  'wolf': '250px-Eurasian_wolf_2.jpg',
+  'zebra': '250px-Equus_quagga_b...i_-_Etosha%2C_2014.jpg',
   'emperor-scorpion': '250px-Female_Emperor_Scorpion.jpg',
   'emerald-boa': '250px-Emerald_Tree_Boa_Head.jpg',
   'panther-chameleon': '250px-Panther_chamele...s%29_male_Nosy_Be.jpg',
@@ -112,7 +112,6 @@ const imageMapping: Record<string, string> = {
   'lappet-faced-vulture': '250px-2012-lappet-faced-vulture.jpg',
   'african-fish-eagle': '250px-African_fish_eagl...283351661283%29.jpg',
   'lions-mane-jellyfish': '250px-Le_Caylar_fg01.JPG',
-  'red-knee-tarantula': '250px-Phelsuma_l._laticauda.jpg', // Using gecko as placeholder
   'indian-rhinoceros': '250px-Great-Indian-one...-park-in-Assam-India.jpg',
   'ruppells-vulture': '250px-R%C3%BCppell%...28211600896%29.jpg',
   'rinkhals': '250px-Rinkhals2.jpg',
@@ -124,27 +123,22 @@ const imageMapping: Record<string, string> = {
 };
 
 export const getAnimalImageUrl = (animalId: string): string => {
-  // Check if we have it in the deadly60 bucket
   const filename = imageMapping[animalId];
   if (filename) {
     return getSupabaseImageUrl('deadly60', filename);
   }
   
-  // Log missing animals for debugging
   console.warn(`[Image Missing] No image mapping found for animal: ${animalId}`);
-  
-  // Fallback to old system for any truly missing animals
-  return getSupabaseImageUrl('animal-images', `${animalId}.jpg`);
+  return getSupabaseImageUrl('deadly60', `${animalId}.jpg`);
 };
 
 export const getFallbackImageUrl = (category: string): string => {
-  // Use diverse, animal-specific fallback images from reliable sources
   const fallbacks = {
-    marine: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
-    terrestrial: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=800&q=80',
-    reptile: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-    aerial: 'https://images.unsplash.com/photo-1520637836862-4d197d17c23a?w=800&q=80',
-    insect: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80'
+    marine: getSupabaseImageUrl('deadly60', '330px-White_shark.jpg'),
+    terrestrial: getSupabaseImageUrl('deadly60', '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'),
+    reptile: getSupabaseImageUrl('deadly60', '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg'),
+    aerial: getSupabaseImageUrl('deadly60', '250px-Golden_Eagle_in_flight_-_5.jpg'),
+    insect: getSupabaseImageUrl('deadly60', '250px-Centruroides_sculpturatus_191624836.jpg')
   };
   
   return fallbacks[category as keyof typeof fallbacks] || fallbacks.terrestrial;
@@ -155,7 +149,7 @@ export const handleImageError = (
   category: string
 ) => {
   const target = event.target as HTMLImageElement;
-  if (!target.src.includes('unsplash.com') && !target.src.includes('data:image')) {
+  if (!target.src.includes('supabase.co') && !target.src.includes('data:image')) {
     target.src = getFallbackImageUrl(category);
   }
 };
