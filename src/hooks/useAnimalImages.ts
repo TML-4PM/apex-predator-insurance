@@ -9,26 +9,33 @@ export const useAnimalImages = () => {
   const getValidatedImageUrl = async (animalId: string, category: string): Promise<string> => {
     // Check cache first
     if (imageCache[animalId]) {
+      console.log(`[Image Cache] Using cached URL for ${animalId}:`, imageCache[animalId]);
       return imageCache[animalId];
     }
 
     try {
       // Try to get the image from the deadly60 bucket first
       const deadly60Url = getAnimalImageUrl(animalId);
+      console.log(`[Image Debug] Testing URL for ${animalId}:`, deadly60Url);
       
       // Verify the image exists by attempting to fetch it
       const response = await fetch(deadly60Url, { method: 'HEAD' });
+      console.log(`[Image Debug] Response for ${animalId}:`, response.status, response.ok);
       
       if (response.ok) {
+        console.log(`[Image Success] Using deadly60 image for ${animalId}`);
         setImageCache(prev => ({ ...prev, [animalId]: deadly60Url }));
         return deadly60Url;
+      } else {
+        console.warn(`[Image Failed] Deadly60 image failed for ${animalId}, status:`, response.status);
       }
     } catch (error) {
-      console.warn(`Failed to load image for ${animalId} from deadly60 bucket:`, error);
+      console.warn(`[Image Error] Failed to load image for ${animalId} from deadly60 bucket:`, error);
     }
 
     // Fall back to category default
     const fallbackUrl = getFallbackImageUrl(category);
+    console.log(`[Image Fallback] Using fallback for ${animalId}:`, fallbackUrl);
     setImageCache(prev => ({ ...prev, [animalId]: fallbackUrl }));
     return fallbackUrl;
   };

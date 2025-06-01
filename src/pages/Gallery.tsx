@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { Search, Filter, Heart, Eye, MapPin } from 'lucide-react';
 import { deadlyAnimals } from '@/data/animalUtils';
 import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import ImageDebugger from '@/components/ImageDebugger';
 import { 
   Dialog,
   DialogContent,
@@ -107,6 +107,11 @@ const Gallery = () => {
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Add debugger for testing */}
+          <div className="mb-8">
+            <ImageDebugger />
+          </div>
+
           {/* Filters */}
           <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:justify-between">
             <div className="flex flex-col md:flex-row gap-4">
