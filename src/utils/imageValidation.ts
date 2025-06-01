@@ -12,7 +12,7 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
-// Complete mapping of all 60 animal IDs to uploaded image filenames in the deadly60 bucket
+// Updated mapping based on actual files in the deadly60 bucket
 const imageMapping: Record<string, string> = {
   // Big Cats (8 animals)
   'african-lion': '250px-020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg',
@@ -76,25 +76,25 @@ const imageMapping: Record<string, string> = {
   'peregrine-falcon': '250px-Peregrine_falcon.jpg',
   'goshawk': '250px-Accipiter_gentilis_-_01.jpg',
   
-  // Large Mammals (4 animals) - Now mapping to actual bucket files
-  'african-elephant': '250px-African_elephant.jpg',
-  'rhinoceros': '250px-Rhinoceros.jpg', 
-  'hippopotamus': '250px-Hippopotamus.jpg',
-  'cape-buffalo': '250px-Cape_buffalo.jpg',
+  // Large Mammals (4 animals) - Using alternative files found in bucket
+  'african-elephant': '250px-African_Bush_Elephant.jpg',
+  'rhinoceros': '250px-White_rhinoceros_or_square-lipped_rhinoceros.jpg', 
+  'hippopotamus': '250px-Hippo_pod_edit.jpg',
+  'cape-buffalo': '250px-African_buffalo_Syncerus_caffer.jpg',
   
-  // Carnivores (2 animals) - Now mapping to actual bucket files
-  'hyena': '250px-Hyena.jpg',
-  'wild-dog': '250px-Wild_dog.jpg',
+  // Carnivores (2 animals) - Using files found in bucket  
+  'hyena': '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
+  'wild-dog': '250px-African_painted_dog.jpg',
   
-  // Small Carnivores (2 animals) - Now mapping to actual bucket files
-  'honey-badger': '250px-Honey_badger.jpg',
-  'wolverine': '250px-Wolverine.jpg',
+  // Small Carnivores (2 animals) - Using files found in bucket
+  'honey-badger': '250px-Honey_badger_in_Kruger_National_Park.jpg',
+  'wolverine': '250px-Wolverine_on_rock.jpg',
   
-  // Insects (4 animals) - Now mapping to actual bucket files
-  'black-widow': '250px-Black_widow_spider.jpg',
-  'brazilian-wandering-spider': '250px-Brazilian_wandering_spider.jpg',
-  'funnel-web-spider': '250px-Funnel_web_spider.jpg',
-  'deathstalker-scorpion': '250px-Deathstalker_scorpion.jpg'
+  // Insects (4 animals) - Using files found in bucket
+  'black-widow': '250px-Latrodectus_hesperus_adult_female.jpg',
+  'brazilian-wandering-spider': '250px-Phoneutria_nigriventer_MHNT.jpg',
+  'funnel-web-spider': '250px-Sydney_funnel-web_spider_male.jpg',
+  'deathstalker-scorpion': '250px-Leiurus_quinquestriatus_MHNT.jpg'
 };
 
 export const getAnimalImageUrl = (animalId: string): string => {
