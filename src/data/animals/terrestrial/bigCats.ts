@@ -1,5 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
+import { getAnimalImageUrl } from '../../../utils/imageValidation';
 
 export const bigCats: DeadlyAnimal[] = [
   {
@@ -12,7 +13,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Kenya', 'Tanzania', 'South Africa', 'Botswana'],
     description: 'The king of the savanna',
     facts: ['Can leap 36 feet horizontally', 'Roar can be heard 5 miles away'],
-    imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('african-lion'),
     killsPerYear: 250,
     rarity: 'rare'
   },
@@ -26,7 +27,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Russia', 'China', 'North Korea'],
     description: 'The largest living cat species',
     facts: ['Can reach speeds of 50 mph', 'Night vision 6x better than humans'],
-    imageUrl: 'https://images.unsplash.com/photo-1605026547156-b966e73a0b04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('siberian-tiger'),
     killsPerYear: 50,
     rarity: 'mythic'
   },
@@ -40,7 +41,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['India', 'Bangladesh', 'Nepal'],
     description: 'The most numerous tiger subspecies',
     facts: ['Excellent swimmers', 'Can consume 88 pounds of meat in one feeding'],
-    imageUrl: 'https://images.unsplash.com/photo-1605026547156-b966e73a0b04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('bengal-tiger'),
     killsPerYear: 85,
     rarity: 'mythic'
   },
@@ -54,7 +55,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Africa', 'Asia', 'Middle East'],
     description: 'The stealthiest big cat',
     facts: ['Can carry prey twice their weight up trees', 'Excellent swimmers'],
-    imageUrl: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('leopard'),
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -68,7 +69,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Amazon', 'Central America', 'Mexico'],
     description: 'The powerhouse of the Americas',
     facts: ['Strongest bite force of any big cat', 'Can crush turtle shells'],
-    imageUrl: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('jaguar'),
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -82,7 +83,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['North America', 'South America'],
     description: 'The silent stalker of the mountains',
     facts: ['Can jump 40 feet horizontally', 'Also known as puma or cougar'],
-    imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('mountain-lion'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -96,7 +97,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Africa', 'Iran'],
     description: 'The fastest land animal',
     facts: ['Can reach 70 mph in 3 seconds', 'Cannot retract claws'],
-    imageUrl: 'https://images.unsplash.com/photo-1539681843443-4ba71cecc8f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('cheetah'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -110,7 +111,7 @@ export const bigCats: DeadlyAnimal[] = [
     locations: ['Central Asia', 'Himalayas'],
     description: 'The ghost of the mountains',
     facts: ['Can leap 50 feet', 'Thick fur protects from extreme cold'],
-    imageUrl: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    imageUrl: getAnimalImageUrl('snow-leopard'),
     killsPerYear: 0,
     rarity: 'rare'
   }

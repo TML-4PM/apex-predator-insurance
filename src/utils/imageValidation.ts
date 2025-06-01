@@ -12,6 +12,10 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
+export const getAnimalImageUrl = (animalId: string): string => {
+  return getSupabaseImageUrl('animal-images', `${animalId}.jpg`);
+};
+
 export const getFallbackImageUrl = (category: string): string => {
   const fallbacks = {
     marine: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',

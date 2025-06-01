@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { handleImageError } from '@/utils/imageValidation';
+import { handleImageError, getFallbackImageUrl } from '@/utils/imageValidation';
 
 interface ImageWithFallbackProps {
   src: string;
@@ -18,17 +18,20 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   loading = 'lazy'
 }) => {
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
 
   const handleError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     if (!hasError) {
       setHasError(true);
+      const fallbackUrl = getFallbackImageUrl(category);
+      setCurrentSrc(fallbackUrl);
       handleImageError(event, category);
     }
   };
 
   return (
     <img
-      src={src}
+      src={currentSrc}
       alt={alt}
       className={className}
       loading={loading}
