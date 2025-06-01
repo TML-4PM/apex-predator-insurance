@@ -13,20 +13,18 @@ export const useAnimalImages = () => {
     }
 
     try {
-      // Try to get the image from Supabase storage
-      const supabaseUrl = getAnimalImageUrl(animalId);
+      // Try to get the image from the deadly60 bucket first
+      const deadly60Url = getAnimalImageUrl(animalId);
       
-      // Verify the image exists
-      const { data, error } = await supabase.storage
-        .from('animal-images')
-        .list('', { search: `${animalId}.jpg` });
-
-      if (!error && data && data.length > 0) {
-        setImageCache(prev => ({ ...prev, [animalId]: supabaseUrl }));
-        return supabaseUrl;
+      // Verify the image exists by attempting to fetch it
+      const response = await fetch(deadly60Url, { method: 'HEAD' });
+      
+      if (response.ok) {
+        setImageCache(prev => ({ ...prev, [animalId]: deadly60Url }));
+        return deadly60Url;
       }
     } catch (error) {
-      console.warn(`Failed to load image for ${animalId}:`, error);
+      console.warn(`Failed to load image for ${animalId} from deadly60 bucket:`, error);
     }
 
     // Fall back to category default
@@ -38,7 +36,7 @@ export const useAnimalImages = () => {
   const uploadAnimalImage = async (animalId: string, file: File): Promise<boolean> => {
     try {
       const { error } = await supabase.storage
-        .from('animal-images')
+        .from('deadly60')
         .upload(`${animalId}.jpg`, file, {
           cacheControl: '3600',
           upsert: true
