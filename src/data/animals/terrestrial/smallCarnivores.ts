@@ -1,5 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
+import { getAnimalImageUrl } from '../../../utils/imageValidation';
 
 export const smallCarnivores: DeadlyAnimal[] = [
   {
@@ -12,7 +13,7 @@ export const smallCarnivores: DeadlyAnimal[] = [
     locations: ['Tasmania'],
     description: 'The feisty marsupial with powerful jaws',
     facts: ['Strongest bite relative to body size', 'Can eat 40% of body weight daily'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Tasdevil_large.jpg',
+    imageUrl: getAnimalImageUrl('tasmanian-devil'),
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -26,7 +27,7 @@ export const smallCarnivores: DeadlyAnimal[] = [
     locations: ['Australia'],
     description: 'Australia\'s wild dog',
     facts: ['Pack hunters', 'Can rotate head 180 degrees'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Dingo_walking.jpg',
+    imageUrl: getAnimalImageUrl('dingo'),
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -40,7 +41,7 @@ export const smallCarnivores: DeadlyAnimal[] = [
     locations: ['North America'],
     description: 'The stealthy wild cat of North America',
     facts: ['Excellent climbers and swimmers', 'Can leap 12 feet high'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Bobcat2.jpg',
+    imageUrl: getAnimalImageUrl('bobcat'),
     killsPerYear: 0,
     rarity: 'common'
   }

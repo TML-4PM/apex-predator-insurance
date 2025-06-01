@@ -1,5 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
+import { getAnimalImageUrl } from '../../../utils/imageValidation';
 
 export const carnivores: DeadlyAnimal[] = [
   {
@@ -12,7 +13,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The laughing scavenger with powerful jaws',
     facts: ['Bite force of 1,100 PSI', 'Matriarchal society'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
+    imageUrl: getAnimalImageUrl('spotted-hyena'),
     killsPerYear: 10,
     rarity: 'uncommon'
   },
@@ -26,7 +27,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The apex predator of the northern wilderness',
     facts: ['Pack hunters with complex social structure', 'Can run 40 mph'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Canis_lupus_portrait.jpg',
+    imageUrl: getAnimalImageUrl('gray-wolf'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -40,7 +41,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The fierce mustelid with incredible strength',
     facts: ['Can take down prey 5x their size', 'Incredible endurance'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Wolverine_on_rock.jpg',
+    imageUrl: getAnimalImageUrl('wolverine'),
     killsPerYear: 0,
     rarity: 'rare'
   }

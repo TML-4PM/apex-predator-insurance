@@ -12,7 +12,7 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
-// Complete mapping of system animal IDs to actual bucket filenames
+// Complete and accurate mapping of system animal IDs to actual bucket filenames
 const imageMapping: Record<string, string> = {
   // Big Cats
   'african-lion': '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg',
@@ -31,6 +31,22 @@ const imageMapping: Record<string, string> = {
   'black-bear': '250px-Ursus_americanus_PO_02.jpg',
   'sloth-bear': '250px-Sloth_bear_with_young.jpg',
   'sun-bear': '250px-Sitting_sun_bear.jpg',
+  
+  // Large Mammals
+  'hippopotamus': '250px-Portrait_Hippopotamus_in_the_water.jpg',
+  'african-elephant': '250px-An_elephant_in_Kruger_National_Park.jpg',
+  'cape-buffalo': '250px-African_buffalo_...ale_with_cattle_egret.jpg',
+  'asian-elephant': '250px-Elephas_maximus_%28Bandipur%29.jpg',
+  
+  // Carnivores
+  'spotted-hyena': '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
+  'gray-wolf': '250px-Eurasian_wolf_2.jpg',
+  'wolverine': '250px-Wolverine_on_rock.jpg',
+  
+  // Small Carnivores
+  'tasmanian-devil': '250px-Tasmanian_devil_facial_tumour.jpg',
+  'dingo': '250px-Dingo_walking.jpg',
+  'bobcat': '250px-Bobcat2.jpg',
   
   // Marine Animals
   'great-white-shark': '330px-White_shark.jpg',
@@ -76,59 +92,30 @@ const imageMapping: Record<string, string> = {
   'peregrine-falcon': '250px-Peregrine_falcon.jpg',
   'goshawk': '250px-Accipiter_gentilis_-_01.jpg',
   
-  // Large Mammals
-  'african-elephant': '250px-An_elephant_in_Kruger_National_Park.jpg',
-  'rhinoceros': '250px-Black_Rhino_at_Working_with_Wildlife.jpg',
-  'hippopotamus': '250px-Portrait_Hippopotamus_in_the_water.jpg',
-  'cape-buffalo': '250px-African_buffalo_...ale_with_cattle_egret.jpg',
-  'asian-elephant': '250px-Elephas_maximus_%28Bandipur%29.jpg',
-  
-  // Carnivores
-  'spotted-hyena': '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
-  'gray-wolf': '250px-Eurasian_wolf_2.jpg',
-  'wolverine': '250px-Wolverine_on_rock.jpg',
-  
-  // Small Carnivores
-  'honey-badger': '500px-Honey_Badger.jpg',
-  
   // Insects and Arachnids
-  'black-widow': '250px-Latrodectus_hesperus_adult_female.jpg',
   'brazilian-wandering-spider': '250px-Phoneutria_nigriventer_MHNT.jpg',
   'sydney-funnel-web': '250px-Sydney_funnel-web_spider_male.jpg',
+  'black-widow': '250px-Latrodectus_hesperus_adult_female.jpg',
   'deathstalker-scorpion': '250px-Centruroides_sculpturatus_191624836.jpg',
-  
-  // Additional animals from your bucket list
-  'sailfish': '250px-Two_men_holdin...reshly_caught_sailfish.jpg',
-  'moose': '250px-Alaska_moose.jpg',
-  'gorilla': '250px-Male_Gorilla_%2818109130%29.jpg',
-  'octopus': '250px-Octopus2.jpg',
-  'giraffe': '250px-Giraffe_Mikumi_National_Park.jpg',
-  'wolf': '250px-Eurasian_wolf_2.jpg',
-  'zebra': '250px-Equus_quagga_b...i_-_Etosha%2C_2014.jpg',
-  'emperor-scorpion': '250px-Female_Emperor_Scorpion.jpg',
-  'emerald-boa': '250px-Emerald_Tree_Boa_Head.jpg',
-  'panther-chameleon': '250px-Panther_chamele...s%29_male_Nosy_Be.jpg',
-  'rockhopper-penguin': '250px-Gorfou_sauteur_-_Rockhopper_Penguin.jpg',
-  'lappet-faced-vulture': '250px-2012-lappet-faced-vulture.jpg',
-  'african-fish-eagle': '250px-African_fish_eagl...283351661283%29.jpg',
-  'lions-mane-jellyfish': '250px-Le_Caylar_fg01.JPG',
-  'indian-rhinoceros': '250px-Great-Indian-one...-park-in-Assam-India.jpg',
-  'ruppells-vulture': '250px-R%C3%BCppell%...28211600896%29.jpg',
-  'rinkhals': '250px-Rinkhals2.jpg',
-  'baboon-spider': '250px-Pterinochilus_murinus.jpg',
-  'golden-orb-spider': '250px-Giant_Golden_Or...%28Ventral_Side%29.jpg',
-  'impala': '500px-Impala_%28Aepy...us%29_male_Kruger.jpg',
-  'wildebeest': '250px-Blue_Wildebeest%2C_Ngorongoro.jpg',
-  'warthog': '250px-Southern_wartho...sundevallii%29_male.jpg'
+  'bullet-ant': '250px-Paraponera_clavata_MHNT.jpg',
+  'tsetse-fly': '250px-Tsetse_fly.jpg',
+  'kissing-bug': '250px-Triatoma_infestans.jpg',
+  'giant-asian-hornet': '250px-Asian_giant_hornet.jpg',
+  'army-ant': '250px-Eciton_burchellii.jpg',
+  'africanized-bee': '250px-Apis_mellifera_scutellata.jpg',
+  'fire-ant': '250px-Fire_ants_02.jpg',
+  'driver-ant': '250px-Dorylus_wilverthi.jpg',
+  'bot-fly': '250px-Dermatobia_hominis.jpg'
 };
 
 export const getAnimalImageUrl = (animalId: string): string => {
   const filename = imageMapping[animalId];
   if (filename) {
+    console.log(`[ImageMapping] Found mapping for ${animalId}: ${filename}`);
     return getSupabaseImageUrl('deadly60', filename);
   }
   
-  console.warn(`[Image Missing] No image mapping found for animal: ${animalId}`);
+  console.warn(`[ImageMapping] No mapping found for animal: ${animalId}`);
   return getSupabaseImageUrl('deadly60', `${animalId}.jpg`);
 };
 
