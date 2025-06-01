@@ -76,52 +76,36 @@ const imageMapping: Record<string, string> = {
   'peregrine-falcon': '250px-Peregrine_falcon.jpg',
   'goshawk': '250px-Accipiter_gentilis_-_01.jpg',
   
-  // Large Mammals (4 animals) - Adding fallback mappings for missing images
-  'african-elephant': 'fallback-elephant.jpg', // Will use fallback
-  'rhinoceros': 'fallback-rhino.jpg', // Will use fallback
-  'hippopotamus': 'fallback-hippo.jpg', // Will use fallback
-  'cape-buffalo': 'fallback-buffalo.jpg', // Will use fallback
+  // Large Mammals (4 animals) - Now mapping to actual bucket files
+  'african-elephant': '250px-African_elephant.jpg',
+  'rhinoceros': '250px-Rhinoceros.jpg', 
+  'hippopotamus': '250px-Hippopotamus.jpg',
+  'cape-buffalo': '250px-Cape_buffalo.jpg',
   
-  // Carnivores (2 animals) - Adding fallback mappings
-  'hyena': 'fallback-hyena.jpg', // Will use fallback
-  'wild-dog': 'fallback-wilddog.jpg', // Will use fallback
+  // Carnivores (2 animals) - Now mapping to actual bucket files
+  'hyena': '250px-Hyena.jpg',
+  'wild-dog': '250px-Wild_dog.jpg',
   
-  // Small Carnivores (2 animals) - Adding fallback mappings
-  'honey-badger': 'fallback-honeybadger.jpg', // Will use fallback
-  'wolverine': 'fallback-wolverine.jpg', // Will use fallback
-};
-
-// Specific fallback images for animals not yet uploaded to deadly60 bucket
-const specificFallbacks: Record<string, string> = {
-  // Large Mammals
-  'african-elephant': 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&q=80',
-  'rhinoceros': 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80',
-  'hippopotamus': 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&q=80',
-  'cape-buffalo': 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&q=80',
+  // Small Carnivores (2 animals) - Now mapping to actual bucket files
+  'honey-badger': '250px-Honey_badger.jpg',
+  'wolverine': '250px-Wolverine.jpg',
   
-  // Carnivores
-  'hyena': 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800&q=80',
-  'wild-dog': 'https://images.unsplash.com/photo-1605114696530-e6e1f4e2d5f6?w=800&q=80',
-  
-  // Small Carnivores
-  'honey-badger': 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&q=80',
-  'wolverine': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',
+  // Insects (4 animals) - Now mapping to actual bucket files
+  'black-widow': '250px-Black_widow_spider.jpg',
+  'brazilian-wandering-spider': '250px-Brazilian_wandering_spider.jpg',
+  'funnel-web-spider': '250px-Funnel_web_spider.jpg',
+  'deathstalker-scorpion': '250px-Deathstalker_scorpion.jpg'
 };
 
 export const getAnimalImageUrl = (animalId: string): string => {
-  // First check if we have a specific fallback for this animal
-  if (specificFallbacks[animalId]) {
-    return specificFallbacks[animalId];
-  }
-  
-  // Then check if we have it in the deadly60 bucket
+  // Check if we have it in the deadly60 bucket
   const filename = imageMapping[animalId];
-  if (filename && !filename.startsWith('fallback-')) {
+  if (filename) {
     return getSupabaseImageUrl('deadly60', filename);
   }
   
   // Log missing animals for debugging
-  console.warn(`[Image Missing] No image found for animal: ${animalId}`);
+  console.warn(`[Image Missing] No image mapping found for animal: ${animalId}`);
   
   // Fallback to old system for any truly missing animals
   return getSupabaseImageUrl('animal-images', `${animalId}.jpg`);
@@ -130,11 +114,11 @@ export const getAnimalImageUrl = (animalId: string): string => {
 export const getFallbackImageUrl = (category: string): string => {
   // Use diverse, animal-specific fallback images from reliable sources
   const fallbacks = {
-    marine: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80', // Different shark
-    terrestrial: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=800&q=80', // Different big cat
-    reptile: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', // Different snake
-    aerial: 'https://images.unsplash.com/photo-1520637836862-4d197d17c23a?w=800&q=80', // Different eagle
-    insect: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80' // Spider/insect
+    marine: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+    terrestrial: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=800&q=80',
+    reptile: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+    aerial: 'https://images.unsplash.com/photo-1520637836862-4d197d17c23a?w=800&q=80',
+    insect: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80'
   };
   
   return fallbacks[category as keyof typeof fallbacks] || fallbacks.terrestrial;
