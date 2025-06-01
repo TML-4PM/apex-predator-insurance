@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import { Search, Filter, Heart, Eye, MapPin } from 'lucide-react';
+import { Search, Filter, Heart, Eye, MapPin, Bug } from 'lucide-react';
 import { deadlyAnimals } from '@/data/animalUtils';
 import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import ImageDebugger from '@/components/ImageDebugger';
+import ImageAuditTool from '@/components/ImageAuditTool';
 import { 
   Dialog,
   DialogContent,
@@ -30,6 +31,7 @@ const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedRarity, setSelectedRarity] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
+  const [showAuditTool, setShowAuditTool] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -107,9 +109,26 @@ const Gallery = () => {
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Add debugger for testing */}
+          {/* Add comprehensive image audit tool */}
           <div className="mb-8">
-            <ImageDebugger />
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold">Image Management Tools</h3>
+              <Button
+                onClick={() => setShowAuditTool(!showAuditTool)}
+                variant="outline"
+                className="border-blue-500 text-blue-500 hover:bg-blue-50"
+              >
+                <Bug className="mr-2 h-4 w-4" />
+                {showAuditTool ? 'Hide' : 'Show'} Image Audit Tool
+              </Button>
+            </div>
+            
+            {showAuditTool && <ImageAuditTool />}
+            
+            {/* Keep the old debugger for reference */}
+            <div className="mt-4">
+              <ImageDebugger />
+            </div>
           </div>
 
           {/* Filters */}
