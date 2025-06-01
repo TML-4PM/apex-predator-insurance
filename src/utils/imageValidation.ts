@@ -87,12 +87,13 @@ export const getAnimalImageUrl = (animalId: string): string => {
 };
 
 export const getFallbackImageUrl = (category: string): string => {
+  // Use more reliable placeholder service
   const fallbacks = {
-    marine: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    terrestrial: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    reptile: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    aerial: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    insect: 'https://images.unsplash.com/photo-1516905365617-5616be34b315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    marine: 'https://picsum.photos/800/600?random=1',
+    terrestrial: 'https://picsum.photos/800/600?random=2',
+    reptile: 'https://picsum.photos/800/600?random=3',
+    aerial: 'https://picsum.photos/800/600?random=4',
+    insect: 'https://picsum.photos/800/600?random=5'
   };
   
   return fallbacks[category as keyof typeof fallbacks] || fallbacks.terrestrial;
@@ -103,7 +104,7 @@ export const handleImageError = (
   category: string
 ) => {
   const target = event.target as HTMLImageElement;
-  if (!target.src.includes('unsplash.com')) {
+  if (!target.src.includes('picsum.photos') && !target.src.includes('data:image')) {
     target.src = getFallbackImageUrl(category);
   }
 };
