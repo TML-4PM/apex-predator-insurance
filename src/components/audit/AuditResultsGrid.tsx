@@ -1,45 +1,50 @@
 
 import React from 'react';
 import AuditResultCard from './AuditResultCard';
-import { ImageTestResult } from '@/hooks/useImageAudit';
 
-interface AuditResultsGridProps {
-  results: Record<string, ImageTestResult>;
-  onUpdateResult: (animalId: string, updates: Partial<ImageTestResult>) => void;
+interface AuditResult {
+  id: string;
+  name: string;
+  status: 'success' | 'error' | 'warning';
+  imageUrl: string;
+  fallbackUrl?: string;
+  message: string;
 }
 
-const AuditResultsGrid = ({ results, onUpdateResult }: AuditResultsGridProps) => {
-  const resultArray = Object.values(results).sort((a, b) => a.name.localeCompare(b.name));
+interface AuditResultsGridProps {
+  results: AuditResult[];
+  isLoading?: boolean;
+}
 
-  const handleImageError = (animalId: string) => {
-    onUpdateResult(animalId, {
-      status: 'error',
-      error: 'Failed to load'
-    });
-  };
+const AuditResultsGrid = ({ results, isLoading = false }: AuditResultsGridProps) => {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div
+            key={index}
+            className="bg-gray-200 animate-pulse rounded-lg h-64"
+          />
+        ))}
+      </div>
+    );
+  }
 
-  const handleImageLoad = (animalId: string) => {
-    const result = results[animalId];
-    if (result.status === 'loading') {
-      onUpdateResult(animalId, {
-        status: result.url.includes('unsplash.com') ? 'fallback' : 'success'
-      });
-    }
-  };
-
-  if (resultArray.length === 0) {
-    return null;
+  if (results.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-gray-500 text-lg">No audit results available</div>
+        <div className="text-gray-400 text-sm mt-2">
+          Run an audit to see results here
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {resultArray.map((result) => (
-        <AuditResultCard
-          key={result.animalId}
-          result={result}
-          onImageError={handleImageError}
-          onImageLoad={handleImageLoad}
-        />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {results.map((result) => (
+        <AuditResultCard key={result.id} result={result} />
       ))}
     </div>
   );
