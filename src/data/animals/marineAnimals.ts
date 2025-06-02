@@ -1,6 +1,8 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
 import { getAnimalImageUrl } from '../../utils/imageValidation';
+import { rays } from './marine/rays';
+import { whales } from './marine/whales';
 
 export const marineAnimals: DeadlyAnimal[] = [
   {
@@ -212,5 +214,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     imageUrl: getAnimalImageUrl('blue-shark'),
     killsPerYear: 2,
     rarity: 'uncommon'
-  }
+  },
+  ...rays,
+  ...whales
 ];
