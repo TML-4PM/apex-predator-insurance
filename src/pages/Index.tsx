@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
 import ModernHero from '@/components/ModernHero';
 import InsurancePlans from '@/components/InsurancePlans';
 import FAQ from '@/components/FAQ';
@@ -15,7 +14,7 @@ import { Camera, TrendingUp, Users, Target, Star, Shield, Globe, Award, Heart } 
 import { Link } from 'react-router-dom';
 
 const Index = () => (
-  <Layout>
+  <>
     <ModernHero />
     
     {/* Social Proof Section */}
@@ -190,7 +189,7 @@ const Index = () => (
         <ContactForm />
       </div>
     </div>
-  </Layout>
+  </>
 );
 
 export default Index;
