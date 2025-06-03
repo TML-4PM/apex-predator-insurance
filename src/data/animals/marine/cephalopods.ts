@@ -9,7 +9,7 @@ export const cephalopods: DeadlyAnimal[] = [
     category: 'marine',
     dangerLevel: 5,
     icon: '🐙',
-    price: 22.99,
+    price: 9.99,
     locations: ['Australia', 'Japan', 'Indonesia'],
     description: 'Small but extremely venomous',
     facts: ['Size of golf ball but can kill 26 adults', 'No known antidote'],

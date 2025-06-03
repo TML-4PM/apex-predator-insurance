@@ -9,7 +9,7 @@ export const whales: DeadlyAnimal[] = [
     category: 'marine',
     dangerLevel: 3,
     icon: '🐋',
-    price: 26.99,
+    price: 9.99,
     locations: ['Deep Ocean Waters Worldwide'],
     description: 'The deep-diving giant with the largest brain',
     facts: ['Can dive 7,000 feet deep', 'Battles giant squid in the depths'],
