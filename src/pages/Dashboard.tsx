@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -6,10 +5,12 @@ import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, User, FileText, CreditCard, LogOut, Award, Share2 } from 'lucide-react';
+import { Shield, User, FileText, CreditCard, LogOut, Award, Share2, BarChart3 } from 'lucide-react';
 import CertificateManager from '@/components/certificate/CertificateManager';
 import SocialSharingPanel from '@/components/certificate/SocialSharingPanel';
 import OrderHistory from '@/components/order/OrderHistory';
+import UserAnalytics from '@/components/dashboard/UserAnalytics';
+import PaymentMethodsManager from '@/components/dashboard/PaymentMethodsManager';
 
 export default function Dashboard() {
   const { user, loading, signOut } = useAuth();
@@ -49,12 +50,19 @@ export default function Dashboard() {
             </Button>
           </div>
 
+          {/* Analytics Overview */}
+          <div className="mb-8">
+            <UserAnalytics />
+          </div>
+
           <Tabs defaultValue="certificates" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="certificates">Certificates</TabsTrigger>
               <TabsTrigger value="orders">Orders</TabsTrigger>
+              <TabsTrigger value="payments">Payments</TabsTrigger>
               <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="sharing">Social</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
 
             <TabsContent value="certificates" className="space-y-6">
@@ -63,6 +71,28 @@ export default function Dashboard() {
 
             <TabsContent value="orders" className="space-y-6">
               <OrderHistory />
+            </TabsContent>
+
+            <TabsContent value="payments" className="space-y-6">
+              <PaymentMethodsManager />
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-apex-red" />
+                    Spending Summary
+                  </CardTitle>
+                  <CardDescription>
+                    Your purchase history and trends
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8 text-gray-500">
+                    <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>Detailed spending analytics coming soon</p>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="profile" className="space-y-6">
@@ -129,30 +159,33 @@ export default function Dashboard() {
               </div>
             </TabsContent>
 
-            <TabsContent value="orders" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="h-5 w-5 text-apex-red" />
-                    Order History
-                  </CardTitle>
-                  <CardDescription>
-                    Track your purchases and payments
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">Your recent orders will appear here.</p>
-                  <Button className="w-full">View All Orders</Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
             <TabsContent value="sharing" className="space-y-6">
               <SocialSharingPanel
                 certificateName="Adventure Insurance"
                 certificateId="sample-cert-id"
                 userName={userDisplayName}
               />
+            </TabsContent>
+
+            <TabsContent value="analytics" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-apex-red" />
+                    Detailed Analytics
+                  </CardTitle>
+                  <CardDescription>
+                    Comprehensive insights into your Wildlife Shield journey
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8 text-gray-500">
+                    <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>Advanced analytics dashboard coming soon</p>
+                    <p className="text-sm mt-2">Track your survival progress, certificate sharing stats, and more</p>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
 

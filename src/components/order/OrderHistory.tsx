@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, FileText, RefreshCw } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Download, FileText, RefreshCw, Eye, Search, Filter } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import OrderDetailsModal from './OrderDetailsModal';
 
 interface Order {
   id: string;
@@ -16,7 +18,12 @@ interface Order {
   status: string;
   created_at: string;
   customer_name: string;
+  customer_email: string;
   plan_id: string;
+  currency: string;
+  stripe_payment_intent_id?: string;
+  items?: any;
+  is_bundle: boolean;
 }
 
 export default function OrderHistory() {
@@ -24,13 +31,22 @@ export default function OrderHistory() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   useEffect(() => {
     if (user) {
       fetchOrders();
     }
   }, [user]);
+
+  useEffect(() => {
+    filterOrders();
+  }, [orders, searchTerm, statusFilter]);
 
   const fetchOrders = async () => {
     try {
@@ -54,6 +70,23 @@ export default function OrderHistory() {
     }
   };
 
+  const filterOrders = () => {
+    let filtered = orders;
+
+    if (searchTerm) {
+      filtered = filtered.filter(order => 
+        order.plan_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.id.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(order => order.status === statusFilter);
+    }
+
+    setFilteredOrders(filtered);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-green-100 text-green-800';
@@ -65,7 +98,6 @@ export default function OrderHistory() {
 
   const viewCertificate = async (order: Order) => {
     try {
-      // Check if certificate exists for this order
       const { data: certificate, error } = await supabase
         .from('user_certificates')
         .select('*')
@@ -81,7 +113,6 @@ export default function OrderHistory() {
         return;
       }
 
-      // Navigate to certificate page
       navigate('/certificate', {
         state: {
           user: { fullName: order.customer_name },
@@ -89,7 +120,7 @@ export default function OrderHistory() {
             id: order.plan_id, 
             name: order.plan_name, 
             price: order.amount / 100,
-            icon: '🦈' // Default icon
+            icon: '🦈'
           },
           fromOrder: true,
           certificateId: certificate.id
@@ -103,6 +134,11 @@ export default function OrderHistory() {
         variant: "destructive"
       });
     }
+  };
+
+  const openOrderDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setShowDetailsModal(true);
   };
 
   if (loading) {
@@ -121,64 +157,125 @@ export default function OrderHistory() {
   }
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Order History</CardTitle>
-        <Button onClick={fetchOrders} variant="outline" size="sm">
-          <RefreshCw className="h-4 w-4 mr-2" />
-          Refresh
-        </Button>
-      </CardHeader>
-      <CardContent>
-        {orders.length === 0 ? (
-          <div className="text-center py-8">
-            <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">No orders found</p>
-            <Button 
-              onClick={() => navigate('/plans')}
-              className="mt-4"
-              variant="outline"
-            >
-              Browse Plans
-            </Button>
+    <>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>Order History</CardTitle>
+          <Button onClick={fetchOrders} variant="outline" size="sm">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+        </CardHeader>
+        <CardContent>
+          {/* Search and Filter */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search orders..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={statusFilter === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('all')}
+              >
+                All
+              </Button>
+              <Button
+                variant={statusFilter === 'completed' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('completed')}
+              >
+                Completed
+              </Button>
+              <Button
+                variant={statusFilter === 'pending' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('pending')}
+              >
+                Pending
+              </Button>
+            </div>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <div key={order.id} className="border rounded-lg p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="font-semibold">{order.plan_name}</h3>
-                    <p className="text-sm text-gray-600">
-                      Order #{order.id.substring(0, 8)}
-                    </p>
-                  </div>
-                  <Badge className={getStatusColor(order.status)}>
-                    {order.status}
-                  </Badge>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <div className="text-sm text-gray-600">
-                    <p>${(order.amount / 100).toFixed(2)} • {new Date(order.created_at).toLocaleDateString()}</p>
+
+          {filteredOrders.length === 0 ? (
+            <div className="text-center py-8">
+              <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600">
+                {searchTerm || statusFilter !== 'all' ? 'No matching orders found' : 'No orders found'}
+              </p>
+              {!searchTerm && statusFilter === 'all' && (
+                <Button 
+                  onClick={() => navigate('/plans')}
+                  className="mt-4"
+                  variant="outline"
+                >
+                  Browse Plans
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredOrders.map((order) => (
+                <div key={order.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold">{order.plan_name}</h3>
+                      <p className="text-sm text-gray-600">
+                        Order #{order.id.substring(0, 8)} • {new Date(order.created_at).toLocaleDateString()}
+                      </p>
+                      {order.is_bundle && (
+                        <Badge variant="outline" className="mt-1">Bundle</Badge>
+                      )}
+                    </div>
+                    <Badge className={getStatusColor(order.status)}>
+                      {order.status}
+                    </Badge>
                   </div>
                   
-                  {order.status === 'completed' && (
-                    <Button 
-                      onClick={() => viewCertificate(order)}
-                      size="sm"
-                      variant="outline"
-                    >
-                      <Download className="h-4 w-4 mr-1" />
-                      View Certificate
-                    </Button>
-                  )}
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm text-gray-600">
+                      <p className="font-medium">${(order.amount / 100).toFixed(2)} {order.currency.toUpperCase()}</p>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button 
+                        onClick={() => openOrderDetails(order)}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <Eye className="h-4 w-4 mr-1" />
+                        Details
+                      </Button>
+                      {order.status === 'completed' && (
+                        <Button 
+                          onClick={() => viewCertificate(order)}
+                          size="sm"
+                          variant="outline"
+                        >
+                          <Download className="h-4 w-4 mr-1" />
+                          Certificate
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <OrderDetailsModal
+        order={selectedOrder}
+        isOpen={showDetailsModal}
+        onClose={() => setShowDetailsModal(false)}
+      />
+    </>
   );
 }
