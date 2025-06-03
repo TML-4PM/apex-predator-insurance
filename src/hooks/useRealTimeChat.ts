@@ -23,7 +23,7 @@ export const useRealTimeChat = (conversationId?: string) => {
           *,
           chat_participants!inner(
             user_id,
-            profiles(username, avatar_url, full_name)
+            profiles!user_id(username, avatar_url, full_name)
           )
         `)
         .order('updated_at', { ascending: false });
@@ -60,7 +60,20 @@ export const useRealTimeChat = (conversationId?: string) => {
         .order('created_at', { ascending: true });
 
       if (error) throw error;
-      setMessages(data || []);
+      
+      // Type-safe message mapping with fallbacks
+      const typedMessages: ChatMessage[] = (data || []).map((msg: any) => ({
+        ...msg,
+        message_type: (msg.message_type as 'text' | 'image' | 'file') || 'text',
+        sender_profile: msg.sender_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
+        reply_to: msg.reply_to ? {
+          ...msg.reply_to,
+          message_type: (msg.reply_to.message_type as 'text' | 'image' | 'file') || 'text',
+          sender_profile: msg.reply_to.sender_profile || { username: 'Unknown User' }
+        } : undefined
+      }));
+      
+      setMessages(typedMessages);
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
@@ -178,7 +191,12 @@ export const useRealTimeChat = (conversationId?: string) => {
               .single();
 
             if (data) {
-              setMessages(prev => [...prev, data as ChatMessage]);
+              const typedMessage: ChatMessage = {
+                ...data,
+                message_type: (data.message_type as 'text' | 'image' | 'file') || 'text',
+                sender_profile: data.sender_profile || { username: 'Unknown User', avatar_url: null, full_name: null }
+              };
+              setMessages(prev => [...prev, typedMessage]);
             }
           }
         )

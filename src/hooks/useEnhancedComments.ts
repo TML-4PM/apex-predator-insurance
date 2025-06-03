@@ -48,9 +48,11 @@ export const useEnhancedComments = (postId: string) => {
 
           return {
             ...comment,
+            user_profile: comment.user_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
             is_liked: user ? comment.comment_likes.some((like: any) => like.user_id === user.id) : false,
             replies: (replies || []).map((reply: any) => ({
               ...reply,
+              user_profile: reply.user_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
               is_liked: user ? reply.comment_likes.some((like: any) => like.user_id === user.id) : false,
             })),
           };

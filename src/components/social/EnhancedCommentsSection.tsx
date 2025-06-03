@@ -22,7 +22,7 @@ const CommentItem: React.FC<{
   return (
     <div className={`flex gap-3 ${isReply ? 'ml-8 mt-3' : ''}`}>
       <Avatar className="w-8 h-8">
-        <AvatarImage src={comment.user_profile?.avatar_url} />
+        <AvatarImage src={comment.user_profile?.avatar_url || undefined} />
         <AvatarFallback>
           {comment.user_profile?.username?.charAt(0) || 'U'}
         </AvatarFallback>
@@ -144,7 +144,7 @@ const EnhancedCommentsSection: React.FC<EnhancedCommentsSectionProps> = ({ postI
             {replyToId && replyToComment && (
               <div className="mb-3 p-3 bg-muted rounded-lg border-l-4 border-primary">
                 <div className="text-sm text-muted-foreground mb-1">
-                  Replying to {replyToComment.user_profile?.username}
+                  Replying to {replyToComment.user_profile?.username || 'Unknown User'}
                 </div>
                 <div className="text-sm truncate">{replyToComment.content}</div>
                 <Button
