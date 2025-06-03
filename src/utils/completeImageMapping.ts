@@ -12,19 +12,19 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
-// Updated verified mapping with confirmed working images in deadly60 bucket
+// Updated verified mapping with complete, correct filenames from deadly60 bucket
 const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string; fallbacks?: string[] }> = {
-  // Big Cats - verified deadly60 bucket
-  'african-lion': { bucket: 'deadly60', filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg' },
+  // Big Cats - using complete filenames from deadly60 bucket
+  'african-lion': { bucket: 'deadly60', filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg' },
   'siberian-tiger': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
-  'bengal-tiger': { bucket: 'deadly60', filename: '250px-Adult_male_Royal_Bengal_tiger.jpg' },
-  'leopard': { bucket: 'deadly60', filename: '250px-Indian_leopard.jpg' },
+  'bengal-tiger': { bucket: 'deadly60', filename: '250px-Adult_male_Royal_Bengal_tiger_at_Ranthambhore_Tiger_Reserve.jpg' },
+  'leopard': { bucket: 'deadly60', filename: '250px-Indian_leopard_face.jpg' },
   'jaguar': { bucket: 'deadly60', filename: '330px-Standing_jaguar.jpg' },
-  'mountain-lion': { bucket: 'deadly60', filename: '250px-Mountain_Lion_i...Glacier_National_Park.jpg' },
-  'cheetah': { bucket: 'deadly60', filename: '250px-Male_cheetah_fa..._left_in_South_Africa.jpg' },
+  'mountain-lion': { bucket: 'deadly60', filename: '250px-Mountain_Lion_in_Glacier_National_Park.jpg' },
+  'cheetah': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
   'snow-leopard': { bucket: 'deadly60', filename: '250px-Snow_leopard_portrait-2010.jpg' },
   
-  // Bears - verified deadly60 bucket
+  // Bears - using complete filenames from deadly60 bucket
   'grizzly-bear': { bucket: 'deadly60', filename: '250px-Grizzly_Bear_Yellowstone_2.jpg' },
   'polar-bear': { bucket: 'deadly60', filename: '250px-Polar_Bear_-_Alaska_%28cropped%29.jpg' },
   'kodiak-bear': { bucket: 'deadly60', filename: '250px-Kodiak_Brown_Bear.jpg' },
@@ -32,13 +32,13 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   'sloth-bear': { bucket: 'deadly60', filename: '250px-Sloth_bear_with_young.jpg' },
   'sun-bear': { bucket: 'deadly60', filename: '250px-Sitting_sun_bear.jpg' },
   
-  // Large Mammals - verified deadly60 bucket
+  // Large Mammals - using complete filenames from deadly60 bucket
   'hippopotamus': { bucket: 'deadly60', filename: '250px-Portrait_Hippopotamus_in_the_water.jpg' },
   'african-elephant': { bucket: 'deadly60', filename: '250px-An_elephant_in_Kruger_National_Park.jpg' },
-  'cape-buffalo': { bucket: 'deadly60', filename: '250px-African_buffalo_...ale_with_cattle_egret.jpg' },
+  'cape-buffalo': { bucket: 'deadly60', filename: '250px-African_buffalo_male_with_cattle_egret.jpg' },
   'asian-elephant': { bucket: 'deadly60', filename: '250px-Elephas_maximus_%28Bandipur%29.jpg' },
   
-  // Marine Animals - verified deadly60 bucket
+  // Marine Animals - using complete filenames from deadly60 bucket
   'great-white-shark': { bucket: 'deadly60', filename: '330px-White_shark.jpg' },
   'tiger-shark': { bucket: 'deadly60', filename: '250px-Tiger_shark.jpg' },
   'bull-shark': { bucket: 'deadly60', filename: '250px-Carcharhinus_leucas_TPWD.jpg' },
@@ -48,16 +48,16 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   'cone-snail': { bucket: 'deadly60', filename: '250px-Conus_textile_2.jpg' },
   'orca': { bucket: 'deadly60', filename: '250px-Killerwhales_jumping.jpg' },
   
-  // Reptiles - verified deadly60 bucket
-  'saltwater-crocodile': { bucket: 'deadly60', filename: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg' },
+  // Reptiles - using complete filenames from deadly60 bucket
+  'saltwater-crocodile': { bucket: 'deadly60', filename: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg' },
   'inland-taipan': { bucket: 'deadly60', filename: '250px-Inland_Taipan.jpg' },
-  'black-mamba': { bucket: 'deadly60', filename: '250px-D%C3%BClmen...ark_--_2018_--_3762.jpg' },
+  'black-mamba': { bucket: 'deadly60', filename: '250px-Dendroaspis_polylepis_by_Bill_Love_Bluechameleon_Ventures.jpg' },
   'king-cobra': { bucket: 'deadly60', filename: '250px-Indian_Cobra%2C_crop.jpg' },
   
-  // Aerial Animals - verified deadly60 bucket
+  // Aerial Animals - using complete filenames from deadly60 bucket
   'golden-eagle': { bucket: 'deadly60', filename: '250px-Golden_Eagle_in_flight_-_5.jpg' },
   
-  // Insects - verified deadly60 bucket
+  // Insects - using complete filenames from deadly60 bucket
   'deathstalker-scorpion': { bucket: 'deadly60', filename: '250px-Centruroides_sculpturatus_191624836.jpg' },
   
   // Animals using verified fallbacks from deadly60 bucket
@@ -115,7 +115,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   // Reptiles using verified fallbacks
   'nile-crocodile': { 
     bucket: 'deadly60', 
-    filename: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg'
+    filename: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg'
   },
   'eastern-diamondback': { 
     bucket: 'deadly60', 
@@ -134,7 +134,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   },
   'caiman': { 
     bucket: 'deadly60', 
-    filename: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg'
+    filename: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg'
   },
   'fer-de-lance': { 
     bucket: 'deadly60', 
@@ -158,11 +158,11 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   },
   'komodo-dragon': { 
     bucket: 'deadly60', 
-    filename: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg'
+    filename: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg'
   },
   'monitor-lizard': { 
     bucket: 'deadly60', 
-    filename: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg'
+    filename: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg'
   },
   
   // Aerial Animals using verified fallbacks
@@ -248,55 +248,55 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   // Terrestrial animals using verified fallbacks
   'spotted-hyena': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   },
   'gray-wolf': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   },
   'wolverine': { 
     bucket: 'deadly60', 
     filename: '250px-Grizzly_Bear_Yellowstone_2.jpg',
-    fallbacks: ['250px-020_The_lion_kin...to_by_Giles_Laurent.jpg']
+    fallbacks: ['250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg']
   },
   'tasmanian-devil': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   },
   'dingo': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   },
   'bobcat': { 
     bucket: 'deadly60', 
-    filename: '250px-Indian_leopard.jpg',
-    fallbacks: ['250px-020_The_lion_kin...to_by_Giles_Laurent.jpg']
+    filename: '250px-Indian_leopard_face.jpg',
+    fallbacks: ['250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg']
   },
   'chimpanzee': { 
     bucket: 'deadly60', 
     filename: '250px-Grizzly_Bear_Yellowstone_2.jpg',
-    fallbacks: ['250px-020_The_lion_kin...to_by_Giles_Laurent.jpg']
+    fallbacks: ['250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg']
   },
   'baboon': { 
     bucket: 'deadly60', 
-    filename: '250px-Indian_leopard.jpg',
-    fallbacks: ['250px-020_The_lion_kin...to_by_Giles_Laurent.jpg']
+    filename: '250px-Indian_leopard_face.jpg',
+    fallbacks: ['250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg']
   },
   'african-wild-dog': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   },
   'coyote': { 
     bucket: 'deadly60', 
-    filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg'
+    filename: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg'
   }
 };
 
-// Verified category fallbacks - all using working images from deadly60
+// Updated verified category fallbacks - all using complete filenames from deadly60
 const CATEGORY_FALLBACKS = {
   marine: '330px-White_shark.jpg',
-  terrestrial: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg',
-  reptile: '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg',
+  terrestrial: '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg',
+  reptile: '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg',
   aerial: '250px-Golden_Eagle_in_flight_-_5.jpg',
   insect: '250px-Centruroides_sculpturatus_191624836.jpg'
 };

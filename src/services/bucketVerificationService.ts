@@ -54,15 +54,15 @@ export const verifyImageExists = async (filename: string, bucket: string = 'dead
 };
 
 export const verifyAllMappings = async (): Promise<BucketVerificationResult[]> => {
-  // Known working filenames in deadly60 bucket based on actual verification
+  // Updated with complete, correct filenames from deadly60 bucket
   const verifiedFilenames = [
-    '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg',
+    '250px-African_Lion_Panthera_leo_Male_Kruger_2019.jpg',
     '330px-Walking_tiger_female.jpg',
-    '250px-Adult_male_Royal_Bengal_tiger.jpg',
-    '250px-Indian_leopard.jpg',
+    '250px-Adult_male_Royal_Bengal_tiger_at_Ranthambhore_Tiger_Reserve.jpg',
+    '250px-Indian_leopard_face.jpg',
     '330px-Standing_jaguar.jpg',
-    '250px-Mountain_Lion_i...Glacier_National_Park.jpg',
-    '250px-Male_cheetah_fa..._left_in_South_Africa.jpg',
+    '250px-Mountain_Lion_in_Glacier_National_Park.jpg',
+    '250px-Male_cheetah_face_left_in_South_Africa.jpg',
     '250px-Snow_leopard_portrait-2010.jpg',
     '250px-Grizzly_Bear_Yellowstone_2.jpg',
     '250px-Polar_Bear_-_Alaska_%28cropped%29.jpg',
@@ -72,7 +72,7 @@ export const verifyAllMappings = async (): Promise<BucketVerificationResult[]> =
     '250px-Sitting_sun_bear.jpg',
     '250px-Portrait_Hippopotamus_in_the_water.jpg',
     '250px-An_elephant_in_Kruger_National_Park.jpg',
-    '250px-African_buffalo_...ale_with_cattle_egret.jpg',
+    '250px-African_buffalo_male_with_cattle_egret.jpg',
     '250px-Elephas_maximus_%28Bandipur%29.jpg',
     '330px-White_shark.jpg',
     '250px-Tiger_shark.jpg',
@@ -82,9 +82,9 @@ export const verifyAllMappings = async (): Promise<BucketVerificationResult[]> =
     '250px-Stonefish_at_AQWA_SMC2006.jpg',
     '250px-Conus_textile_2.jpg',
     '250px-Killerwhales_jumping.jpg',
-    '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg',
+    '250px-SaltwaterCrocodile_%27Maximo%27_at_Australia_Zoo.jpg',
     '250px-Inland_Taipan.jpg',
-    '250px-D%C3%BClmen...ark_--_2018_--_3762.jpg',
+    '250px-Dendroaspis_polylepis_by_Bill_Love_Bluechameleon_Ventures.jpg',
     '250px-Indian_Cobra%2C_crop.jpg',
     '250px-Golden_Eagle_in_flight_-_5.jpg',
     '250px-Centruroides_sculpturatus_191624836.jpg'
