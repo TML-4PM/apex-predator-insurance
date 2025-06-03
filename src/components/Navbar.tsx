@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -62,12 +63,6 @@ const Navbar = () => {
               className={`font-medium transition-colors ${isActive('/articles') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
             >
               Articles
-            </Link>
-            <Link 
-              to="/platform-audit" 
-              className={`font-medium transition-colors ${isActive('/platform-audit') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Platform Audit
             </Link>
             
             <Link to="/donate">
