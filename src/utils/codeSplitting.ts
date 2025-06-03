@@ -1,5 +1,4 @@
-
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 
 // Lazy load components with error boundaries
 export const createLazyComponent = (importFn: () => Promise<any>) => {
@@ -8,17 +7,19 @@ export const createLazyComponent = (importFn: () => Promise<any>) => {
       console.error('Error loading component:', error);
       // Return a fallback component
       return {
-        default: () => (
-          <div className="p-4 text-center text-red-600">
-            <p>Failed to load component</p>
-            <button 
-              onClick={() => window.location.reload()} 
-              className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-            >
-              Retry
-            </button>
-          </div>
-        )
+        default: () => {
+          return React.createElement('div', 
+            { className: 'p-4 text-center text-red-600' },
+            React.createElement('p', null, 'Failed to load component'),
+            React.createElement('button', 
+              { 
+                onClick: () => window.location.reload(),
+                className: 'mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700'
+              }, 
+              'Retry'
+            )
+          );
+        }
       };
     })
   );
