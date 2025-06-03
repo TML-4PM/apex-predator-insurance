@@ -30,40 +30,58 @@ export const useCommunity = () => {
 
   const fetchPosts = async () => {
     try {
+      console.log('Fetching community posts...');
+      
       // First fetch posts
       const { data: postsData, error: postsError } = await supabase
-        .from('community_posts' as any)
+        .from('community_posts')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(20);
 
-      if (postsError) throw postsError;
+      if (postsError) {
+        console.error('Error fetching posts:', postsError);
+        throw postsError;
+      }
 
-      if (!postsData) {
+      if (!postsData || postsData.length === 0) {
+        console.log('No posts found');
         setPosts([]);
+        setLoading(false);
         return;
       }
+
+      console.log('Posts fetched:', postsData.length);
 
       // Get current user for like status
       const { data: { user } } = await supabase.auth.getUser();
 
       // Fetch profiles for each post
       const userIds = postsData.map((post: any) => post.user_id);
-      const { data: profilesData } = await supabase
-        .from('profiles' as any)
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
         .select('user_id, username, avatar_url, full_name')
         .in('user_id', userIds);
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+      }
 
       // Fetch like status if user is logged in
       let likesData: any[] = [];
       if (user) {
         const postIds = postsData.map((post: any) => post.id);
-        const { data } = await supabase
-          .from('post_likes' as any)
+        const { data, error: likesError } = await supabase
+          .from('post_likes')
           .select('post_id')
           .eq('user_id', user.id)
           .in('post_id', postIds);
-        likesData = data || [];
+        
+        if (likesError) {
+          console.error('Error fetching likes:', likesError);
+        } else {
+          likesData = data || [];
+        }
       }
 
       // Combine data
@@ -74,14 +92,19 @@ export const useCommunity = () => {
         return {
           ...post,
           user_profile: profile ? {
-            username: profile.username,
+            username: profile.username || 'Unknown User',
             avatar_url: profile.avatar_url,
             full_name: profile.full_name
-          } : undefined,
+          } : {
+            username: 'Unknown User',
+            avatar_url: undefined,
+            full_name: undefined
+          },
           is_liked: isLiked
         };
       });
 
+      console.log('Formatted posts:', formattedPosts.length);
       setPosts(formattedPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -101,7 +124,7 @@ export const useCommunity = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('community_posts' as any)
+        .from('community_posts')
         .insert({
           user_id: user.id,
           content,
@@ -139,23 +162,23 @@ export const useCommunity = () => {
       if (post.is_liked) {
         // Unlike
         await supabase
-          .from('post_likes' as any)
+          .from('post_likes')
           .delete()
           .eq('post_id', postId)
           .eq('user_id', user.id);
 
         await supabase
-          .from('community_posts' as any)
+          .from('community_posts')
           .update({ likes_count: Math.max(0, post.likes_count - 1) })
           .eq('id', postId);
       } else {
         // Like
         await supabase
-          .from('post_likes' as any)
+          .from('post_likes')
           .insert({ post_id: postId, user_id: user.id });
 
         await supabase
-          .from('community_posts' as any)
+          .from('community_posts')
           .update({ likes_count: post.likes_count + 1 })
           .eq('id', postId);
       }
@@ -188,7 +211,7 @@ export const useCommunity = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('user_follows' as any)
+        .from('user_follows')
         .insert({ follower_id: user.id, following_id: userId });
 
       if (error) throw error;

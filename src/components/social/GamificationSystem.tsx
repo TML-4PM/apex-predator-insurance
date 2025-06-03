@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -13,7 +12,7 @@ import {
   Award,
   Star,
   Crown,
-  Fire
+  Flame
 } from 'lucide-react';
 
 interface Challenge {
@@ -86,7 +85,7 @@ const GamificationSystem = ({
           <div className="grid grid-cols-3 gap-4 mt-6">
             <div className="text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full mx-auto mb-2">
-                <Fire className="h-6 w-6 text-orange-500" />
+                <Flame className="h-6 w-6 text-orange-500" />
               </div>
               <div className="text-2xl font-bold text-apex-black">{streak}</div>
               <div className="text-sm text-apex-darkgray/60">Day Streak</div>
