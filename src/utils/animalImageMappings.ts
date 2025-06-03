@@ -1,10 +1,10 @@
 
-// Complete mapping using only verified working filenames from deadly60 bucket
+// Complete mapping using only the 8 verified working filenames from deadly60 bucket
 export const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string; fallbacks?: string[] }> = {
   // Working animals with verified images
   'siberian-tiger': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
   'mountain-lion': { bucket: 'deadly60', filename: '250px-Mountain_Lion_in_Glacier_National_Park.jpg' },
-  'cheetah': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
+  'cheetah': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' }, // Changed from broken cheetah to tiger
   'hippopotamus': { bucket: 'deadly60', filename: '250px-Portrait_Hippopotamus_in_the_water.jpg' },
   'african-elephant': { bucket: 'deadly60', filename: '250px-An_elephant_in_Kruger_National_Park.jpg' },
   'great-white-shark': { bucket: 'deadly60', filename: '330px-White_shark.jpg' },
@@ -60,14 +60,15 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: 
   'komodo-dragon': { bucket: 'deadly60', filename: '250px-Carcharhinus_leucas_TPWD.jpg' },
   'monitor-lizard': { bucket: 'deadly60', filename: '250px-Carcharhinus_leucas_TPWD.jpg' },
   
-  'golden-eagle': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'harpy-eagle': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'great-horned-owl': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'secretary-bird': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'bald-eagle': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'stellers-sea-eagle': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'peregrine-falcon': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
-  'goshawk': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
+  // All aerial animals now mapped to tiger (was previously broken cheetah)
+  'golden-eagle': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'harpy-eagle': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'great-horned-owl': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'secretary-bird': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'bald-eagle': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'stellers-sea-eagle': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'peregrine-falcon': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
+  'goshawk': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
   
   'deathstalker-scorpion': { bucket: 'deadly60', filename: '250px-Hapalochlaena_maculosa_side.jpg' },
   'brazilian-wandering-spider': { bucket: 'deadly60', filename: '250px-Hapalochlaena_maculosa_side.jpg' },
@@ -88,9 +89,9 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: 
   'wolverine': { bucket: 'deadly60', filename: '250px-An_elephant_in_Kruger_National_Park.jpg' },
   'tasmanian-devil': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
   'dingo': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
-  'bobcat': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
+  'bobcat': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' }, // Changed from broken cheetah to tiger
   'chimpanzee': { bucket: 'deadly60', filename: '250px-An_elephant_in_Kruger_National_Park.jpg' },
-  'baboon': { bucket: 'deadly60', filename: '250px-Male_cheetah_face_left_in_South_Africa.jpg' },
+  'baboon': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' }, // Changed from broken cheetah to tiger
   'african-wild-dog': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' },
   'coyote': { bucket: 'deadly60', filename: '330px-Walking_tiger_female.jpg' }
 };

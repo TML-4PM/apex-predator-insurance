@@ -1,3 +1,4 @@
+
 import { getSupabaseImageUrl } from '@/utils/imageUrlUtils';
 
 export interface BucketVerificationResult {
@@ -53,11 +54,10 @@ export const verifyImageExists = async (filename: string, bucket: string = 'dead
 };
 
 export const verifyAllMappings = async (): Promise<BucketVerificationResult[]> => {
-  // Based on the test results, these are the files that are actually working in deadly60 bucket
+  // Updated to only include the 8 files that are actually working
   const workingFilenames = [
     '330px-Walking_tiger_female.jpg',
     '250px-Mountain_Lion_in_Glacier_National_Park.jpg',
-    '250px-Male_cheetah_face_left_in_South_Africa.jpg',
     '250px-Portrait_Hippopotamus_in_the_water.jpg',
     '250px-An_elephant_in_Kruger_National_Park.jpg',
     '330px-White_shark.jpg',
