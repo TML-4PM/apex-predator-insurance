@@ -1,20 +1,19 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   Trophy, 
   Target, 
   Zap, 
-  Crown, 
+  Calendar, 
+  TrendingUp, 
+  Award,
   Star,
-  TrendingUp,
-  Users,
-  MapPin,
-  Calendar,
-  Gift
+  Crown,
+  Fire
 } from 'lucide-react';
 
 interface Challenge {
@@ -34,10 +33,7 @@ interface Achievement {
   name: string;
   description: string;
   icon: string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
-  unlockedAt?: string;
-  progress?: number;
-  total?: number;
+  earned_at: string;
 }
 
 interface GamificationSystemProps {
@@ -59,69 +55,57 @@ const GamificationSystem = ({
   leaderboardPosition,
   streak
 }: GamificationSystemProps) => {
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'easy': return 'bg-green-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'hard': return 'bg-red-500';
-      default: return 'bg-gray-500';
-    }
-  };
+  const xpProgress = (xp / xpToNext) * 100;
 
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case 'common': return 'text-gray-600 border-gray-300';
-      case 'rare': return 'text-blue-600 border-blue-300';
-      case 'epic': return 'text-purple-600 border-purple-300';
-      case 'legendary': return 'text-yellow-600 border-yellow-300';
-      default: return 'text-gray-600 border-gray-300';
+  const getDifficultyColor = (difficulty: Challenge['difficulty']) => {
+    switch (difficulty) {
+      case 'easy': return 'bg-green-100 text-green-800 border-green-200';
+      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'hard': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
   return (
-    <div className="space-y-6">
-      {/* User Progress Overview */}
-      <Card className="border-none shadow-lg bg-gradient-to-r from-apex-red/10 to-orange-500/10">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="bg-apex-red p-3 rounded-full">
-                <Crown className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-apex-black">Level {userLevel}</h2>
-                <p className="text-apex-darkgray/70">Adventure Master</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-apex-red">{xp.toLocaleString()}</div>
-              <div className="text-sm text-apex-darkgray/60">Total XP</div>
-            </div>
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* User Level & XP */}
+      <Card className="border-none shadow-lg bg-gradient-to-r from-purple-50 to-blue-50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Crown className="h-6 w-6 text-yellow-500" />
+            Adventurer Level {userLevel}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium">Experience Points</span>
+            <span className="text-sm text-apex-darkgray/60">{xp} / {xpToNext} XP</span>
           </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Progress to Level {userLevel + 1}</span>
-              <span>{(xpToNext - (xpToNext - xp)).toLocaleString()} / {xpToNext.toLocaleString()} XP</span>
-            </div>
-            <Progress value={((xpToNext - (xpToNext - xp)) / xpToNext) * 100} className="h-3" />
-          </div>
-
+          <Progress value={xpProgress} className="h-3" />
+          
           <div className="grid grid-cols-3 gap-4 mt-6">
             <div className="text-center">
-              <TrendingUp className="h-6 w-6 text-green-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-apex-black">#{leaderboardPosition}</div>
-              <div className="text-xs text-apex-darkgray/60">Leaderboard</div>
+              <div className="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full mx-auto mb-2">
+                <Fire className="h-6 w-6 text-orange-500" />
+              </div>
+              <div className="text-2xl font-bold text-apex-black">{streak}</div>
+              <div className="text-sm text-apex-darkgray/60">Day Streak</div>
             </div>
+            
             <div className="text-center">
-              <Target className="h-6 w-6 text-blue-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-apex-black">{streak}</div>
-              <div className="text-xs text-apex-darkgray/60">Day Streak</div>
+              <div className="flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mx-auto mb-2">
+                <TrendingUp className="h-6 w-6 text-purple-500" />
+              </div>
+              <div className="text-2xl font-bold text-apex-black">#{leaderboardPosition}</div>
+              <div className="text-sm text-apex-darkgray/60">Global Rank</div>
             </div>
+            
             <div className="text-center">
-              <Trophy className="h-6 w-6 text-yellow-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-apex-black">{achievements.filter(a => a.unlockedAt).length}</div>
-              <div className="text-xs text-apex-darkgray/60">Achievements</div>
+              <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full mx-auto mb-2">
+                <Trophy className="h-6 w-6 text-yellow-500" />
+              </div>
+              <div className="text-2xl font-bold text-apex-black">{achievements.length}</div>
+              <div className="text-sm text-apex-darkgray/60">Achievements</div>
             </div>
           </div>
         </CardContent>
@@ -131,167 +115,128 @@ const GamificationSystem = ({
       <Card className="border-none shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-yellow-500" />
+            <Target className="h-5 w-5 text-blue-500" />
             Active Challenges
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {activeChallenges.map((challenge) => (
-            <div key={challenge.id} className="p-4 border border-gray-200 rounded-lg">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-medium text-apex-black">{challenge.title}</h4>
-                    <div className={`w-2 h-2 rounded-full ${getDifficultyColor(challenge.difficulty)}`}></div>
-                    <Badge variant="outline" className="text-xs">
-                      {challenge.category}
+        <CardContent>
+          {activeChallenges.length > 0 ? (
+            <div className="grid gap-4">
+              {activeChallenges.map((challenge) => (
+                <div
+                  key={challenge.id}
+                  className="p-4 border border-apex-lightgray rounded-lg bg-white"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h4 className="font-semibold text-apex-black">{challenge.title}</h4>
+                      <p className="text-sm text-apex-darkgray/60 mt-1">{challenge.description}</p>
+                    </div>
+                    <Badge className={getDifficultyColor(challenge.difficulty)}>
+                      {challenge.difficulty}
                     </Badge>
                   </div>
-                  <p className="text-sm text-apex-darkgray/70 mb-2">{challenge.description}</p>
                   
                   <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span>{challenge.progress} / {challenge.total}</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Progress: {challenge.progress}/{challenge.total}</span>
+                      <span className="text-apex-darkgray/60">{challenge.timeLeft} left</span>
                     </div>
                     <Progress value={(challenge.progress / challenge.total) * 100} className="h-2" />
+                    
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center gap-2">
+                        <Zap className="h-4 w-4 text-yellow-500" />
+                        <span className="text-sm font-medium">{challenge.reward}</span>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {challenge.category}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="text-right ml-4">
-                  <div className="flex items-center gap-1 text-yellow-600 mb-1">
-                    <Gift className="h-4 w-4" />
-                    <span className="text-sm font-medium">{challenge.reward}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-apex-darkgray/60">
-                    <Calendar className="h-3 w-3" />
-                    <span>{challenge.timeLeft}</span>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
-
-          {activeChallenges.length === 0 && (
+          ) : (
             <div className="text-center py-8">
               <Target className="h-12 w-12 text-apex-darkgray/40 mx-auto mb-4" />
               <h3 className="font-medium text-apex-black mb-2">No active challenges</h3>
               <p className="text-apex-darkgray/60 mb-4">
-                Complete adventures and engage with the community to unlock new challenges!
+                Check back daily for new challenges to earn XP and rewards!
               </p>
               <Button className="bg-apex-red hover:bg-apex-red/90">
-                Explore Adventures
+                Explore Challenges
               </Button>
             </div>
           )}
         </CardContent>
       </Card>
 
-      {/* Achievements Grid */}
+      {/* Recent Achievements */}
       <Card className="border-none shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Trophy className="h-5 w-5 text-yellow-500" />
-            Achievements
+            <Award className="h-5 w-5 text-yellow-500" />
+            Recent Achievements
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {achievements.map((achievement) => (
-              <div
-                key={achievement.id}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  achievement.unlockedAt
-                    ? `${getRarityColor(achievement.rarity)} bg-gradient-to-br from-white to-gray-50`
-                    : 'border-gray-200 bg-gray-50/50 opacity-60'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="text-3xl">{achievement.icon}</div>
+          {achievements.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {achievements.slice(0, 6).map((achievement) => (
+                <div
+                  key={achievement.id}
+                  className="flex items-center gap-3 p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-200"
+                >
+                  <div className="text-2xl">{achievement.icon}</div>
                   <div className="flex-1">
                     <h4 className="font-medium text-apex-black">{achievement.name}</h4>
-                    <p className="text-sm text-apex-darkgray/70 mb-2">{achievement.description}</p>
-                    
-                    {achievement.unlockedAt ? (
-                      <Badge variant="outline" className={`text-xs ${getRarityColor(achievement.rarity)}`}>
-                        {achievement.rarity} • Unlocked
-                      </Badge>
-                    ) : achievement.progress !== undefined ? (
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs text-apex-darkgray/60">
-                          <span>Progress</span>
-                          <span>{achievement.progress} / {achievement.total}</span>
-                        </div>
-                        <Progress 
-                          value={((achievement.progress || 0) / (achievement.total || 1)) * 100} 
-                          className="h-1" 
-                        />
-                      </div>
-                    ) : (
-                      <Badge variant="outline" className="text-xs border-gray-300 text-gray-500">
-                        Locked
-                      </Badge>
-                    )}
+                    <p className="text-sm text-apex-darkgray/60">{achievement.description}</p>
                   </div>
+                  <Badge variant="outline" className="text-xs">
+                    <Star className="h-3 w-3 mr-1" />
+                    New
+                  </Badge>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <Trophy className="h-12 w-12 text-apex-darkgray/40 mx-auto mb-4" />
+              <h3 className="font-medium text-apex-black mb-2">No achievements yet</h3>
+              <p className="text-apex-darkgray/60">
+                Complete adventures and challenges to unlock your first achievement!
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Weekly Leaderboard */}
+      {/* Quick Actions */}
       <Card className="border-none shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-purple-500" />
-            Weekly Leaderboard
-            <Badge variant="outline" className="ml-auto">You're #{leaderboardPosition}</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {[
-              { rank: 1, name: "AdventureKing", xp: 2850, change: "+2" },
-              { rank: 2, name: "WildExplorer", xp: 2740, change: "0" },
-              { rank: 3, name: "SafariQueen", xp: 2680, change: "-1" },
-              { rank: leaderboardPosition, name: "You", xp: xp, change: "+5", isUser: true }
-            ].map((player) => (
-              <div 
-                key={player.rank}
-                className={`flex items-center justify-between p-3 rounded-lg ${
-                  player.isUser ? 'bg-apex-red/10 border border-apex-red/20' : 'bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                    player.rank === 1 ? 'bg-yellow-500 text-white' :
-                    player.rank === 2 ? 'bg-gray-400 text-white' :
-                    player.rank === 3 ? 'bg-orange-500 text-white' :
-                    'bg-gray-200 text-gray-700'
-                  }`}>
-                    {player.rank}
-                  </div>
-                  <div>
-                    <div className="font-medium text-apex-black">{player.name}</div>
-                    <div className="text-sm text-apex-darkgray/60">{player.xp.toLocaleString()} XP</div>
-                  </div>
-                </div>
-                
-                <div className={`text-sm font-medium ${
-                  player.change.startsWith('+') ? 'text-green-600' :
-                  player.change.startsWith('-') ? 'text-red-600' :
-                  'text-gray-600'
-                }`}>
-                  {player.change !== "0" && (player.change.startsWith('+') ? '↗' : '↘')} {player.change}
-                </div>
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <Calendar className="h-5 w-5 mx-auto mb-1" />
+                <div className="text-sm">Daily Check-in</div>
               </div>
-            ))}
+            </Button>
+            
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <TrendingUp className="h-5 w-5 mx-auto mb-1" />
+                <div className="text-sm">View Leaderboard</div>
+              </div>
+            </Button>
+            
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <Trophy className="h-5 w-5 mx-auto mb-1" />
+                <div className="text-sm">Browse Rewards</div>
+              </div>
+            </Button>
           </div>
-          
-          <Button variant="outline" className="w-full mt-4">
-            View Full Leaderboard
-          </Button>
         </CardContent>
       </Card>
     </div>

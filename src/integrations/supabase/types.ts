@@ -131,6 +131,48 @@ export type Database = {
         }
         Relationships: []
       }
+      community_posts: {
+        Row: {
+          certificate_id: string | null
+          comments_count: number
+          content: string
+          created_at: string
+          id: string
+          image_url: string | null
+          likes_count: number
+          location: string | null
+          shares_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certificate_id?: string | null
+          comments_count?: number
+          content: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          likes_count?: number
+          location?: string | null
+          shares_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certificate_id?: string | null
+          comments_count?: number
+          content?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          likes_count?: number
+          location?: string | null
+          shares_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       content_sources: {
         Row: {
           created_at: string | null
@@ -612,6 +654,35 @@ export type Database = {
           why_partner?: string | null
         }
         Relationships: []
+      }
+      post_likes: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       predator_encounters: {
         Row: {
@@ -1109,6 +1180,27 @@ export type Database = {
           user_id?: string
           weekly_recap?: boolean
           welcome_email_sent?: boolean
+        }
+        Relationships: []
+      }
+      user_follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
         }
         Relationships: []
       }

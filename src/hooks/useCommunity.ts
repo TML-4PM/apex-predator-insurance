@@ -30,31 +30,57 @@ export const useCommunity = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('community_posts')
-        .select(`
-          *,
-          profiles:user_id (
-            username,
-            avatar_url,
-            full_name
-          ),
-          post_likes!left (
-            user_id
-          )
-        `)
+      // First fetch posts
+      const { data: postsData, error: postsError } = await supabase
+        .from('community_posts' as any)
+        .select('*')
         .order('created_at', { ascending: false })
         .limit(20);
 
-      if (error) throw error;
+      if (postsError) throw postsError;
 
-      const formattedPosts = data?.map(post => ({
-        ...post,
-        user_profile: post.profiles,
-        is_liked: post.post_likes?.some((like: any) => 
-          like.user_id === (await supabase.auth.getUser()).data.user?.id
-        ) || false
-      })) || [];
+      if (!postsData) {
+        setPosts([]);
+        return;
+      }
+
+      // Get current user for like status
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // Fetch profiles for each post
+      const userIds = postsData.map((post: any) => post.user_id);
+      const { data: profilesData } = await supabase
+        .from('profiles' as any)
+        .select('user_id, username, avatar_url, full_name')
+        .in('user_id', userIds);
+
+      // Fetch like status if user is logged in
+      let likesData: any[] = [];
+      if (user) {
+        const postIds = postsData.map((post: any) => post.id);
+        const { data } = await supabase
+          .from('post_likes' as any)
+          .select('post_id')
+          .eq('user_id', user.id)
+          .in('post_id', postIds);
+        likesData = data || [];
+      }
+
+      // Combine data
+      const formattedPosts = postsData.map((post: any) => {
+        const profile = profilesData?.find((p: any) => p.user_id === post.user_id);
+        const isLiked = likesData.some((like: any) => like.post_id === post.id);
+
+        return {
+          ...post,
+          user_profile: profile ? {
+            username: profile.username,
+            avatar_url: profile.avatar_url,
+            full_name: profile.full_name
+          } : undefined,
+          is_liked: isLiked
+        };
+      });
 
       setPosts(formattedPosts);
     } catch (error) {
@@ -75,7 +101,7 @@ export const useCommunity = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('community_posts')
+        .from('community_posts' as any)
         .insert({
           user_id: user.id,
           content,
@@ -113,23 +139,23 @@ export const useCommunity = () => {
       if (post.is_liked) {
         // Unlike
         await supabase
-          .from('post_likes')
+          .from('post_likes' as any)
           .delete()
           .eq('post_id', postId)
           .eq('user_id', user.id);
 
         await supabase
-          .from('community_posts')
+          .from('community_posts' as any)
           .update({ likes_count: Math.max(0, post.likes_count - 1) })
           .eq('id', postId);
       } else {
         // Like
         await supabase
-          .from('post_likes')
+          .from('post_likes' as any)
           .insert({ post_id: postId, user_id: user.id });
 
         await supabase
-          .from('community_posts')
+          .from('community_posts' as any)
           .update({ likes_count: post.likes_count + 1 })
           .eq('id', postId);
       }
@@ -162,7 +188,7 @@ export const useCommunity = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('user_follows')
+        .from('user_follows' as any)
         .insert({ follower_id: user.id, following_id: userId });
 
       if (error) throw error;
