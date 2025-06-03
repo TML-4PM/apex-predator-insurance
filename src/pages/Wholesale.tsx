@@ -1,297 +1,138 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Building2, 
-  Users, 
-  TrendingUp, 
-  Globe, 
-  Palette, 
-  DollarSign,
-  CheckCircle,
-  Star,
-  Target
-} from 'lucide-react';
+import { useProducts } from '@/hooks/useProducts';
+import { WholesalePricing } from '@/components/wholesale/WholesalePricing';
+import { PartnerApplicationForm } from '@/components/wholesale/PartnerApplicationForm';
+import { Building2, Users, Crown, Handshake, Target, DollarSign } from 'lucide-react';
 
 const Wholesale = () => {
-  const [formData, setFormData] = useState({
-    companyName: '',
-    contactName: '',
-    email: '',
-    phone: '',
-    businessType: '',
-    expectedVolume: '',
-    message: ''
-  });
-
-  const pricingTiers = [
-    {
-      name: 'Travel Agent',
-      icon: Users,
-      markup: '30%',
-      minVolume: '10/month',
-      features: [
-        'Agent dashboard',
-        'Customer management',
-        'Basic branding',
-        'Email support'
-      ],
-      color: 'from-blue-500 to-cyan-500',
-      cta: 'Start as Agent'
-    },
-    {
-      name: 'Tour Operator',
-      icon: Building2,
-      markup: '50%',
-      minVolume: '50/month',
-      features: [
-        'Full white-label',
-        'Custom certificates',
-        'API integration',
-        'Priority support'
-      ],
-      color: 'from-purple-500 to-pink-500',
-      cta: 'Access Portal',
-      isPopular: true
-    },
-    {
-      name: 'Hotel Chain',
-      icon: Globe,
-      markup: 'Volume discounts',
-      minVolume: '500/month',
-      features: [
-        'Enterprise dashboard',
-        'Multi-location support',
-        'Custom integrations',
-        'Dedicated account manager'
-      ],
-      color: 'from-amber-500 to-red-500',
-      cta: 'Enterprise Setup'
-    }
-  ];
+  const { wholesaleTiers, loading } = useProducts();
 
   const benefits = [
     {
-      icon: DollarSign,
-      title: 'High Profit Margins',
-      description: 'Earn 30-50% markup on every certificate sold'
+      icon: <DollarSign className="w-8 h-8 text-green-600" />,
+      title: "Volume Discounts",
+      description: "Up to 40% off retail prices with our bulk pricing tiers"
     },
     {
-      icon: Target,
-      title: 'Viral Product',
-      description: 'Customers love sharing certificates on social media'
+      icon: <Crown className="w-8 h-8 text-purple-600" />,
+      title: "White-Label Solutions",
+      description: "Custom branding and domain options for enterprise partners"
     },
     {
-      icon: TrendingUp,
-      title: 'Growing Market',
-      description: '#1 trending travel insurance product'
+      icon: <Target className="w-8 h-8 text-blue-600" />,
+      title: "Marketing Support",
+      description: "Co-marketing opportunities and promotional materials"
     },
     {
-      icon: Palette,
-      title: 'Full Customization',
-      description: 'White-label with your branding and colors'
+      icon: <Handshake className="w-8 h-8 text-orange-600" />,
+      title: "Dedicated Support",
+      description: "Personal account managers for enterprise accounts"
     }
   ];
 
-  const handlePartnerAccess = (tierName: string) => {
-    if (tierName === 'Tour Operator') {
-      window.open('/partner-portal', '_blank');
-    } else {
-      // Handle other tier access
-      console.log(`Accessing ${tierName} features`);
-    }
-  };
-
   return (
     <Layout>
-      <div className="pt-28 pb-16">
+      <div className="pt-20 min-h-screen bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Hero Section */}
-          <div className="text-center mb-16">
-            <Badge className="bg-apex-red text-white mb-4">B2B PARTNERSHIPS</Badge>
-            <h1 className="text-4xl md:text-5xl font-bold text-apex-black mb-6">
-              Partner with the #1 Adventure Insurance Trend
-            </h1>
-            <p className="text-xl text-apex-darkgray/70 mb-8 max-w-3xl mx-auto">
-              Join travel agents, tour operators, and hotels worldwide offering viral adventure insurance certificates to their customers.
-            </p>
-            
-            <div className="grid md:grid-cols-4 gap-4 mb-8">
-              {[
-                { number: '50K+', label: 'Certificates Sold' },
-                { number: '89%', label: 'Customer Satisfaction' },
-                { number: '300+', label: 'B2B Partners' },
-                { number: '#1', label: 'Social Media Trend' }
-              ].map((stat, index) => (
-                <div key={index} className="bg-slate-50 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-apex-black">{stat.number}</div>
-                  <div className="text-sm text-apex-darkgray/70">{stat.label}</div>
-                </div>
-              ))}
+          <div className="text-center mb-12">
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                <Building2 className="w-10 h-10 text-white" />
+              </div>
             </div>
+            <h1 className="text-4xl font-bold text-apex-black mb-4">
+              Wholesale & Partnership Program
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Join our global network of travel agencies, tour operators, and adventure companies. 
+              Offer Apex Predator Insurance to your customers with exclusive wholesale pricing and white-label solutions.
+            </p>
           </div>
 
-          {/* Benefits Section */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {/* Benefits Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {benefits.map((benefit, index) => (
               <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="bg-apex-red/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <benefit.icon className="text-apex-red" size={24} />
+                <div className="flex justify-center mb-4">
+                  {benefit.icon}
                 </div>
-                <h3 className="font-bold text-apex-black mb-2">{benefit.title}</h3>
-                <p className="text-sm text-apex-darkgray/70">{benefit.description}</p>
+                <h3 className="font-bold text-lg mb-2">{benefit.title}</h3>
+                <p className="text-gray-600 text-sm">{benefit.description}</p>
               </Card>
             ))}
           </div>
 
-          {/* Pricing Tiers */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-apex-black text-center mb-12">
-              Choose Your Partnership Level
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              {pricingTiers.map((tier, index) => (
-                <Card key={index} className="p-6 relative overflow-hidden hover:shadow-xl transition-shadow">
-                  <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${tier.color}`} />
-                  
-                  {tier.isPopular && (
-                    <div className="absolute -top-3 -right-3">
-                      <Badge className="bg-apex-red text-white">Most Popular</Badge>
-                    </div>
-                  )}
-                  
-                  <div className="text-center mb-6">
-                    <div className={`bg-gradient-to-r ${tier.color} rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
-                      <tier.icon className="text-white" size={24} />
-                    </div>
-                    <h3 className="text-xl font-bold text-apex-black mb-2">{tier.name}</h3>
-                    <div className="text-2xl font-bold text-apex-red">{tier.markup}</div>
-                    <p className="text-sm text-apex-darkgray/70">markup potential</p>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-sm text-apex-darkgray/70">Minimum volume:</p>
-                      <p className="font-semibold">{tier.minVolume}</p>
-                    </div>
-                    
-                    <div>
-                      <p className="text-sm text-apex-darkgray/70 mb-2">Features included:</p>
-                      <ul className="space-y-1">
-                        {tier.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-sm">
-                            <CheckCircle size={16} className="text-green-500 mr-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    className="w-full mt-6" 
-                    variant={tier.isPopular ? "default" : "outline"}
-                    onClick={() => handlePartnerAccess(tier.name)}
-                  >
-                    {tier.cta}
-                  </Button>
-                </Card>
-              ))}
-            </div>
-          </div>
+          {/* Main Content */}
+          <Tabs defaultValue="pricing" className="space-y-8">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="pricing" className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Wholesale Pricing
+              </TabsTrigger>
+              <TabsTrigger value="apply" className="flex items-center gap-2">
+                <Building2 className="w-4 h-4" />
+                Become a Partner
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Application Form */}
-          <Card className="max-w-2xl mx-auto p-8">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-apex-black mb-4">
-                Ready to Partner with Us?
-              </h2>
-              <p className="text-apex-darkgray/70">
-                Fill out this form and we'll get back to you within 24 hours with a custom proposal.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">Company Name *</label>
-                <Input 
-                  value={formData.companyName}
-                  onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                  placeholder="Your Travel Company"
-                />
+            <TabsContent value="pricing">
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-apex-black mb-4">Choose Your Wholesale Tier</h2>
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    Our flexible pricing structure grows with your business. Start small and scale up as your volume increases.
+                  </p>
+                </div>
+                
+                {loading ? (
+                  <div className="text-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-apex-red mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading pricing tiers...</p>
+                  </div>
+                ) : (
+                  <WholesalePricing 
+                    tiers={wholesaleTiers}
+                    onSelectTier={(tier) => {
+                      console.log('Selected tier:', tier);
+                      // Handle tier selection - could open contact form or checkout
+                    }}
+                  />
+                )}
+
+                {/* Additional Information */}
+                <Card className="p-8 bg-gradient-to-r from-blue-50 to-purple-50">
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-apex-black mb-4">Ready to Get Started?</h3>
+                    <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                      Our wholesale program is designed to help your business grow while providing your customers 
+                      with essential travel protection. Apply today to unlock exclusive pricing and partnership benefits.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <button 
+                        onClick={() => document.querySelector('[data-tab="apply"]')?.click()}
+                        className="bg-apex-red hover:bg-apex-red/90 text-white px-8 py-3 rounded-lg font-semibold"
+                      >
+                        Apply for Partnership
+                      </button>
+                      <button className="border border-apex-red text-apex-red hover:bg-apex-red/10 px-8 py-3 rounded-lg font-semibold">
+                        Schedule a Demo
+                      </button>
+                    </div>
+                  </div>
+                </Card>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Contact Name *</label>
-                <Input 
-                  value={formData.contactName}
-                  onChange={(e) => setFormData({...formData, contactName: e.target.value})}
-                  placeholder="John Smith"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
-                <Input 
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="john@travelcompany.com"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Phone</label>
-                <Input 
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Business Type *</label>
-                <Input 
-                  value={formData.businessType}
-                  onChange={(e) => setFormData({...formData, businessType: e.target.value})}
-                  placeholder="Travel Agency, Tour Operator, Hotel..."
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Expected Monthly Volume</label>
-                <Input 
-                  value={formData.expectedVolume}
-                  onChange={(e) => setFormData({...formData, expectedVolume: e.target.value})}
-                  placeholder="50-100 certificates"
-                />
-              </div>
-            </div>
-            
-            <div className="mt-6">
-              <label className="block text-sm font-medium mb-2">Tell us about your business</label>
-              <Textarea 
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                placeholder="What type of travelers do you serve? What destinations? How would you integrate our certificates?"
-                rows={4}
-              />
-            </div>
-            
-            <Button className="w-full mt-6 bg-apex-red hover:bg-apex-red/90">
-              Submit Partnership Application
-            </Button>
-            
-            <p className="text-xs text-center text-apex-darkgray/60 mt-4">
-              We typically respond within 24 hours with a custom proposal and next steps.
-            </p>
-          </Card>
+            </TabsContent>
+
+            <TabsContent value="apply" data-tab="apply">
+              <PartnerApplicationForm />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </Layout>
