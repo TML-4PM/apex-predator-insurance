@@ -30,12 +30,12 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     
     if (!fallbackAttempted && !hasError) {
       const fallbackUrl = getFallbackImageUrl(category);
-      console.log(`[ImageWithFallback] Using category fallback for ${alt}:`, fallbackUrl);
+      console.log(`[ImageWithFallback] Using deadly60 category fallback for ${alt}:`, fallbackUrl);
       setCurrentSrc(fallbackUrl);
       setFallbackAttempted(true);
       onError?.(errorMsg);
     } else if (!hasError) {
-      console.error(`[ImageWithFallback] All fallbacks failed for ${alt}, using placeholder`);
+      console.error(`[ImageWithFallback] All deadly60 fallbacks failed for ${alt}, using placeholder`);
       setHasError(true);
       onError?.('All fallbacks failed');
       // Use a simple data URL as final fallback
@@ -49,7 +49,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       if (loadTime === null) {
         setLoadTime(endTime);
       }
-      console.log(`[ImageWithFallback] Image loaded successfully for ${alt}:`, currentSrc);
+      console.log(`[ImageWithFallback] Image loaded successfully from deadly60 bucket for ${alt}:`, currentSrc);
     }
   };
 

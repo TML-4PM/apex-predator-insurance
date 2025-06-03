@@ -12,7 +12,7 @@ export const getSupabaseImageUrl = (bucket: string, path: string): string => {
   return `https://pflisxkcxbzboxwidywf.supabase.co/storage/v1/object/public/${bucket}/${path}`;
 };
 
-// Complete verified mapping for all 82 animals across all categories
+// Complete verified mapping for all 82 animals - ALL use deadly60 bucket
 const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string; fallbacks?: string[] }> = {
   // Big Cats - deadly60 bucket (verified)
   'african-lion': { bucket: 'deadly60', filename: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg' },
@@ -60,7 +60,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   // Insects - deadly60 bucket (verified)
   'deathstalker-scorpion': { bucket: 'deadly60', filename: '250px-Centruroides_sculpturatus_191624836.jpg' },
   
-  // Animals with smart fallback patterns
+  // Marine with fallbacks - ALL deadly60
   'barracuda': { 
     bucket: 'deadly60', 
     filename: '250px-Great_barracuda_off_Islamorada.jpg',
@@ -96,8 +96,6 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
     filename: '250px-Blue_shark.jpg',
     fallbacks: ['250px-Tiger_shark.jpg', '330px-White_shark.jpg']
   },
-  
-  // Marine - Additional with fallbacks
   'manta-ray': { 
     bucket: 'deadly60', 
     filename: '250px-Dasyatis_americana.jpg',
@@ -114,11 +112,11 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
     fallbacks: ['330px-White_shark.jpg', '250px-Tiger_shark.jpg']
   },
   
-  // Reptiles with fallbacks
+  // Reptiles with fallbacks - ALL deadly60
   'nile-crocodile': { 
     bucket: 'deadly60', 
     filename: '250px-NileCrocodile.jpg',
-    fallbacks: ['250px-SaltwaterCrocodil..%27Maximo%27%29.jpg', '250px-Caiman_crocodilus_llanos.JPG']
+    fallbacks: ['250px-SaltwaterCrocodil..%27Maximo%27%29.jpg']
   },
   'eastern-diamondback': { 
     bucket: 'deadly60', 
@@ -171,7 +169,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
     fallbacks: ['250px-Komodo_dragon_with_forked_tongue.jpg', '250px-SaltwaterCrocodil..%27Maximo%27%29.jpg']
   },
   
-  // Aerial Animals with fallbacks
+  // Aerial Animals with fallbacks - ALL deadly60
   'harpy-eagle': { 
     bucket: 'deadly60', 
     filename: '250px-Harpy_eagle_(Harpia_harpyja)_adult_female.jpg',
@@ -208,7 +206,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
     fallbacks: ['250px-Golden_Eagle_in_flight_-_5.jpg']
   },
   
-  // Insects with fallbacks
+  // Insects with fallbacks - ALL deadly60
   'brazilian-wandering-spider': { 
     bucket: 'deadly60', 
     filename: '250px-Phoneutria_nigriventer_MHNT.jpg',
@@ -270,7 +268,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
     fallbacks: ['250px-Tsetse_fly.jpg', '250px-Centruroides_sculpturatus_191624836.jpg']
   },
   
-  // Terrestrial with fallbacks
+  // Terrestrial with fallbacks - ALL deadly60
   'spotted-hyena': { 
     bucket: 'deadly60', 
     filename: '250px-Spotted_Hyena_and_young_in_Ngorongoro_crater.jpg',
@@ -323,7 +321,7 @@ const COMPLETE_IMAGE_MAPPING: Record<string, { bucket: string; filename: string;
   }
 };
 
-// Category-based fallbacks for ultimate fallback
+// Category-based fallbacks for ultimate fallback - ALL deadly60
 const CATEGORY_FALLBACKS = {
   marine: '330px-White_shark.jpg',
   terrestrial: '250px-020_The_lion_kin...to_by_Giles_Laurent.jpg',
@@ -336,12 +334,12 @@ export const getCompleteAnimalImageUrl = (animalId: string, category: string = '
   const mapping = COMPLETE_IMAGE_MAPPING[animalId];
   
   if (mapping) {
-    console.log(`[CompleteImageMapping] Found mapping for ${animalId}: ${mapping.filename}`);
+    console.log(`[CompleteImageMapping] Found mapping for ${animalId}: ${mapping.filename} (deadly60 bucket)`);
     return getSupabaseImageUrl(mapping.bucket, mapping.filename);
   }
   
-  // If no mapping found, use category fallback
-  console.warn(`[CompleteImageMapping] No mapping found for ${animalId}, using category fallback`);
+  // If no mapping found, use category fallback with deadly60 bucket
+  console.warn(`[CompleteImageMapping] No mapping found for ${animalId}, using category fallback (deadly60 bucket)`);
   const fallbackFilename = CATEGORY_FALLBACKS[category as keyof typeof CATEGORY_FALLBACKS] || CATEGORY_FALLBACKS.terrestrial;
   return getSupabaseImageUrl('deadly60', fallbackFilename);
 };
@@ -350,25 +348,25 @@ export const getImageWithFallbacks = async (animalId: string, category: string =
   const mapping = COMPLETE_IMAGE_MAPPING[animalId];
   
   if (mapping) {
-    // Try primary image
+    // Try primary image from deadly60 bucket
     const primaryUrl = getSupabaseImageUrl(mapping.bucket, mapping.filename);
     if (await validateImageUrl(primaryUrl)) {
       return primaryUrl;
     }
     
-    // Try fallbacks if specified
+    // Try fallbacks if specified (all from deadly60 bucket)
     if (mapping.fallbacks) {
       for (const fallback of mapping.fallbacks) {
-        const fallbackUrl = getSupabaseImageUrl(mapping.bucket, fallback);
+        const fallbackUrl = getSupabaseImageUrl('deadly60', fallback);
         if (await validateImageUrl(fallbackUrl)) {
-          console.log(`[CompleteImageMapping] Using fallback for ${animalId}: ${fallback}`);
+          console.log(`[CompleteImageMapping] Using fallback for ${animalId}: ${fallback} (deadly60 bucket)`);
           return fallbackUrl;
         }
       }
     }
   }
   
-  // Use category fallback as last resort
+  // Use category fallback as last resort (deadly60 bucket)
   const categoryFallback = CATEGORY_FALLBACKS[category as keyof typeof CATEGORY_FALLBACKS] || CATEGORY_FALLBACKS.terrestrial;
   return getSupabaseImageUrl('deadly60', categoryFallback);
 };
