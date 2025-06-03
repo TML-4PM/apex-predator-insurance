@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
 import { navItems } from "./nav-items";
 
 const queryClient = new QueryClient();
@@ -15,11 +16,13 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          {navItems.map(({ to, page }) => (
-            <Route key={to} path={to} element={<Suspense fallback={<div>Loading...</div>}>{page}</Suspense>} />
-          ))}
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            {navItems.map(({ to, page }) => (
+              <Route key={to} path={to} element={<Suspense fallback={<div>Loading...</div>}>{page}</Suspense>} />
+            ))}
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

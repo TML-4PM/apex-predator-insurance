@@ -1,16 +1,15 @@
 
-import { HomeIcon, ShieldIcon, ImageIcon, UsersIcon, PhoneIcon, InfoIcon, HeartIcon, StoreIcon, Building2Icon, FileTextIcon, LockIcon } from "lucide-react";
-import Index from "./pages/Index.jsx";
-import Plans from "./pages/Plans.jsx";
-import Gallery from "./pages/Gallery.jsx";
-import TestimonialsPage from "./pages/TestimonialsPage.jsx";
-import Contact from "./pages/Contact.jsx";
-import About from "./pages/About.jsx";
-import DonationPage from "./pages/DonationPage.jsx";
-import Store from "./pages/Store.jsx";
-import Wholesale from "./pages/Wholesale.jsx";
-import Terms from "./pages/Terms.jsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon } from "lucide-react";
+import Index from "./pages/Index";
+import Plans from "./pages/Plans";
+import Gallery from "./pages/Gallery";
+import Store from "./pages/Store";
+import Wholesale from "./pages/Wholesale";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export const navItems = [
   {
@@ -28,20 +27,20 @@ export const navItems = [
   {
     title: "Gallery",
     to: "/gallery",
-    icon: <ImageIcon className="h-4 w-4" />,
+    icon: <GalleryVerticalEndIcon className="h-4 w-4" />,
     page: <Gallery />,
   },
   {
-    title: "Testimonials",
-    to: "/testimonials",
-    icon: <UsersIcon className="h-4 w-4" />,
-    page: <TestimonialsPage />,
+    title: "Store",
+    to: "/store",
+    icon: <ShoppingCartIcon className="h-4 w-4" />,
+    page: <Store />,
   },
   {
-    title: "Contact",
-    to: "/contact",
-    icon: <PhoneIcon className="h-4 w-4" />,
-    page: <Contact />,
+    title: "Wholesale",
+    to: "/wholesale",
+    icon: <BuildingIcon className="h-4 w-4" />,
+    page: <Wholesale />,
   },
   {
     title: "About",
@@ -50,33 +49,23 @@ export const navItems = [
     page: <About />,
   },
   {
-    title: "Donate",
-    to: "/donate",
-    icon: <HeartIcon className="h-4 w-4" />,
-    page: <DonationPage />,
+    title: "Contact",
+    to: "/contact",
+    icon: <PhoneIcon className="h-4 w-4" />,
+    page: <Contact />,
   },
   {
-    title: "Store",
-    to: "/store",
-    icon: <StoreIcon className="h-4 w-4" />,
-    page: <Store />,
+    title: "Auth",
+    to: "/auth",
+    icon: <UserIcon className="h-4 w-4" />,
+    page: <Auth />,
+    hidden: true,
   },
   {
-    title: "Wholesale",
-    to: "/wholesale",
-    icon: <Building2Icon className="h-4 w-4" />,
-    page: <Wholesale />,
-  },
-  {
-    title: "Terms",
-    to: "/terms",
-    icon: <FileTextIcon className="h-4 w-4" />,
-    page: <Terms />,
-  },
-  {
-    title: "Privacy",
-    to: "/privacy",
-    icon: <LockIcon className="h-4 w-4" />,
-    page: <PrivacyPolicy />,
+    title: "Dashboard",
+    to: "/dashboard",
+    icon: <UserIcon className="h-4 w-4" />,
+    page: <ProtectedRoute><Dashboard /></ProtectedRoute>,
+    protected: true,
   },
 ];
