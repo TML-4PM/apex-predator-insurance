@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import Gallery from './pages/Gallery';
 import ProductPage from './pages/ProductPage';
 import Plans from './pages/Plans';
 import Articles from './pages/Articles';
+import PlatformAudit from './pages/PlatformAudit';
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -44,6 +44,7 @@ const App = () => {
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<NotFound />} />
+                  <Route path="/platform-audit" element={<PlatformAudit />} />
                 </Routes>
               </BrowserRouter>
             </TooltipProvider>
