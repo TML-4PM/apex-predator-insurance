@@ -1,4 +1,5 @@
-import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon, XCircleIcon } from "lucide-react";
+
+import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon, XCircleIcon, UsersIcon } from "lucide-react";
 import Index from "./pages/Index";
 import Plans from "./pages/Plans";
 import Gallery from "./pages/Gallery";
@@ -14,6 +15,7 @@ import PaymentFailure from "./pages/PaymentFailure";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminPortal from "./pages/AdminPortal";
 import AdminRoute from "./components/AdminRoute";
+import SocialHub from "./pages/SocialHub";
 
 export const navItems = [
   {
@@ -39,6 +41,12 @@ export const navItems = [
     to: "/store",
     icon: <ShoppingCartIcon className="h-4 w-4" />,
     page: <Store />,
+  },
+  {
+    title: "Community",
+    to: "/social",
+    icon: <UsersIcon className="h-4 w-4" />,
+    page: <SocialHub />,
   },
   {
     title: "Wholesale",
