@@ -8,6 +8,7 @@ export interface Product {
   name: string;
   category: 'terrestrial' | 'marine' | 'aerial' | 'reptile' | 'insect';
   base_price: number;
+  price: number;
   description: string;
   icon: string;
   image_url?: string;
@@ -81,7 +82,9 @@ export const useProducts = () => {
       const mappedProducts: Product[] = (productsData || []).map(product => ({
         ...product,
         category: product.category as Product['category'],
-        rarity: product.rarity as Product['rarity']
+        rarity: product.rarity as Product['rarity'],
+        base_price: product.base_price || product.price || 9.99,
+        price: product.price || product.base_price || 9.99
       }));
 
       setProducts(mappedProducts);

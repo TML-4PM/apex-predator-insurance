@@ -1,145 +1,95 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Menu, X, Shield, Heart } from 'lucide-react';
+import { Menu, X, Shield, ShoppingCart, Building2 } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Plans', path: '/plans' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Store', path: '/store' },
+    { name: 'Wholesale', path: '/wholesale' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="bg-apex-red rounded-lg p-2">
-              <Shield className="h-8 w-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-apex-black">Apex Predator</h1>
-              <p className="text-sm text-apex-darkgray -mt-1">Insurance</p>
-            </div>
-          </Link>
+    <nav className="bg-white shadow-lg fixed w-full z-50 top-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <Shield className="h-8 w-8 text-apex-red" />
+              <span className="text-xl font-bold text-apex-black">Apex Predator Insurance</span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
-              className={`font-medium transition-colors ${isActive('/') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/product" 
-              className={`font-medium transition-colors ${isActive('/product') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Product
-            </Link>
-            <Link 
-              to="/plans" 
-              className={`font-medium transition-colors ${isActive('/plans') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Plans
-            </Link>
-            <Link 
-              to="/about" 
-              className={`font-medium transition-colors ${isActive('/about') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              About
-            </Link>
-            <Link 
-              to="/gallery" 
-              className={`font-medium transition-colors ${isActive('/gallery') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Gallery
-            </Link>
-            <Link 
-              to="/articles" 
-              className={`font-medium transition-colors ${isActive('/articles') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-            >
-              Articles
-            </Link>
-            
-            <Link to="/donate">
-              <Button 
-                size="sm" 
-                className="bg-apex-red hover:bg-apex-red/90"
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive(item.path)
+                    ? 'text-apex-red bg-apex-red/10'
+                    : 'text-gray-700 hover:text-apex-red hover:bg-gray-50'
+                }`}
               >
-                <Heart size={16} className="mr-2" />
-                Donate
-              </Button>
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              to="/wholesale"
+              className="flex items-center gap-2 bg-apex-red text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-apex-red/90 transition-colors"
+            >
+              <Building2 className="h-4 w-4" />
+              Partners
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-apex-darkgray hover:text-apex-red transition-colors"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-700 hover:text-apex-red focus:outline-none focus:ring-2 focus:ring-apex-red"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 bg-white">
-            <div className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
-                className={`font-medium transition-colors ${isActive('/') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/product" 
-                className={`font-medium transition-colors ${isActive('/product') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Product
-              </Link>
-              <Link 
-                to="/plans" 
-                className={`font-medium transition-colors ${isActive('/plans') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Plans
-              </Link>
-              <Link 
-                to="/about" 
-                className={`font-medium transition-colors ${isActive('/about') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </Link>
-              <Link 
-                to="/gallery" 
-                className={`font-medium transition-colors ${isActive('/gallery') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Gallery
-              </Link>
-              <Link 
-                to="/articles" 
-                className={`font-medium transition-colors ${isActive('/articles') ? 'text-apex-red' : 'text-apex-darkgray hover:text-apex-red'}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Articles
-              </Link>
-              
-              <Link to="/donate" onClick={() => setIsOpen(false)}>
-                <Button 
-                  size="sm" 
-                  className="bg-apex-red hover:bg-apex-red/90 w-full justify-center"
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'text-apex-red bg-apex-red/10'
+                      : 'text-gray-700 hover:text-apex-red hover:bg-gray-50'
+                  }`}
                 >
-                  <Heart size={16} className="mr-2" />
-                  Donate
-                </Button>
+                  {item.name}
+                </Link>
+              ))}
+              <Link
+                to="/wholesale"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 bg-apex-red text-white px-3 py-2 rounded-md text-base font-medium hover:bg-apex-red/90 transition-colors"
+              >
+                <Building2 className="h-4 w-4" />
+                Partners
               </Link>
             </div>
           </div>

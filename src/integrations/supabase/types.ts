@@ -669,54 +669,155 @@ export type Database = {
           },
         ]
       }
+      printify_orders: {
+        Row: {
+          created_at: string | null
+          estimated_delivery_date: string | null
+          id: string
+          order_id: string | null
+          printify_order_id: string | null
+          printify_status: string | null
+          tracking_number: string | null
+          tracking_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          estimated_delivery_date?: string | null
+          id?: string
+          order_id?: string | null
+          printify_order_id?: string | null
+          printify_status?: string | null
+          tracking_number?: string | null
+          tracking_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          estimated_delivery_date?: string | null
+          id?: string
+          order_id?: string | null
+          printify_order_id?: string | null
+          printify_status?: string | null
+          tracking_number?: string | null
+          tracking_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "printify_orders_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      printify_settings: {
+        Row: {
+          api_token_configured: boolean | null
+          created_at: string | null
+          id: string
+          last_sync_at: string | null
+          sync_enabled: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          api_token_configured?: boolean | null
+          created_at?: string | null
+          id?: string
+          last_sync_at?: string | null
+          sync_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          api_token_configured?: boolean | null
+          created_at?: string | null
+          id?: string
+          last_sync_at?: string | null
+          sync_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       products: {
         Row: {
-          base_price: number
           category: string
+          coming_soon: boolean | null
           created_at: string | null
           danger_level: number | null
           description: string | null
           facts: string[] | null
+          featured: boolean | null
           icon: string | null
           id: string
           image_url: string | null
           is_active: boolean | null
+          is_printify_product: boolean | null
           locations: string[] | null
+          mockup_images: Json | null
           name: string
+          price: number
+          print_on_demand: boolean | null
+          printify_data: Json | null
+          printify_product_id: string | null
+          printify_variant_id: string | null
           rarity: string | null
+          stripe_price_id: string | null
           updated_at: string | null
+          variants: Json | null
         }
         Insert: {
-          base_price?: number
           category: string
+          coming_soon?: boolean | null
           created_at?: string | null
           danger_level?: number | null
           description?: string | null
           facts?: string[] | null
+          featured?: boolean | null
           icon?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_printify_product?: boolean | null
           locations?: string[] | null
+          mockup_images?: Json | null
           name: string
+          price: number
+          print_on_demand?: boolean | null
+          printify_data?: Json | null
+          printify_product_id?: string | null
+          printify_variant_id?: string | null
           rarity?: string | null
+          stripe_price_id?: string | null
           updated_at?: string | null
+          variants?: Json | null
         }
         Update: {
-          base_price?: number
           category?: string
+          coming_soon?: boolean | null
           created_at?: string | null
           danger_level?: number | null
           description?: string | null
           facts?: string[] | null
+          featured?: boolean | null
           icon?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_printify_product?: boolean | null
           locations?: string[] | null
+          mockup_images?: Json | null
           name?: string
+          price?: number
+          print_on_demand?: boolean | null
+          printify_data?: Json | null
+          printify_product_id?: string | null
+          printify_variant_id?: string | null
           rarity?: string | null
+          stripe_price_id?: string | null
           updated_at?: string | null
+          variants?: Json | null
         }
         Relationships: []
       }
