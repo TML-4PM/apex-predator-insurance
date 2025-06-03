@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import Stripe from 'https://esm.sh/stripe@12.0.0';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -60,8 +61,40 @@ serve(async (req) => {
         );
       }
 
-      // Log payment attempt for monitoring (but don't log full card details)
-      console.log(`Payment intent created for ${amount} cents, plan: ${metadata?.plan_name || 'unknown'}`);
+      // Initialize Supabase client with service role key for order creation
+      const supabase = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+        { auth: { persistSession: false } }
+      );
+
+      // Create order record before payment
+      const orderData = {
+        customer_name: metadata.fullName,
+        customer_email: metadata.email,
+        plan_id: metadata.plan_id || metadata.primary_plan_id || 'unknown',
+        plan_name: metadata.plan_name || metadata.primary_plan_name || 'Unknown Plan',
+        amount: amount,
+        currency: 'usd',
+        status: 'pending',
+        is_bundle: metadata.is_bundle || false,
+        items: metadata.items ? JSON.parse(`{"items": "${metadata.items}"}`) : null,
+        user_id: null // Will be updated if user is authenticated
+      };
+
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert(orderData)
+        .select()
+        .single();
+
+      if (orderError) {
+        console.error('Error creating order:', orderError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to create order' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
 
       // Configure payment method options based on country
       const paymentMethodsConfig = getPaymentMethodOptions(countryCode);
@@ -70,7 +103,10 @@ serve(async (req) => {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
         currency: 'usd',
-        metadata: metadata || {},
+        metadata: {
+          ...metadata,
+          order_id: order.id,
+        },
         receipt_email: metadata.email,
         automatic_payment_methods: {
           enabled: true,
@@ -78,10 +114,23 @@ serve(async (req) => {
         payment_method_options: paymentMethodsConfig,
       });
 
+      // Update order with Stripe payment intent ID
+      await supabase
+        .from('orders')
+        .update({ 
+          stripe_payment_intent_id: paymentIntent.id,
+          stripe_session_id: paymentIntent.id // Using payment intent ID as session ID for tracking
+        })
+        .eq('id', order.id);
+
+      // Log payment attempt for monitoring (but don't log full card details)
+      console.log(`Payment intent created for ${amount} cents, plan: ${metadata?.plan_name || 'unknown'}, order: ${order.id}`);
+
       // Return the client secret to the client
       return new Response(
         JSON.stringify({ 
-          clientSecret: paymentIntent.client_secret 
+          clientSecret: paymentIntent.client_secret,
+          orderId: order.id
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );

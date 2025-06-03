@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
@@ -16,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useNavigate } from 'react-router-dom';
 
 interface PaymentFormProps {
   plan: { id: string; name: string; price: number; icon: string };
@@ -54,6 +54,7 @@ export const PaymentForm = ({
 }: PaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessed, setIsProcessed] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
@@ -90,25 +91,25 @@ export const PaymentForm = ({
       variant: "destructive"
     });
     setIsLoading(false);
+    
+    // Navigate to failure page after a delay
+    setTimeout(() => {
+      navigate('/payment-failure');
+    }, 2000);
   };
 
   // Function to handle successful payment
-  const handlePaymentSuccess = (paymentData: any) => {
+  const handlePaymentSuccess = (paymentIntent: any) => {
     setIsProcessed(true);
     toast({
       title: "Payment successful!",
-      description: "Your certificate is ready to download on the next page.",
+      description: "Redirecting to your certificate...",
     });
     
     setTimeout(() => {
-      resetCardElement();
-      
-      const freshData = {
-        fullName: formData.fullName,
-        email: formData.email
-      };
-      
-      onSuccess(freshData);
+      // Navigate to success page with session ID
+      const sessionId = paymentIntent.id;
+      navigate(`/payment-success?session_id=${sessionId}`);
     }, 1500);
   };
 
@@ -209,20 +210,13 @@ export const PaymentForm = ({
       if (isDemoMode) {
         setTimeout(() => {
           toast({
-            title: "Payment Successful!",
-            description: "Your certificate has been generated and can be viewed on the next page.",
+            title: "Payment Successful! (Demo)",
+            description: "Redirecting to your certificate...",
           });
           
           setIsProcessed(true);
           setTimeout(() => {
-            resetCardElement();
-            
-            const freshData = {
-              fullName: formData.fullName,
-              email: formData.email
-            };
-            
-            onSuccess(freshData);
+            onSuccess(formData);
           }, 1500);
         }, 1000);
         

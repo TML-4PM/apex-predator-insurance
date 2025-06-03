@@ -90,10 +90,12 @@ export const createPaymentIntent = async (amount: number, metadata: any, country
       return { error: 'Missing required information. Please fill in all fields.' };
     }
     
-    // Add a timestamp to metadata to ensure uniqueness
+    // Add success and cancel URLs to metadata
     const enhancedMetadata = {
       ...metadata,
       timestamp: new Date().toISOString(),
+      success_url: `${window.location.origin}/payment-success`,
+      cancel_url: `${window.location.origin}/payment-failure`,
     };
     
     // Create an AbortController to handle timeouts

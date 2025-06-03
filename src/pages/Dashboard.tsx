@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Shield, User, FileText, CreditCard, LogOut, Award, Share2 } from 'lucide-react';
 import CertificateManager from '@/components/certificate/CertificateManager';
 import SocialSharingPanel from '@/components/certificate/SocialSharingPanel';
+import OrderHistory from '@/components/order/OrderHistory';
 
 export default function Dashboard() {
   const { user, loading, signOut } = useAuth();
@@ -49,15 +50,19 @@ export default function Dashboard() {
           </div>
 
           <Tabs defaultValue="certificates" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="certificates">Certificates</TabsTrigger>
-              <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="orders">Orders</TabsTrigger>
+              <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="sharing">Social</TabsTrigger>
             </TabsList>
 
             <TabsContent value="certificates" className="space-y-6">
               <CertificateManager />
+            </TabsContent>
+
+            <TabsContent value="orders" className="space-y-6">
+              <OrderHistory />
             </TabsContent>
 
             <TabsContent value="profile" className="space-y-6">

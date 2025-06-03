@@ -1,5 +1,5 @@
 
-import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon } from "lucide-react";
+import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon, XCircleIcon } from "lucide-react";
 import Index from "./pages/Index";
 import Plans from "./pages/Plans";
 import Gallery from "./pages/Gallery";
@@ -10,6 +10,8 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import CertificateVerify from "./pages/CertificateVerify";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailure from "./pages/PaymentFailure";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export const navItems = [
@@ -74,5 +76,19 @@ export const navItems = [
     icon: <UserIcon className="h-4 w-4" />,
     page: <ProtectedRoute><Dashboard /></ProtectedRoute>,
     protected: true,
+  },
+  {
+    title: "Payment Success",
+    to: "/payment-success",
+    icon: <CheckCircleIcon className="h-4 w-4" />,
+    page: <PaymentSuccess />,
+    hidden: true,
+  },
+  {
+    title: "Payment Failure",
+    to: "/payment-failure",
+    icon: <XCircleIcon className="h-4 w-4" />,
+    page: <PaymentFailure />,
+    hidden: true,
   },
 ];
