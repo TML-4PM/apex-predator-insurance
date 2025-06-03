@@ -57,9 +57,10 @@ export const useActivityFeed = (limit = 20) => {
         profilesMap.set(profile.user_id, profile);
       });
 
-      // Combine data
+      // Combine data and ensure proper type conversion
       const formattedActivities = activitiesData.map(activity => ({
         ...activity,
+        metadata: (activity.metadata as Record<string, any>) || {},
         user_profile: profilesMap.get(activity.user_id) || {
           username: 'Unknown User',
           avatar_url: null,
@@ -134,6 +135,7 @@ export const useActivityFeed = (limit = 20) => {
 
           const formattedActivity: ActivityFeed = {
             ...newActivity,
+            metadata: (newActivity.metadata as Record<string, any>) || {},
             user_profile: profile || {
               username: 'Unknown User',
               avatar_url: null,

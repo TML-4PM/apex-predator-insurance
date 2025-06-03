@@ -85,10 +85,11 @@ export const useAdventureStories = (featured = false) => {
         likesData = data || [];
       }
 
-      // Combine data
+      // Combine data and ensure proper type conversion
       const formattedStories = storiesData.map(story => ({
         ...story,
-        image_urls: Array.isArray(story.image_urls) ? story.image_urls : [],
+        image_urls: Array.isArray(story.image_urls) ? 
+          (story.image_urls as any[]).map(url => String(url)) : [],
         user_profile: profilesMap.get(story.user_id) || {
           username: 'Unknown User',
           avatar_url: null,
@@ -153,10 +154,11 @@ export const useAdventureStories = (featured = false) => {
 
   const incrementViewsMutation = useMutation({
     mutationFn: async (storyId: string) => {
+      const currentStory = stories.find(s => s.id === storyId);
       const { error } = await supabase
         .from('adventure_stories')
         .update({ 
-          views_count: stories.find(s => s.id === storyId)?.views_count + 1 || 1 
+          views_count: (currentStory?.views_count || 0) + 1 
         })
         .eq('id', storyId);
 
@@ -169,10 +171,11 @@ export const useAdventureStories = (featured = false) => {
 
   const incrementSharesMutation = useMutation({
     mutationFn: async (storyId: string) => {
+      const currentStory = stories.find(s => s.id === storyId);
       const { error } = await supabase
         .from('adventure_stories')
         .update({ 
-          shares_count: stories.find(s => s.id === storyId)?.shares_count + 1 || 1 
+          shares_count: (currentStory?.shares_count || 0) + 1 
         })
         .eq('id', storyId);
 
