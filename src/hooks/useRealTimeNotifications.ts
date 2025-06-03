@@ -28,13 +28,10 @@ export const useRealTimeNotifications = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Direct query to notifications table with profile join
-      const { data, error } = await supabase
+      // Fetch notifications
+      const { data: notificationsData, error } = await supabase
         .from('notifications')
-        .select(`
-          *,
-          from_user:profiles!notifications_from_user_id_fkey(username, avatar_url)
-        `)
+        .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(20);
@@ -44,14 +41,33 @@ export const useRealTimeNotifications = () => {
         return;
       }
 
-      if (data) {
-        const formattedNotifications = data.map(notification => ({
-          ...notification,
-          from_user: notification.from_user ? {
-            username: notification.from_user.username || 'Unknown User',
-            avatar_url: notification.from_user.avatar_url
-          } : undefined
-        })) as Notification[];
+      if (notificationsData) {
+        // Fetch profile data for notifications that have from_user_id
+        const fromUserIds = notificationsData
+          .filter(n => n.from_user_id)
+          .map(n => n.from_user_id);
+
+        let profilesData: any[] = [];
+        if (fromUserIds.length > 0) {
+          const { data: profiles } = await supabase
+            .from('profiles')
+            .select('user_id, username, avatar_url')
+            .in('user_id', fromUserIds);
+          
+          profilesData = profiles || [];
+        }
+
+        const formattedNotifications = notificationsData.map(notification => {
+          const profile = profilesData.find(p => p.user_id === notification.from_user_id);
+          
+          return {
+            ...notification,
+            from_user: profile ? {
+              username: profile.username || 'Unknown User',
+              avatar_url: profile.avatar_url
+            } : undefined
+          };
+        }) as Notification[];
         
         setNotifications(formattedNotifications);
         setUnreadCount(formattedNotifications.filter(n => !n.read).length);
@@ -70,10 +86,32 @@ export const useRealTimeNotifications = () => {
           schema: 'public',
           table: 'notifications'
         },
-        (payload) => {
-          const newNotification = payload.new as Notification;
+        async (payload) => {
+          const newNotification = payload.new as any;
           
-          setNotifications(prev => [newNotification, ...prev]);
+          // Fetch the user profile for the new notification if it has from_user_id
+          let fromUser = undefined;
+          if (newNotification.from_user_id) {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('username, avatar_url')
+              .eq('user_id', newNotification.from_user_id)
+              .single();
+
+            if (profile) {
+              fromUser = {
+                username: profile.username || 'Unknown User',
+                avatar_url: profile.avatar_url
+              };
+            }
+          }
+
+          const formattedNotification: Notification = {
+            ...newNotification,
+            from_user: fromUser
+          };
+          
+          setNotifications(prev => [formattedNotification, ...prev]);
           setUnreadCount(prev => prev + 1);
           
           // Show toast for new notification
