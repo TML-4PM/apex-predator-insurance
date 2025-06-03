@@ -37,7 +37,7 @@ const socialTemplates = [
     id: 'fearless',
     name: 'Fearless Explorer',
     platform: 'twitter',
-    template: "I'm officially protected against {certificateName.toLowerCase()}! 💪 Nature's deadliest vs me - bring it on! 🦁 #FearlessExplorer #WildlifeInsurance",
+    template: "I'm officially protected against {certificateName}! 💪 Nature's deadliest vs me - bring it on! 🦁 #FearlessExplorer #WildlifeInsurance",
     icon: Twitter,
     color: 'bg-blue-500'
   },
@@ -53,7 +53,7 @@ const socialTemplates = [
     id: 'bragging',
     name: 'Bragging Rights',
     platform: 'whatsapp',
-    template: "Not to brag, but I'm now officially insured against {certificateName.toLowerCase()} 😎 Check out my certificate: {shareUrl}",
+    template: "Not to brag, but I'm now officially insured against {certificateName} 😎 Check out my certificate: {shareUrl}",
     icon: MessageCircle,
     color: 'bg-green-500'
   }
@@ -100,29 +100,29 @@ export default function SocialSharingPanel({
     setTimeout(() => setCopiedLink(false), 3000);
   };
 
-  const shareToPlat form = (platform: string, text: string) => {
+  const shareToPlatform = (platform: string, text: string) => {
     const encodedText = encodeURIComponent(text);
     const encodedUrl = encodeURIComponent(shareUrl);
     
-    let shareUrl_platform = '';
+    let platformUrl = '';
     
     switch (platform) {
       case 'twitter':
-        shareUrl_platform = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+        platformUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
         break;
       case 'facebook':
-        shareUrl_platform = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+        platformUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
         break;
       case 'whatsapp':
-        shareUrl_platform = `https://wa.me/?text=${encodedText} ${encodedUrl}`;
+        platformUrl = `https://wa.me/?text=${encodedText} ${encodedUrl}`;
         break;
       case 'email':
-        shareUrl_platform = `mailto:?subject=Check out my certificate&body=${encodedText} ${encodedUrl}`;
+        platformUrl = `mailto:?subject=Check out my certificate&body=${encodedText} ${encodedUrl}`;
         break;
     }
     
-    if (shareUrl_platform) {
-      window.open(shareUrl_platform, '_blank');
+    if (platformUrl) {
+      window.open(platformUrl, '_blank');
     }
   };
 
@@ -153,7 +153,7 @@ export default function SocialSharingPanel({
           
           <div className="flex flex-wrap gap-2">
             <Button
-              onClick={() => shareToPlat form('twitter', `I just got my ${certificateName}!`)}
+              onClick={() => shareToPlatform('twitter', `I just got my ${certificateName}!`)}
               size="sm"
               className="bg-blue-500 hover:bg-blue-600"
             >
@@ -161,7 +161,7 @@ export default function SocialSharingPanel({
               Twitter
             </Button>
             <Button
-              onClick={() => shareToPlat form('facebook', `Check out my ${certificateName} certificate!`)}
+              onClick={() => shareToPlatform('facebook', `Check out my ${certificateName} certificate!`)}
               size="sm"
               className="bg-blue-600 hover:bg-blue-700"
             >
@@ -169,7 +169,7 @@ export default function SocialSharingPanel({
               Facebook
             </Button>
             <Button
-              onClick={() => shareToPlat form('whatsapp', `I got my ${certificateName} certificate!`)}
+              onClick={() => shareToPlatform('whatsapp', `I got my ${certificateName} certificate!`)}
               size="sm"
               className="bg-green-500 hover:bg-green-600"
             >
@@ -177,7 +177,7 @@ export default function SocialSharingPanel({
               WhatsApp
             </Button>
             <Button
-              onClick={() => shareToPlat form('email', `Check out my ${certificateName} certificate!`)}
+              onClick={() => shareToPlatform('email', `Check out my ${certificateName} certificate!`)}
               size="sm"
               variant="outline"
             >
@@ -237,7 +237,7 @@ export default function SocialSharingPanel({
                         Copy
                       </Button>
                       <Button
-                        onClick={() => shareToPlat form(template.platform, text)}
+                        onClick={() => shareToPlatform(template.platform, text)}
                         size="sm"
                         className={template.color}
                       >
