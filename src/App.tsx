@@ -49,56 +49,56 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <InstallPrompt />
-        <PerformanceOptimizer />
-        <BrowserRouter>
-          <Layout>
-            <Suspense fallback={<div className="flex justify-center items-center min-h-[400px]">Loading...</div>}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/gallery" element={<LazyPages.Gallery />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/disclaimer" element={<Disclaimer />} />
-                <Route path="/articles" element={<Articles />} />
-                <Route path="/articles/:slug" element={<ArticleDetail />} />
-                <Route path="/certificate/:animalName" element={<CertificatePage />} />
-                <Route path="/verify/:certificateId" element={<CertificateVerify />} />
-                <Route path="/testimonials" element={<TestimonialsPage />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/donate" element={<DonationPage />} />
-                <Route path="/payment/success" element={<PaymentSuccess />} />
-                <Route path="/payment/failure" element={<PaymentFailure />} />
-                <Route path="/content" element={<ContentHub />} />
-                <Route path="/audit" element={<PlatformAudit />} />
-                <Route path="/store" element={<LazyPages.Store />} />
-                <Route path="/plans" element={<LazyPages.Plans />} />
-                <Route path="/checkout" element={<LazyPages.Checkout />} />
-                <Route path="/social" element={<LazyPages.SocialHub />} />
-                <Route path="/chat" element={<ChatPage />} />
-                <Route path="/wholesale" element={<Suspense fallback={<div>Loading...</div>}><LazyPages.Wholesale /></Suspense>} />
-                
-                {/* Protected Routes */}
-                <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <LazyPages.Dashboard />
-                  </ProtectedRoute>
-                } />
-                
-                {/* Admin Routes */}
-                <Route path="/admin" element={
-                  <AdminRoute>
-                    <LazyPages.AdminPortal />
-                  </AdminRoute>
-                } />
-                
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </Layout>
-        </BrowserRouter>
+        <InstallPrompt onDismiss={() => {}} />
+        <PerformanceOptimizer>
+          <BrowserRouter>
+            <Layout>
+              <Suspense fallback={<div className="flex justify-center items-center min-h-[400px]">Loading...</div>}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/gallery" element={<LazyPages.Gallery />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/disclaimer" element={<Disclaimer />} />
+                  <Route path="/articles" element={<Articles />} />
+                  <Route path="/articles/:slug" element={<ArticleDetail />} />
+                  <Route path="/certificate/:animalName" element={<CertificatePage />} />
+                  <Route path="/verify/:certificateId" element={<CertificateVerify />} />
+                  <Route path="/testimonials" element={<TestimonialsPage />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/donate" element={<DonationPage />} />
+                  <Route path="/payment/success" element={<PaymentSuccess />} />
+                  <Route path="/payment/failure" element={<PaymentFailure />} />
+                  <Route path="/content" element={<ContentHub />} />
+                  <Route path="/audit" element={<PlatformAudit />} />
+                  <Route path="/store" element={<LazyPages.Store />} />
+                  <Route path="/plans" element={<LazyPages.Plans />} />
+                  <Route path="/checkout" element={<LazyPages.Checkout />} />
+                  <Route path="/social" element={<LazyPages.SocialHub />} />
+                  <Route path="/chat" element={<ChatPage />} />
+                  
+                  {/* Protected Routes */}
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                      <LazyPages.Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin" element={
+                    <AdminRoute>
+                      <LazyPages.AdminPortal />
+                    </AdminRoute>
+                  } />
+                  
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </Layout>
+          </BrowserRouter>
+        </PerformanceOptimizer>
       </TooltipProvider>
     </QueryClientProvider>
   );

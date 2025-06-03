@@ -22,7 +22,7 @@ export const useEnhancedComments = (postId: string) => {
         .from('post_comments')
         .select(`
           *,
-          profiles!user_id(username, avatar_url, full_name),
+          user_profile:profiles!user_id(username, avatar_url, full_name),
           comment_likes(user_id)
         `)
         .eq('post_id', postId)
@@ -38,7 +38,7 @@ export const useEnhancedComments = (postId: string) => {
             .from('post_comments')
             .select(`
               *,
-              profiles!user_id(username, avatar_url, full_name),
+              user_profile:profiles!user_id(username, avatar_url, full_name),
               comment_likes(user_id)
             `)
             .eq('parent_comment_id', comment.id)
@@ -48,11 +48,9 @@ export const useEnhancedComments = (postId: string) => {
 
           return {
             ...comment,
-            user_profile: comment.profiles,
             is_liked: user ? comment.comment_likes.some((like: any) => like.user_id === user.id) : false,
             replies: (replies || []).map((reply: any) => ({
               ...reply,
-              user_profile: reply.profiles,
               is_liked: user ? reply.comment_likes.some((like: any) => like.user_id === user.id) : false,
             })),
           };

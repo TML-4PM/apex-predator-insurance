@@ -23,7 +23,7 @@ export const useRealTimeChat = (conversationId?: string) => {
           *,
           chat_participants!inner(
             user_id,
-            profiles!user_id(username, avatar_url, full_name)
+            profiles(username, avatar_url, full_name)
           )
         `)
         .order('updated_at', { ascending: false });
@@ -49,11 +49,11 @@ export const useRealTimeChat = (conversationId?: string) => {
         .from('chat_messages')
         .select(`
           *,
-          profiles!sender_id(username, avatar_url, full_name),
+          sender_profile:profiles!sender_id(username, avatar_url, full_name),
           reply_to:chat_messages!reply_to_id(
             id,
             content,
-            profiles!sender_id(username)
+            sender_profile:profiles!sender_id(username)
           )
         `)
         .eq('conversation_id', convId)
@@ -149,60 +149,64 @@ export const useRealTimeChat = (conversationId?: string) => {
 
   // Set up real-time subscriptions
   useEffect(() => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    const setupRealtimeSubscriptions = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-    // Subscribe to new messages
-    const messagesChannel = supabase
-      .channel('chat-messages')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'chat_messages',
-          filter: conversationId ? `conversation_id=eq.${conversationId}` : undefined,
-        },
-        async (payload) => {
-          const newMessage = payload.new as ChatMessage;
-          
-          // Fetch the complete message with profile data
-          const { data } = await supabase
-            .from('chat_messages')
-            .select(`
-              *,
-              profiles!sender_id(username, avatar_url, full_name)
-            `)
-            .eq('id', newMessage.id)
-            .single();
+      // Subscribe to new messages
+      const messagesChannel = supabase
+        .channel('chat-messages')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'chat_messages',
+            filter: conversationId ? `conversation_id=eq.${conversationId}` : undefined,
+          },
+          async (payload) => {
+            const newMessage = payload.new as any;
+            
+            // Fetch the complete message with profile data
+            const { data } = await supabase
+              .from('chat_messages')
+              .select(`
+                *,
+                sender_profile:profiles!sender_id(username, avatar_url, full_name)
+              `)
+              .eq('id', newMessage.id)
+              .single();
 
-          if (data) {
-            setMessages(prev => [...prev, data]);
+            if (data) {
+              setMessages(prev => [...prev, data as ChatMessage]);
+            }
           }
-        }
-      )
-      .subscribe();
+        )
+        .subscribe();
 
-    // Subscribe to conversation updates
-    const conversationsChannel = supabase
-      .channel('chat-conversations')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'chat_conversations',
-        },
-        () => {
-          fetchConversations();
-        }
-      )
-      .subscribe();
+      // Subscribe to conversation updates
+      const conversationsChannel = supabase
+        .channel('chat-conversations')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'chat_conversations',
+          },
+          () => {
+            fetchConversations();
+          }
+        )
+        .subscribe();
 
-    return () => {
-      supabase.removeChannel(messagesChannel);
-      supabase.removeChannel(conversationsChannel);
+      return () => {
+        supabase.removeChannel(messagesChannel);
+        supabase.removeChannel(conversationsChannel);
+      };
     };
+
+    setupRealtimeSubscriptions();
   }, [conversationId]);
 
   // Initial load
