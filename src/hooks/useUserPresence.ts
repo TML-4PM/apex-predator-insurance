@@ -40,7 +40,13 @@ export const useUserPresence = () => {
       presenceChannel
         .on('presence', { event: 'sync' }, () => {
           const state = presenceChannel.presenceState();
-          const users = Object.values(state).flat() as UserPresence[];
+          const users = Object.values(state).flat().map((presence: any) => ({
+            user_id: presence.user_id || '',
+            username: presence.username || 'Anonymous',
+            avatar_url: presence.avatar_url,
+            status: presence.status || 'online',
+            last_seen: presence.last_seen || new Date().toISOString()
+          })) as UserPresence[];
           setOnlineUsers(users);
         })
         .on('presence', { event: 'join' }, ({ newPresences }) => {

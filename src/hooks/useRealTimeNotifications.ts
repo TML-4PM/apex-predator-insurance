@@ -28,23 +28,37 @@ export const useRealTimeNotifications = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
+      // Use raw query since notifications table may not be in types yet
       const { data, error } = await supabase
-        .from('notifications')
-        .select(`
-          *,
-          from_user:from_user_id(username, avatar_url)
-        `)
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
+        .rpc('get_user_notifications', { p_user_id: user.id })
         .limit(20);
 
       if (error) {
         console.error('Error fetching notifications:', error);
+        // Fallback to direct table query
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from('notifications' as any)
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (fallbackError) {
+          console.error('Fallback query also failed:', fallbackError);
+          return;
+        }
+
+        if (fallbackData) {
+          setNotifications(fallbackData as Notification[]);
+          setUnreadCount(fallbackData.filter((n: any) => !n.read).length);
+        }
         return;
       }
 
-      setNotifications(data || []);
-      setUnreadCount(data?.filter(n => !n.read).length || 0);
+      if (data) {
+        setNotifications(data as Notification[]);
+        setUnreadCount(data.filter((n: any) => !n.read).length);
+      }
     };
 
     fetchNotifications();
@@ -82,7 +96,7 @@ export const useRealTimeNotifications = () => {
 
   const markAsRead = async (notificationId: string) => {
     const { error } = await supabase
-      .from('notifications')
+      .from('notifications' as any)
       .update({ read: true })
       .eq('id', notificationId);
 
@@ -99,7 +113,7 @@ export const useRealTimeNotifications = () => {
     if (!user) return;
 
     const { error } = await supabase
-      .from('notifications')
+      .from('notifications' as any)
       .update({ read: true })
       .eq('user_id', user.id)
       .eq('read', false);

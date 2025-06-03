@@ -3,8 +3,22 @@ import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+interface UserProfile {
+  username: string;
+  full_name?: string;
+  avatar_url?: string;
+  bio?: string;
+}
+
+interface ExtendedUser extends User {
+  username?: string;
+  full_name?: string;
+  avatar_url?: string;
+  bio?: string;
+}
+
 interface AuthContextType {
-  user: User | null;
+  user: ExtendedUser | null;
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: any }>;
@@ -15,24 +29,70 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ExtendedUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchUserProfile = async (userId: string): Promise<UserProfile | null> => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('username, full_name, avatar_url, bio')
+        .eq('user_id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      return null;
+    }
+  };
+
+  const updateUserWithProfile = async (authUser: User): Promise<ExtendedUser> => {
+    const profile = await fetchUserProfile(authUser.id);
+    
+    return {
+      ...authUser,
+      username: profile?.username || 'Unknown User',
+      full_name: profile?.full_name || undefined,
+      avatar_url: profile?.avatar_url || undefined,
+      bio: profile?.bio || undefined,
+    };
+  };
+
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        const extendedUser = await updateUserWithProfile(session.user);
+        setUser(extendedUser);
+      } else {
+        setUser(null);
+      }
+      
       setLoading(false);
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        const extendedUser = await updateUserWithProfile(session.user);
+        setUser(extendedUser);
+      } else {
+        setUser(null);
+      }
+      
       setLoading(false);
     });
 
