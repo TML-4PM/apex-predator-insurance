@@ -22,7 +22,6 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [currentSrc, setCurrentSrc] = useState(src);
   const [fallbackAttempted, setFallbackAttempted] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [loadTime, setLoadTime] = useState<number | null>(null);
 
   const handleError = () => {
     const errorMsg = `Image failed to load: ${currentSrc}`;
@@ -30,7 +29,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     
     if (!fallbackAttempted && !hasError) {
       const fallbackUrl = getFallbackImageUrl(category);
-      console.log(`[ImageWithFallback] Using deadly60 category fallback for ${alt}:`, fallbackUrl);
+      console.log(`[ImageWithFallback] Using verified deadly60 category fallback for ${alt}:`, fallbackUrl);
       setCurrentSrc(fallbackUrl);
       setFallbackAttempted(true);
       onError?.(errorMsg);
@@ -45,17 +44,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 
   const handleLoad = () => {
     if (!hasError) {
-      const endTime = performance.now();
-      if (loadTime === null) {
-        setLoadTime(endTime);
-      }
       console.log(`[ImageWithFallback] Image loaded successfully from deadly60 bucket for ${alt}:`, currentSrc);
-    }
-  };
-
-  const handleLoadStart = () => {
-    if (loadTime === null) {
-      setLoadTime(performance.now());
     }
   };
 
@@ -67,7 +56,6 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       loading={loading}
       onError={handleError}
       onLoad={handleLoad}
-      onLoadStart={handleLoadStart}
     />
   );
 };

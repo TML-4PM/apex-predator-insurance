@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, AlertTriangle, XCircle, Database, Image, Activity } from 'lucide-react';
 import { AuditData } from '@/types/audit';
+import BucketVerificationResults from './BucketVerificationResults';
 
 interface DetailedAuditResultsProps {
   auditData: AuditData;
@@ -31,7 +31,7 @@ const DetailedAuditResults = ({ auditData }: DetailedAuditResultsProps) => {
   const routeSuccessRate = Math.round((auditData.routes.working / auditData.routes.total) * 100);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Health Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
@@ -84,6 +84,12 @@ const DetailedAuditResults = ({ auditData }: DetailedAuditResultsProps) => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Add Bucket Verification Section */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold text-gray-900">Bucket Verification</h3>
+        <BucketVerificationResults />
       </div>
 
       {/* Detailed Route Results */}
