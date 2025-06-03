@@ -131,6 +131,38 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          content: string
+          created_at: string | null
+          fail_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          fail_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          fail_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_fail_id_fkey"
+            columns: ["fail_id"]
+            isOneToOne: false
+            referencedRelation: "oopsies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_posts: {
         Row: {
           certificate_id: string | null
@@ -307,6 +339,35 @@ export type Database = {
           requirements?: string[]
         }
         Relationships: []
+      }
+      likes: {
+        Row: {
+          created_at: string | null
+          fail_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          fail_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          fail_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "likes_fail_id_fkey"
+            columns: ["fail_id"]
+            isOneToOne: false
+            referencedRelation: "oopsies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       link_health: {
         Row: {
@@ -925,6 +986,36 @@ export type Database = {
         }
         Relationships: []
       }
+      scheduled_tasks: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_running: boolean | null
+          last_run: string | null
+          next_run: string | null
+          task_name: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_running?: boolean | null
+          last_run?: string | null
+          next_run?: string | null
+          task_name: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_running?: boolean | null
+          last_run?: string | null
+          next_run?: string | null
+          task_name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       site_audits: {
         Row: {
           accessibility_score: number | null
@@ -1351,9 +1442,17 @@ export type Database = {
         }
         Returns: number
       }
+      decrement_likes: {
+        Args: { fail_id: string }
+        Returns: undefined
+      }
       generate_daily_challenge: {
         Args: { challenge_date: string }
         Returns: string
+      }
+      increment_likes: {
+        Args: { fail_id: string }
+        Returns: undefined
       }
       increment_oopsie_likes: {
         Args: { oopsie_id: string }
