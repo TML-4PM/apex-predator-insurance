@@ -1,4 +1,3 @@
-
 import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon, XCircleIcon } from "lucide-react";
 import Index from "./pages/Index";
 import Plans from "./pages/Plans";
@@ -13,6 +12,8 @@ import CertificateVerify from "./pages/CertificateVerify";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminPortal from "./pages/AdminPortal";
+import AdminRoute from "./components/AdminRoute";
 
 export const navItems = [
   {
@@ -89,6 +90,13 @@ export const navItems = [
     to: "/payment-failure",
     icon: <XCircleIcon className="h-4 w-4" />,
     page: <PaymentFailure />,
+    hidden: true,
+  },
+  {
+    title: "Admin Portal",
+    to: "/admin",
+    icon: <ShieldIcon className="h-4 w-4" />,
+    page: <AdminRoute><AdminPortal /></AdminRoute>,
     hidden: true,
   },
 ];
