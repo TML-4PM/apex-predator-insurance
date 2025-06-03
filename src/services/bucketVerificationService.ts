@@ -1,5 +1,4 @@
-
-import { getSupabaseImageUrl } from '@/utils/completeImageMapping';
+import { getSupabaseImageUrl } from '@/utils/imageUrlUtils';
 
 export interface BucketVerificationResult {
   url: string;
