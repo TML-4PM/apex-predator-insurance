@@ -1,110 +1,77 @@
 
-import { HomeIcon, ShieldIcon, ShoppingCartIcon, GalleryVerticalEndIcon, BuildingIcon, InfoIcon, PhoneIcon, FileTextIcon, CreditCardIcon, UserIcon, CheckCircleIcon, XCircleIcon, UsersIcon } from "lucide-react";
-import Index from "./pages/Index";
-import Plans from "./pages/Plans";
-import Gallery from "./pages/Gallery";
-import Store from "./pages/Store";
-import Wholesale from "./pages/Wholesale";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
-import CertificateVerify from "./pages/CertificateVerify";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentFailure from "./pages/PaymentFailure";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminPortal from "./pages/AdminPortal";
-import AdminRoute from "./components/AdminRoute";
-import SocialHub from "./pages/SocialHub";
+import { Home, Shield, ShoppingCart, Users, Image, Phone, MessageCircle, User, Gavel, DollarSign, Briefcase, MapPin, Trophy, Upload } from "lucide-react";
 
 export const navItems = [
   {
     title: "Home",
     to: "/",
-    icon: <HomeIcon className="h-4 w-4" />,
-    page: <Index />,
+    icon: <Home className="h-4 w-4" />,
   },
   {
     title: "Plans",
     to: "/plans",
-    icon: <ShieldIcon className="h-4 w-4" />,
-    page: <Plans />,
+    icon: <Shield className="h-4 w-4" />,
   },
   {
     title: "Gallery",
     to: "/gallery",
-    icon: <GalleryVerticalEndIcon className="h-4 w-4" />,
-    page: <Gallery />,
+    icon: <Image className="h-4 w-4" />,
   },
   {
     title: "Store",
     to: "/store",
-    icon: <ShoppingCartIcon className="h-4 w-4" />,
-    page: <Store />,
+    icon: <ShoppingCart className="h-4 w-4" />,
   },
   {
-    title: "Community",
+    title: "Social Hub",
     to: "/social",
-    icon: <UsersIcon className="h-4 w-4" />,
-    page: <SocialHub />,
+    icon: <Users className="h-4 w-4" />,
   },
   {
-    title: "Wholesale",
-    to: "/wholesale",
-    icon: <BuildingIcon className="h-4 w-4" />,
-    page: <Wholesale />,
-  },
-  {
-    title: "About",
-    to: "/about",
-    icon: <InfoIcon className="h-4 w-4" />,
-    page: <About />,
+    title: "Chat",
+    to: "/chat",
+    icon: <MessageCircle className="h-4 w-4" />,
   },
   {
     title: "Contact",
     to: "/contact",
-    icon: <PhoneIcon className="h-4 w-4" />,
-    page: <Contact />,
+    icon: <Phone className="h-4 w-4" />,
   },
-  {
-    title: "Verify",
-    to: "/verify",
-    icon: <CheckCircleIcon className="h-4 w-4" />,
-    page: <CertificateVerify />,
-  },
-  {
-    title: "Auth",
-    to: "/auth",
-    icon: <UserIcon className="h-4 w-4" />,
-    page: <Auth />,
-    hidden: true,
-  },
+];
+
+export const protectedNavItems = [
   {
     title: "Dashboard",
     to: "/dashboard",
-    icon: <UserIcon className="h-4 w-4" />,
-    page: <ProtectedRoute><Dashboard /></ProtectedRoute>,
-    protected: true,
+    icon: <User className="h-4 w-4" />,
   },
-  {
-    title: "Payment Success",
-    to: "/payment-success",
-    icon: <CheckCircleIcon className="h-4 w-4" />,
-    page: <PaymentSuccess />,
-    hidden: true,
-  },
-  {
-    title: "Payment Failure",
-    to: "/payment-failure",
-    icon: <XCircleIcon className="h-4 w-4" />,
-    page: <PaymentFailure />,
-    hidden: true,
-  },
+];
+
+export const adminNavItems = [
   {
     title: "Admin Portal",
     to: "/admin",
-    icon: <ShieldIcon className="h-4 w-4" />,
-    page: <AdminRoute><AdminPortal /></AdminRoute>,
-    hidden: true,
+    icon: <Gavel className="h-4 w-4" />,
+  },
+];
+
+export const businessNavItems = [
+  {
+    title: "Wholesale",
+    to: "/wholesale",
+    icon: <DollarSign className="h-4 w-4" />,
+  },
+  {
+    title: "Partner Portal",
+    to: "/partner",
+    icon: <Briefcase className="h-4 w-4" />,
+  },
+];
+
+export const featureNavItems = [
+  {
+    title: "Platform Audit",
+    to: "/audit",
+    icon: <Trophy className="h-4 w-4" />,
   },
 ];
