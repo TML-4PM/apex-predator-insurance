@@ -77,7 +77,14 @@ export const useProducts = () => {
       if (bundlesError) throw bundlesError;
       if (wholesaleError) throw wholesaleError;
 
-      setProducts(productsData || []);
+      // Map and validate the data to ensure it matches our interfaces
+      const mappedProducts: Product[] = (productsData || []).map(product => ({
+        ...product,
+        category: product.category as Product['category'],
+        rarity: product.rarity as Product['rarity']
+      }));
+
+      setProducts(mappedProducts);
       setBundleProducts(bundlesData || []);
       setWholesaleTiers(wholesaleData || []);
     } catch (error) {

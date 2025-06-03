@@ -34,6 +34,14 @@ const Wholesale = () => {
     }
   ];
 
+  const handleApplyTabClick = () => {
+    // Find the tab element and trigger its click programmatically
+    const applyTab = document.querySelector('[data-value="apply"]');
+    if (applyTab && applyTab instanceof HTMLElement) {
+      applyTab.click();
+    }
+  };
+
   return (
     <Layout>
       <div className="pt-20 min-h-screen bg-slate-50">
@@ -75,7 +83,7 @@ const Wholesale = () => {
                 <Users className="w-4 h-4" />
                 Wholesale Pricing
               </TabsTrigger>
-              <TabsTrigger value="apply" className="flex items-center gap-2">
+              <TabsTrigger value="apply" className="flex items-center gap-2" data-value="apply">
                 <Building2 className="w-4 h-4" />
                 Become a Partner
               </TabsTrigger>
@@ -115,7 +123,7 @@ const Wholesale = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <button 
-                        onClick={() => document.querySelector('[data-tab="apply"]')?.click()}
+                        onClick={handleApplyTabClick}
                         className="bg-apex-red hover:bg-apex-red/90 text-white px-8 py-3 rounded-lg font-semibold"
                       >
                         Apply for Partnership
