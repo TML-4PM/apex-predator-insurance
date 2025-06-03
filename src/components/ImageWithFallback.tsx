@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { getFallbackImageUrl } from '@/utils/completeImageMapping';
+import LazyImage from '@/components/performance/LazyImage';
 
 interface ImageWithFallbackProps {
   src: string;
@@ -48,14 +49,14 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     }
   };
 
+  // Use the new LazyImage component for better performance
   return (
-    <img
+    <LazyImage
       src={currentSrc}
       alt={alt}
       className={className}
-      loading={loading}
-      onError={handleError}
       onLoad={handleLoad}
+      onError={handleError}
     />
   );
 };

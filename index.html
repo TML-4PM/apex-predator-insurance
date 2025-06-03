@@ -3,17 +3,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Apex Predator Insurance</title>
     <meta name="description" content="Insurance for adventurers who encounter predators in the wild." />
     <meta name="author" content="Apex Predator Insurance" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Apex Insurance" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Apex Predator Insurance" />
     <meta property="og:description" content="Insurance for adventurers who encounter predators in the wild." />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     <meta property="og:type" content="website" />
+    
+    <!-- Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <!-- Preconnect to CDNs -->
+    <link rel="apple-touch-icon" href="/favicon.ico" />
+    
+    <!-- Preconnect to CDNs for performance -->
     <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    
+    <!-- DNS Prefetch for better performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//api.supabase.co" />
   </head>
 
   <body>
