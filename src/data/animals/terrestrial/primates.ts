@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const primates: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const primates: DeadlyAnimal[] = [
     locations: ['Central Africa', 'West Africa'],
     description: 'Our closest living relatives with surprising strength',
     facts: ['5x stronger than humans', 'Use tools for hunting and gathering'],
-    imageUrl: getAnimalImageUrl('chimpanzee'),
+    imageUrl: getCompleteAnimalImageUrl('chimpanzee', 'terrestrial'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -27,7 +27,7 @@ export const primates: DeadlyAnimal[] = [
     locations: ['Africa', 'Arabian Peninsula'],
     description: 'Highly social primates with powerful jaws',
     facts: ['Live in troops of up to 300', 'Can run 30 mph'],
-    imageUrl: getAnimalImageUrl('baboon'),
+    imageUrl: getCompleteAnimalImageUrl('baboon', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'common'
   }

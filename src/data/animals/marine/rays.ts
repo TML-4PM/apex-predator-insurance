@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const rays: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const rays: DeadlyAnimal[] = [
     locations: ['Tropical Oceans Worldwide'],
     description: 'The gentle giant of the ocean',
     facts: ['Wingspan up to 29 feet', 'Filter feeds on plankton'],
-    imageUrl: getAnimalImageUrl('manta-ray'),
+    imageUrl: getCompleteAnimalImageUrl('manta-ray', 'marine'),
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -27,7 +27,7 @@ export const rays: DeadlyAnimal[] = [
     locations: ['Warm Ocean Waters'],
     description: 'The shocking bottom dweller',
     facts: ['Can generate 220 volts', 'Stuns prey with electric discharge'],
-    imageUrl: getAnimalImageUrl('electric-ray'),
+    imageUrl: getCompleteAnimalImageUrl('electric-ray', 'marine'),
     killsPerYear: 1,
     rarity: 'uncommon'
   }

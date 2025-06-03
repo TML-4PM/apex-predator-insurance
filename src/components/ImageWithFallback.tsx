@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { getFallbackImageUrl } from '@/utils/enhancedImageValidation';
+import { getFallbackImageUrl } from '@/utils/completeImageMapping';
 
 interface ImageWithFallbackProps {
   src: string;

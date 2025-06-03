@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const bears: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Montana', 'Wyoming'],
     description: 'North America\'s apex predator',
     facts: ['Can run 35 mph', 'Sense of smell 7x stronger than bloodhound'],
-    imageUrl: getAnimalImageUrl('grizzly-bear'),
+    imageUrl: getCompleteAnimalImageUrl('grizzly-bear', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -27,7 +27,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Arctic Circle', 'Greenland', 'Canada', 'Alaska'],
     description: 'The Arctic\'s apex predator',
     facts: ['Can smell seals 20 miles away', 'Excellent swimmers'],
-    imageUrl: getAnimalImageUrl('polar-bear'),
+    imageUrl: getCompleteAnimalImageUrl('polar-bear', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'legendary'
   },
@@ -41,7 +41,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Kodiak Island', 'Alaska'],
     description: 'The largest brown bear subspecies',
     facts: ['Can weigh up to 1,500 pounds', 'Omnivorous giants'],
-    imageUrl: getAnimalImageUrl('kodiak-bear'),
+    imageUrl: getCompleteAnimalImageUrl('kodiak-bear', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -55,7 +55,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['North America', 'Canada', 'USA'],
     description: 'The most common bear in North America',
     facts: ['Excellent climbers', 'Can run 30 mph'],
-    imageUrl: getAnimalImageUrl('black-bear'),
+    imageUrl: getCompleteAnimalImageUrl('black-bear', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'common'
   },
@@ -69,7 +69,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka'],
     description: 'The shaggy bear of the Indian subcontinent',
     facts: ['Excellent climbers', 'Feed primarily on insects'],
-    imageUrl: getAnimalImageUrl('sloth-bear'),
+    imageUrl: getCompleteAnimalImageUrl('sloth-bear', 'terrestrial'),
     killsPerYear: 5,
     rarity: 'uncommon'
   },
@@ -83,7 +83,7 @@ export const bears: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The smallest bear species',
     facts: ['Excellent climbers', 'Long tongue for honey'],
-    imageUrl: getAnimalImageUrl('sun-bear'),
+    imageUrl: getCompleteAnimalImageUrl('sun-bear', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'uncommon'
   }

@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../utils/completeImageMapping';
 
 export const reptileAnimals: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Southeast Asia', 'India'],
     description: 'The largest living reptile and apex predator',
     facts: ['Bite force of 16,460 newtons', 'Can hold breath for 1 hour'],
-    imageUrl: getAnimalImageUrl('saltwater-crocodile'),
+    imageUrl: getCompleteAnimalImageUrl('saltwater-crocodile', 'reptile'),
     killsPerYear: 1000,
     rarity: 'mythic'
   },
@@ -27,7 +27,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Africa', 'Nile River', 'Sub-Saharan Africa'],
     description: 'Africa\'s largest freshwater predator',
     facts: ['Can grow up to 20 feet long', 'Ambush predator extraordinaire'],
-    imageUrl: getAnimalImageUrl('nile-crocodile'),
+    imageUrl: getCompleteAnimalImageUrl('nile-crocodile', 'reptile'),
     killsPerYear: 745,
     rarity: 'mythic'
   },
@@ -41,7 +41,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Australia'],
     description: 'The world\'s most venomous snake',
     facts: ['One bite can kill 100 adults', 'Venom is 50x more toxic than cobra'],
-    imageUrl: getAnimalImageUrl('inland-taipan'),
+    imageUrl: getCompleteAnimalImageUrl('inland-taipan', 'reptile'),
     killsPerYear: 1,
     rarity: 'mythic'
   },
@@ -55,7 +55,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['South Africa', 'Botswana', 'Kenya'],
     description: 'Africa\'s deadliest snake',
     facts: ['Fastest snake in the world at 12.5 mph', '100% fatal without antivenom'],
-    imageUrl: getAnimalImageUrl('black-mamba'),
+    imageUrl: getCompleteAnimalImageUrl('black-mamba', 'reptile'),
     killsPerYear: 20000,
     rarity: 'legendary'
   },
@@ -69,7 +69,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia', 'China'],
     description: 'The world\'s longest venomous snake',
     facts: ['Can grow up to 18 feet long', 'Can rear up to 6 feet high'],
-    imageUrl: getAnimalImageUrl('king-cobra'),
+    imageUrl: getCompleteAnimalImageUrl('king-cobra', 'reptile'),
     killsPerYear: 5000,
     rarity: 'legendary'
   },
@@ -83,7 +83,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeastern USA'],
     description: 'The largest venomous snake in North America',
     facts: ['Can strike two-thirds of its body length', 'Rattle warns of danger'],
-    imageUrl: getAnimalImageUrl('eastern-diamondback'),
+    imageUrl: getCompleteAnimalImageUrl('eastern-diamondback', 'reptile'),
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -97,7 +97,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central Africa', 'West Africa'],
     description: 'The snake with the longest fangs',
     facts: ['Fangs can be 2 inches long', 'Perfectly camouflaged'],
-    imageUrl: getAnimalImageUrl('gaboon-viper'),
+    imageUrl: getCompleteAnimalImageUrl('gaboon-viper', 'reptile'),
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -111,7 +111,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin', 'South America'],
     description: 'The heaviest snake in the world',
     facts: ['Can weigh over 550 pounds', 'Excellent swimmers'],
-    imageUrl: getAnimalImageUrl('anaconda'),
+    imageUrl: getCompleteAnimalImageUrl('anaconda', 'reptile'),
     killsPerYear: 1,
     rarity: 'rare'
   },
@@ -125,7 +125,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Amazon Basin'],
     description: 'The largest predator in the Amazon',
     facts: ['Can grow up to 20 feet long', 'Apex predator of the Amazon'],
-    imageUrl: getAnimalImageUrl('caiman'),
+    imageUrl: getCompleteAnimalImageUrl('caiman', 'reptile'),
     killsPerYear: 10,
     rarity: 'rare'
   },
@@ -139,7 +139,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ultimate pit viper',
     facts: ['Responsible for most snakebite deaths in Central America', 'Gives birth to live young'],
-    imageUrl: getAnimalImageUrl('fer-de-lance'),
+    imageUrl: getCompleteAnimalImageUrl('fer-de-lance', 'reptile'),
     killsPerYear: 100,
     rarity: 'rare'
   },
@@ -153,7 +153,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southern USA', 'Central America'],
     description: 'Beautiful but deadly with potent neurotoxin',
     facts: ['Red touches yellow, kills a fellow', 'Secretive and elusive'],
-    imageUrl: getAnimalImageUrl('coral-snake'),
+    imageUrl: getCompleteAnimalImageUrl('coral-snake', 'reptile'),
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -167,7 +167,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['India', 'Sri Lanka', 'Southeast Asia'],
     description: 'The most dangerous snake in Asia',
     facts: ['Causes more deaths than any other snake in India', 'Aggressive and fast-striking'],
-    imageUrl: getAnimalImageUrl('russells-viper'),
+    imageUrl: getCompleteAnimalImageUrl('russells-viper', 'reptile'),
     killsPerYear: 15000,
     rarity: 'rare'
   },
@@ -181,7 +181,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeast Asia', 'Indonesia', 'Philippines'],
     description: 'The world\'s longest snake',
     facts: ['Can grow over 30 feet long', 'Excellent swimmers and climbers'],
-    imageUrl: getAnimalImageUrl('reticulated-python'),
+    imageUrl: getCompleteAnimalImageUrl('reticulated-python', 'reptile'),
     killsPerYear: 3,
     rarity: 'uncommon'
   },
@@ -195,7 +195,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Indonesia'],
     description: 'The world\'s largest lizard',
     facts: ['Can run 13 mph', 'Venomous bite prevents blood clotting'],
-    imageUrl: getAnimalImageUrl('komodo-dragon'),
+    imageUrl: getCompleteAnimalImageUrl('komodo-dragon', 'reptile'),
     killsPerYear: 5,
     rarity: 'mythic'
   },
@@ -209,7 +209,7 @@ export const reptileAnimals: DeadlyAnimal[] = [
     locations: ['Southeast Asia'],
     description: 'The aquatic giant lizard',
     facts: ['Can grow up to 9 feet long', 'Excellent swimmers'],
-    imageUrl: getAnimalImageUrl('monitor-lizard'),
+    imageUrl: getCompleteAnimalImageUrl('monitor-lizard', 'reptile'),
     killsPerYear: 1,
     rarity: 'uncommon'
   }

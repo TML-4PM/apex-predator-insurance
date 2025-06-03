@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../utils/completeImageMapping';
 
 export const insectAnimals: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Brazil', 'Central America', 'South America'],
     description: 'World\'s most venomous spider',
     facts: ['Aggressive and fast-moving', 'Venom causes painful erections'],
-    imageUrl: getAnimalImageUrl('brazilian-wandering-spider'),
+    imageUrl: getCompleteAnimalImageUrl('brazilian-wandering-spider', 'insect'),
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -27,7 +27,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sydney', 'Australia'],
     description: 'Australia\'s most dangerous spider',
     facts: ['Male is more venomous than female', 'Can survive underwater for hours'],
-    imageUrl: getAnimalImageUrl('sydney-funnel-web'),
+    imageUrl: getCompleteAnimalImageUrl('sydney-funnel-web', 'insect'),
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -41,7 +41,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['North America', 'Australia'],
     description: 'The infamous red hourglass spider',
     facts: ['Female eats male after mating', 'Venom is 15x stronger than rattlesnake'],
-    imageUrl: getAnimalImageUrl('black-widow'),
+    imageUrl: getCompleteAnimalImageUrl('black-widow', 'insect'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -55,7 +55,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Middle East', 'North Africa'],
     description: 'One of the most dangerous scorpions',
     facts: ['Venom contains neurotoxins', 'Glows under UV light'],
-    imageUrl: getAnimalImageUrl('deathstalker-scorpion'),
+    imageUrl: getCompleteAnimalImageUrl('deathstalker-scorpion', 'insect'),
     killsPerYear: 2,
     rarity: 'rare'
   },
@@ -69,7 +69,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The ant with the most painful sting',
     facts: ['Sting feels like being shot', 'Pain lasts up to 24 hours'],
-    imageUrl: getAnimalImageUrl('bullet-ant'),
+    imageUrl: getCompleteAnimalImageUrl('bullet-ant', 'insect'),
     killsPerYear: 0,
     rarity: 'uncommon'
   },
@@ -83,7 +83,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The fly that carries sleeping sickness',
     facts: ['Transmits deadly parasites', 'Responsible for thousands of deaths annually'],
-    imageUrl: getAnimalImageUrl('tsetse-fly'),
+    imageUrl: getCompleteAnimalImageUrl('tsetse-fly', 'insect'),
     killsPerYear: 10000,
     rarity: 'uncommon'
   },
@@ -97,7 +97,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The bug that kisses you to death',
     facts: ['Transmits Chagas disease', 'Feeds on blood at night'],
-    imageUrl: getAnimalImageUrl('kissing-bug'),
+    imageUrl: getCompleteAnimalImageUrl('kissing-bug', 'insect'),
     killsPerYear: 7000,
     rarity: 'uncommon'
   },
@@ -111,7 +111,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Japan', 'China', 'Korea'],
     description: 'The murder hornet with a painful sting',
     facts: ['Largest hornet species in the world', 'Can decimate entire bee colonies'],
-    imageUrl: getAnimalImageUrl('giant-asian-hornet'),
+    imageUrl: getCompleteAnimalImageUrl('giant-asian-hornet', 'insect'),
     killsPerYear: 40,
     rarity: 'uncommon'
   },
@@ -125,7 +125,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central America', 'South America'],
     description: 'The unstoppable swarm',
     facts: ['Colonies can contain 2 million ants', 'Can take down animals much larger than themselves'],
-    imageUrl: getAnimalImageUrl('army-ant'),
+    imageUrl: getCompleteAnimalImageUrl('army-ant', 'insect'),
     killsPerYear: 0,
     rarity: 'common'
   },
@@ -139,7 +139,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Americas'],
     description: 'The notorious killer bees',
     facts: ['Will chase victims for up to a mile', 'Attack in massive numbers'],
-    imageUrl: getAnimalImageUrl('africanized-bee'),
+    imageUrl: getCompleteAnimalImageUrl('africanized-bee', 'insect'),
     killsPerYear: 20,
     rarity: 'uncommon'
   },
@@ -153,7 +153,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Worldwide Tropical Regions'],
     description: 'The burning invader',
     facts: ['Create living rafts during floods', 'Painful alkaloid venom'],
-    imageUrl: getAnimalImageUrl('fire-ant'),
+    imageUrl: getCompleteAnimalImageUrl('fire-ant', 'insect'),
     killsPerYear: 5,
     rarity: 'common'
   },
@@ -167,7 +167,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and East Africa'],
     description: 'The swarming terror of Africa',
     facts: ['Colonies can contain 20 million ants', 'Can consume animals unable to escape'],
-    imageUrl: getAnimalImageUrl('driver-ant'),
+    imageUrl: getCompleteAnimalImageUrl('driver-ant', 'insect'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -181,7 +181,7 @@ export const insectAnimals: DeadlyAnimal[] = [
     locations: ['Central and South America'],
     description: 'The parasitic hijacker',
     facts: ['Larvae develop under human skin', 'Can cause severe infections'],
-    imageUrl: getAnimalImageUrl('bot-fly'),
+    imageUrl: getCompleteAnimalImageUrl('bot-fly', 'insect'),
     killsPerYear: 0,
     rarity: 'uncommon'
   }

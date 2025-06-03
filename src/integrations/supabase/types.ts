@@ -51,6 +51,41 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_metrics: {
+        Row: {
+          audit_id: string | null
+          id: string
+          metric_type: string
+          metric_value: number
+          page_url: string | null
+          recorded_at: string | null
+        }
+        Insert: {
+          audit_id?: string | null
+          id?: string
+          metric_type: string
+          metric_value: number
+          page_url?: string | null
+          recorded_at?: string | null
+        }
+        Update: {
+          audit_id?: string | null
+          id?: string
+          metric_type?: string
+          metric_value?: number
+          page_url?: string | null
+          recorded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_metrics_audit_id_fkey"
+            columns: ["audit_id"]
+            isOneToOne: false
+            referencedRelation: "site_audits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       content_sources: {
         Row: {
           created_at: string | null
@@ -183,6 +218,42 @@ export type Database = {
           name?: string
           price?: number
           requirements?: string[]
+        }
+        Relationships: []
+      }
+      link_health: {
+        Row: {
+          checked_count: number | null
+          error_message: string | null
+          first_discovered: string | null
+          id: string
+          is_healthy: boolean | null
+          last_checked: string | null
+          response_time: number | null
+          status_code: number | null
+          url: string
+        }
+        Insert: {
+          checked_count?: number | null
+          error_message?: string | null
+          first_discovered?: string | null
+          id?: string
+          is_healthy?: boolean | null
+          last_checked?: string | null
+          response_time?: number | null
+          status_code?: number | null
+          url: string
+        }
+        Update: {
+          checked_count?: number | null
+          error_message?: string | null
+          first_discovered?: string | null
+          id?: string
+          is_healthy?: boolean | null
+          last_checked?: string | null
+          response_time?: number | null
+          status_code?: number | null
+          url?: string
         }
         Relationships: []
       }
@@ -433,6 +504,63 @@ export type Database = {
           updated_at?: string
           user_id?: string
           username?: string
+        }
+        Relationships: []
+      }
+      site_audits: {
+        Row: {
+          accessibility_score: number | null
+          audit_type: string
+          average_load_time: number | null
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          domain: string
+          id: string
+          performance_score: number | null
+          results: Json | null
+          seo_score: number | null
+          status: string
+          summary: Json | null
+          total_errors: number | null
+          total_pages: number | null
+          url: string
+        }
+        Insert: {
+          accessibility_score?: number | null
+          audit_type?: string
+          average_load_time?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          domain: string
+          id?: string
+          performance_score?: number | null
+          results?: Json | null
+          seo_score?: number | null
+          status?: string
+          summary?: Json | null
+          total_errors?: number | null
+          total_pages?: number | null
+          url: string
+        }
+        Update: {
+          accessibility_score?: number | null
+          audit_type?: string
+          average_load_time?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          domain?: string
+          id?: string
+          performance_score?: number | null
+          results?: Json | null
+          seo_score?: number | null
+          status?: string
+          summary?: Json | null
+          total_errors?: number | null
+          total_pages?: number | null
+          url?: string
         }
         Relationships: []
       }
@@ -704,6 +832,15 @@ export type Database = {
       }
       increment_oopsie_likes: {
         Args: { oopsie_id: string }
+        Returns: undefined
+      }
+      update_link_health: {
+        Args: {
+          check_url: string
+          status_code_param: number
+          response_time_param: number
+          error_message_param?: string
+        }
         Returns: undefined
       }
       update_viral_scores: {

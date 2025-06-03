@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const largeMammals: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'Africa\'s most dangerous large mammal',
     facts: ['Can run 30 mph on land', 'Kills more humans than any other large animal in Africa'],
-    imageUrl: getAnimalImageUrl('hippopotamus'),
+    imageUrl: getCompleteAnimalImageUrl('hippopotamus', 'terrestrial'),
     killsPerYear: 500,
     rarity: 'rare'
   },
@@ -27,7 +27,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The largest land animal',
     facts: ['Can weigh up to 14,000 pounds', 'Excellent memory'],
-    imageUrl: getAnimalImageUrl('african-elephant'),
+    imageUrl: getCompleteAnimalImageUrl('african-elephant', 'terrestrial'),
     killsPerYear: 100,
     rarity: 'uncommon'
   },
@@ -41,7 +41,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'One of Africa\'s Big Five',
     facts: ['Never been domesticated', 'Known to ambush hunters'],
-    imageUrl: getAnimalImageUrl('cape-buffalo'),
+    imageUrl: getCompleteAnimalImageUrl('cape-buffalo', 'terrestrial'),
     killsPerYear: 200,
     rarity: 'rare'
   },
@@ -55,7 +55,7 @@ export const largeMammals: DeadlyAnimal[] = [
     locations: ['India', 'Southeast Asia'],
     description: 'The intelligent giant of Asia',
     facts: ['Smaller than African elephants', 'Highly intelligent'],
-    imageUrl: getAnimalImageUrl('asian-elephant'),
+    imageUrl: getCompleteAnimalImageUrl('asian-elephant', 'terrestrial'),
     killsPerYear: 400,
     rarity: 'uncommon'
   }

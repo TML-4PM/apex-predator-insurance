@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const canines: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const canines: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'Africa\'s most efficient predator',
     facts: ['80% hunting success rate', 'Pack hunters with incredible endurance'],
-    imageUrl: getAnimalImageUrl('african-wild-dog'),
+    imageUrl: getCompleteAnimalImageUrl('african-wild-dog', 'terrestrial'),
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -27,7 +27,7 @@ export const canines: DeadlyAnimal[] = [
     locations: ['North America'],
     description: 'The adaptable urban predator',
     facts: ['Highly adaptable to urban environments', 'Can run 43 mph'],
-    imageUrl: getAnimalImageUrl('coyote'),
+    imageUrl: getCompleteAnimalImageUrl('coyote', 'terrestrial'),
     killsPerYear: 1,
     rarity: 'common'
   }

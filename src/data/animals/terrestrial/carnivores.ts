@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const carnivores: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Sub-Saharan Africa'],
     description: 'The laughing scavenger with powerful jaws',
     facts: ['Bite force of 1,100 PSI', 'Matriarchal society'],
-    imageUrl: getAnimalImageUrl('spotted-hyena'),
+    imageUrl: getCompleteAnimalImageUrl('spotted-hyena', 'terrestrial'),
     killsPerYear: 10,
     rarity: 'uncommon'
   },
@@ -27,7 +27,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The apex predator of the northern wilderness',
     facts: ['Pack hunters with complex social structure', 'Can run 40 mph'],
-    imageUrl: getAnimalImageUrl('gray-wolf'),
+    imageUrl: getCompleteAnimalImageUrl('gray-wolf', 'terrestrial'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -41,7 +41,7 @@ export const carnivores: DeadlyAnimal[] = [
     locations: ['Alaska', 'Canada', 'Northern USA'],
     description: 'The fierce mustelid with incredible strength',
     facts: ['Can take down prey 5x their size', 'Incredible endurance'],
-    imageUrl: getAnimalImageUrl('wolverine'),
+    imageUrl: getCompleteAnimalImageUrl('wolverine', 'terrestrial'),
     killsPerYear: 0,
     rarity: 'rare'
   }

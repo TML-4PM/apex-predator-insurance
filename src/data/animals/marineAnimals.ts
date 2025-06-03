@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../utils/completeImageMapping';
 import { rays } from './marine/rays';
 import { whales } from './marine/whales';
 
@@ -15,7 +15,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'South Africa', 'California', 'Mexico'],
     description: 'The apex predator of the ocean',
     facts: ['Can detect a drop of blood in 25 gallons of water', 'Reaches speeds of 35 mph'],
-    imageUrl: getAnimalImageUrl('great-white-shark'),
+    imageUrl: getCompleteAnimalImageUrl('great-white-shark', 'marine'),
     killsPerYear: 10,
     rarity: 'legendary'
   },
@@ -29,7 +29,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Pacific Ocean', 'Indian Ocean', 'Caribbean'],
     description: 'The garbage disposal of the sea',
     facts: ['Will eat almost anything', 'Has serrated teeth like a saw'],
-    imageUrl: getAnimalImageUrl('tiger-shark'),
+    imageUrl: getCompleteAnimalImageUrl('tiger-shark', 'marine'),
     killsPerYear: 8,
     rarity: 'rare'
   },
@@ -43,7 +43,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Coastal Waters', 'Rivers', 'Lakes'],
     description: 'The most aggressive shark species',
     facts: ['Can swim in fresh water', 'Highest testosterone levels of any animal'],
-    imageUrl: getAnimalImageUrl('bull-shark'),
+    imageUrl: getCompleteAnimalImageUrl('bull-shark', 'marine'),
     killsPerYear: 12,
     rarity: 'rare'
   },
@@ -57,7 +57,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Thailand', 'Malaysia', 'Philippines'],
     description: 'One of the most venomous creatures on Earth',
     facts: ['Venom can kill in 2-5 minutes', 'Nearly transparent in water'],
-    imageUrl: getAnimalImageUrl('box-jellyfish'),
+    imageUrl: getCompleteAnimalImageUrl('box-jellyfish', 'marine'),
     killsPerYear: 70,
     rarity: 'legendary'
   },
@@ -71,7 +71,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Japan', 'Indonesia'],
     description: 'Small but extremely venomous',
     facts: ['Size of golf ball but can kill 26 adults', 'No known antidote'],
-    imageUrl: getAnimalImageUrl('blue-ringed-octopus'),
+    imageUrl: getCompleteAnimalImageUrl('blue-ringed-octopus', 'marine'),
     killsPerYear: 3,
     rarity: 'legendary'
   },
@@ -85,7 +85,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Australia', 'Indo-Pacific'],
     description: 'Most venomous fish in the world',
     facts: ['Perfectly camouflaged as rock', 'Venom causes excruciating pain'],
-    imageUrl: getAnimalImageUrl('stonefish'),
+    imageUrl: getCompleteAnimalImageUrl('stonefish', 'marine'),
     killsPerYear: 5,
     rarity: 'rare'
   },
@@ -99,7 +99,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Indo-Pacific', 'Caribbean'],
     description: 'Beautiful but deadly mollusk',
     facts: ['Shoots venomous darts', 'No antivenom exists'],
-    imageUrl: getAnimalImageUrl('cone-snail'),
+    imageUrl: getCompleteAnimalImageUrl('cone-snail', 'marine'),
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -113,7 +113,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Global Oceans'],
     description: 'The ocean\'s apex predator',
     facts: ['Hunt in coordinated pods', 'Can beach themselves to catch prey'],
-    imageUrl: getAnimalImageUrl('orca'),
+    imageUrl: getCompleteAnimalImageUrl('orca', 'marine'),
     killsPerYear: 0,
     rarity: 'rare'
   },
@@ -127,7 +127,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Waters', 'Caribbean'],
     description: 'The torpedo of the sea',
     facts: ['Can reach speeds of 36 mph', 'Razor-sharp teeth'],
-    imageUrl: getAnimalImageUrl('barracuda'),
+    imageUrl: getCompleteAnimalImageUrl('barracuda', 'marine'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -141,7 +141,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Reefs Worldwide'],
     description: 'The serpent of the coral reef',
     facts: ['Has two sets of jaws', 'Can grow up to 10 feet long'],
-    imageUrl: getAnimalImageUrl('moray-eel'),
+    imageUrl: getCompleteAnimalImageUrl('moray-eel', 'marine'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -155,7 +155,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Amazon River Basin'],
     description: 'The living electric generator',
     facts: ['Can produce 600-volt electric shocks', 'Actually a type of knifefish'],
-    imageUrl: getAnimalImageUrl('electric-eel'),
+    imageUrl: getCompleteAnimalImageUrl('electric-eel', 'marine'),
     killsPerYear: 1,
     rarity: 'uncommon'
   },
@@ -169,7 +169,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Atlantic Ocean', 'Pacific Ocean', 'Indian Ocean'],
     description: 'The floating terror with deadly tentacles',
     facts: ['Tentacles can extend 165 feet', 'Stings remain venomous after death'],
-    imageUrl: getAnimalImageUrl('portuguese-man-o-war'),
+    imageUrl: getCompleteAnimalImageUrl('portuguese-man-o-war', 'marine'),
     killsPerYear: 15,
     rarity: 'rare'
   },
@@ -183,7 +183,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Caribbean', 'Gulf of Mexico', 'Atlantic Coast'],
     description: 'The graceful glider with a venomous barb',
     facts: ['Barbed tail delivers painful venom', 'Can bury themselves in sand'],
-    imageUrl: getAnimalImageUrl('stingray'),
+    imageUrl: getCompleteAnimalImageUrl('stingray', 'marine'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },
@@ -197,7 +197,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Tropical Oceans Worldwide'],
     description: 'The hammer-headed apex predator',
     facts: ['360-degree vision', 'Can sense electrical fields'],
-    imageUrl: getAnimalImageUrl('hammerhead-shark'),
+    imageUrl: getCompleteAnimalImageUrl('hammerhead-shark', 'marine'),
     killsPerYear: 3,
     rarity: 'rare'
   },
@@ -211,7 +211,7 @@ export const marineAnimals: DeadlyAnimal[] = [
     locations: ['Open Ocean Worldwide'],
     description: 'The elegant ocean wanderer',
     facts: ['Can migrate up to 5,500 miles', 'Excellent vision in low light'],
-    imageUrl: getAnimalImageUrl('blue-shark'),
+    imageUrl: getCompleteAnimalImageUrl('blue-shark', 'marine'),
     killsPerYear: 2,
     rarity: 'uncommon'
   },

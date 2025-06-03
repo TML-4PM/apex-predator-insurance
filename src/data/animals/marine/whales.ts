@@ -1,6 +1,6 @@
 
 import { DeadlyAnimal } from '../../types/DeadlyAnimal';
-import { getAnimalImageUrl } from '../../../utils/imageValidation';
+import { getCompleteAnimalImageUrl } from '../../../utils/completeImageMapping';
 
 export const whales: DeadlyAnimal[] = [
   {
@@ -13,7 +13,7 @@ export const whales: DeadlyAnimal[] = [
     locations: ['Deep Ocean Waters Worldwide'],
     description: 'The deep-diving giant with the largest brain',
     facts: ['Can dive 7,000 feet deep', 'Battles giant squid in the depths'],
-    imageUrl: getAnimalImageUrl('sperm-whale'),
+    imageUrl: getCompleteAnimalImageUrl('sperm-whale', 'marine'),
     killsPerYear: 0,
     rarity: 'rare'
   }
