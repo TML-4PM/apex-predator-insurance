@@ -5,8 +5,8 @@ import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Package, Users, Crown, ShoppingCart, Building2 } from 'lucide-react';
 import { useProducts } from '@/hooks/useProducts';
-import { ProductGrid } from './ProductGrid';
-import { BundleGrid } from './BundleGrid';
+import { EnhancedProductGrid } from './EnhancedProductGrid';
+import { EnhancedBundleGrid } from './EnhancedBundleGrid';
 import { WholesalePricing } from '../wholesale/WholesalePricing';
 import { PartnerApplicationForm } from '../wholesale/PartnerApplicationForm';
 import DynamicRiskCard from '@/components/DynamicRiskCard';
@@ -55,10 +55,23 @@ const ProductPreview = () => {
         <h2 className="text-3xl font-bold text-apex-black mb-4">
           Complete Predator Insurance Collection
         </h2>
-        <p className="text-apex-darkgray/70 max-w-2xl mx-auto">
+        <p className="text-apex-darkgray/70 max-w-2xl mx-auto mb-6">
           All {products.length} apex predators now available at $9.99 each, with category bundles, 
           wholesale pricing, and white-label partnership opportunities.
         </p>
+        
+        {/* Pricing highlights */}
+        <div className="flex flex-wrap justify-center gap-4 text-sm">
+          <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold">
+            Individual: $9.99 each
+          </div>
+          <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
+            Bundles: Save up to $589
+          </div>
+          <div className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full font-semibold">
+            Wholesale: 40% off bulk orders
+          </div>
+        </div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
@@ -69,7 +82,7 @@ const ProductPreview = () => {
           </TabsTrigger>
           <TabsTrigger value="bundles" className="flex items-center gap-2">
             <Package className="w-4 h-4" />
-            Bundles
+            Bundle Collections
           </TabsTrigger>
           <TabsTrigger value="wholesale" className="flex items-center gap-2">
             <Users className="w-4 h-4" />
@@ -83,9 +96,8 @@ const ProductPreview = () => {
 
         <TabsContent value="individual" className="space-y-8">
           {/* Individual Products */}
-          <ProductGrid 
+          <EnhancedProductGrid 
             products={products}
-            onAddToCart={handleAddToCart}
             onSelectProduct={handleSelectProduct}
           />
 
@@ -159,13 +171,26 @@ const ProductPreview = () => {
         </TabsContent>
 
         <TabsContent value="bundles">
-          <BundleGrid 
-            bundles={bundleProducts}
-            onSelectBundle={(bundle) => {
-              console.log('Selected bundle:', bundle);
-              // Handle bundle selection
-            }}
-          />
+          <div className="space-y-8">
+            {/* Bundle Collection Header */}
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-apex-black mb-4">
+                🎁 Bundle Collections - Maximum Savings!
+              </h3>
+              <p className="text-gray-600 max-w-3xl mx-auto">
+                Save hundreds with our curated collections! From regional adventures to experience-based packages, 
+                find the perfect bundle for your next expedition.
+              </p>
+            </div>
+
+            <EnhancedBundleGrid 
+              bundles={bundleProducts}
+              onSelectBundle={(bundle) => {
+                console.log('Selected bundle:', bundle);
+                // Handle bundle selection
+              }}
+            />
+          </div>
         </TabsContent>
 
         <TabsContent value="wholesale">
@@ -185,11 +210,11 @@ const ProductPreview = () => {
 
       {/* Cart Summary */}
       {cart.length > 0 && (
-        <Card className="fixed bottom-4 right-4 p-4 shadow-lg">
+        <Card className="fixed bottom-4 right-4 p-4 shadow-lg bg-white border-2 border-apex-red">
           <div className="flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5" />
-            <span className="font-semibold">{cart.length} items in cart</span>
-            <Button size="sm" className="bg-apex-red hover:bg-apex-red/90 text-white">
+            <ShoppingCart className="w-5 h-5 text-apex-red" />
+            <span className="font-semibold text-apex-black">{cart.length} items in cart</span>
+            <Button size="sm" className="bg-apex-red hover:bg-apex-red/90 text-white ml-2">
               Checkout
             </Button>
           </div>
