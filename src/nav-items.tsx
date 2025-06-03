@@ -1,5 +1,5 @@
 
-import { HomeIcon, ShieldIcon, PhotoIcon, UsersIcon, PhoneIcon, InfoIcon, HeartIcon, StoreIcon, Building2Icon, FileTextIcon, LockIcon } from "lucide-react";
+import { HomeIcon, ShieldIcon, ImageIcon, UsersIcon, PhoneIcon, InfoIcon, HeartIcon, StoreIcon, Building2Icon, FileTextIcon, LockIcon } from "lucide-react";
 import Index from "./pages/Index.jsx";
 import Plans from "./pages/Plans.jsx";
 import Gallery from "./pages/Gallery.jsx";
@@ -28,7 +28,7 @@ export const navItems = [
   {
     title: "Gallery",
     to: "/gallery",
-    icon: <PhotoIcon className="h-4 w-4" />,
+    icon: <ImageIcon className="h-4 w-4" />,
     page: <Gallery />,
   },
   {

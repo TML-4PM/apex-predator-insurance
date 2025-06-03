@@ -83,8 +83,8 @@ export const useProducts = () => {
         ...product,
         category: product.category as Product['category'],
         rarity: product.rarity as Product['rarity'],
-        base_price: product.base_price || product.price || 9.99,
-        price: product.price || product.base_price || 9.99
+        base_price: product.price || 9.99, // Use price as base_price since that's what exists in DB
+        price: product.price || 9.99
       }));
 
       setProducts(mappedProducts);
