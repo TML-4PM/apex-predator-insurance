@@ -28,36 +28,33 @@ export const useRealTimeNotifications = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Use raw query since notifications table may not be in types yet
+      // Direct query to notifications table with profile join
       const { data, error } = await supabase
-        .rpc('get_user_notifications', { p_user_id: user.id })
+        .from('notifications')
+        .select(`
+          *,
+          from_user:profiles!notifications_from_user_id_fkey(username, avatar_url)
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
         .limit(20);
 
       if (error) {
         console.error('Error fetching notifications:', error);
-        // Fallback to direct table query
-        const { data: fallbackData, error: fallbackError } = await supabase
-          .from('notifications' as any)
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(20);
-
-        if (fallbackError) {
-          console.error('Fallback query also failed:', fallbackError);
-          return;
-        }
-
-        if (fallbackData) {
-          setNotifications(fallbackData as Notification[]);
-          setUnreadCount(fallbackData.filter((n: any) => !n.read).length);
-        }
         return;
       }
 
       if (data) {
-        setNotifications(data as Notification[]);
-        setUnreadCount(data.filter((n: any) => !n.read).length);
+        const formattedNotifications = data.map(notification => ({
+          ...notification,
+          from_user: notification.from_user ? {
+            username: notification.from_user.username || 'Unknown User',
+            avatar_url: notification.from_user.avatar_url
+          } : undefined
+        })) as Notification[];
+        
+        setNotifications(formattedNotifications);
+        setUnreadCount(formattedNotifications.filter(n => !n.read).length);
       }
     };
 
@@ -96,7 +93,7 @@ export const useRealTimeNotifications = () => {
 
   const markAsRead = async (notificationId: string) => {
     const { error } = await supabase
-      .from('notifications' as any)
+      .from('notifications')
       .update({ read: true })
       .eq('id', notificationId);
 
@@ -113,7 +110,7 @@ export const useRealTimeNotifications = () => {
     if (!user) return;
 
     const { error } = await supabase
-      .from('notifications' as any)
+      .from('notifications')
       .update({ read: true })
       .eq('user_id', user.id)
       .eq('read', false);
