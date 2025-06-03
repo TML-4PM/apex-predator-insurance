@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -18,27 +17,41 @@ export const useEnhancedComments = (postId: string) => {
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       
-      const { data, error } = await supabase
+      // First get comments
+      const { data: commentsData, error: commentsError } = await supabase
         .from('post_comments')
         .select(`
           *,
-          user_profile:profiles!user_id(username, avatar_url, full_name),
           comment_likes(user_id)
         `)
         .eq('post_id', postId)
         .is('parent_comment_id', null)
         .order('created_at', { ascending: true });
 
-      if (error) throw error;
+      if (commentsError) throw commentsError;
+
+      // Get unique user IDs from comments
+      const userIds = [...new Set(commentsData?.map(comment => comment.user_id).filter(Boolean))];
+      
+      // Fetch profiles separately
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('user_id, username, avatar_url, full_name')
+        .in('user_id', userIds);
+
+      // Create a map of user profiles
+      const profilesMap = new Map();
+      profilesData?.forEach(profile => {
+        profilesMap.set(profile.user_id, profile);
+      });
 
       // Fetch replies for each comment
       const commentsWithReplies = await Promise.all(
-        (data || []).map(async (comment) => {
+        (commentsData || []).map(async (comment) => {
           const { data: replies, error: repliesError } = await supabase
             .from('post_comments')
             .select(`
               *,
-              user_profile:profiles!user_id(username, avatar_url, full_name),
               comment_likes(user_id)
             `)
             .eq('parent_comment_id', comment.id)
@@ -46,13 +59,36 @@ export const useEnhancedComments = (postId: string) => {
 
           if (repliesError) throw repliesError;
 
+          // Get user IDs from replies
+          const replyUserIds = [...new Set(replies?.map(reply => reply.user_id).filter(Boolean))];
+          
+          // Fetch profiles for reply users
+          const { data: replyProfilesData } = await supabase
+            .from('profiles')
+            .select('user_id, username, avatar_url, full_name')
+            .in('user_id', replyUserIds);
+
+          // Create profiles map for replies
+          const replyProfilesMap = new Map();
+          replyProfilesData?.forEach(profile => {
+            replyProfilesMap.set(profile.user_id, profile);
+          });
+
           return {
             ...comment,
-            user_profile: comment.user_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
+            user_profile: profilesMap.get(comment.user_id) || { 
+              username: 'Unknown User', 
+              avatar_url: null, 
+              full_name: null 
+            },
             is_liked: user ? comment.comment_likes.some((like: any) => like.user_id === user.id) : false,
             replies: (replies || []).map((reply: any) => ({
               ...reply,
-              user_profile: reply.user_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
+              user_profile: replyProfilesMap.get(reply.user_id) || { 
+                username: 'Unknown User', 
+                avatar_url: null, 
+                full_name: null 
+              },
               is_liked: user ? reply.comment_likes.some((like: any) => like.user_id === user.id) : false,
             })),
           };

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { ChatConversation, ChatMessage } from '@/types/chat';
@@ -45,32 +44,71 @@ export const useRealTimeChat = (conversationId?: string) => {
   // Fetch messages for a conversation
   const fetchMessages = async (convId: string) => {
     try {
-      const { data, error } = await supabase
+      // First get messages
+      const { data: messagesData, error } = await supabase
         .from('chat_messages')
-        .select(`
-          *,
-          sender_profile:profiles!sender_id(username, avatar_url, full_name),
-          reply_to:chat_messages!reply_to_id(
-            id,
-            content,
-            sender_profile:profiles!sender_id(username)
-          )
-        `)
+        .select('*')
         .eq('conversation_id', convId)
         .order('created_at', { ascending: true });
 
       if (error) throw error;
+
+      // Get unique sender IDs
+      const senderIds = [...new Set(messagesData?.map(msg => msg.sender_id).filter(Boolean))];
+      
+      // Fetch profiles separately
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('user_id, username, avatar_url, full_name')
+        .in('user_id', senderIds);
+
+      // Create profiles map
+      const profilesMap = new Map();
+      profilesData?.forEach(profile => {
+        profilesMap.set(profile.user_id, profile);
+      });
+
+      // Get reply message IDs for nested queries
+      const replyIds = messagesData?.map(msg => msg.reply_to_id).filter(Boolean) || [];
+      
+      let replyMessagesMap = new Map();
+      if (replyIds.length > 0) {
+        const { data: replyMessages } = await supabase
+          .from('chat_messages')
+          .select('*')
+          .in('id', replyIds);
+
+        // Get profiles for reply message senders
+        const replySenderIds = [...new Set(replyMessages?.map(msg => msg.sender_id).filter(Boolean))];
+        const { data: replyProfilesData } = await supabase
+          .from('profiles')
+          .select('user_id, username, avatar_url, full_name')
+          .in('user_id', replySenderIds);
+
+        const replyProfilesMap = new Map();
+        replyProfilesData?.forEach(profile => {
+          replyProfilesMap.set(profile.user_id, profile);
+        });
+
+        replyMessages?.forEach(msg => {
+          replyMessagesMap.set(msg.id, {
+            ...msg,
+            message_type: (msg.message_type as 'text' | 'image' | 'file') || 'text',
+            sender_profile: replyProfilesMap.get(msg.sender_id) || { username: 'Unknown User' }
+          });
+        });
+      }
       
       // Type-safe message mapping with fallbacks
-      const typedMessages: ChatMessage[] = (data || []).map((msg: any) => ({
+      const typedMessages: ChatMessage[] = (messagesData || []).map((msg: any) => ({
         ...msg,
         message_type: (msg.message_type as 'text' | 'image' | 'file') || 'text',
-        sender_profile: msg.sender_profile || { username: 'Unknown User', avatar_url: null, full_name: null },
-        reply_to: msg.reply_to ? {
-          ...msg.reply_to,
-          message_type: (msg.reply_to.message_type as 'text' | 'image' | 'file') || 'text',
-          sender_profile: msg.reply_to.sender_profile || { username: 'Unknown User' }
-        } : undefined
+        sender_profile: profilesMap.get(msg.sender_id) || { 
+          username: 'Unknown User', 
+          avatar_url: null, 
+          full_name: null 
+        },
+        reply_to: msg.reply_to_id ? replyMessagesMap.get(msg.reply_to_id) : undefined
       }));
       
       setMessages(typedMessages);
@@ -181,20 +219,21 @@ export const useRealTimeChat = (conversationId?: string) => {
             const newMessage = payload.new as any;
             
             // Fetch the complete message with profile data
-            const { data } = await supabase
-              .from('chat_messages')
-              .select(`
-                *,
-                sender_profile:profiles!sender_id(username, avatar_url, full_name)
-              `)
-              .eq('id', newMessage.id)
+            const { data: profileData } = await supabase
+              .from('profiles')
+              .select('username, avatar_url, full_name')
+              .eq('user_id', newMessage.sender_id)
               .single();
 
-            if (data) {
+            if (newMessage) {
               const typedMessage: ChatMessage = {
-                ...data,
-                message_type: (data.message_type as 'text' | 'image' | 'file') || 'text',
-                sender_profile: data.sender_profile || { username: 'Unknown User', avatar_url: null, full_name: null }
+                ...newMessage,
+                message_type: (newMessage.message_type as 'text' | 'image' | 'file') || 'text',
+                sender_profile: profileData || { 
+                  username: 'Unknown User', 
+                  avatar_url: null, 
+                  full_name: null 
+                }
               };
               setMessages(prev => [...prev, typedMessage]);
             }
