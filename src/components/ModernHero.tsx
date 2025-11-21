@@ -46,17 +46,18 @@ const ModernHero = () => {
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
+    <div className="relative min-h-screen flex flex-col bg-gradient-hero overflow-hidden">
       {/* Video Background with Overlay */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10" />
         <div 
-          className="absolute inset-0 bg-center bg-cover z-0"
+          className="absolute inset-0 bg-center bg-cover z-0 animate-fade-in"
           style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')`,
             filter: 'brightness(0.4) contrast(1.2)'
           }} 
         />
+        <div className="absolute inset-0 grid-pattern opacity-20 z-5" />
       </div>
 
       {/* Floating Social Proof */}
@@ -107,14 +108,14 @@ const ModernHero = () => {
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <Link to="/plans">
-                <Button size="lg" className="bg-apex-red hover:bg-apex-red/90 text-white px-8 py-4 text-lg">
+                <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-primary-foreground px-8 py-4 text-lg shadow-glow glow-pulse transition-all duration-300 hover:scale-105">
                   <ShoppingCart className="mr-2" size={20} />
                   Buy Insurance Now
                 </Button>
               </Link>
               
               <Link to="/donate">
-                <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 text-lg">
+                <Button size="lg" className="bg-card/20 hover:bg-card/30 text-primary-foreground border border-border/30 backdrop-blur-md px-8 py-4 text-lg transition-all duration-300 hover:scale-105">
                   <Heart className="mr-2" size={20} />
                   Support Our Mission
                 </Button>
