@@ -33,21 +33,21 @@ export const ProductGrid = ({ products, onAddToCart, onSelectProduct }: ProductG
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case 'common': return 'bg-gray-500';
-      case 'uncommon': return 'bg-green-600';
-      case 'rare': return 'bg-blue-600';
-      case 'legendary': return 'bg-purple-600';
-      case 'mythic': return 'bg-red-600';
-      default: return 'bg-gray-500';
+      case 'common': return 'bg-muted';
+      case 'uncommon': return 'bg-accent/80';
+      case 'rare': return 'bg-primary/70';
+      case 'legendary': return 'bg-primary';
+      case 'mythic': return 'bg-destructive';
+      default: return 'bg-muted';
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 p-4 bg-white rounded-lg shadow-sm">
+      <div className="flex flex-col md:flex-row gap-4 p-4 bg-card rounded-lg shadow-card border border-border">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search animals..."
             value={searchTerm}
@@ -87,12 +87,12 @@ export const ProductGrid = ({ products, onAddToCart, onSelectProduct }: ProductG
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
-          <Card key={product.id} className="group hover:shadow-lg transition-shadow cursor-pointer overflow-hidden">
+          <Card key={product.id} className="group hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden bg-card border-border">
             <div onClick={() => onSelectProduct(product)} className="p-4">
               <div className="text-center mb-4">
-                <div className="text-6xl mb-2">{product.icon}</div>
-                <h3 className="font-bold text-lg text-apex-black">{product.name}</h3>
-                <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+                <div className="text-6xl mb-2 transition-transform group-hover:scale-110 duration-300">{product.icon}</div>
+                <h3 className="font-bold text-lg text-foreground">{product.name}</h3>
+                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{product.description}</p>
               </div>
               
               <div className="space-y-3">
@@ -106,10 +106,10 @@ export const ProductGrid = ({ products, onAddToCart, onSelectProduct }: ProductG
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-apex-red">
+                  <span className="text-2xl font-bold text-primary">
                     ${product.base_price}
                   </span>
-                  <Badge className="bg-green-600 text-white">
+                  <Badge className="bg-accent text-accent-foreground">
                     {product.category}
                   </Badge>
                 </div>
@@ -122,7 +122,7 @@ export const ProductGrid = ({ products, onAddToCart, onSelectProduct }: ProductG
                   e.stopPropagation();
                   onAddToCart(product);
                 }}
-                className="w-full bg-apex-red hover:bg-apex-red/90 text-white"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow transition-all duration-300 hover:scale-105"
               >
                 <ShoppingCart className="h-4 w-4 mr-2" />
                 Add to Cart
@@ -133,8 +133,8 @@ export const ProductGrid = ({ products, onAddToCart, onSelectProduct }: ProductG
       </div>
 
       {filteredProducts.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
+        <div className="text-center py-12 bg-card rounded-lg border border-border">
+          <p className="text-muted-foreground text-lg">No products found matching your criteria.</p>
         </div>
       )}
     </div>

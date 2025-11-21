@@ -20,13 +20,13 @@ const PhotoGallery = () => {
   const selectedPhoto = galleryItems.find(item => item.id === openPhotoId);
   
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-apex-black mb-6 animate-fade-up">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 animate-fade-up">
             Adventure Snapshots
           </h2>
-          <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100 mb-8">
+          <p className="text-xl text-muted-foreground animate-fade-up stagger-1 mb-8">
             See real adventures from our community of thrill-seekers.
           </p>
         </div>
@@ -37,7 +37,7 @@ const PhotoGallery = () => {
         />
         
         <div className="mt-12 text-center">
-          <button className="inline-flex items-center justify-center px-6 py-3 bg-apex-lightgray hover:bg-apex-lightgray/70 text-apex-darkgray rounded-lg transition-all duration-300">
+          <button className="inline-flex items-center justify-center px-6 py-3 bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-lg transition-all duration-300 hover:scale-105 shadow-card">
             View All Adventures
           </button>
         </div>
