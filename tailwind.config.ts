@@ -26,11 +26,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				apex: {
-					red: '#ea384c',
-					yellow: '#FFCC00',
-					black: '#1A1F2C',
-					darkgray: '#403E43',
-					lightgray: '#F5F5F7'
+					red: 'hsl(0 73% 57%)',
+					yellow: 'hsl(48 100% 50%)',
+					black: 'hsl(222 84% 5%)',
+					darkgray: 'hsl(0 0% 26%)',
+					lightgray: 'hsl(0 0% 96%)'
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -137,7 +137,14 @@ export default {
 			boxShadow: {
 				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
 				'elevation': '0 10px 40px -10px rgba(0, 0, 0, 0.5)',
-				'card': '0 4px 20px rgba(0, 0, 0, 0.2)',
+				'card': 'var(--shadow-card)',
+				'glow': 'var(--shadow-glow)',
+				'elevated': 'var(--shadow-elevated)',
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-accent': 'var(--gradient-accent)',
+				'gradient-hero': 'var(--gradient-hero)',
 			},
 			backdropBlur: {
 				'xs': '2px',
