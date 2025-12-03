@@ -6,9 +6,14 @@ export const getAllMappedAnimals = (): string[] => {
 };
 
 export const getBucketStats = () => {
-  const buckets: Record<string, number> = {};
+  // Count images by domain/source
+  const sources: Record<string, number> = { 'unsplash': 0, 'other': 0 };
   Object.values(COMPLETE_IMAGE_MAPPING).forEach(mapping => {
-    buckets[mapping.bucket] = (buckets[mapping.bucket] || 0) + 1;
+    if (mapping.url.includes('unsplash')) {
+      sources['unsplash']++;
+    } else {
+      sources['other']++;
+    }
   });
-  return buckets;
+  return sources;
 };

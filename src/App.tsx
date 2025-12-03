@@ -80,6 +80,7 @@ function App() {
                       <Route path="/content" element={<ContentHub />} />
                       <Route path="/audit" element={<PlatformAudit />} />
                       <Route path="/store" element={<LazyPages.Store />} />
+                      <Route path="/products" element={<LazyPages.Plans />} />
                       <Route path="/plans" element={<LazyPages.Plans />} />
                       <Route path="/checkout" element={<LazyPages.Checkout />} />
                       <Route path="/social" element={<LazyPages.SocialHub />} />
