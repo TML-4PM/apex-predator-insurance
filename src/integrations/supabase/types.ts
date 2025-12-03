@@ -5063,6 +5063,90 @@ export type Database = {
           },
         ]
       }
+      fax_history: {
+        Row: {
+          country_code: string
+          cover_note: string | null
+          created_at: string | null
+          delivered_at: string | null
+          file_names: string[]
+          file_urls: string[] | null
+          id: string
+          pages_count: number | null
+          recipient_number: string
+          reference_id: string | null
+          sender_email: string
+          status: string | null
+          transmitted_at: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          country_code: string
+          cover_note?: string | null
+          created_at?: string | null
+          delivered_at?: string | null
+          file_names: string[]
+          file_urls?: string[] | null
+          id?: string
+          pages_count?: number | null
+          recipient_number: string
+          reference_id?: string | null
+          sender_email: string
+          status?: string | null
+          transmitted_at?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          country_code?: string
+          cover_note?: string | null
+          created_at?: string | null
+          delivered_at?: string | null
+          file_names?: string[]
+          file_urls?: string[] | null
+          id?: string
+          pages_count?: number | null
+          recipient_number?: string
+          reference_id?: string | null
+          sender_email?: string
+          status?: string | null
+          transmitted_at?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fax_usage: {
+        Row: {
+          created_at: string | null
+          id: string
+          month_reset_at: string | null
+          monthly_faxes_sent: number | null
+          total_faxes_sent: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          month_reset_at?: string | null
+          monthly_faxes_sent?: number | null
+          total_faxes_sent?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          month_reset_at?: string | null
+          monthly_faxes_sent?: number | null
+          total_faxes_sent?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       featured_content_slots: {
         Row: {
           created_at: string | null
@@ -8712,6 +8796,7 @@ export type Database = {
           id: string
           onboarding_completed: boolean
           privacy_preferences: Json | null
+          subscription_tier: string | null
           updated_at: string
           user_id: string
           username: string
@@ -8725,6 +8810,7 @@ export type Database = {
           id?: string
           onboarding_completed?: boolean
           privacy_preferences?: Json | null
+          subscription_tier?: string | null
           updated_at?: string
           user_id: string
           username: string
@@ -8738,6 +8824,7 @@ export type Database = {
           id?: string
           onboarding_completed?: boolean
           privacy_preferences?: Json | null
+          subscription_tier?: string | null
           updated_at?: string
           user_id?: string
           username?: string
@@ -13242,6 +13329,7 @@ export type Database = {
         Args: { challenge_date: string }
         Returns: string
       }
+      generate_fax_reference: { Args: never; Returns: string }
       generate_qr_token: { Args: never; Returns: string }
       generate_study_key: { Args: never; Returns: string }
       get_category_analytics: {
