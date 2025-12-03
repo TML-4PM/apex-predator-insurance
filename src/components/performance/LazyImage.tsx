@@ -25,6 +25,9 @@ const LazyImage: React.FC<LazyImageProps> = ({
   const [isInView, setIsInView] = useState(false);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  
+  // Use internal fallback only when no external error handler provided
+  const useInternalFallback = !onError;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,7 +66,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
       )}
       {isInView && (
         <img
-          src={hasError ? fallback : src}
+          src={(hasError && useInternalFallback) ? fallback : src}
           alt={alt}
           className={`transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
