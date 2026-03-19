@@ -25,6 +25,7 @@ import Auth from "./pages/Auth";
 import DonationPage from "./pages/DonationPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
+import CoveredPage from "./pages/CoveredPage";
 import ContentHub from "./pages/ContentHub";
 import PlatformAudit from "./pages/PlatformAudit";
 import ChatPage from "./pages/ChatPage";
@@ -77,6 +78,7 @@ function App() {
                       <Route path="/donate" element={<DonationPage />} />
                       <Route path="/payment/success" element={<PaymentSuccess />} />
                       <Route path="/payment/failure" element={<PaymentFailure />} />
+                      <Route path="/covered" element={<CoveredPage />} />
                       <Route path="/content" element={<ContentHub />} />
                       <Route path="/audit" element={<PlatformAudit />} />
                       <Route path="/store" element={<LazyPages.Store />} />
