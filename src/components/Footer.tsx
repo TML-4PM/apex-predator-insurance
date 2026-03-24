@@ -50,6 +50,7 @@ const Footer = () => {
               <li><Link to="/gallery" className="text-white/60 hover:text-white transition-colors duration-300">Adventure Gallery</Link></li>
               <li><Link to="/testimonials" className="text-white/60 hover:text-white transition-colors duration-300">Customer Stories</Link></li>
               <li><Link to="/disclaimer" className="text-white/60 hover:text-white transition-colors duration-300 font-medium text-amber-400/70 hover:text-amber-400">Legal Disclaimer</Link></li>
+              <li><Link to="/donate" className="text-white/60 hover:text-white transition-colors duration-300">Support Wildlife Education</Link></li>
             </ul>
           </div>
 

@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CalendarDays, Clock, User, Tag } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import RelatedPredators from '@/components/blog/RelatedPredators';
 
 // Sample blog post data - this would typically come from a CMS or API
 const blogPosts = [
@@ -173,7 +174,7 @@ const blogPosts = [
     date: 'March 3, 2023',
     readTime: '8 min read',
     category: 'Crocodile Safety',
-    image: 'https://images.unsplash.com/photo-1610058908279-b8ef27153f5e?q=80&w=1000',
+    image: 'https://images.unsplash.com/photo-1484620479898-57494cfedf1a?q=80&w=1000',
     slug: 'crocodile-encounters-surviving'
   }
 ];
@@ -243,6 +244,8 @@ const ArticleDetail = () => {
             </div>
             
             <div className="prose prose-lg max-w-none mb-12" dangerouslySetInnerHTML={{ __html: article.content }} />
+            
+            <RelatedPredators articleCategory={article.category} />
             
             <Separator className="my-12" />
             
