@@ -172,7 +172,7 @@ serve(async (req) => {
     
     console.log('Starting content crawl:', { sources, subreddits, keywords });
     
-    let allNewContent = [];
+    let allNewContent: any[] = [];
     
     if (sources.includes('reddit')) {
       const redditContent = await crawlReddit(subreddits || ['tifu', 'Whatcouldgowrong'], keywords || []);
