@@ -174,7 +174,7 @@ const blogPosts = [
     date: 'March 3, 2023',
     readTime: '8 min read',
     category: 'Crocodile Safety',
-    image: 'https://images.unsplash.com/photo-1610058908279-b8ef27153f5e?q=80&w=1000',
+    image: 'https://images.unsplash.com/photo-1484620479898-57494cfedf1a?q=80&w=1000',
     slug: 'crocodile-encounters-surviving'
   }
 ];

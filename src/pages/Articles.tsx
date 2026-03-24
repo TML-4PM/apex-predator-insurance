@@ -75,7 +75,7 @@ const blogPosts = [
     date: 'January 9, 2023',
     readTime: '5 min read',
     category: 'African Wildlife',
-    image: 'https://images.unsplash.com/photo-1595162265991-c9e603c0f2e7?q=80&w=1000',
+    image: 'https://images.unsplash.com/photo-1521762695480-fc8d4b6c3e63?q=80&w=1000',
     slug: 'hippos-africas-most-dangerous'
   }
 ];
