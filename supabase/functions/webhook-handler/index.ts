@@ -229,7 +229,7 @@ serve(async (req) => {
               }
             );
           } catch (emailError) {
-            console.error(`Error sending sample certificates: ${emailError.message}`);
+            console.error(`Error sending sample certificates: ${(emailError as Error).message}`);
             return new Response(
               JSON.stringify({ 
                 success: false, 
