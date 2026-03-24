@@ -301,7 +301,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message || "Unknown server error" 
+        error: (error as Error).message || "Unknown server error" 
       }),
       { 
         status: 500, 

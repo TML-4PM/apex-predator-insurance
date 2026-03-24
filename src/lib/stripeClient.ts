@@ -37,6 +37,23 @@ export const configurePaymentMethodOptions = (): Record<string, PaymentMethodCon
   google_pay: { enabled: true, countries: ['us','ca','au','nz','jp','sg','hk','tw','gb','fr','es','it','de'] },
 });
 
+// Subscription management stubs — these call the webhook edge function
+export const fetchSubscription = async (subscriptionId: string): Promise<any> => {
+  return { id: subscriptionId, status: 'active', demoMode: true, message: 'Subscription management coming soon' };
+};
+
+export const updateSubscription = async (subscriptionId: string, updates: any): Promise<any> => {
+  return { id: subscriptionId, ...updates, demoMode: true, message: 'Subscription management coming soon' };
+};
+
+export const cancelSubscription = async (subscriptionId: string): Promise<any> => {
+  return { id: subscriptionId, status: 'cancelled', demoMode: true, message: 'Subscription management coming soon' };
+};
+
+export const reactivateSubscription = async (subscriptionId: string): Promise<any> => {
+  return { id: subscriptionId, status: 'active', demoMode: true, message: 'Subscription management coming soon' };
+};
+
 export const createPaymentIntent = async (amount: number, metadata: any, countryCode = 'AU'): Promise<PaymentIntentResponse> => {
   try {
     if (!metadata.fullName || !metadata.email) {
