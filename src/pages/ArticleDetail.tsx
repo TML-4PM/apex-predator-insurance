@@ -245,6 +245,8 @@ const ArticleDetail = () => {
             
             <div className="prose prose-lg max-w-none mb-12" dangerouslySetInnerHTML={{ __html: article.content }} />
             
+            <RelatedPredators articleCategory={article.category} />
+            
             <Separator className="my-12" />
             
             <div className="rounded-lg bg-apex-lightgray/30 p-6">
