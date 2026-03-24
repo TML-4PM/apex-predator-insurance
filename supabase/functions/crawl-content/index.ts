@@ -172,7 +172,7 @@ serve(async (req) => {
     
     console.log('Starting content crawl:', { sources, subreddits, keywords });
     
-    let allNewContent = [];
+    let allNewContent: any[] = [];
     
     if (sources.includes('reddit')) {
       const redditContent = await crawlReddit(subreddits || ['tifu', 'Whatcouldgowrong'], keywords || []);
@@ -191,7 +191,7 @@ serve(async (req) => {
     
   } catch (error) {
     console.error('Crawl error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: (error as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

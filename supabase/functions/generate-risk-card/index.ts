@@ -116,7 +116,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error generating risk card:', error)
     return new Response(
-      JSON.stringify({ error: 'Failed to generate risk card', details: error.message }),
+      JSON.stringify({ error: 'Failed to generate risk card', details: (error as Error).message }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 
         status: 500 

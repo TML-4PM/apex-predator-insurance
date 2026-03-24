@@ -82,11 +82,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                 </Link>
               )}
               <Link
-                to="/settings"
+                to="/dashboard"
                 onClick={onClose}
                 className="block px-5 py-3 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50"
               >
-                Settings
+                My Account
               </Link>
               <button
                 onClick={() => {

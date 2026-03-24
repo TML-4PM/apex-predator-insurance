@@ -229,11 +229,11 @@ serve(async (req) => {
               }
             );
           } catch (emailError) {
-            console.error(`Error sending sample certificates: ${emailError.message}`);
+            console.error(`Error sending sample certificates: ${(emailError as Error).message}`);
             return new Response(
               JSON.stringify({ 
                 success: false, 
-                error: `Failed to send sample certificates: ${emailError.message}` 
+                error: `Failed to send sample certificates: ${(emailError as Error).message}` 
               }),
               { 
                 status: 500, 
@@ -269,11 +269,11 @@ serve(async (req) => {
               }
             );
           } catch (emailError) {
-            console.error(`Error sending subscription notification: ${emailError.message}`);
+            console.error(`Error sending subscription notification: ${(emailError as Error).message}`);
             return new Response(
               JSON.stringify({ 
                 success: false, 
-                error: `Failed to send subscription notification: ${emailError.message}` 
+                error: `Failed to send subscription notification: ${(emailError as Error).message}` 
               }),
               { 
                 status: 500, 
@@ -301,7 +301,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message || "Unknown server error" 
+        error: (error as Error).message || "Unknown server error" 
       }),
       { 
         status: 500, 

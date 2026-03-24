@@ -173,9 +173,7 @@ const MerchandiseStore = () => {
           <p className="text-muted-foreground mb-4">
             NFT Certificates • VR Experiences • Monthly Survival Boxes
           </p>
-          <Button variant="outline">
-            Join Waitlist
-          </Button>
+          <Badge variant="secondary" className="text-sm px-4 py-2">Coming Soon</Badge>
         </CardContent>
       </Card>
     </div>

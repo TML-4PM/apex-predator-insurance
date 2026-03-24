@@ -162,7 +162,7 @@ serve(async (req) => {
 
 // Helper function to get payment method options based on country code
 function getPaymentMethodOptions(countryCode = 'US') {
-  const options = {};
+  const options: Record<string, any> = {};
   
   if (countryCode === 'US') {
     // For US customers, enable Apple Pay and Google Pay

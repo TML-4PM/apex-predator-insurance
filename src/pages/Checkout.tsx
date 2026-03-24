@@ -109,7 +109,7 @@ const Checkout = () => {
       const primaryPlan = cartItems.length > 0 ? cartItems[0] : selectedPlan;
       
       // Navigate to certificate page with user data
-      navigate('/certificate', { 
+      navigate('/covered', { 
         state: { 
           plan: primaryPlan,
           user: freshUserData,
