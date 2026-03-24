@@ -269,7 +269,7 @@ serve(async (req) => {
               }
             );
           } catch (emailError) {
-            console.error(`Error sending subscription notification: ${emailError.message}`);
+            console.error(`Error sending subscription notification: ${(emailError as Error).message}`);
             return new Response(
               JSON.stringify({ 
                 success: false, 
