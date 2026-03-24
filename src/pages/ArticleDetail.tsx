@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CalendarDays, Clock, User, Tag } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import RelatedPredators from '@/components/blog/RelatedPredators';
 
 // Sample blog post data - this would typically come from a CMS or API
 const blogPosts = [
