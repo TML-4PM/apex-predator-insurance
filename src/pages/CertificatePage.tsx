@@ -185,8 +185,8 @@ const CertificatePage = () => {
                 Your Certificate is Ready!
               </h1>
               <p className="text-xl text-apex-darkgray/70">
-                Congratulations on your Wildlife Shield protection! <br />
-                <span className="text-apex-red font-semibold">$50,000 accidental death benefit</span>
+                Congratulations on your Wildlife Shield certificate! <br />
+                <span className="text-apex-red font-semibold">Your novelty predator certificate is ready</span>
               </p>
               
               <Alert className="mt-6 mb-4 bg-green-50 border-green-200">

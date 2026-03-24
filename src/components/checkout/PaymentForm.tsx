@@ -408,7 +408,7 @@ export const PaymentForm = ({
         </div>
         
         <p className="text-xs text-gray-500 mt-4 text-center">
-          * This is a real insurance product with a $50,000 accidental death benefit.
+          * Novelty certificate only — not real insurance. For entertainment and gifting purposes.
         </p>
       </div>
     </form>
