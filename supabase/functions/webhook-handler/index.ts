@@ -233,7 +233,7 @@ serve(async (req) => {
             return new Response(
               JSON.stringify({ 
                 success: false, 
-                error: `Failed to send sample certificates: ${emailError.message}` 
+                error: `Failed to send sample certificates: ${(emailError as Error).message}` 
               }),
               { 
                 status: 500, 
