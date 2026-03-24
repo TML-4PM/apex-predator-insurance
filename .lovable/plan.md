@@ -1,152 +1,62 @@
 
 
-# Full Site Audit & Repair Plan — Apex Predator Insurance
+# Fix All Wrong Animal Images — Complete URL Replacement
 
-## EXECUTIVE STATUS
+## Problem
+Nearly every animal image is wrong. From screenshots and URL verification:
+- **Box Jellyfish** shows an octopus
+- **Saltwater/Nile Crocodile** shows an elephant
+- **Hippopotamus** shows a dog (photo `1517849845537` is a famous dog portrait)
+- **Gray Wolf/Dingo/Coyote** shows a man's face (photo `1507003211169` is a human portrait)
+- **All insects** share one generic URL that may not even be an insect
+- **All snakes** share one generic URL
+- **All marine animals** (stonefish, barracuda, rays, eels) share one wrong URL
+- **Category fallbacks** also use wrong URLs (reptile fallback shows elephant)
 
-**Launch readiness: ~55%**
-**Critical blockers: 5**
-**Estimated fix time: 1 session**
+Many Unsplash photo IDs were fabricated — they show completely unrelated subjects.
 
----
+## Root Cause
+The file `src/utils/animalImageMappings.ts` has ~65 animals but many share duplicate, incorrect Unsplash photo IDs. Same problem in `src/utils/categoryFallbacks.ts`.
 
-## 1. BUILD ERRORS (STOP-SHIP — 19 errors blocking deployment)
+## Verified Correct Unsplash Photo IDs (from Unsplash pages)
 
-### A. SubscriptionManager imports non-existent functions
-**File:** `src/components/checkout/SubscriptionManager.tsx` lines 6-9
-**Problem:** Imports `fetchSubscription`, `updateSubscription`, `cancelSubscription`, `reactivateSubscription` from `@/lib/stripeClient` — these exports don't exist.
-**Fix:** Add stub implementations to `src/lib/stripeClient.ts` that call the Supabase edge function, or remove SubscriptionManager from the build since it's not wired to any route anyway.
+| Animal | Verified Photo ID |
+|--------|------------------|
+| Box jellyfish | `photo-1571767594520-3106ddc752df` |
+| Crocodile | `photo-1484620479898-57494cfedf1a` |
+| Polar bear | `photo-1614720216135-c83575f58165` |
+| Hippopotamus | `photo-1521762695480-fc8d4b6c3e63` |
+| Gray wolf | `photo-1653915052544-57318d65b1ad` |
+| King cobra | `photo-1572317584569-f652a3350a69` |
+| Komodo dragon | `photo-1767986857017-0b1f95af57b1` |
+| Orca | `photo-1768345074605-d760b5d2ecd6` |
+| Golden eagle | `photo-1750797636255-8c939940bcad` |
+| Scorpion | `photo-1531003914465-d6c6673bc635` |
+| Chimpanzee | `photo-1742328114706-c38529d47f6b` |
+| Cape buffalo | `photo-1764258562741-2b754c56e5f4` |
+| African wild dog | `photo-1759145223076-aa96aa7ef122` |
+| Spotted hyena | `photo-1692198025819-db9e0a6c9ebd` |
 
-### B. Edge function TypeScript errors (14 errors across 5 files)
-All are the same two patterns:
-1. **`error` is of type `unknown`** — need `(error as Error).message` in catch blocks
-2. **`options` typed as `{}`** — need `Record<string, any>` in `getPaymentMethodOptions`
-3. **`allNewContent` implicit `any[]`** — needs explicit type annotation
+## Implementation Plan
 
-**Files to fix:**
-- `supabase/functions/crawl-content/index.ts` — type `allNewContent` and `error`
-- `supabase/functions/create-payment-intent/index.ts` — type `options` as `Record<string, any>`
-- `supabase/functions/generate-risk-card/index.ts` — type `error`
-- `supabase/functions/get-user-notifications/index.ts` — type `error`
-- `supabase/functions/process-content-ai/index.ts` — type `error`
-- `supabase/functions/webhook-handler/index.ts` — type 4 `emailError`/`error` catches
+### Step 1: Replace entire `src/utils/animalImageMappings.ts`
+Rewrite with verified correct Unsplash photo IDs for every animal. For animals without a verified ID yet, search additional Unsplash pages during implementation to find correct ones. Each animal gets a unique, species-accurate image — no more sharing URLs between unrelated species.
 
----
+### Step 2: Fix `src/utils/categoryFallbacks.ts`
+Replace all 5 category fallback URLs with verified correct ones:
+- marine → verified shark/ocean photo
+- terrestrial → verified lion photo (current one may be correct)
+- reptile → verified crocodile: `photo-1484620479898-57494cfedf1a`
+- aerial → verified eagle: `photo-1750797636255-8c939940bcad`
+- insect → verified scorpion: `photo-1531003914465-d6c6673bc635`
 
-## 2. BROKEN ROUTES & NAVIGATION
+### Step 3: Verify remaining URLs during implementation
+For animals I haven't verified yet (black widow, bullet ant, barracuda, moray eel, manta ray, anaconda, etc.), I'll search Unsplash during implementation to find correct photo IDs for each. Every single URL will be verified before being written.
 
-### Sitemap lists non-existent routes
-- `/claims` — no route exists, no page exists → **404 for Google**
-- `/faq` — no route exists (FAQ is a component on Index, not a page) → **404 for Google**
+### Files Changed
+- `src/utils/animalImageMappings.ts` — complete rewrite (~65 animals)
+- `src/utils/categoryFallbacks.ts` — 5 URL replacements
 
-**Fix:** Update `public/sitemap.xml` to only list real routes: `/`, `/about`, `/plans`, `/store`, `/gallery`, `/contact`, `/testimonials`, `/articles`, `/terms`, `/privacy`, `/disclaimer`
-
-### Mobile menu links to `/settings` — no route exists
-**File:** `src/components/navbar/MobileMenu.tsx` line 87
-**Fix:** Change to `/dashboard` or remove
-
-### Certificate route mismatch
-Checkout navigates to `/certificate` (no param) but route expects `/certificate/:animalName`. Post-purchase flow will 404.
-**Fix:** Update `handlePaymentSuccess` in `Checkout.tsx` to navigate to `/covered` (which exists) or create a general certificate route.
-
----
-
-## 3. REALITY LEDGER
-
-| Feature | Status | Evidence |
-|---------|--------|----------|
-| Homepage | REAL | Renders, CTAs link to /plans |
-| Plans page | REAL | Lists products, add to cart works |
-| Cart system | REAL | localStorage-backed, persists |
-| Checkout form | PARTIAL | Form renders, Stripe loads, but falls back to "demo mode" if no STRIPE_SECRET_KEY |
-| Payment processing | PRETEND | Edge function returns demoMode when no key configured |
-| Subscription management | PRETEND | Imports non-existent functions, will crash if accessed |
-| Gallery | PARTIAL | Page loads but images depend on external URLs that may break |
-| Store/Merchandise | PRETEND | Emoji placeholders, no real products, "Add to Cart" goes nowhere |
-| Blog/Articles | PARTIAL | Loads but content is from Supabase — may be empty |
-| Certificate generation | PARTIAL | Preview works, post-purchase flow navigates to wrong route |
-| Social/Community | PARTIAL | UI renders, requires auth for interaction |
-| YouTube integration | PRETEND | Links to non-existent channel |
-| Printify integration | PRETEND | No Printify code exists anywhere in the codebase |
-| Email flows | PRETEND | Edge functions reference email sending but no email provider configured |
-| Donation page | PARTIAL | Loads, uses Stripe session — same demo mode issue |
-| World Map | REAL | Interactive SVG renders |
-| Contact form | PARTIAL | Form exists, submission goes to Supabase |
-| Auth system | REAL | Supabase auth configured |
-| PWA/Install prompt | REAL | Service worker registered |
-
-**Counts: REAL: 6 | PARTIAL: 7 | PRETEND: 5**
-
----
-
-## 4. IMAGE AUDIT
-
-- **Hero background:** Unsplash URL — works but relies on external CDN
-- **Supporter testimonials:** 3 Unsplash face URLs — works
-- **Gallery animals:** Previous fix applied Unsplash fallbacks — should work but fragile
-- **Merchandise Store:** All products show 🎯 emoji, no real images
-- **Insurance Plans:** Emoji icons (🦈🦁🐻) — acceptable for novelty product
-- **No Supabase storage bucket images loading** — bucket URLs are non-functional
-
----
-
-## 5. CHECKOUT FLOW AUDIT
-
-1. Add to cart → **WORKS** (localStorage)
-2. Navigate to /checkout → **WORKS** (state passed via router)
-3. Fill form → **WORKS** (validation present)
-4. Stripe Elements load → **WORKS** (test key hardcoded)
-5. Payment submission → **DEMO MODE** (no STRIPE_SECRET_KEY in edge function secrets)
-6. Post-payment redirect → **BROKEN** (navigates to `/certificate` which 404s)
-
----
-
-## 6. IMPLEMENTATION PLAN (Execution Order)
-
-### Step 1: Fix all build errors
-- Add 4 stub exports to `src/lib/stripeClient.ts` for subscription functions
-- Fix all edge function TypeScript errors (type annotations on catch blocks and options object)
-
-### Step 2: Fix broken routes
-- Update sitemap.xml to only list real routes
-- Fix `/settings` link in MobileMenu to `/dashboard`
-- Fix post-checkout navigation to `/covered` instead of `/certificate`
-
-### Step 3: Fix checkout post-payment flow
-- In `Checkout.tsx`, change `navigate('/certificate', ...)` to `navigate('/covered', ...)`
-
-### Step 4: Clean up pretend features
-- Remove "Compare Savings" button in Store (does nothing)
-- Remove "Join Waitlist" button in MerchandiseStore (does nothing)
-- Merchandise "Add to Cart" should either work or be labeled "Coming Soon"
-
-### Step 5: Sitemap & SEO
-- Remove `/claims` and `/faq` from sitemap
-- Add real routes to sitemap
-
----
-
-## 7. ESCALATION — Cannot Fix Automatically
-
-| Item | Action Required | Where |
-|------|----------------|-------|
-| Stripe payments | Add `STRIPE_SECRET_KEY` to Supabase Edge Function secrets | Supabase Dashboard → Settings → Functions |
-| Printify integration | Does not exist — needs full implementation or removal from marketing | Business decision |
-| YouTube channel | Channel doesn't exist — create or remove links | YouTube + Footer.tsx |
-| Email sending | No email provider (Resend/SendGrid) configured | Supabase secrets |
-| Social media links | Point to non-existent profiles | Create profiles or remove links |
-
----
-
-## 8. FINAL VERDICT
-
-## ⚠️ READY WITH RISKS
-
-The site can launch as a **novelty certificate store** if:
-1. Build errors are fixed (blocking deployment)
-2. Post-checkout flow is fixed (broken user journey)
-3. Sitemap is corrected (SEO damage)
-4. Stripe secret key is added (or demo mode is clearly communicated to users)
-
-The merchandise store, subscription management, YouTube, and Printify integrations are **not real** and should either be removed or clearly marked as "Coming Soon" before launch.
+### No Other Files Change
+The data files (`bigCats.ts`, `jellyfish.ts`, etc.) all call `getCompleteAnimalImageUrl()` which reads from the mapping. Fixing the mapping file fixes all images site-wide.
 
