@@ -115,7 +115,7 @@ const TravelerStories = () => {
                   </div>
                   
                   <Badge variant="outline" className="text-xs">
-                    💰 $50K Covered
+                    🎫 Novelty Certificate
                   </Badge>
                 </div>
               </div>

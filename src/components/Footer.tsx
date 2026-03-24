@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Instagram, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { ShieldCheck, Mail } from 'lucide-react';
 import BrandCarousel from './BrandCarousel';
 
 const Footer = () => {
