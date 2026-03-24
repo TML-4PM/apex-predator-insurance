@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Instagram, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { ShieldCheck, Mail } from 'lucide-react';
 import BrandCarousel from './BrandCarousel';
 
 const Footer = () => {
@@ -35,17 +35,8 @@ const Footer = () => {
             </div>
 
             <div className="flex space-x-4">
-              <a href="https://instagram.com/apexpredatorinsurance" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
-                <Instagram size={18} className="text-white" />
-              </a>
-              <a href="https://facebook.com/apexpredatorinsurance" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
-                <Facebook size={18} className="text-white" />
-              </a>
-              <a href="https://linkedin.com/company/apex-predator-insurance" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
-                <Linkedin size={18} className="text-white" />
-              </a>
-              <a href="https://youtube.com/c/apexpredatorinsurance" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
-                <Youtube size={18} className="text-white" />
+              <a href="mailto:contact@tech4humanity.com.au" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                <Mail size={18} className="text-white" />
               </a>
             </div>
           </div>

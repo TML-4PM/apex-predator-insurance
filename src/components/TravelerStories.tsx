@@ -39,7 +39,7 @@ const TravelerStories = () => {
           🌟 Traveler Survival Stories
         </h3>
         <p className="text-apex-darkgray/70">
-          Real adventures, real insurance, real peace of mind
+          Real adventures, real fun, real bragging rights
         </p>
       </div>
 
@@ -115,7 +115,7 @@ const TravelerStories = () => {
                   </div>
                   
                   <Badge variant="outline" className="text-xs">
-                    💰 $50K Covered
+                    🎫 Novelty Certificate
                   </Badge>
                 </div>
               </div>

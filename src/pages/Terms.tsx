@@ -18,7 +18,7 @@ const Terms = () => {
               
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">2. Service Description</h2>
-                <p>Apex Predator Insurance provides novelty insurance certificates with a real $50,000 accidental death benefit. Our certificates are designed for entertainment purposes but include a legitimate insurance policy underwritten by our partners.</p>
+                <p>Apex Predator Insurance provides <strong className="text-white">novelty certificates for entertainment and gifting purposes only</strong>. Our certificates are designed as fun, shareable products featuring the world's deadliest animals. <strong className="text-white">No actual insurance coverage, financial protection, or regulated benefit of any kind is provided.</strong></p>
               </section>
               
               <section>
@@ -32,8 +32,8 @@ const Terms = () => {
               </section>
               
               <section>
-                <h2 className="text-xl font-semibold text-white mb-4">5. Insurance Coverage</h2>
-                <p>Each certificate includes a $50,000 accidental death benefit. This is a real insurance policy with specific terms, conditions, and exclusions. Please review the policy details provided with your certificate for complete information about coverage.</p>
+                <h2 className="text-xl font-semibold text-white mb-4">5. Product Nature — Novelty Only</h2>
+                <p>Each certificate is a <strong className="text-white">novelty entertainment product</strong>. It is not an insurance policy, financial product, or regulated instrument. No claims can be made against these certificates. They carry no monetary value beyond the purchase price of the novelty item itself.</p>
               </section>
               
               <section>
@@ -48,12 +48,12 @@ const Terms = () => {
               
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">8. Limitation of Liability</h2>
-                <p>Apex Predator Insurance shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services.</p>
+                <p>Apex Predator Insurance shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services. Our products are novelty items and carry no insurance or financial guarantee.</p>
               </section>
               
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">9. Governing Law</h2>
-                <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which Apex Predator Insurance operates, without regard to its conflict of law provisions.</p>
+                <p>These Terms shall be governed by and construed in accordance with the laws of Australia, without regard to its conflict of law provisions.</p>
               </section>
               
               <section>
@@ -64,11 +64,11 @@ const Terms = () => {
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">11. Contact Information</h2>
                 <p>If you have any questions about these Terms, please contact us at:</p>
-                <p className="mt-2"><a href="mailto:troy.latter@4pm.net.au" className="text-apex-red hover:underline">troy.latter@4pm.net.au</a></p>
+                <p className="mt-2"><a href="mailto:contact@tech4humanity.com.au" className="text-apex-red hover:underline">contact@tech4humanity.com.au</a></p>
               </section>
               
               <div className="pt-6 border-t border-white/10 text-white/60">
-                <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p>Last updated: March 2026</p>
               </div>
             </div>
           </div>

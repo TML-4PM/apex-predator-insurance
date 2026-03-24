@@ -119,7 +119,7 @@ const Hero = () => {
               </div>
               
               <div className="absolute bottom-6 right-6">
-                <div className="text-xs text-white/60">$50,000 accidental death benefit</div>
+                <div className="text-xs text-white/60">Novelty certificate — not real insurance</div>
               </div>
             </div>
           </div>
