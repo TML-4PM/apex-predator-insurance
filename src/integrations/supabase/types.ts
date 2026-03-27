@@ -7898,6 +7898,282 @@ export type Database = {
         }
         Relationships: []
       }
+      nf_catalogue: {
+        Row: {
+          amount_minor: number
+          billing_type: string
+          business_key: string
+          created_at: string
+          currency: string
+          description: string | null
+          is_active: boolean
+          name: string
+          product_family: string
+          sku: string
+          statement_descriptor: string | null
+          stripe_payment_link: string | null
+          stripe_price_id: string | null
+          stripe_product_id: string | null
+          tax_behavior: string
+          updated_at: string
+          wave_minimum: string | null
+        }
+        Insert: {
+          amount_minor: number
+          billing_type?: string
+          business_key?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          is_active?: boolean
+          name: string
+          product_family?: string
+          sku: string
+          statement_descriptor?: string | null
+          stripe_payment_link?: string | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          tax_behavior?: string
+          updated_at?: string
+          wave_minimum?: string | null
+        }
+        Update: {
+          amount_minor?: number
+          billing_type?: string
+          business_key?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          is_active?: boolean
+          name?: string
+          product_family?: string
+          sku?: string
+          statement_descriptor?: string | null
+          stripe_payment_link?: string | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          tax_behavior?: string
+          updated_at?: string
+          wave_minimum?: string | null
+        }
+        Relationships: []
+      }
+      nf_delivery_log: {
+        Row: {
+          artifact_ref: string | null
+          created_at: string
+          delivery_channel: string
+          delivery_id: string
+          delivery_status: string
+          order_id: string
+          provider_message_id: string | null
+          recipient: string
+          updated_at: string
+        }
+        Insert: {
+          artifact_ref?: string | null
+          created_at?: string
+          delivery_channel: string
+          delivery_id?: string
+          delivery_status: string
+          order_id: string
+          provider_message_id?: string | null
+          recipient: string
+          updated_at?: string
+        }
+        Update: {
+          artifact_ref?: string | null
+          created_at?: string
+          delivery_channel?: string
+          delivery_id?: string
+          delivery_status?: string
+          order_id?: string
+          provider_message_id?: string | null
+          recipient?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nf_delivery_log_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "nf_orders"
+            referencedColumns: ["order_id"]
+          },
+          {
+            foreignKeyName: "nf_delivery_log_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "v_nf_order_status"
+            referencedColumns: ["order_id"]
+          },
+        ]
+      }
+      nf_fulfilment_runs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          error_text: string | null
+          evidence_ref: string | null
+          input_payload: Json
+          order_id: string
+          output_payload: Json
+          run_id: string
+          run_status: string
+          sku: string
+          started_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          error_text?: string | null
+          evidence_ref?: string | null
+          input_payload?: Json
+          order_id: string
+          output_payload?: Json
+          run_id?: string
+          run_status?: string
+          sku: string
+          started_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          error_text?: string | null
+          evidence_ref?: string | null
+          input_payload?: Json
+          order_id?: string
+          output_payload?: Json
+          run_id?: string
+          run_status?: string
+          sku?: string
+          started_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nf_fulfilment_runs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "nf_orders"
+            referencedColumns: ["order_id"]
+          },
+          {
+            foreignKeyName: "nf_fulfilment_runs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "v_nf_order_status"
+            referencedColumns: ["order_id"]
+          },
+        ]
+      }
+      nf_orders: {
+        Row: {
+          amount_minor: number
+          created_at: string
+          currency: string
+          delivery_status: string
+          email: string
+          evidence_status: string
+          fulfilment_status: string
+          metadata: Json
+          order_id: string
+          payment_status: string
+          sku: string
+          stripe_customer_id: string | null
+          stripe_event_id: string | null
+          stripe_payment_link_id: string | null
+          stripe_session_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_minor: number
+          created_at?: string
+          currency?: string
+          delivery_status?: string
+          email: string
+          evidence_status?: string
+          fulfilment_status?: string
+          metadata?: Json
+          order_id?: string
+          payment_status?: string
+          sku: string
+          stripe_customer_id?: string | null
+          stripe_event_id?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_minor?: number
+          created_at?: string
+          currency?: string
+          delivery_status?: string
+          email?: string
+          evidence_status?: string
+          fulfilment_status?: string
+          metadata?: Json
+          order_id?: string
+          payment_status?: string
+          sku?: string
+          stripe_customer_id?: string | null
+          stripe_event_id?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      nf_results: {
+        Row: {
+          created_at: string
+          delivery_artifact_url: string | null
+          order_id: string
+          result_id: string
+          result_payload: Json
+          result_version: string
+          sku: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          delivery_artifact_url?: string | null
+          order_id: string
+          result_id?: string
+          result_payload: Json
+          result_version?: string
+          sku: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          delivery_artifact_url?: string | null
+          order_id?: string
+          result_id?: string
+          result_payload?: Json
+          result_version?: string
+          sku?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nf_results_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "nf_orders"
+            referencedColumns: ["order_id"]
+          },
+          {
+            foreignKeyName: "nf_results_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "v_nf_order_status"
+            referencedColumns: ["order_id"]
+          },
+        ]
+      }
       notification_queue: {
         Row: {
           created_at: string | null
@@ -7978,6 +8254,993 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      nt_claims: {
+        Row: {
+          claim_text: string
+          claim_type: string | null
+          company_id: string | null
+          confidence: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at: string | null
+          id: string
+          notes: string | null
+          product_id: string | null
+          source_date: string | null
+          source_url: string | null
+        }
+        Insert: {
+          claim_text: string
+          claim_type?: string | null
+          company_id?: string | null
+          confidence?: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          source_date?: string | null
+          source_url?: string | null
+        }
+        Update: {
+          claim_text?: string
+          claim_type?: string | null
+          company_id?: string | null
+          confidence?: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          source_date?: string | null
+          source_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_claims_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_claims_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_claims_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "nt_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_companies: {
+        Row: {
+          clinical_or_consumer: string | null
+          created_at: string | null
+          data_confidence:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description: string | null
+          employee_count_est: number | null
+          founded_year: number | null
+          funding_total_usd: number | null
+          hq_city: string | null
+          hq_country: string | null
+          id: string
+          last_reviewed_at: string | null
+          linkedin_url: string | null
+          modality: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          primary_segment: string | null
+          score_australia_relevance: number | null
+          score_commercial_traction: number | null
+          score_composite: number | null
+          score_consent_model: number | null
+          score_deployability: number | null
+          score_ecosystem_fit: number | null
+          score_ethical_risk: number | null
+          score_human_impact: number | null
+          score_regulatory_clarity: number | null
+          score_standards_relevance: number | null
+          score_tech_maturity: number | null
+          secondary_segment: string | null
+          slug: string
+          stage: Database["public"]["Enums"]["nt_stage"] | null
+          t4h_relevance_notes: string | null
+          updated_at: string | null
+          use_case: string | null
+          visibility: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+          website: string | null
+        }
+        Insert: {
+          clinical_or_consumer?: string | null
+          created_at?: string | null
+          data_confidence?:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description?: string | null
+          employee_count_est?: number | null
+          founded_year?: number | null
+          funding_total_usd?: number | null
+          hq_city?: string | null
+          hq_country?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          linkedin_url?: string | null
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          primary_segment?: string | null
+          score_australia_relevance?: number | null
+          score_commercial_traction?: number | null
+          score_composite?: number | null
+          score_consent_model?: number | null
+          score_deployability?: number | null
+          score_ecosystem_fit?: number | null
+          score_ethical_risk?: number | null
+          score_human_impact?: number | null
+          score_regulatory_clarity?: number | null
+          score_standards_relevance?: number | null
+          score_tech_maturity?: number | null
+          secondary_segment?: string | null
+          slug: string
+          stage?: Database["public"]["Enums"]["nt_stage"] | null
+          t4h_relevance_notes?: string | null
+          updated_at?: string | null
+          use_case?: string | null
+          visibility?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+          website?: string | null
+        }
+        Update: {
+          clinical_or_consumer?: string | null
+          created_at?: string | null
+          data_confidence?:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description?: string | null
+          employee_count_est?: number | null
+          founded_year?: number | null
+          funding_total_usd?: number | null
+          hq_city?: string | null
+          hq_country?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          linkedin_url?: string | null
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name?: string
+          primary_segment?: string | null
+          score_australia_relevance?: number | null
+          score_commercial_traction?: number | null
+          score_composite?: number | null
+          score_consent_model?: number | null
+          score_deployability?: number | null
+          score_ecosystem_fit?: number | null
+          score_ethical_risk?: number | null
+          score_human_impact?: number | null
+          score_regulatory_clarity?: number | null
+          score_standards_relevance?: number | null
+          score_tech_maturity?: number | null
+          secondary_segment?: string | null
+          slug?: string
+          stage?: Database["public"]["Enums"]["nt_stage"] | null
+          t4h_relevance_notes?: string | null
+          updated_at?: string | null
+          use_case?: string | null
+          visibility?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_companies_primary_segment_fkey"
+            columns: ["primary_segment"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "nt_companies_secondary_segment_fkey"
+            columns: ["secondary_segment"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      nt_cta_events: {
+        Row: {
+          created_at: string | null
+          cta_label: string | null
+          event_type: string | null
+          id: string
+          lead_id: string | null
+          page: string | null
+          session_id: string | null
+          sku: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          cta_label?: string | null
+          event_type?: string | null
+          id?: string
+          lead_id?: string | null
+          page?: string | null
+          session_id?: string | null
+          sku?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          cta_label?: string | null
+          event_type?: string | null
+          id?: string
+          lead_id?: string | null
+          page?: string | null
+          session_id?: string | null
+          sku?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_cta_events_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "nt_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_leads: {
+        Row: {
+          company: string | null
+          created_at: string | null
+          cta_event: string | null
+          email: string
+          id: string
+          name: string | null
+          notes: string | null
+          role: string | null
+          source: string | null
+          status: Database["public"]["Enums"]["nt_lead_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string | null
+          cta_event?: string | null
+          email: string
+          id?: string
+          name?: string | null
+          notes?: string | null
+          role?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["nt_lead_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string | null
+          cta_event?: string | null
+          email?: string
+          id?: string
+          name?: string | null
+          notes?: string | null
+          role?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["nt_lead_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      nt_market_segments: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          modality: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          parent_slug: string | null
+          slug: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          parent_slug?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name?: string
+          parent_slug?: string | null
+          slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_market_segments_parent_slug_fkey"
+            columns: ["parent_slug"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      nt_orders: {
+        Row: {
+          amount_aud: number | null
+          created_at: string | null
+          id: string
+          lead_id: string | null
+          paid_at: string | null
+          sku: string | null
+          status: Database["public"]["Enums"]["nt_order_status"] | null
+          stripe_payment_intent: string | null
+          stripe_session_id: string | null
+        }
+        Insert: {
+          amount_aud?: number | null
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          paid_at?: string | null
+          sku?: string | null
+          status?: Database["public"]["Enums"]["nt_order_status"] | null
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+        }
+        Update: {
+          amount_aud?: number | null
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          paid_at?: string | null
+          sku?: string | null
+          status?: Database["public"]["Enums"]["nt_order_status"] | null
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_orders_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "nt_leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_orders_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "nt_product_catalog"
+            referencedColumns: ["sku"]
+          },
+          {
+            foreignKeyName: "nt_orders_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "v_nt_catalog_golive"
+            referencedColumns: ["sku"]
+          },
+        ]
+      }
+      nt_product_catalog: {
+        Row: {
+          active: boolean | null
+          billing_interval: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          price_aud: number | null
+          price_usd: number | null
+          sku: string
+          stripe_price_id: string | null
+          tier: Database["public"]["Enums"]["nt_entitlement_tier"]
+        }
+        Insert: {
+          active?: boolean | null
+          billing_interval?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          price_aud?: number | null
+          price_usd?: number | null
+          sku: string
+          stripe_price_id?: string | null
+          tier: Database["public"]["Enums"]["nt_entitlement_tier"]
+        }
+        Update: {
+          active?: boolean | null
+          billing_interval?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          price_aud?: number | null
+          price_usd?: number | null
+          sku?: string
+          stripe_price_id?: string | null
+          tier?: Database["public"]["Enums"]["nt_entitlement_tier"]
+        }
+        Relationships: []
+      }
+      nt_products: {
+        Row: {
+          ce_status: string | null
+          company_id: string | null
+          created_at: string | null
+          data_confidence:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description: string | null
+          fda_status: string | null
+          id: string
+          modality: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          segment: string | null
+          stage: Database["public"]["Enums"]["nt_stage"] | null
+          tga_status: string | null
+        }
+        Insert: {
+          ce_status?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          data_confidence?:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description?: string | null
+          fda_status?: string | null
+          id?: string
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name: string
+          segment?: string | null
+          stage?: Database["public"]["Enums"]["nt_stage"] | null
+          tga_status?: string | null
+        }
+        Update: {
+          ce_status?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          data_confidence?:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          description?: string | null
+          fda_status?: string | null
+          id?: string
+          modality?: Database["public"]["Enums"]["nt_modality"] | null
+          name?: string
+          segment?: string | null
+          stage?: Database["public"]["Enums"]["nt_stage"] | null
+          tga_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_products_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_products_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_products_segment_fkey"
+            columns: ["segment"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      nt_regulatory_events: {
+        Row: {
+          agency: string | null
+          company_id: string | null
+          created_at: string | null
+          event_date: string | null
+          event_type: string | null
+          id: string
+          jurisdiction: string
+          notes: string | null
+          product_id: string | null
+          source_url: string | null
+          status: string | null
+        }
+        Insert: {
+          agency?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          id?: string
+          jurisdiction: string
+          notes?: string | null
+          product_id?: string | null
+          source_url?: string | null
+          status?: string | null
+        }
+        Update: {
+          agency?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          id?: string
+          jurisdiction?: string
+          notes?: string | null
+          product_id?: string | null
+          source_url?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_regulatory_events_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_regulatory_events_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_regulatory_events_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "nt_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_reports: {
+        Row: {
+          archived_at: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          price_aud: number | null
+          published_at: string | null
+          report_type: string | null
+          slug: string
+          stripe_price_id: string | null
+          title: string
+          visibility: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Insert: {
+          archived_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          price_aud?: number | null
+          published_at?: string | null
+          report_type?: string | null
+          slug: string
+          stripe_price_id?: string | null
+          title: string
+          visibility?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Update: {
+          archived_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          price_aud?: number | null
+          published_at?: string | null
+          report_type?: string | null
+          slug?: string
+          stripe_price_id?: string | null
+          title?: string
+          visibility?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Relationships: []
+      }
+      nt_revenue_attribution: {
+        Row: {
+          attribution_date: string | null
+          company_id: string | null
+          id: string
+          lead_id: string | null
+          linked_business: string | null
+          notes: string | null
+          order_id: string | null
+          revenue_type: string | null
+          source: string
+          value_aud: number | null
+        }
+        Insert: {
+          attribution_date?: string | null
+          company_id?: string | null
+          id?: string
+          lead_id?: string | null
+          linked_business?: string | null
+          notes?: string | null
+          order_id?: string | null
+          revenue_type?: string | null
+          source: string
+          value_aud?: number | null
+        }
+        Update: {
+          attribution_date?: string | null
+          company_id?: string | null
+          id?: string
+          lead_id?: string | null
+          linked_business?: string | null
+          notes?: string | null
+          order_id?: string | null
+          revenue_type?: string | null
+          source?: string
+          value_aud?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_revenue_attribution_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_revenue_attribution_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_revenue_attribution_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "nt_leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_revenue_attribution_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "nt_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_sku_entitlements: {
+        Row: {
+          id: string
+          notes: string | null
+          resource_type: string | null
+          route: string
+          sku: string | null
+        }
+        Insert: {
+          id?: string
+          notes?: string | null
+          resource_type?: string | null
+          route: string
+          sku?: string | null
+        }
+        Update: {
+          id?: string
+          notes?: string | null
+          resource_type?: string | null
+          route?: string
+          sku?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_sku_entitlements_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "nt_product_catalog"
+            referencedColumns: ["sku"]
+          },
+          {
+            foreignKeyName: "nt_sku_entitlements_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "v_nt_catalog_golive"
+            referencedColumns: ["sku"]
+          },
+        ]
+      }
+      nt_sources: {
+        Row: {
+          company_id: string | null
+          confidence: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at: string | null
+          id: string
+          notes: string | null
+          published_at: string | null
+          source_type: string | null
+          title: string | null
+          url: string | null
+        }
+        Insert: {
+          company_id?: string | null
+          confidence?: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          published_at?: string | null
+          source_type?: string | null
+          title?: string | null
+          url?: string | null
+        }
+        Update: {
+          company_id?: string | null
+          confidence?: Database["public"]["Enums"]["nt_claim_confidence"] | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          published_at?: string | null
+          source_type?: string | null
+          title?: string | null
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_sources_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_sources_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_standards_mappings: {
+        Row: {
+          company_id: string | null
+          compliance_status: string | null
+          created_at: string | null
+          id: string
+          notes: string | null
+          standard_body: string | null
+          standard_code: string
+        }
+        Insert: {
+          company_id?: string | null
+          compliance_status?: string | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          standard_body?: string | null
+          standard_code: string
+        }
+        Update: {
+          company_id?: string | null
+          compliance_status?: string | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          standard_body?: string | null
+          standard_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_standards_mappings_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_standards_mappings_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nt_stripe_webhooks: {
+        Row: {
+          created_at: string | null
+          error: string | null
+          event_type: string
+          id: string
+          payload: Json | null
+          processed: boolean | null
+          processed_at: string | null
+          stripe_event_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          error?: string | null
+          event_type: string
+          id?: string
+          payload?: Json | null
+          processed?: boolean | null
+          processed_at?: string | null
+          stripe_event_id: string
+        }
+        Update: {
+          created_at?: string | null
+          error?: string | null
+          event_type?: string
+          id?: string
+          payload?: Json | null
+          processed?: boolean | null
+          processed_at?: string | null
+          stripe_event_id?: string
+        }
+        Relationships: []
+      }
+      nt_subscriptions: {
+        Row: {
+          created_at: string | null
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          lead_id: string | null
+          sku: string | null
+          status: string | null
+          stripe_sub_id: string | null
+          tier: Database["public"]["Enums"]["nt_entitlement_tier"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          lead_id?: string | null
+          sku?: string | null
+          status?: string | null
+          stripe_sub_id?: string | null
+          tier: Database["public"]["Enums"]["nt_entitlement_tier"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          lead_id?: string | null
+          sku?: string | null
+          status?: string | null
+          stripe_sub_id?: string | null
+          tier?: Database["public"]["Enums"]["nt_entitlement_tier"]
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_subscriptions_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "nt_leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_subscriptions_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "nt_product_catalog"
+            referencedColumns: ["sku"]
+          },
+          {
+            foreignKeyName: "nt_subscriptions_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "v_nt_catalog_golive"
+            referencedColumns: ["sku"]
+          },
+        ]
+      }
+      nt_user_entitlements: {
+        Row: {
+          expires_at: string | null
+          granted_at: string | null
+          id: string
+          lead_id: string | null
+          route: string
+          sku: string | null
+          source: string | null
+        }
+        Insert: {
+          expires_at?: string | null
+          granted_at?: string | null
+          id?: string
+          lead_id?: string | null
+          route: string
+          sku?: string | null
+          source?: string | null
+        }
+        Update: {
+          expires_at?: string | null
+          granted_at?: string | null
+          id?: string
+          lead_id?: string | null
+          route?: string
+          sku?: string | null
+          source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_user_entitlements_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "nt_leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_user_entitlements_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "nt_product_catalog"
+            referencedColumns: ["sku"]
+          },
+          {
+            foreignKeyName: "nt_user_entitlements_sku_fkey"
+            columns: ["sku"]
+            isOneToOne: false
+            referencedRelation: "v_nt_catalog_golive"
+            referencedColumns: ["sku"]
+          },
+        ]
+      }
+      nt_watchlist: {
+        Row: {
+          added_at: string | null
+          company_id: string | null
+          id: string
+          linked_business: string | null
+          list_name: string
+          priority: number | null
+          reason: string | null
+        }
+        Insert: {
+          added_at?: string | null
+          company_id?: string | null
+          id?: string
+          linked_business?: string | null
+          list_name: string
+          priority?: number | null
+          reason?: string | null
+        }
+        Update: {
+          added_at?: string | null
+          company_id?: string | null
+          id?: string
+          linked_business?: string | null
+          list_name?: string
+          priority?: number | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_watchlist_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "nt_companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nt_watchlist_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "v_nt_rankings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       offerings: {
         Row: {
@@ -14247,6 +15510,185 @@ export type Database = {
         }
         Relationships: []
       }
+      v_nf_fulfilment_health: {
+        Row: {
+          completed_at: string | null
+          duration_seconds: number | null
+          email: string | null
+          error_text: string | null
+          evidence_ref: string | null
+          evidence_status: string | null
+          order_id: string | null
+          payment_status: string | null
+          run_id: string | null
+          run_status: string | null
+          sku: string | null
+          started_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nf_fulfilment_runs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "nf_orders"
+            referencedColumns: ["order_id"]
+          },
+          {
+            foreignKeyName: "nf_fulfilment_runs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "v_nf_order_status"
+            referencedColumns: ["order_id"]
+          },
+        ]
+      }
+      v_nf_order_status: {
+        Row: {
+          amount_minor: number | null
+          created_at: string | null
+          currency: string | null
+          delivery_artifact_url: string | null
+          delivery_channel: string | null
+          delivery_status: string | null
+          email: string | null
+          evidence_status: string | null
+          fulfilment_status: string | null
+          log_delivery_status: string | null
+          order_id: string | null
+          payment_status: string | null
+          provider_message_id: string | null
+          result_id: string | null
+          result_version: string | null
+          sku: string | null
+          stripe_customer_id: string | null
+          stripe_session_id: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
+      v_nt_catalog_golive: {
+        Row: {
+          billing_interval: string | null
+          go_live_status: string | null
+          name: string | null
+          price_aud: number | null
+          sku: string | null
+          stripe_price_id: string | null
+          tier: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Insert: {
+          billing_interval?: string | null
+          go_live_status?: never
+          name?: string | null
+          price_aud?: number | null
+          sku?: string | null
+          stripe_price_id?: string | null
+          tier?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Update: {
+          billing_interval?: string | null
+          go_live_status?: never
+          name?: string | null
+          price_aud?: number | null
+          sku?: string | null
+          stripe_price_id?: string | null
+          tier?: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Relationships: []
+      }
+      v_nt_catalog_golive_summary: {
+        Row: {
+          blocked_count: number | null
+          launch_gate: string | null
+          ready_count: number | null
+          total_skus: number | null
+        }
+        Relationships: []
+      }
+      v_nt_free_tier: {
+        Row: {
+          data_confidence:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          hq_country: string | null
+          modality: Database["public"]["Enums"]["nt_modality"] | null
+          name: string | null
+          primary_segment: string | null
+          rank_overall: number | null
+          score_band: number | null
+          slug: string | null
+          stage: Database["public"]["Enums"]["nt_stage"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_companies_primary_segment_fkey"
+            columns: ["primary_segment"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      v_nt_funnel: {
+        Row: {
+          event_type: string | null
+          events: number | null
+          first_seen: string | null
+          last_seen: string | null
+          sessions: number | null
+        }
+        Relationships: []
+      }
+      v_nt_rankings: {
+        Row: {
+          clinical_or_consumer: string | null
+          data_confidence:
+            | Database["public"]["Enums"]["nt_claim_confidence"]
+            | null
+          hq_country: string | null
+          id: string | null
+          last_reviewed_at: string | null
+          modality: Database["public"]["Enums"]["nt_modality"] | null
+          name: string | null
+          primary_segment: string | null
+          rank_by_modality: number | null
+          rank_overall: number | null
+          score_australia_relevance: number | null
+          score_commercial_traction: number | null
+          score_composite: number | null
+          score_consent_model: number | null
+          score_deployability: number | null
+          score_ecosystem_fit: number | null
+          score_ethical_risk: number | null
+          score_human_impact: number | null
+          score_regulatory_clarity: number | null
+          score_standards_relevance: number | null
+          score_tech_maturity: number | null
+          slug: string | null
+          stage: Database["public"]["Enums"]["nt_stage"] | null
+          visibility: Database["public"]["Enums"]["nt_entitlement_tier"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nt_companies_primary_segment_fkey"
+            columns: ["primary_segment"]
+            isOneToOne: false
+            referencedRelation: "nt_market_segments"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      v_nt_revenue_summary: {
+        Row: {
+          events: number | null
+          first_event: string | null
+          last_event: string | null
+          linked_business: string | null
+          revenue_type: string | null
+          total_aud: number | null
+        }
+        Relationships: []
+      }
       v_top_gaps: {
         Row: {
           book: string | null
@@ -14596,6 +16038,32 @@ export type Database = {
             }
             Returns: undefined
           }
+      nt_check_entitlement: {
+        Args: { p_lead_id: string; p_route: string }
+        Returns: boolean
+      }
+      nt_grant_entitlements_for_sku: {
+        Args: {
+          p_expires_at?: string
+          p_lead_id: string
+          p_sku: string
+          p_source?: string
+        }
+        Returns: number
+      }
+      nt_search_companies: {
+        Args: { q: string }
+        Returns: {
+          id: string
+          modality: Database["public"]["Enums"]["nt_modality"]
+          name: string
+          primary_segment: string
+          score_composite: number
+          similarity: number
+          slug: string
+          visibility: Database["public"]["Enums"]["nt_entitlement_tier"]
+        }[]
+      }
       pick_best_agent: {
         Args: { report_category: string; report_tags: string[] }
         Returns: string
@@ -14629,6 +16097,8 @@ export type Database = {
         }[]
       }
       seed_demo_data: { Args: never; Returns: undefined }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       slack_digest: { Args: never; Returns: undefined }
       slack_enrich_and_alert: { Args: never; Returns: undefined }
       snapshot_exec_briefing: { Args: never; Returns: undefined }
@@ -14698,6 +16168,28 @@ export type Database = {
         | "partner_legal"
         | "partner_operator"
         | "consentx_admin"
+      nt_claim_confidence:
+        | "verified"
+        | "cross_checked"
+        | "inferred"
+        | "modelled"
+        | "unknown"
+      nt_entitlement_tier:
+        | "free"
+        | "pro"
+        | "investor"
+        | "enterprise"
+        | "internal"
+      nt_lead_status: "new" | "contacted" | "qualified" | "converted" | "dead"
+      nt_modality: "invasive" | "noninvasive" | "hybrid" | "unknown"
+      nt_order_status: "pending" | "paid" | "failed" | "refunded" | "cancelled"
+      nt_stage:
+        | "concept"
+        | "preclinical"
+        | "clinical"
+        | "commercial"
+        | "scaled"
+        | "acqui"
       subscription_plan: "free" | "pro" | "enterprise"
     }
     CompositeTypes: {
@@ -14835,6 +16327,31 @@ export const Constants = {
         "partner_legal",
         "partner_operator",
         "consentx_admin",
+      ],
+      nt_claim_confidence: [
+        "verified",
+        "cross_checked",
+        "inferred",
+        "modelled",
+        "unknown",
+      ],
+      nt_entitlement_tier: [
+        "free",
+        "pro",
+        "investor",
+        "enterprise",
+        "internal",
+      ],
+      nt_lead_status: ["new", "contacted", "qualified", "converted", "dead"],
+      nt_modality: ["invasive", "noninvasive", "hybrid", "unknown"],
+      nt_order_status: ["pending", "paid", "failed", "refunded", "cancelled"],
+      nt_stage: [
+        "concept",
+        "preclinical",
+        "clinical",
+        "commercial",
+        "scaled",
+        "acqui",
       ],
       subscription_plan: ["free", "pro", "enterprise"],
     },
