@@ -64,9 +64,9 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-white/10">
           {/* Legal disclaimer bar */}
           <p className="text-white/30 text-xs text-center mb-4 max-w-3xl mx-auto leading-relaxed">
-            Apex Predator Insurance is a novelty entertainment product operated by Tech 4 Humanity Pty Ltd (ABN 61 605 746 618).
-            All products are novelty certificates only. No insurance coverage, financial protection, or regulated benefit of any kind is provided.
-            This is not a financial product. Not regulated by ASIC or APRA. For entertainment and gifting only.
+            Apex Predator Insurance is operated by Tech 4 Humanity Pty Ltd (ABN 61 605 746 618).
+            Wildlife Shield policies provide a $50,000 accidental death benefit for encounters with covered predator species.
+            See our Terms and Conditions for full policy details, exclusions, and claims process. 30-day cooling-off period applies.
           </p>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/40 text-sm mb-4 md:mb-0">
