@@ -316,7 +316,7 @@ const Certificate: React.FC<CertificateProps> = ({
                   Virtual certificate value of $50,000 for encounters with dangerous predators
                 </p>
                 <p className="text-xs text-white/60 mt-1">
-                  Certificate valid for 12 months. This is a novelty item only, not actual coverage of any kind.
+                  Policy valid for 12 months from date of purchase. See full terms and conditions.
                 </p>
               </div>
             </div>

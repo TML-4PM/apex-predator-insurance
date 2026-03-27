@@ -115,7 +115,7 @@ export const OrderSummary = ({
         {isCompleteBundle && (
           <div className="bg-apex-red/20 rounded p-3 mb-4">
             <p className="text-sm text-white font-medium">
-              Premium Bundle: Protection against all 60 predators
+              Premium Bundle: Protection against all 85+ predators
             </p>
             <div className="mt-2 grid grid-cols-2 gap-1 text-xs text-white/80">
               <div className="flex items-center"><span className="mr-1">🦈</span> Sharks</div>

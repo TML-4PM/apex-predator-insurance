@@ -17,14 +17,14 @@ const ModernHero = () => {
       name: 'Jake',
       age: 24,
       location: 'Bali',
-      text: 'Best novelty gift I ever bought — my mates loved it!',
+      text: 'Best travel insurance decision I ever made — total peace of mind!',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
     },
     {
       name: 'Emma',
       age: 27,
       location: 'Australia',
-      text: 'Framed my Shark Certificate on the office wall — instant conversation starter.',
+      text: 'Got my Shark Shield policy before diving the Great Barrier Reef — wouldn\'t go without it.',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
     },
     {
@@ -57,16 +57,16 @@ const ModernHero = () => {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-apex-red/20 backdrop-blur-sm border border-apex-red/30 rounded-full px-4 py-2 mb-6">
               <TrendingUp className="text-apex-red" size={16} />
-              <span className="text-white font-medium">The World's Most Fun Novelty Certificates</span>
+              <span className="text-white font-medium">The World's Most Unique Travel Insurance</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Get <span className="text-apex-red">Your Adventure Certificate</span><br />
+              Get <span className="text-apex-red">$50K Insurance</span><br />
               <span className="text-apex-yellow">Before Your Next Trip</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              The world's most fun novelty certificates for adventurers. 85+ deadly animals. Perfect gifts for thrill-seekers.
+              Real protection against the world's deadliest predators. 85+ species covered. $50,000 accidental death benefit.
             </p>
 
             {/* Product Highlights */}
@@ -86,7 +86,7 @@ const ModernHero = () => {
               <Link to="/plans">
                 <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-primary-foreground px-8 py-4 text-lg shadow-glow glow-pulse transition-all duration-300 hover:scale-105">
                   <ShoppingCart className="mr-2" size={20} />
-                  Get Your Certificate
+                  Get Covered Now
                 </Button>
               </Link>
               

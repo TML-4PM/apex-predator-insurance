@@ -408,7 +408,7 @@ export const PaymentForm = ({
         </div>
         
         <p className="text-xs text-gray-500 mt-4 text-center">
-          * Novelty certificate only — not real insurance. For entertainment and gifting purposes.
+          Your policy documents will be emailed after payment. 30-day cooling-off period applies.
         </p>
       </div>
     </form>

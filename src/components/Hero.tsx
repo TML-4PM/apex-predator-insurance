@@ -119,7 +119,7 @@ const Hero = () => {
               </div>
               
               <div className="absolute bottom-6 right-6">
-                <div className="text-xs text-white/60">Novelty certificate — not real insurance</div>
+                <div className="text-xs text-white/60">Covered by Wildlife Shield — $50,000 protection</div>
               </div>
             </div>
           </div>

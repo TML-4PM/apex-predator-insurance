@@ -20,19 +20,18 @@ const CoveredPage: React.FC = () => {
 
           <h1 className="text-3xl font-bold text-white mb-4">You're covered!</h1>
           <p className="text-white/70 mb-2 text-lg">
-            Your novelty certificate is on its way to your inbox.
+            Your policy documents are on their way to your inbox.
           </p>
           <p className="text-white/50 text-sm mb-8">
-            Check your email — it usually arrives within a few minutes.
+            Coverage is active for 12 months from today. Check your email for full policy details.
           </p>
 
-          {/* Novelty disclaimer on success page */}
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-8 text-left">
+          <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 mb-8 text-left">
             <div className="flex items-start gap-2">
-              <ShieldCheck size={16} className="text-amber-400 mt-0.5 shrink-0" />
-              <p className="text-amber-300 text-xs leading-relaxed">
-                <strong className="text-amber-200">Reminder:</strong> This is a novelty certificate only.
-                Not real insurance. No actual coverage is provided. For entertainment and gifting purposes only.
+              <ShieldCheck size={16} className="text-green-400 mt-0.5 shrink-0" />
+              <p className="text-green-300 text-xs leading-relaxed">
+                <strong className="text-green-200">Your Wildlife Shield policy is now active.</strong> Your policy documents have been sent to your email. 
+                $50,000 accidental death benefit. 30-day cooling-off period applies.
               </p>
             </div>
           </div>
@@ -46,7 +45,7 @@ const CoveredPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild className="bg-apex-red hover:bg-apex-red/90">
               <Link to="/plans">
-                Get another certificate
+                Get another policy
               </Link>
             </Button>
             <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">

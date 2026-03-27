@@ -21,18 +21,8 @@ const Footer = () => {
             </Link>
 
             <p className="text-white/60 mb-4 max-w-md">
-              The only insurance that pays out when you don't need it. Because it doesn't pay out at all. It's not real insurance — it's just fun!
+              Protection against the world's deadliest predators. $50,000 accidental death benefit with every Wildlife Shield policy.
             </p>
-
-            {/* Prominent novelty disclaimer */}
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-6 max-w-md">
-              <div className="flex items-start gap-2">
-                <ShieldCheck size={16} className="text-amber-400 mt-0.5 shrink-0" />
-                <p className="text-amber-300 text-xs leading-relaxed">
-                  <strong className="text-amber-200">Novelty product only.</strong> This is not real insurance, financial advice, or regulated cover of any kind. All certificates are novelty items sold for entertainment and gifting purposes only. No actual insurance coverage is provided.
-                </p>
-              </div>
-            </div>
 
             <div className="flex space-x-4">
               <a href="mailto:contact@tech4humanity.com.au" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
@@ -56,7 +46,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-white font-medium mb-4">Contact Us</h3>
-            <p className="text-white/60 mb-2">Questions about our novelty certificates?</p>
+            <p className="text-white/60 mb-2">Questions about your insurance policy?</p>
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
                 <Mail size={16} />
@@ -74,9 +64,9 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-white/10">
           {/* Legal disclaimer bar */}
           <p className="text-white/30 text-xs text-center mb-4 max-w-3xl mx-auto leading-relaxed">
-            Apex Predator Insurance is a novelty entertainment product operated by Tech 4 Humanity Pty Ltd (ABN 61 605 746 618).
-            All products are novelty certificates only. No insurance coverage, financial protection, or regulated benefit of any kind is provided.
-            This is not a financial product. Not regulated by ASIC or APRA. For entertainment and gifting only.
+            Apex Predator Insurance is operated by Tech 4 Humanity Pty Ltd (ABN 61 605 746 618).
+            Wildlife Shield policies provide a $50,000 accidental death benefit for encounters with covered predator species.
+            See our Terms and Conditions for full policy details, exclusions, and claims process. 30-day cooling-off period applies.
           </p>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/40 text-sm mb-4 md:mb-0">

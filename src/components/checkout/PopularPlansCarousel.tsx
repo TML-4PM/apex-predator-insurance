@@ -96,7 +96,7 @@ const PopularPlansCarousel = ({
                 <span className="text-3xl mr-2">🏆</span>
                 <h3 className="font-bold text-white">Complete Bundle</h3>
               </div>
-              <p className="text-sm text-white/70 mb-2">Protection against all 60 predators at once!</p>
+              <p className="text-sm text-white/70 mb-2"><p className="text-sm text-white/70 mb-2">Protection against all 85+ predators at once!</p> at once!</p>
               <div className="flex items-center">
                 <p className="text-apex-red font-bold">$99.99</p>
                 <span className="text-white/50 text-xs ml-2 line-through">$599.40</span>
