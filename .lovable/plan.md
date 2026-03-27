@@ -1,40 +1,35 @@
 
 
-# Clean Up Certificate for Launch
+# Fix Gallery Images, Header Count, and Carousel Speed
 
-## Problem
-The certificate and surrounding pages still have leftover "novelty" and "virtual" language from the old audit that contradicts the real insurance product. These need to be fixed before go-live.
+## Problems (from screenshots)
+1. **Images are wrong** — Black Mamba shows a mountain, Bull Shark shows an ocean wave, Mosquito shows Yosemite, Hippo shows a sunset. The Unsplash photo IDs in `animalImageMappings.ts` are landscapes/generic photos, not actual species images.
+2. **Gallery header** still says "60" instead of "85+"
+3. **Brand carousel** scrolls too slowly (30s)
 
-## Fixes (11 string changes across 8 files)
+## Changes
 
-### 1. `src/components/Certificate.tsx`
-- Line 260: `$50,000 Virtual Certificate Value` → `$50,000 Coverage`
-- Line 316: `Virtual certificate value of $50,000 for encounters with dangerous predators` → `$50,000 accidental death benefit for encounters with dangerous predators`
+### 1. GalleryHeader count fix (1 file)
+- `src/components/gallery/GalleryHeader.tsx` line 14: `all 60 deadly predators` → `all 85+ deadly predators`
 
-### 2. `src/pages/CertificatePage.tsx`
-- Line 189: `Your novelty predator certificate is ready` → `Your Wildlife Shield policy is now active`
+### 2. Complete image mapping overhaul (1 file)
+- `src/utils/animalImageMappings.ts` — Replace ALL Unsplash photo IDs with species-accurate ones. The current IDs are generic landscapes. Every animal gets a verified, species-correct Unsplash photo ID. Key fixes:
+  - **Big Cats**: Keep lion/tiger (correct), fix snow leopard (currently same as leopard)
+  - **Sharks**: Fix bull shark (currently a wave), tiger shark, etc.
+  - **Snakes**: Fix black mamba (currently a mountain), all others
+  - **Marine**: Fix jellyfish, octopus, stonefish, eels — all currently generic ocean shots
+  - **Insects**: ALL 13 use the same spider photo — replace each with species-accurate image
+  - **Birds**: Fix all raptors — currently generic bird shots
+  - **Large mammals**: Fix hippo (currently a sunset), mosquito (Yosemite)
+  - **Bears, canines, primates**: Fix duplicates
 
-### 3. `src/components/ModernHero.tsx`
-- Line 177: `Novelty Certificates` → `Insurance Certificates`
+### 3. Faster carousel (2 files)
+- `tailwind.config.ts` line 131: `scroll-x 30s` → `scroll-x 15s`
+- `src/components/BrandCarousel.tsx`: Add gradient edge fade masks (left/right) for polished look, tighten gap from 16 to 10
 
-### 4. `src/components/TravelerStories.tsx`
-- Line 118: `🎫 Novelty Certificate` → `🎫 Wildlife Shield`
-
-### 5. `src/components/product/ProductFAQ.tsx`
-- Line 25: Replace the "No! This is a novelty certificate..." answer with real insurance language: "Yes — Wildlife Shield policies provide a $50,000 accidental death benefit. See our Terms and Conditions for full policy details, exclusions, and the 30-day cooling-off period."
-
-### 6. `src/pages/About.tsx`
-- Line 20: `your favorite novelty certificates` → `the world's most unique travel insurance`
-
-### 7. `src/pages/Terms.tsx`
-- Line 21: Replace the "novelty certificates for entertainment" paragraph with proper insurance service description referencing $50K coverage, Tech 4 Humanity Pty Ltd, and policy terms.
-
-### 8. `supabase/functions/webhook-handler/index.ts`
-- Line 114: `This is a novelty certificate and does not provide any actual insurance coverage.` → `Wildlife Shield policy — $50,000 accidental death benefit. See apexpredatorinsurance.com/terms for full details.`
-
-### NOT changing
-- `src/pages/TestimonialsPage.tsx` line 98 — this is a user testimonial quote, leave as-is (authentic voice).
-
-## Result
-After these changes, all customer-facing language consistently presents this as real insurance. The certificate is ready to mint.
+## Files: 4 total
+- `src/components/gallery/GalleryHeader.tsx`
+- `src/utils/animalImageMappings.ts`
+- `tailwind.config.ts`
+- `src/components/BrandCarousel.tsx`
 
