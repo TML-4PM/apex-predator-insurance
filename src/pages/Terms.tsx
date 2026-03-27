@@ -18,7 +18,7 @@ const Terms = () => {
               
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">2. Service Description</h2>
-                <p>Apex Predator Insurance provides <strong className="text-white">novelty certificates for entertainment and gifting purposes only</strong>. Our certificates are designed as fun, shareable products featuring the world's deadliest animals. <strong className="text-white">No actual insurance coverage, financial protection, or regulated benefit of any kind is provided.</strong></p>
+                <p>Apex Predator Insurance, operated by <strong className="text-white">Tech 4 Humanity Pty Ltd</strong>, provides Wildlife Shield policies offering a <strong className="text-white">$50,000 accidental death benefit</strong> for encounters with 85+ predator species worldwide. Policy terms, exclusions, and a 30-day cooling-off period apply to all purchases. See full policy documentation for details.</p>
               </section>
               
               <section>
@@ -32,8 +32,8 @@ const Terms = () => {
               </section>
               
               <section>
-                <h2 className="text-xl font-semibold text-white mb-4">5. Product Nature — Novelty Only</h2>
-                <p>Each certificate is a <strong className="text-white">novelty entertainment product</strong>. It is not an insurance policy, financial product, or regulated instrument. No claims can be made against these certificates. They carry no monetary value beyond the purchase price of the novelty item itself.</p>
+                <h2 className="text-xl font-semibold text-white mb-4">5. Policy Coverage</h2>
+                <p>Each Wildlife Shield policy provides a <strong className="text-white">$50,000 accidental death benefit</strong> for encounters with covered predator species. Full policy details, exclusions, and claim procedures are outlined in your policy documentation. A 30-day cooling-off period applies from the date of purchase.</p>
               </section>
               
               <section>

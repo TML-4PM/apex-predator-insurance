@@ -17,7 +17,7 @@ const About = () => {
                 Meet the Team
               </h1>
               <p className="text-xl text-apex-darkgray/70 animate-fade-up animate-delay-100">
-                The adventurous minds behind your favorite novelty certificates
+                The adventurous minds behind the world's most unique travel insurance
               </p>
             </div>
 

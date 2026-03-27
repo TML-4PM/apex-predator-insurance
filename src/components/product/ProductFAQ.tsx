@@ -22,7 +22,7 @@ const ProductFAQ = () => {
     },
     {
       question: "Is this real insurance?",
-      answer: "No! This is a novelty certificate for entertainment purposes only. It's not actual insurance coverage of any kind—but it's way more fun than real insurance."
+      answer: "Yes — Wildlife Shield policies provide a $50,000 accidental death benefit. See our Terms and Conditions for full policy details, exclusions, and the 30-day cooling-off period."
     },
     {
       question: "Can I order in bulk for gifts?",

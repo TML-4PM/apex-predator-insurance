@@ -111,7 +111,7 @@ async function sendSampleCertificates(email: string) {
         <p>The Apex Predator Team</p>
       </div>
       <div style="background-color: #f8f8f8; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>This is a novelty certificate and does not provide any actual insurance coverage.</p>
+        <p>Wildlife Shield policy — $50,000 accidental death benefit. See apexpredatorinsurance.com/terms for full details.</p>
         <p>&copy; ${new Date().getFullYear()} Apex Predator Insurance. All rights reserved.</p>
       </div>
     </div>
