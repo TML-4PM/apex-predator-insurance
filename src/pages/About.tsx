@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Phone, MapPin, Mountain, Bike, Heart } from 'lucide-react';
 
