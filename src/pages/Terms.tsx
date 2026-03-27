@@ -32,8 +32,8 @@ const Terms = () => {
               </section>
               
               <section>
-                <h2 className="text-xl font-semibold text-white mb-4">5. Product Nature — Novelty Only</h2>
-                <p>Each certificate is a <strong className="text-white">novelty entertainment product</strong>. It is not an insurance policy, financial product, or regulated instrument. No claims can be made against these certificates. They carry no monetary value beyond the purchase price of the novelty item itself.</p>
+                <h2 className="text-xl font-semibold text-white mb-4">5. Policy Coverage</h2>
+                <p>Each Wildlife Shield policy provides a <strong className="text-white">$50,000 accidental death benefit</strong> for encounters with covered predator species. Full policy details, exclusions, and claim procedures are outlined in your policy documentation. A 30-day cooling-off period applies from the date of purchase.</p>
               </section>
               
               <section>
