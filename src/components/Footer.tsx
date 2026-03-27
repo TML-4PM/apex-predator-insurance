@@ -21,18 +21,8 @@ const Footer = () => {
             </Link>
 
             <p className="text-white/60 mb-4 max-w-md">
-              The only insurance that pays out when you don't need it. Because it doesn't pay out at all. It's not real insurance — it's just fun!
+              Protection against the world's deadliest predators. $50,000 accidental death benefit with every Wildlife Shield policy.
             </p>
-
-            {/* Prominent novelty disclaimer */}
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-6 max-w-md">
-              <div className="flex items-start gap-2">
-                <ShieldCheck size={16} className="text-amber-400 mt-0.5 shrink-0" />
-                <p className="text-amber-300 text-xs leading-relaxed">
-                  <strong className="text-amber-200">Novelty product only.</strong> This is not real insurance, financial advice, or regulated cover of any kind. All certificates are novelty items sold for entertainment and gifting purposes only. No actual insurance coverage is provided.
-                </p>
-              </div>
-            </div>
 
             <div className="flex space-x-4">
               <a href="mailto:contact@tech4humanity.com.au" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
