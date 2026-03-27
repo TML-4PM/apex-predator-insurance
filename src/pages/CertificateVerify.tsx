@@ -22,6 +22,6 @@ export default function CertificateVerify() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

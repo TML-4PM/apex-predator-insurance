@@ -261,7 +261,7 @@ const ArticleDetail = () => {
           </div>
         </div>
       </article>
-    </Layout>
+    </>
   );
 };
 

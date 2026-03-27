@@ -38,7 +38,7 @@ const PlatformAudit = () => {
           )}
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

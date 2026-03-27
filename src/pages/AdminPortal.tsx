@@ -111,6 +111,6 @@ export default function AdminPortal() {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

@@ -273,7 +273,7 @@ const CertificatePage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

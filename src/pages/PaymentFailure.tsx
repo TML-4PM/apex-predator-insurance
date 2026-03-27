@@ -72,6 +72,6 @@ export default function PaymentFailure() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

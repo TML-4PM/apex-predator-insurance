@@ -57,7 +57,7 @@ const CoveredPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
