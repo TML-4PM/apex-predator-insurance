@@ -36,7 +36,7 @@ const Gallery = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <GalleryHeader />
       
       <section className="py-16 bg-white">
