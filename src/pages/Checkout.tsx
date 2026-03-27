@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Layout from '@/components/Layout';
+
 import { ShoppingCart } from 'lucide-react';
 import { CheckoutForm, CheckoutFormValues } from '@/components/checkout/CheckoutForm';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
