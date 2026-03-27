@@ -257,7 +257,7 @@ const Certificate: React.FC<CertificateProps> = ({
                   }
                 </div>
                 <div className="text-lg font-bold text-apex-red mt-4 bg-white/10 backdrop-blur-sm rounded-full py-2 max-w-xs mx-auto drop-shadow-lg">
-                  $50,000 Virtual Certificate Value
+                  $50,000 Coverage
                 </div>
               </div>
               
