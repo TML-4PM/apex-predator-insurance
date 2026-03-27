@@ -193,7 +193,7 @@ const ArticleDetail = () => {
             <Button>Back to Articles</Button>
           </Link>
         </div>
-      </Layout>
+      </>
     );
   }
   
