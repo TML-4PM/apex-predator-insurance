@@ -13,7 +13,7 @@ import { ShoppingCart, Star, Heart } from 'lucide-react';
 
 const ProductPage = () => {
   return (
-    <Layout>
+    <>
       {/* Product Hero */}
       <ProductHero />
       
