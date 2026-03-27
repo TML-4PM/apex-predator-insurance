@@ -185,7 +185,7 @@ const ArticleDetail = () => {
   
   if (!article) {
     return (
-      <Layout>
+      <>
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-bold mb-6">Article Not Found</h1>
           <p className="mb-8">Sorry, we couldn't find the article you're looking for.</p>
