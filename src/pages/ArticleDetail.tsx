@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CalendarDays, Clock, User, Tag } from 'lucide-react';
