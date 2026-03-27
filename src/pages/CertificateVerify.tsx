@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
-import CertificateVerification from '@/components/certificate/CertificateVerification';
+
+
 
 export default function CertificateVerify() {
   return (
