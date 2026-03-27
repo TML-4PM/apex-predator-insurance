@@ -31,7 +31,7 @@ const Index = () => (
         
         <div className="grid md:grid-cols-4 gap-6 mb-12">
           {[
-            { icon: Users, number: '50K+', label: 'Certificates Issued', gradient: 'from-blue-500 to-blue-600' },
+            { icon: Users, number: '10K+', label: 'Certificates Issued', gradient: 'from-blue-500 to-blue-600' },
             { icon: Star, number: '4.9★', label: 'App Store Rating', gradient: 'from-accent to-yellow-600' },
             { icon: Target, number: '85+', label: 'Deadly Animals', gradient: 'from-green-500 to-green-600' },
             { icon: TrendingUp, number: '#1', label: 'Novelty Gift Trend', gradient: 'from-primary to-red-600' }
