@@ -124,7 +124,7 @@ const FeaturedPredators = () => {
               className="border-apex-red text-apex-red hover:bg-apex-red/10"
             >
               <Eye className="mr-2 h-5 w-5" />
-              View All 60+ Predators
+              View All 85+ Predators
             </Button>
           </Link>
         </div>

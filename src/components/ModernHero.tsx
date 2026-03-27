@@ -86,7 +86,7 @@ const ModernHero = () => {
               <Link to="/plans">
                 <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-primary-foreground px-8 py-4 text-lg shadow-glow glow-pulse transition-all duration-300 hover:scale-105">
                   <ShoppingCart className="mr-2" size={20} />
-                  Get Your Certificate
+                  Get Covered Now
                 </Button>
               </Link>
               
