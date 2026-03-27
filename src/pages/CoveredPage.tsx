@@ -9,7 +9,7 @@ const CoveredPage: React.FC = () => {
   const sessionId = searchParams.get('session_id');
 
   return (
-    <Layout>
+    <>
       <div className="min-h-[70vh] flex items-center justify-center py-20 px-4 bg-gradient-to-br from-slate-900 to-apex-black">
         <div className="max-w-lg w-full text-center">
           <div className="flex justify-center mb-6">
