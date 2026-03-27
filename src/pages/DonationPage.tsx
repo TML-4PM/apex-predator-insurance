@@ -8,7 +8,7 @@ import { Heart, Shield, Users, Target } from 'lucide-react';
 
 const DonationPage = () => {
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-apex-lightgray to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
