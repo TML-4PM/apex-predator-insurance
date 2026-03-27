@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
