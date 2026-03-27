@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import Layout from '@/components/Layout';
+
 import AuditDashboard from '@/components/audit/AuditDashboard';
 import AuditResults from '@/components/audit/AuditResults';
 import { usePlatformAudit } from '@/hooks/usePlatformAudit';
