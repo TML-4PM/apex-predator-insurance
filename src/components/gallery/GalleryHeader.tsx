@@ -11,7 +11,7 @@ const GalleryHeader = () => {
             Predator Gallery
           </h1>
           <p className="text-xl text-apex-darkgray/70 mb-6 animate-fade-up animate-delay-100">
-            Explore all 60 deadly predators from around the world
+            Explore all 85+ deadly predators from around the world
           </p>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
             <Eye size={16} />

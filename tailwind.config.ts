@@ -128,7 +128,7 @@ export default {
 				'blur-in': 'blur-in 0.7s ease-out forwards',
 				'slide-in-right': 'slide-in-right 0.7s ease-out forwards',
 				'slide-in-left': 'slide-in-left 0.7s ease-out forwards',
-				'scroll-x': 'scroll-x 30s linear infinite',
+				'scroll-x': 'scroll-x 15s linear infinite',
 			},
 			fontFamily: {
 				'sans': ['SF Pro Display', 'ui-sans-serif', 'system-ui', 'sans-serif'],

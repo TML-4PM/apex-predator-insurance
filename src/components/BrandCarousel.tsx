@@ -42,23 +42,28 @@ const brands: Brand[] = [
 
 const BrandCarousel = () => {
   return (
-    <div className="bg-white/10 backdrop-blur-lg border-t border-white/20 py-8 overflow-hidden relative">
+    <div className="bg-white/10 backdrop-blur-lg border-t border-white/20 py-6 overflow-hidden relative">
+      {/* Left fade mask */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/40 to-transparent z-10 pointer-events-none" />
+      {/* Right fade mask */}
+      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/40 to-transparent z-10 pointer-events-none" />
+
       <div className="group">
-        <div className="flex animate-scroll-x group-hover:[animation-play-state:paused] w-[calc(200%+4rem)]">
+        <div className="flex animate-scroll-x group-hover:[animation-play-state:paused] w-[calc(200%+2.5rem)]">
           {/* First track */}
-          <div className="flex items-center gap-16 min-w-full">
+          <div className="flex items-center gap-10 min-w-full justify-around">
             {brands.map((brand, index) => (
               <a
                 key={`first-${index}`}
                 href={brand.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-white/15 hover:bg-white/25 px-8 py-4 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg whitespace-nowrap group/item"
+                className="flex items-center gap-3 bg-white/15 hover:bg-white/25 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg whitespace-nowrap"
               >
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${brand.gradientFrom} ${brand.gradientTo} flex items-center justify-center font-bold text-white text-sm shadow-lg`}>
+                <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${brand.gradientFrom} ${brand.gradientTo} flex items-center justify-center font-bold text-white text-xs shadow-lg`}>
                   {brand.logo}
                 </div>
-                <div className="font-semibold text-white text-lg drop-shadow-sm">
+                <div className="font-semibold text-white text-base drop-shadow-sm">
                   {brand.name}
                 </div>
               </a>
@@ -66,19 +71,19 @@ const BrandCarousel = () => {
           </div>
           
           {/* Duplicate track for seamless loop */}
-          <div className="flex items-center gap-16 min-w-full">
+          <div className="flex items-center gap-10 min-w-full justify-around">
             {brands.map((brand, index) => (
               <a
                 key={`second-${index}`}
                 href={brand.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-white/15 hover:bg-white/25 px-8 py-4 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg whitespace-nowrap group/item"
+                className="flex items-center gap-3 bg-white/15 hover:bg-white/25 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg whitespace-nowrap"
               >
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${brand.gradientFrom} ${brand.gradientTo} flex items-center justify-center font-bold text-white text-sm shadow-lg`}>
+                <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${brand.gradientFrom} ${brand.gradientTo} flex items-center justify-center font-bold text-white text-xs shadow-lg`}>
                   {brand.logo}
                 </div>
-                <div className="font-semibold text-white text-lg drop-shadow-sm">
+                <div className="font-semibold text-white text-base drop-shadow-sm">
                   {brand.name}
                 </div>
               </a>
