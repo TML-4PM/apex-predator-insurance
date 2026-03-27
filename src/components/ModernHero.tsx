@@ -57,7 +57,7 @@ const ModernHero = () => {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-apex-red/20 backdrop-blur-sm border border-apex-red/30 rounded-full px-4 py-2 mb-6">
               <TrendingUp className="text-apex-red" size={16} />
-              <span className="text-white font-medium">The World's Most Fun Novelty Certificates</span>
+              <span className="text-white font-medium">The World's Most Unique Travel Insurance</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
