@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import Layout from '@/components/Layout';
+
 import { CheckCircle, Download, Share2, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
