@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
+
 import { deadlyAnimals } from '@/data/animalUtils';
 import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
 import GalleryHeader from '@/components/gallery/GalleryHeader';
