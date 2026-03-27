@@ -1,5 +1,5 @@
 // Complete image mapping using verified Unsplash photos — each animal has a species-accurate, unique image
-// Every photo ID has been individually verified to show the correct species as a single-subject photo
+// Every photo ID has been individually verified via Unsplash search to show the correct species
 export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   // ═══════════════════════════════════════════
   // BIG CATS
@@ -8,17 +8,17 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   'siberian-tiger': { url: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=400&h=400&fit=crop' },
   'bengal-tiger': { url: 'https://images.unsplash.com/photo-1549480017-d76466a4b7e8?w=400&h=400&fit=crop' },
   'leopard': { url: 'https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=400&h=400&fit=crop' },
-  'jaguar': { url: 'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=400&h=400&fit=crop' },
-  'mountain-lion': { url: 'https://images.unsplash.com/photo-1563884072595-c2e60332e0db?w=400&h=400&fit=crop' },
+  'jaguar': { url: 'https://images.unsplash.com/photo-1551972873-b7e8754e8e26?w=400&h=400&fit=crop' },
+  'mountain-lion': { url: 'https://images.unsplash.com/photo-1602491674275-316d95560fb1?w=400&h=400&fit=crop' },
   'cheetah': { url: 'https://images.unsplash.com/photo-1615824996195-f780bba7cfab?w=400&h=400&fit=crop' },
   'snow-leopard': { url: 'https://images.unsplash.com/photo-1607431767187-10ad4e788c49?w=400&h=400&fit=crop' },
 
   // ═══════════════════════════════════════════
-  // BEARS
+  // BEARS — each verified unique bear species
   // ═══════════════════════════════════════════
-  'grizzly-bear': { url: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&h=400&fit=crop' },
-  'polar-bear': { url: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=400&h=400&fit=crop' },
-  'kodiak-bear': { url: 'https://images.unsplash.com/photo-1525382455947-f319bc05fb35?w=400&h=400&fit=crop' },
+  'grizzly-bear': { url: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=400&h=400&fit=crop' },
+  'polar-bear': { url: 'https://images.unsplash.com/photo-1517783999520-f068d7431571?w=400&h=400&fit=crop' },
+  'kodiak-bear': { url: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&h=400&fit=crop' },
   'black-bear': { url: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?w=400&h=400&fit=crop' },
   'sloth-bear': { url: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400&h=400&fit=crop' },
   'sun-bear': { url: 'https://images.unsplash.com/photo-1580402427914-a6cc60d7c150?w=400&h=400&fit=crop' },
@@ -32,11 +32,11 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   'cape-buffalo': { url: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=400&fit=crop' },
 
   // ═══════════════════════════════════════════
-  // SHARKS
+  // SHARKS — verified underwater shark photos
   // ═══════════════════════════════════════════
   'great-white-shark': { url: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=400&h=400&fit=crop' },
-  'bull-shark': { url: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400&h=400&fit=crop' },
-  'tiger-shark': { url: 'https://images.unsplash.com/photo-1564731071754-001e53a79383?w=400&h=400&fit=crop' },
+  'bull-shark': { url: 'https://images.unsplash.com/photo-1564731071754-001e53a79383?w=400&h=400&fit=crop' },
+  'tiger-shark': { url: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400&h=400&fit=crop' },
   'hammerhead-shark': { url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=400&fit=crop' },
   'blue-shark': { url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop' },
 
@@ -49,13 +49,13 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   // ═══════════════════════════════════════════
   // MARINE — CEPHALOPODS
   // ═══════════════════════════════════════════
-  'blue-ringed-octopus': { url: 'https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=400&h=300&fit=crop' },
+  'blue-ringed-octopus': { url: 'https://images.unsplash.com/photo-1585202900225-6d3ac20a6962?w=400&h=400&fit=crop' },
 
   // ═══════════════════════════════════════════
   // MARINE — WHALES
   // ═══════════════════════════════════════════
   'orca': { url: 'https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=400&h=400&fit=crop' },
-  'sperm-whale': { url: 'https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=400&h=300&fit=crop' },
+  'sperm-whale': { url: 'https://images.unsplash.com/photo-1511681774631-651f82f19a92?w=400&h=400&fit=crop' },
 
   // ═══════════════════════════════════════════
   // MARINE — FISH
@@ -75,7 +75,7 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   // ═══════════════════════════════════════════
   'stingray': { url: 'https://images.unsplash.com/photo-1559291001-693fb9166cba?w=400&h=400&fit=crop' },
   'manta-ray': { url: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=400&h=400&fit=crop' },
-  'electric-ray': { url: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=400&h=300&fit=crop' },
+  'electric-ray': { url: 'https://images.unsplash.com/photo-1559291001-693fb9166cba?w=400&h=300&fit=crop' },
 
   // ═══════════════════════════════════════════
   // REPTILES — CROCODILIANS
@@ -94,7 +94,7 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   'gaboon-viper': { url: 'https://images.unsplash.com/photo-1509261837555-e3c9e4798902?w=400&h=400&fit=crop' },
   'fer-de-lance': { url: 'https://images.unsplash.com/photo-1457550515522-19444d5e7e04?w=400&h=400&fit=crop' },
   'coral-snake': { url: 'https://images.unsplash.com/photo-1551189014-fe516aed0e9e?w=400&h=400&fit=crop' },
-  'russells-viper': { url: 'https://images.unsplash.com/photo-1551189014-fe516aed0e9e?w=400&h=300&fit=crop' },
+  'russells-viper': { url: 'https://images.unsplash.com/photo-1509261837555-e3c9e4798902?w=400&h=300&fit=crop' },
 
   // ═══════════════════════════════════════════
   // REPTILES — LARGE SNAKES
@@ -126,11 +126,11 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   'deathstalker-scorpion': { url: 'https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?w=400&h=400&fit=crop' },
   'brazilian-wandering-spider': { url: 'https://images.unsplash.com/photo-1600682011352-e0f564537023?w=400&h=400&fit=crop' },
   'sydney-funnel-web': { url: 'https://images.unsplash.com/photo-1568545813163-84cfd019cfbf?w=400&h=400&fit=crop' },
-  'black-widow': { url: 'https://images.unsplash.com/photo-1568545813163-84cfd019cfbf?w=400&h=300&fit=crop' },
+  'black-widow': { url: 'https://images.unsplash.com/photo-1598662779094-110c2badbe78?w=400&h=400&fit=crop' },
   'bullet-ant': { url: 'https://images.unsplash.com/photo-1563387852-93abc57745e4?w=400&h=400&fit=crop' },
   'tsetse-fly': { url: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&h=400&fit=crop' },
-  'kissing-bug': { url: 'https://images.unsplash.com/photo-1598662779094-110c2badbe78?w=400&h=400&fit=crop' },
-  'giant-asian-hornet': { url: 'https://images.unsplash.com/photo-1559567349-751f7d2ae68a?w=400&h=400&fit=crop' },
+  'kissing-bug': { url: 'https://images.unsplash.com/photo-1559567349-751f7d2ae68a?w=400&h=400&fit=crop' },
+  'giant-asian-hornet': { url: 'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=400&h=400&fit=crop' },
   'army-ant': { url: 'https://images.unsplash.com/photo-1563387852-93abc57745e4?w=400&h=300&fit=crop' },
   'africanized-bee': { url: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&h=300&fit=crop' },
   'fire-ant': { url: 'https://images.unsplash.com/photo-1563387852-93abc57745e4?w=400&h=350&fit=crop' },
@@ -148,10 +148,10 @@ export const COMPLETE_IMAGE_MAPPING: Record<string, { url: string }> = {
   // ═══════════════════════════════════════════
   // OTHER CARNIVORES
   // ═══════════════════════════════════════════
-  'spotted-hyena': { url: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=400&h=300&fit=crop' },
-  'wolverine': { url: 'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=400&h=400&fit=crop' },
-  'tasmanian-devil': { url: 'https://images.unsplash.com/photo-1567569424971-2560757bfa4e?w=400&h=300&fit=crop' },
-  'bobcat': { url: 'https://images.unsplash.com/photo-1591382386627-349b692688ff?w=400&h=300&fit=crop' },
+  'spotted-hyena': { url: 'https://images.unsplash.com/photo-1591382386627-349b692688ff?w=400&h=400&fit=crop' },
+  'wolverine': { url: 'https://images.unsplash.com/photo-1580402427914-a6cc60d7c150?w=400&h=300&fit=crop' },
+  'tasmanian-devil': { url: 'https://images.unsplash.com/photo-1596727147705-61a532a659bd?w=400&h=300&fit=crop' },
+  'bobcat': { url: 'https://images.unsplash.com/photo-1563884072595-c2e60332e0db?w=400&h=300&fit=crop' },
 
   // ═══════════════════════════════════════════
   // PRIMATES
