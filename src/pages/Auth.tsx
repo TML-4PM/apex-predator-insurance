@@ -27,7 +27,7 @@ export default function Auth() {
   }
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gradient-to-br from-apex-lightgray/20 to-white flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
