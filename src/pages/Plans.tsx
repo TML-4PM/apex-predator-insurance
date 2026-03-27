@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
+
 import InsurancePlans from '@/components/InsurancePlans';
 import { ShoppingCart } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
