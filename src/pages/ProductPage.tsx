@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
+
 import ProductHero from '@/components/product/ProductHero';
 import ProductPreview from '@/components/product/ProductPreview';
 import ProductFeatures from '@/components/product/ProductFeatures';
@@ -13,7 +13,7 @@ import { ShoppingCart, Star, Heart } from 'lucide-react';
 
 const ProductPage = () => {
   return (
-    <Layout>
+    <>
       {/* Product Hero */}
       <ProductHero />
       
@@ -103,7 +103,7 @@ const ProductPage = () => {
           </section>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
+
 import { deadlyAnimals } from '@/data/animalUtils';
 import { DeadlyAnimal } from '@/data/types/DeadlyAnimal';
 import GalleryHeader from '@/components/gallery/GalleryHeader';
@@ -36,7 +36,7 @@ const Gallery = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <GalleryHeader />
       
       <section className="py-16 bg-white">
@@ -64,7 +64,7 @@ const Gallery = () => {
         animal={selectedAnimal}
         onClose={() => setSelectedAnimal(null)}
       />
-    </Layout>
+    </>
   );
 };
 

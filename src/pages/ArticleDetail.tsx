@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CalendarDays, Clock, User, Tag } from 'lucide-react';
@@ -185,7 +185,7 @@ const ArticleDetail = () => {
   
   if (!article) {
     return (
-      <Layout>
+      <>
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-bold mb-6">Article Not Found</h1>
           <p className="mb-8">Sorry, we couldn't find the article you're looking for.</p>
@@ -193,12 +193,12 @@ const ArticleDetail = () => {
             <Button>Back to Articles</Button>
           </Link>
         </div>
-      </Layout>
+      </>
     );
   }
   
   return (
-    <Layout>
+    <>
       <article className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -261,7 +261,7 @@ const ArticleDetail = () => {
           </div>
         </div>
       </article>
-    </Layout>
+    </>
   );
 };
 

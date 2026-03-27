@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Layout from '@/components/Layout';
+
 import { ShoppingCart } from 'lucide-react';
 import { CheckoutForm, CheckoutFormValues } from '@/components/checkout/CheckoutForm';
 import { OrderSummary } from '@/components/checkout/OrderSummary';
@@ -214,7 +214,7 @@ const Checkout = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="py-20 bg-[#1A1F2C]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -278,7 +278,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

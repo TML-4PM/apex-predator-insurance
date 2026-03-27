@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import Layout from '@/components/Layout';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { 
@@ -23,11 +23,11 @@ export default function AdminPortal() {
 
   if (loading) {
     return (
-      <Layout>
+      <>
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-apex-red"></div>
         </div>
-      </Layout>
+      </>
     );
   }
 
@@ -36,7 +36,7 @@ export default function AdminPortal() {
   }
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gray-50 pt-20">
         <div className="border-b bg-white">
           <div className="container mx-auto px-4 py-4">
@@ -111,6 +111,6 @@ export default function AdminPortal() {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

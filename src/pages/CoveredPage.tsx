@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import Layout from '@/components/Layout';
+
 import { CheckCircle, Download, Share2, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -9,7 +9,7 @@ const CoveredPage: React.FC = () => {
   const sessionId = searchParams.get('session_id');
 
   return (
-    <Layout>
+    <>
       <div className="min-h-[70vh] flex items-center justify-center py-20 px-4 bg-gradient-to-br from-slate-900 to-apex-black">
         <div className="max-w-lg w-full text-center">
           <div className="flex justify-center mb-6">
@@ -57,7 +57,7 @@ const CoveredPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

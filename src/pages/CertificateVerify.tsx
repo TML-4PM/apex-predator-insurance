@@ -1,11 +1,10 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
-import CertificateVerification from '@/components/certificate/CertificateVerification';
 
+import CertificateVerification from '@/components/certificate/CertificateVerification';
 export default function CertificateVerify() {
   return (
-    <Layout>
+    <>
       <div className="py-20 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -22,6 +21,6 @@ export default function CertificateVerify() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

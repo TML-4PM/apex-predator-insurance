@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import ContentAutomationDashboard from '@/components/ContentAutomationDashboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +8,7 @@ import { Bot, Globe, Zap, TrendingUp } from 'lucide-react';
 
 const ContentHub = () => {
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -115,7 +115,7 @@ const ContentHub = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

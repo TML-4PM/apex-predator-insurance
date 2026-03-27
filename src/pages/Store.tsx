@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import MerchandiseStore from '@/components/MerchandiseStore';
 import EnhancedCertificateSystem from '@/components/EnhancedCertificateSystem';
 import ApexPredatorInsurance from '@/components/ApexPredatorInsurance';
@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 
 const Store = () => {
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -178,7 +178,7 @@ const Store = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

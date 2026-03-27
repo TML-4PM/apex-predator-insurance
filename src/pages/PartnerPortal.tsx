@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,7 +29,7 @@ const PartnerPortal = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="pt-20 min-h-screen bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -169,7 +169,7 @@ const PartnerPortal = () => {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Play, Users, TrendingUp, Instagram, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,37 +10,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ModernHero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [selectedPlan, setSelectedPlan] = useState({ name: 'Shark Insurance', price: 9.99 });
-  
-  const socialStats = [
-    { icon: Instagram, label: '12.5K', sublabel: 'Posts' },
-    { icon: Users, label: '89%', sublabel: 'Survival Rate' },
-    { icon: TrendingUp, label: '#1', sublabel: 'Travel Trend' },
-  ];
+  const [selectedPlan, setSelectedPlan] = useState({ name: 'Shark Certificate', price: 9.99 });
 
   const supporterTestimonials = [
     {
       name: 'Jake',
       age: 24,
       location: 'Bali',
-      donation: '$100',
-      text: 'Supporting real protection for adventurers like me!',
+      text: 'Best novelty gift I ever bought — my mates loved it!',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
     },
     {
       name: 'Emma',
       age: 27,
       location: 'Australia',
-      donation: '$50',
-      text: 'Love knowing my adventures are covered properly',
+      text: 'Framed my Shark Certificate on the office wall — instant conversation starter.',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
     },
     {
       name: 'Alex',
       age: 22,
       location: 'Kenya',
-      donation: '$250',
-      text: 'This service gives me peace of mind on every trip',
+      text: 'Got the full Big Five bundle as a birthday gift — absolutely hilarious!',
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
     }
   ];
@@ -60,49 +51,34 @@ const ModernHero = () => {
         <div className="absolute inset-0 grid-pattern opacity-20 z-5" />
       </div>
 
-      {/* Floating Social Proof */}
-      <div className="absolute top-20 right-4 z-20 space-y-3 hidden lg:block">
-        {socialStats.map((stat, index) => (
-          <div key={index} className="bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
-            <div className="flex items-center gap-2 text-white">
-              <stat.icon size={16} />
-              <div>
-                <div className="font-bold text-lg">{stat.label}</div>
-                <div className="text-xs opacity-80">{stat.sublabel}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-24 pb-12">
         <div className="max-w-6xl mx-auto">
           {/* Main Hero Content */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-apex-red/20 backdrop-blur-sm border border-apex-red/30 rounded-full px-4 py-2 mb-6">
               <TrendingUp className="text-apex-red" size={16} />
-              <span className="text-white font-medium">Supporting Real Adventure Protection</span>
+              <span className="text-white font-medium">The World's Most Fun Novelty Certificates</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Get <span className="text-apex-red">$50K Insurance</span><br />
-              <span className="text-apex-yellow">Before Your Adventure</span>
+              Get <span className="text-apex-red">Your Adventure Certificate</span><br />
+              <span className="text-apex-yellow">Before Your Next Trip</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              Real protection for real adventurers. Support our mission to keep explorers safe worldwide.
+              The world's most fun novelty certificates for adventurers. 85+ deadly animals. Perfect gifts for thrill-seekers.
             </p>
 
-            {/* Donation Call-to-Action */}
+            {/* Product Highlights */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <Badge className="bg-white/10 text-white border-white/20 text-base px-4 py-2">
-                💝 Support from $5
+                🎁 From $9.99
               </Badge>
               <Badge className="bg-apex-red text-white text-base px-4 py-2">
-                🔥 Help Fund Protection (POPULAR)
+                🔥 85+ Predator Species
               </Badge>
               <Badge className="bg-white/10 text-white border-white/20 text-base px-4 py-2">
-                👑 VIP Supporter Access
+                📦 Instant Digital Delivery
               </Badge>
             </div>
 
@@ -110,14 +86,13 @@ const ModernHero = () => {
               <Link to="/plans">
                 <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-primary-foreground px-8 py-4 text-lg shadow-glow glow-pulse transition-all duration-300 hover:scale-105">
                   <ShoppingCart className="mr-2" size={20} />
-                  Buy Insurance Now
+                  Get Your Certificate
                 </Button>
               </Link>
               
-              <Link to="/donate">
+              <Link to="/gallery">
                 <Button size="lg" className="bg-card/20 hover:bg-card/30 text-primary-foreground border border-border/30 backdrop-blur-md px-8 py-4 text-lg transition-all duration-300 hover:scale-105">
-                  <Heart className="mr-2" size={20} />
-                  Support Our Mission
+                  Browse All Animals
                 </Button>
               </Link>
             </div>
@@ -156,10 +131,10 @@ const ModernHero = () => {
               </Tabs>
             </div>
 
-            {/* Supporter Stories */}
+            {/* Customer Reviews */}
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10">
               <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                🏆 Our Amazing Supporters
+                🏆 What Adventurers Are Saying
               </h3>
               
               <div className="space-y-4">
@@ -175,7 +150,6 @@ const ModernHero = () => {
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-semibold text-white">{supporter.name}</span>
                           <span className="text-white/60 text-sm">({supporter.age})</span>
-                          <span className="text-apex-red font-bold">{supporter.donation}</span>
                         </div>
                         <div className="text-sm text-white/60 mb-2">{supporter.location}</div>
                         <p className="text-white/90 text-sm italic">"{supporter.text}"</p>
@@ -186,10 +160,9 @@ const ModernHero = () => {
               </div>
               
               <div className="text-center mt-6">
-                <Link to="/donate">
+                <Link to="/testimonials">
                   <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                    <Heart className="mr-2" size={16} />
-                    Join Our Supporters
+                    See More Reviews
                   </Button>
                 </Link>
               </div>
@@ -201,15 +174,15 @@ const ModernHero = () => {
             <div className="flex flex-wrap justify-center items-center gap-8 text-white/60">
               <div className="flex items-center gap-2">
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30">✓</Badge>
-                <span>Real $50K Coverage</span>
+                <span>Novelty Certificates</span>
               </div>
               <div className="flex items-center gap-2">
                 <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">✓</Badge>
-                <span>Instant Certificate</span>
+                <span>Instant Digital Download</span>
               </div>
               <div className="flex items-center gap-2">
                 <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">✓</Badge>
-                <span>Community Supported</span>
+                <span>85+ Species Available</span>
               </div>
             </div>
           </div>

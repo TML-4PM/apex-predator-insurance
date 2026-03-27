@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -120,7 +120,7 @@ const TestimonialsPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
@@ -253,7 +253,7 @@ const TestimonialsPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import Layout from '@/components/Layout';
+
 import { 
   ShieldAlert, 
   AlertCircle, 
@@ -20,7 +20,7 @@ const Disclaimer = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-[#1A1F2C] to-[#221F26]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
@@ -206,7 +206,7 @@ const Disclaimer = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

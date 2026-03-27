@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import Layout from '@/components/Layout';
+
 import AuditDashboard from '@/components/audit/AuditDashboard';
 import AuditResults from '@/components/audit/AuditResults';
 import { usePlatformAudit } from '@/hooks/usePlatformAudit';
@@ -18,7 +18,7 @@ const PlatformAudit = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
@@ -38,7 +38,7 @@ const PlatformAudit = () => {
           )}
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

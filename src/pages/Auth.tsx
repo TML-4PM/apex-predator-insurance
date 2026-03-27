@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import Layout from '@/components/Layout';
+
 import LoginForm from '@/components/auth/LoginForm';
 import SignUpForm from '@/components/auth/SignUpForm';
 import { Button } from '@/components/ui/button';
@@ -14,11 +14,11 @@ export default function Auth() {
 
   if (loading) {
     return (
-      <Layout>
+      <>
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-apex-red"></div>
         </div>
-      </Layout>
+      </>
     );
   }
 
@@ -27,7 +27,7 @@ export default function Auth() {
   }
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gradient-to-br from-apex-lightgray/20 to-white flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
@@ -53,6 +53,6 @@ export default function Auth() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

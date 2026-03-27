@@ -1,12 +1,12 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Phone, MapPin, Mountain, Bike, Heart } from 'lucide-react';
 
 const About = () => {
   return (
-    <Layout>
+    <>
       <div className="pt-28 pb-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -110,7 +110,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

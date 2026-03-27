@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import Layout from '@/components/Layout';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -17,11 +17,11 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <Layout>
+      <>
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-apex-red"></div>
         </div>
-      </Layout>
+      </>
     );
   }
 
@@ -36,7 +36,7 @@ export default function Dashboard() {
   const userDisplayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gray-50 pt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
@@ -207,6 +207,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
