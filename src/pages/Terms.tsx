@@ -18,7 +18,7 @@ const Terms = () => {
               
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">2. Service Description</h2>
-                <p>Apex Predator Insurance provides <strong className="text-white">novelty certificates for entertainment and gifting purposes only</strong>. Our certificates are designed as fun, shareable products featuring the world's deadliest animals. <strong className="text-white">No actual insurance coverage, financial protection, or regulated benefit of any kind is provided.</strong></p>
+                <p>Apex Predator Insurance, operated by <strong className="text-white">Tech 4 Humanity Pty Ltd</strong>, provides Wildlife Shield policies offering a <strong className="text-white">$50,000 accidental death benefit</strong> for encounters with 85+ predator species worldwide. Policy terms, exclusions, and a 30-day cooling-off period apply to all purchases. See full policy documentation for details.</p>
               </section>
               
               <section>

@@ -174,7 +174,7 @@ const ModernHero = () => {
             <div className="flex flex-wrap justify-center items-center gap-8 text-white/60">
               <div className="flex items-center gap-2">
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30">✓</Badge>
-                <span>Novelty Certificates</span>
+                <span><span>Insurance Certificates</span></span>
               </div>
               <div className="flex items-center gap-2">
                 <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">✓</Badge>

@@ -313,7 +313,7 @@ const Certificate: React.FC<CertificateProps> = ({
               
               <div className="mt-8 pt-6 border-t border-white/20 text-center">
                 <p className="text-sm text-white/80">
-                  Virtual certificate value of $50,000 for encounters with dangerous predators
+                  $50,000 accidental death benefit for encounters with dangerous predators
                 </p>
                 <p className="text-xs text-white/60 mt-1">
                   Policy valid for 12 months from date of purchase. See full terms and conditions.
