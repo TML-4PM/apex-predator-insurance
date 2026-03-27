@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Layout from '@/components/Layout';
+
 import DonationForm from '@/components/DonationForm';
 import DonationTiers from '@/components/DonationTiers';
 import DonorRecognition from '@/components/DonorRecognition';
