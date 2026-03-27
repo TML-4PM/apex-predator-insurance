@@ -22,7 +22,7 @@ const Index = () => (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Join 50,000+ Adventure Seekers
+            Join 10,000+ Adventure Seekers
           </h2>
           <p className="text-xl text-muted-foreground">
             From backpackers to influencers - everyone's getting covered
