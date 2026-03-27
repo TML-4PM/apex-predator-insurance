@@ -66,7 +66,7 @@ const ModernHero = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              The world's most fun novelty certificates for adventurers. 85+ deadly animals. Perfect gifts for thrill-seekers.
+              Real protection against the world's deadliest predators. 85+ species covered. $50,000 accidental death benefit.
             </p>
 
             {/* Product Highlights */}
