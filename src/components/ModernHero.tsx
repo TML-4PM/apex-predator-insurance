@@ -24,7 +24,7 @@ const ModernHero = () => {
       name: 'Emma',
       age: 27,
       location: 'Australia',
-      text: 'Framed my Shark Certificate on the office wall — instant conversation starter.',
+      text: 'Got my Shark Shield policy before diving the Great Barrier Reef — wouldn\'t go without it.',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
     },
     {
