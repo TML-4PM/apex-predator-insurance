@@ -109,7 +109,7 @@ const Plans = () => {
       </div>
       
       <InsurancePlans />
-    </Layout>
+    </>
   );
 };
 

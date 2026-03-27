@@ -206,7 +206,7 @@ const Disclaimer = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

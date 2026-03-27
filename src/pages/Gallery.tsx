@@ -64,7 +64,7 @@ const Gallery = () => {
         animal={selectedAnimal}
         onClose={() => setSelectedAnimal(null)}
       />
-    </Layout>
+    </>
   );
 };
 

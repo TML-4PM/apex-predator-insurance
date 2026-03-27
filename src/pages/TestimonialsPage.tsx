@@ -253,7 +253,7 @@ const TestimonialsPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

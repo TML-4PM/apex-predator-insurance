@@ -103,7 +103,7 @@ const ProductPage = () => {
           </section>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

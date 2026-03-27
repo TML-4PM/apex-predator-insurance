@@ -71,7 +71,7 @@ const DonationPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

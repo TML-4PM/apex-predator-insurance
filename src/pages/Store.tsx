@@ -178,7 +178,7 @@ const Store = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

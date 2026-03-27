@@ -169,7 +169,7 @@ const PartnerPortal = () => {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

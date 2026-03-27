@@ -115,7 +115,7 @@ const ContentHub = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

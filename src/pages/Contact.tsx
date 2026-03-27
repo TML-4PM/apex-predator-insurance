@@ -155,7 +155,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

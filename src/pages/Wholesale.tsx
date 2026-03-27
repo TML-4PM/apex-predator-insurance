@@ -143,7 +143,7 @@ const Wholesale = () => {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

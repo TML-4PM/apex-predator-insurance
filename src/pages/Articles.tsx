@@ -139,7 +139,7 @@ const Articles = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

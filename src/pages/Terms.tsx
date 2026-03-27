@@ -74,7 +74,7 @@ const Terms = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
