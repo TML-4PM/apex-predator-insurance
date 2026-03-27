@@ -61,7 +61,7 @@ const ModernHero = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Get <span className="text-apex-red">Your Adventure Certificate</span><br />
+              Get <span className="text-apex-red">$50K Insurance</span><br />
               <span className="text-apex-yellow">Before Your Next Trip</span>
             </h1>
             
