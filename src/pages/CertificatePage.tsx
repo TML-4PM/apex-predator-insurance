@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Layout from '@/components/Layout';
+
 import Certificate from '@/components/Certificate';
 import SocialSharingPanel from '@/components/certificate/SocialSharingPanel';
 import { Button } from '@/components/ui/button';
