@@ -45,7 +45,7 @@ const CoveredPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild className="bg-apex-red hover:bg-apex-red/90">
               <Link to="/plans">
-                Get another certificate
+                Get another policy
               </Link>
             </Button>
             <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
