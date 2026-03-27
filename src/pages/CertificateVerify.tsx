@@ -1,8 +1,7 @@
 
 import React from 'react';
 
-
-
+import CertificateVerification from '@/components/certificate/CertificateVerification';
 export default function CertificateVerify() {
   return (
     <>
