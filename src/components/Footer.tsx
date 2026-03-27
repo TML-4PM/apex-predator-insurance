@@ -46,7 +46,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-white font-medium mb-4">Contact Us</h3>
-            <p className="text-white/60 mb-2">Questions about our novelty certificates?</p>
+            <p className="text-white/60 mb-2">Questions about your insurance policy?</p>
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
                 <Mail size={16} />
