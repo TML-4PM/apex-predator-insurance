@@ -36,7 +36,7 @@ export default function AdminPortal() {
   }
 
   return (
-    <Layout>
+    <>
       <div className="min-h-screen bg-gray-50 pt-20">
         <div className="border-b bg-white">
           <div className="container mx-auto px-4 py-4">
