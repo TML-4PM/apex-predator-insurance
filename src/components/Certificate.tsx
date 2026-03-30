@@ -10,314 +10,289 @@ type CertificateProps = {
   date?: string;
   uniqueId?: string;
   multipleItems?: Array<{ id: string; name: string; icon: string }>;
+  isPreview?: boolean;
 };
 
-const Certificate: React.FC<CertificateProps> = ({ 
-  insuranceType = "Shark Certificate", 
-  name = "John Adventurer",
-  country = "Australia",
+// ── Premium animal-only photography (no humans in frame) ──────────────────
+const ANIMAL_IMAGES: Record<string, string> = {
+  Shark:       'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/White_shark.jpg/800px-White_shark.jpg',
+  'Great White': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/White_shark.jpg/800px-White_shark.jpg',
+  'Hammerhead': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28226845659%29.jpeg/800px-Scalloped_Hammerhead_Shark_Sphyrna_Lewini_%28226845659%29.jpeg',
+  'Bull Shark': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Bullshark_Beqa_Fiji_2007.jpg/800px-Bullshark_Beqa_Fiji_2007.jpg',
+  'Tiger Shark': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Tiger_shark.jpg/800px-Tiger_shark.jpg',
+  Crocodile:   'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/SaltwaterCrocodile%28%27Maximo%27%29.jpg/800px-SaltwaterCrocodile%28%27Maximo%27%29.jpg',
+  Lion:        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/800px-020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg',
+  Tiger:       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/P.t.altaica_Tomak_Male.jpg/800px-P.t.altaica_Tomak_Male.jpg',
+  Bear:        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/GrizzlyBearJeanBeaufort.jpg/800px-GrizzlyBearJeanBeaufort.jpg',
+  Grizzly:     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/GrizzlyBearJeanBeaufort.jpg/800px-GrizzlyBearJeanBeaufort.jpg',
+  Polar:       'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Polar_Bear_-_Alaska_%28cropped%29.jpg/800px-Polar_Bear_-_Alaska_%28cropped%29.jpg',
+  Scorpion:    'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Androctonus_australis.jpg/800px-Androctonus_australis.jpg',
+  Spider:      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Black_widow_spider.jpg/800px-Black_widow_spider.jpg',
+  Snake:       'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Ophiophagus_hannah_2.jpg/800px-Ophiophagus_hannah_2.jpg',
+  Cobra:       'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Ophiophagus_hannah_2.jpg/800px-Ophiophagus_hannah_2.jpg',
+  Elephant:    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg/800px-African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg',
+  Jellyfish:   'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Avispa_marina_cropped.png/800px-Avispa_marina_cropped.png',
+  'Box Jellyfish': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Avispa_marina_cropped.png/800px-Avispa_marina_cropped.png',
+  Octopus:     'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG',
+  Leopard:     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/African_leopard_male_%28cropped%29.jpg/800px-African_leopard_male_%28cropped%29.jpg',
+  Jaguar:      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/800px-Standing_jaguar.jpg',
+  Hippo:       'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Portrait_Hippopotamus_in_the_water.jpg/800px-Portrait_Hippopotamus_in_the_water.jpg',
+  Orca:        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Killerwhales_jumping.jpg/800px-Killerwhales_jumping.jpg',
+  Stonefish:   'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Synanceia_verrucosa_Prague_2011_2.jpg/800px-Synanceia_verrucosa_Prague_2011_2.jpg',
+  Stingray:    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/SStringray.jpg/800px-SStringray.jpg',
+  default:     'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/White_shark.jpg/800px-White_shark.jpg',
+};
+
+const getAnimalImage = (type: string): string => {
+  for (const [key, url] of Object.entries(ANIMAL_IMAGES)) {
+    if (type.toLowerCase().includes(key.toLowerCase())) return url;
+  }
+  return ANIMAL_IMAGES.default;
+};
+
+// ── Theme colours per animal class ───────────────────────────────────────
+const getTheme = (type: string) => {
+  const t = type.toLowerCase();
+  if (t.includes('shark') || t.includes('orca') || t.includes('stingray'))
+    return { accent: '#1a6fb5', gold: '#c9a84c', ring: 'rgba(26,111,181,0.4)' };
+  if (t.includes('lion') || t.includes('cheetah') || t.includes('leopard') || t.includes('jaguar'))
+    return { accent: '#c47c1a', gold: '#e2c06a', ring: 'rgba(196,124,26,0.4)' };
+  if (t.includes('tiger'))
+    return { accent: '#c44a1a', gold: '#e2a06a', ring: 'rgba(196,74,26,0.4)' };
+  if (t.includes('bear') || t.includes('grizzly') || t.includes('polar'))
+    return { accent: '#6b4c2a', gold: '#c9a070', ring: 'rgba(107,76,42,0.4)' };
+  if (t.includes('croc') || t.includes('snake') || t.includes('cobra'))
+    return { accent: '#2a6b3a', gold: '#7ec47a', ring: 'rgba(42,107,58,0.4)' };
+  if (t.includes('spider') || t.includes('scorpion'))
+    return { accent: '#7b1fa2', gold: '#ce93d8', ring: 'rgba(123,31,162,0.4)' };
+  if (t.includes('jellyfish') || t.includes('octopus'))
+    return { accent: '#c2185b', gold: '#f48fb1', ring: 'rgba(194,24,91,0.4)' };
+  return { accent: '#b71c1c', gold: '#c9a84c', ring: 'rgba(183,28,28,0.4)' };
+};
+
+const getInsuranceInfo = (type: string) => {
+  const infoMap: Record<string, { icon: string; text: string; funFact: string }> = {
+    Shark:       { icon: '🦈', text: 'in open ocean waters', funFact: 'Great whites can detect a single drop of blood from 400m away.' },
+    Crocodile:   { icon: '🐊', text: 'in tropical waterways', funFact: 'Saltwater crocodiles have the strongest bite force ever measured in an animal.' },
+    Lion:        { icon: '🦁', text: 'across African savannas', funFact: "A lion's roar can be heard from 8km away." },
+    Tiger:       { icon: '🐅', text: 'in Asian wilderness', funFact: 'Tigers are the only big cats that actively enjoy water.' },
+    Bear:        { icon: '🐻', text: 'in national parks & wilderness', funFact: 'Grizzlies can run at 56 km/h — faster than Usain Bolt.' },
+    Scorpion:    { icon: '🦂', text: 'in desert & arid regions', funFact: 'Scorpions glow blue-green under UV light.' },
+    Spider:      { icon: '🕷️', text: 'in tropical & temperate zones', funFact: 'Some spiders can hold their breath underwater for 24 hours.' },
+    Snake:       { icon: '🐍', text: 'in wilderness & grasslands', funFact: 'King cobras are the only snakes that build nests for their eggs.' },
+    Elephant:    { icon: '🐘', text: 'in wildlife reserves', funFact: 'Elephants recognise themselves in mirrors — one of only four animals able to do so.' },
+    Jellyfish:   { icon: '🪼', text: 'in coastal ocean waters', funFact: 'Jellyfish have survived for 650 million years — longer than trees.' },
+    Octopus:     { icon: '🐙', text: 'in tidal and deep waters', funFact: 'The blue-ringed octopus carries enough venom to kill 26 adults.' },
+    Leopard:     { icon: '🐆', text: 'in forest & savanna zones', funFact: 'Leopards can carry prey twice their body weight up into trees.' },
+    Hippo:       { icon: '🦛', text: 'along African rivers', funFact: 'Hippos kill more people in Africa than any other large animal.' },
+    Orca:        { icon: '🐋', text: 'in polar and temperate seas', funFact: 'Orcas have culture — each pod has its own dialect.' },
+    default:     { icon: '🦁', text: 'anywhere danger lurks', funFact: 'Nature has perfected its predators over millions of years of evolution.' },
+  };
+  const key = Object.keys(infoMap).find(k => type.toLowerCase().includes(k.toLowerCase()));
+  return infoMap[key ?? 'default'];
+};
+
+const Certificate: React.FC<CertificateProps> = ({
+  insuranceType = 'Shark Certificate',
+  name = 'John Adventurer',
+  country = 'Australia',
   date = new Date().toISOString().split('T')[0],
   uniqueId = Math.random().toString(36).substring(2, 10).toUpperCase(),
-  multipleItems
+  multipleItems,
+  isPreview = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
-  
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 500);
-    
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setIsVisible(true), 500);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (isVisible && !animationComplete) {
-      const timer = setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+    if (isVisible && !animationComplete && !isPreview) {
+      const t = setTimeout(() => {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         setAnimationComplete(true);
       }, 800);
-      
-      return () => clearTimeout(timer);
+      return () => clearTimeout(t);
     }
-  }, [isVisible, animationComplete]);
-  
-  const getInsuranceInfo = (type: string) => {
-    const info = {
-      Shark: {
-        icon: "🦈",
-        text: "in Australian waters",
-        color: "from-blue-500/20 to-cyan-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232E86AB' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-blue-500/5 to-cyan-500/10",
-        funFact: "Great white sharks can detect one drop of blood in 25 gallons of water and can smell blood up to 3 miles away.",
-        image: "url('https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Crocodile: {
-        icon: "🐊",
-        text: "in tropical rivers",
-        color: "from-green-500/20 to-emerald-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23166534' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-green-500/5 to-emerald-500/10",
-        funFact: "Saltwater crocodiles have the strongest bite force ever measured in an animal - strong enough to crush a small boat.",
-        image: "url('https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Lion: {
-        icon: "🦁",
-        text: "on African safaris",
-        color: "from-yellow-500/20 to-amber-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D97706' fill-opacity='0.08' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-yellow-500/5 to-amber-500/10",
-        funFact: "A lion's roar can be heard from up to 5 miles away and can reach 114 decibels - as loud as a rock concert.",
-        image: "url('https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Bear: {
-        icon: "🐻",
-        text: "in national parks",
-        color: "from-amber-500/20 to-orange-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C2410C' fill-opacity='0.07'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6h-2c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-amber-500/5 to-orange-500/10",
-        funFact: "Grizzly bears can run as fast as 35 mph, which is faster than the world's fastest human sprinter.",
-        image: "url('https://images.unsplash.com/photo-1525869916826-972885c91c1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Scorpion: {
-        icon: "🦂",
-        text: "in desert regions",
-        color: "from-orange-500/20 to-red-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23B91C1C' fill-opacity='0.06'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-orange-500/5 to-red-500/10",
-        funFact: "Scorpions glow bright blue-green under ultraviolet light, making them easy to spot for researchers at night.",
-        image: "url('https://images.unsplash.com/photo-1561535544-9d245cdb9d6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Spider: {
-        icon: "🕷️",
-        text: "in tropical regions",
-        color: "from-purple-500/20 to-violet-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%237E22CE' fill-opacity='0.07' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-purple-500/5 to-violet-500/10",
-        funFact: "Some spiders can hold their breath underwater for up to 24 hours by trapping air bubbles on their bodies.",
-        image: "url('https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Snake: {
-        icon: "🐍",
-        text: "in wilderness areas",
-        color: "from-emerald-500/20 to-teal-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='32' height='64' viewBox='0 0 32 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 28h20V16h-4v8H4V4h28v28h-4V8H8v12h4v-8h12v20H0v-4zm12 8h20v4H16v24H0v-4h12V36zm16 12h-4v12h8v4H20V44h12v12h-4v-8zM0 36h8v20H0v-4h4V40H0v-4z' fill='%230F766E' fill-opacity='0.06' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-emerald-500/5 to-teal-500/10",
-        funFact: "King cobras are the only snakes in the world that build nests for their eggs, which they guard fiercely.",
-        image: "url('https://images.unsplash.com/photo-1531386151447-fd76ad50012f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Elephant: {
-        icon: "🐘",
-        text: "in wildlife reserves",
-        color: "from-gray-500/20 to-slate-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%23475569' fill-opacity='0.07' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-gray-500/5 to-slate-500/10",
-        funFact: "Elephants can recognize themselves in mirrors, a rare ability that shows self-awareness shared only by apes, dolphins, and magpies.",
-        image: "url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      Jellyfish: {
-        icon: "🪼",
-        text: "in coastal waters",
-        color: "from-pink-500/20 to-fuchsia-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23DB2777' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-pink-500/5 to-fuchsia-500/10",
-        funFact: "Jellyfish have existed for over 650 million years, making them older than dinosaurs and even trees.",
-        image: "url('https://images.unsplash.com/photo-1628944681206-2ee8d49f3844?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      "Apex Predator": {
-        icon: "🏆",
-        text: "anywhere danger lurks",
-        color: "from-apex-red/20 to-apex-yellow/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E94444' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-apex-red/5 to-apex-yellow/10",
-        funFact: "Humans are technically apex predators with a trophic level of 2.21, higher than even some sharks and big cats.",
-        image: "url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      },
-      "Multiple Predator": {
-        icon: "🦌",
-        text: "across various habitats",
-        color: "from-indigo-500/20 to-blue-500/20",
-        pattern: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234F46E5' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-        gradientOverlay: "bg-gradient-to-br from-indigo-500/5 to-blue-500/10",
-        funFact: "A combination of predator defenses is the most effective survival strategy in the wild - just like this multi-predator insurance package!",
-        image: "url('https://images.unsplash.com/photo-1487252665478-49b61b47f302?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
-      }
-    };
-    
-    // Check for multiple predators
-    if (type.includes("Multiple") || (multipleItems && multipleItems.length > 1)) {
-      return info["Multiple Predator"];
-    }
-    
-    for (const [key, value] of Object.entries(info)) {
-      if (type.includes(key)) {
-        return value;
-      }
-    }
-    
-    const firstChar = type.charAt(0).toUpperCase();
-    const charCode = firstChar.charCodeAt(0);
-    const keys = Object.keys(info);
-    const randomIndex = charCode % keys.length;
-    const randomKey = keys[randomIndex] as keyof typeof info;
-    
-    const result = {...info[randomKey]};
-    if (type.includes('Snake')) result.icon = '🐍';
-    else if (type.includes('Spider')) result.icon = '🕷️';
-    else if (type.includes('Bear')) result.icon = '🐻';
-    
-    return result;
-  };
-  
-  const getPredatorIcons = () => {
-    if (multipleItems && multipleItems.length > 1) {
-      // Return up to 6 icons for visual appeal
-      return multipleItems.slice(0, 6).map(item => item.icon).join(' ');
-    }
-    return info.icon;
-  };
-  
+  }, [isVisible, animationComplete, isPreview]);
+
   const info = getInsuranceInfo(insuranceType);
-  const today = new Date().toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
-  
+  const theme = getTheme(insuranceType);
+  const animalImage = multipleItems && multipleItems.length > 1
+    ? ANIMAL_IMAGES.default
+    : getAnimalImage(insuranceType);
+
   const expiryDate = new Date();
   expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-  const expiryDateFormatted = expiryDate.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  
+  const expiryFormatted = expiryDate.toLocaleDateString('en-AU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  const todayFormatted = new Date().toLocaleDateString('en-AU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
   return (
-    <div className={`relative transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-      <motion.div 
-        className="preserve-3d hover:rotate-y-10 transition-all duration-500"
+    <div className={`relative transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+      <motion.div
         initial={{ rotateY: 0 }}
-        whileHover={{ rotateY: 5, scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        whileHover={{ rotateY: 3, scale: 1.01 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 20 }}
       >
-        <div 
-          className={`max-w-2xl mx-auto bg-white rounded-xl overflow-hidden shadow-glass backface-hidden ${info.color}`}
-          style={{ 
-            backgroundImage: info.pattern,
-            backgroundSize: "auto",
-            backgroundRepeat: "repeat",
+        {/* Outer gold frame */}
+        <div
+          className="max-w-2xl mx-auto rounded-2xl overflow-hidden"
+          style={{
+            background: `linear-gradient(135deg, #c9a84c 0%, #f5e095 40%, #c9a84c 60%, #8a6a1a 100%)`,
+            padding: '4px',
+            boxShadow: `0 0 0 1px rgba(201,168,76,0.3), 0 20px 60px rgba(0,0,0,0.4), 0 0 80px ${theme.ring}`,
           }}
         >
-          <div 
-            className={`relative ${info.gradientOverlay} backdrop-blur-[1px]`}
+          {/* Inner cert body */}
+          <div
+            className="relative rounded-xl overflow-hidden"
             style={{
-              backgroundImage: info.image,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundBlendMode: "soft-light",
+              background: '#0d0d0d',
+              minHeight: 520,
             }}
           >
-            <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-0"></div>
-            
-            <div className="relative z-10 p-8 md:p-10">
-              <div className="flex justify-between items-start mb-8">
+            {/* Hero animal image — fills top 55% */}
+            <div className="relative h-72 overflow-hidden">
+              <img
+                src={animalImage}
+                alt={insuranceType}
+                className="w-full h-full object-cover object-center"
+                style={{ filter: 'brightness(0.75) saturate(1.15)' }}
+              />
+              {/* Gradient fade to dark body */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
+
+              {/* Top bar */}
+              <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 pt-5">
                 <div>
-                  <div className="text-sm uppercase tracking-wider text-white/80">Apex Predator Certificates</div>
-                  <div className="text-3xl font-bold text-white">Wildlife Shield</div>
+                  <div className="text-xs uppercase tracking-[0.2em] text-white/60 font-medium">Wildlife Shield</div>
+                  <div className="text-white font-bold text-lg tracking-wide">Certificate of Coverage</div>
                 </div>
-                <div className="h-16 w-16 rounded-full bg-apex-red flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">AP</span>
-                </div>
-              </div>
-              
-              <div className="text-center my-8">
-                <div className="text-sm uppercase tracking-wider text-white/80">Certificate of</div>
-                <div className="text-4xl font-bold text-apex-red mb-2 drop-shadow-lg">{insuranceType}</div>
-                <div className="text-6xl my-6 animate-pulse flex justify-center items-center space-x-1">
-                  {multipleItems && multipleItems.length > 1 
-                    ? multipleItems.slice(0, 5).map((item, index) => (
-                        <span key={index} className="inline-block drop-shadow-lg">{item.icon}</span>
-                      ))
-                    : <span className="drop-shadow-lg">{info.icon}</span>
-                  }
-                </div>
-                <div className="text-lg text-white/90">
-                  This certifies that
-                </div>
-                <div className="text-3xl font-bold text-white my-3 drop-shadow-md">{name}</div>
-                <div className="text-lg text-white/90 max-w-md mx-auto">
-                  {multipleItems && multipleItems.length > 1 
-                    ? `is now covered for encounters with ${multipleItems.length} different predators across multiple environments.`
-                    : `is now covered for ${insuranceType.toLowerCase().replace(' insurance', '').replace(' certificate', '')} encounters ${info.text}.`
-                  }
-                </div>
-                <div className="text-lg font-bold text-apex-red mt-4 bg-white/10 backdrop-blur-sm rounded-full py-2 max-w-xs mx-auto drop-shadow-lg">
-                  $50,000 Coverage
+                <div
+                  className="text-xs font-bold tracking-wider px-3 py-1 rounded-full"
+                  style={{ background: theme.accent, color: '#fff' }}
+                >
+                  {isPreview ? 'PREVIEW' : 'AUTHENTIC'}
                 </div>
               </div>
-              
-              {/* Fun Fact */}
-              {info.funFact && (
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg my-6 border border-white/20">
-                  <p className="text-white/90 text-sm italic text-center">
-                    <span className="font-semibold text-apex-red">Fun Fact:</span> {info.funFact}
+
+              {/* Animal name centred over image */}
+              <div className="absolute bottom-4 left-0 right-0 text-center px-6">
+                <div
+                  className="text-3xl font-black tracking-tight"
+                  style={{ color: theme.gold, textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
+                >
+                  {multipleItems && multipleItems.length > 1
+                    ? `${multipleItems.length} Predator Collection`
+                    : insuranceType.replace(' Certificate', '').replace(' Insurance', '')}
+                </div>
+                {!multipleItems && (
+                  <div className="text-white/60 text-xs mt-0.5 tracking-widest uppercase">
+                    {info.text}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Body content */}
+            <div className="px-8 pb-8 pt-5 relative">
+
+              {/* Diagonal watermark — only shown in preview */}
+              {isPreview && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
+                  style={{ transform: 'rotate(-25deg)' }}
+                >
+                  <div
+                    className="text-white/12 font-black text-4xl tracking-widest text-center select-none"
+                    style={{ whiteSpace: 'nowrap' }}
+                  >
+                    APEXPREDATORINSURANCE.COM
+                    <br />
+                    APEXPREDATORINSURANCE.COM
+                  </div>
+                </div>
+              )}
+
+              {/* Icons for multi-predator */}
+              {multipleItems && multipleItems.length > 1 && (
+                <div className="flex justify-center gap-2 mb-4 flex-wrap">
+                  {multipleItems.slice(0, 8).map((item, i) => (
+                    <span key={i} className="text-2xl">{item.icon}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Gold divider */}
+              <div className="h-px mb-5" style={{ background: `linear-gradient(to right, transparent, ${theme.gold}, transparent)` }} />
+
+              {/* Certifies that */}
+              <div className="text-center mb-5">
+                <div className="text-white/50 text-xs uppercase tracking-[0.2em] mb-1">This certifies that</div>
+                <div
+                  className="text-2xl font-bold"
+                  style={{ color: '#fff', textShadow: `0 0 20px ${theme.ring}` }}
+                >
+                  {name}
+                </div>
+                <div className="text-white/60 text-sm mt-1">
+                  {multipleItems && multipleItems.length > 1
+                    ? `is covered for encounters with ${multipleItems.length} apex predators across multiple environments`
+                    : `is covered for ${insuranceType.replace(' Certificate', '').replace(' Insurance', '').toLowerCase()} encounters ${info.text}`}
+                </div>
+              </div>
+
+              {/* Coverage + validity row */}
+              <div
+                className="rounded-xl p-4 mb-5 flex justify-between items-center"
+                style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${theme.gold}30` }}
+              >
+                <div>
+                  <div className="text-white/40 text-xs uppercase tracking-wider">Coverage</div>
+                  <div className="font-black text-2xl mt-0.5" style={{ color: theme.gold }}>US$50,000</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white/40 text-xs uppercase tracking-wider">Valid Until</div>
+                  <div className="text-white font-bold text-lg mt-0.5">{expiryFormatted}</div>
+                </div>
+              </div>
+
+              {/* Fun fact */}
+              {info.funFact && !multipleItems && (
+                <div
+                  className="rounded-lg p-3 mb-5 text-center"
+                  style={{ background: 'rgba(255,255,255,0.04)', borderLeft: `3px solid ${theme.accent}` }}
+                >
+                  <p className="text-white/60 text-xs italic">
+                    <span className="not-italic font-semibold" style={{ color: theme.gold }}>Fact: </span>
+                    {info.funFact}
                   </p>
                 </div>
               )}
-              
-              {/* Multiple predators list */}
-              {multipleItems && multipleItems.length > 1 && (
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg my-6 border border-white/20">
-                  <p className="text-sm font-medium text-white mb-2">Coverage includes protection against:</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {multipleItems.map((item, index) => (
-                      <div key={index} className="flex items-center">
-                        <span className="mr-2">{item.icon}</span>
-                        <span className="text-sm text-white/90">{item.name.replace(' Insurance', '')}</span>
-                      </div>
-                    ))}
-                  </div>
+
+              {/* Footer meta */}
+              <div className="flex justify-between items-end">
+                <div>
+                  <div className="text-white/30 text-xs uppercase tracking-wider">Certificate ID</div>
+                  <div className="text-white/70 font-mono text-sm font-semibold mt-0.5">{uniqueId}</div>
                 </div>
-              )}
-              
-              <div className="flex flex-col sm:flex-row justify-between gap-4 mt-10">
-                <div className="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
-                  <div className="text-sm text-white/70">CERTIFICATE LOCATION</div>
-                  <div className="text-base font-medium flex items-center text-white">
-                    <span className="mr-1">📍</span> {country}
-                  </div>
-                </div>
-                <div className="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
-                  <div className="text-sm text-white/70">CERTIFICATE ID</div>
-                  <div className="text-base font-medium flex items-center text-white">
-                    <span className="mr-1">🔢</span> {uniqueId}
-                  </div>
+                <div className="text-right">
+                  <div className="text-white/30 text-xs uppercase tracking-wider">Issued</div>
+                  <div className="text-white/70 text-sm mt-0.5">{todayFormatted}</div>
                 </div>
               </div>
-              
-              <div className="flex justify-between items-end mt-6">
-                <div className="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
-                  <div className="text-sm text-white/70">ISSUE DATE</div>
-                  <div className="text-base font-medium text-white">{today}</div>
+
+              {/* Branding footer */}
+              <div
+                className="mt-5 pt-4 text-center"
+                style={{ borderTop: `1px solid ${theme.gold}25` }}
+              >
+                <div className="text-white/25 text-xs tracking-[0.15em] uppercase">
+                  ApexPredatorInsurance.com · Wildlife Shield Programme
                 </div>
-                <div className="bg-black/40 backdrop-blur-sm p-3 rounded-lg text-right border border-white/20">
-                  <div className="text-sm text-white/70">VALID UNTIL</div>
-                  <div className="text-base font-medium text-white">{expiryDateFormatted}</div>
-                </div>
-              </div>
-              
-              <div className="mt-8 pt-6 border-t border-white/20 text-center">
-                <p className="text-sm text-white/80">
-                  $50,000 accidental death benefit for encounters with dangerous predators
-                </p>
-                <p className="text-xs text-white/60 mt-1">
-                  Policy valid for 12 months from date of purchase. See full terms and conditions.
-                </p>
               </div>
             </div>
           </div>
