@@ -31,6 +31,7 @@ import PlatformAudit from "./pages/PlatformAudit";
 import ChatPage from "./pages/ChatPage";
 import Wholesale from "./pages/Wholesale";
 import PartnerPortal from "./pages/PartnerPortal";
+import CommunityPage from "./pages/CommunityPage";
 
 // Lazy loaded components using the new code splitting utilities
 import { LazyPages } from "./utils/codeSplitting";
@@ -86,6 +87,7 @@ function App() {
                       <Route path="/plans" element={<LazyPages.Plans />} />
                       <Route path="/checkout" element={<LazyPages.Checkout />} />
                       <Route path="/social" element={<LazyPages.SocialHub />} />
+                      <Route path="/community" element={<CommunityPage />} />
                       <Route path="/chat" element={<ChatPage />} />
                       <Route path="/wholesale" element={<Wholesale />} />
                       <Route path="/partner" element={
