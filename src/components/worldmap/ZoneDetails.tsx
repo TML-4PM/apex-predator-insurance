@@ -3,9 +3,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { DangerZone } from '@/models/DangerZone';
 import { getThreatIcon } from '@/utils/threatIcons';
-import { Skull, Share2, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Skull, Share2, Facebook, Instagram, Linkedin, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -35,7 +36,6 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
         shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`Apex Predator Insurance - ${zone.name}`)}&summary=${encodeURIComponent(text)}`;
         break;
       case 'instagram':
-        // Instagram doesn't have a direct share URL API, so we'll just copy to clipboard
         navigator.clipboard.writeText(`${text} ${url}`)
           .then(() => {
             toast({
@@ -45,38 +45,25 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
           });
         return;
       default:
-        // Default share or copy to clipboard
         if (navigator.share) {
           navigator.share({
             title: `Apex Predator Insurance - ${zone.name}`,
             text: text,
             url: url,
-          })
-          .then(() => console.log('Successful share'))
-          .catch((error) => console.log('Error sharing:', error));
+          }).catch(() => {});
           return;
         } else {
-          // Fallback for browsers that don't support navigator.share
           navigator.clipboard.writeText(`${text} ${url}`)
             .then(() => {
               toast({
                 title: "Link copied!",
                 description: "Share link has been copied to your clipboard.",
               });
-            })
-            .catch(err => {
-              console.error('Failed to copy: ', err);
-              toast({
-                title: "Sharing failed",
-                description: "Could not copy the share link.",
-                variant: "destructive"
-              });
             });
           return;
         }
     }
     
-    // Open share URL in a new window
     if (shareUrl) {
       window.open(shareUrl, '_blank', 'width=600,height=400');
     }
@@ -87,7 +74,7 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className="absolute z-20 bg-[#1A1F2C]/90 backdrop-blur-md px-5 py-4 rounded-xl shadow-xl border border-white/10 max-w-sm overflow-hidden"
+      className="absolute z-20 bg-[#1A1F2C]/95 backdrop-blur-md px-5 py-4 rounded-xl shadow-xl border border-white/10 max-w-sm overflow-hidden"
       style={{ 
         left: `${zone.coordinates.x > 70 ? zone.coordinates.x - 30 : zone.coordinates.x + 5}%`, 
         top: `${zone.coordinates.y > 70 ? zone.coordinates.y - 30 : zone.coordinates.y + 5}%` 
@@ -113,7 +100,7 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
       
       <p className="text-white/80 text-sm">{zone.description}</p>
       
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between gap-2">
         <button 
           onClick={onClose}
           className="text-xs font-medium text-white/60 hover:text-white transition-colors"
@@ -121,36 +108,48 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({ zone, onClose }) => {
           Close
         </button>
         
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <div className="flex items-center gap-2">
+          <Link to="/plans">
             <Button 
               size="sm" 
-              variant="outline" 
-              className="border-white/20 text-white hover:bg-white/10"
+              className="bg-apex-red hover:bg-apex-red/90 text-white text-xs"
             >
-              <Share2 className="h-3.5 w-3.5 mr-1" />
-              Share
+              <ShieldCheck className="h-3.5 w-3.5 mr-1" />
+              Get Covered
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-[#1A1F2C] border border-white/10">
-            <DropdownMenuItem onClick={() => handleShare('facebook')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
-              <Facebook className="h-4 w-4 text-blue-500" />
-              <span>Facebook</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare('instagram')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
-              <Instagram className="h-4 w-4 text-pink-500" />
-              <span>Instagram</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare('linkedin')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
-              <Linkedin className="h-4 w-4 text-blue-600" />
-              <span>LinkedIn</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare()} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
-              <Share2 className="h-4 w-4" />
-              <span>Copy Link</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </Link>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="border-white/20 text-white hover:bg-white/10"
+              >
+                <Share2 className="h-3.5 w-3.5 mr-1" />
+                Share
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 bg-[#1A1F2C] border border-white/10">
+              <DropdownMenuItem onClick={() => handleShare('facebook')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+                <Facebook className="h-4 w-4 text-blue-500" />
+                <span>Facebook</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('instagram')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+                <Instagram className="h-4 w-4 text-pink-500" />
+                <span>Instagram</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('linkedin')} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+                <Linkedin className="h-4 w-4 text-blue-600" />
+                <span>LinkedIn</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare()} className="flex items-center gap-2 text-white hover:bg-white/10 cursor-pointer">
+                <Share2 className="h-4 w-4" />
+                <span>Copy Link</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </motion.div>
   );

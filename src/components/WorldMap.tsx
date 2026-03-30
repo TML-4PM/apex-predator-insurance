@@ -28,14 +28,9 @@ const WorldMap = () => {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      {/* Enhanced background with texture and gradient */}
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C] to-[#221F26]"></div>
-        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover"></div>
-        <div className="absolute inset-0 opacity-30" style={{ 
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)`,
-          backgroundSize: '30px 30px' 
-        }}></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1A1F2C]/80"></div>
       </div>
       
@@ -84,28 +79,59 @@ const WorldMap = () => {
               transition={{ duration: 0.8 }}
               className="relative w-full h-full"
             >
-              {/* Improved map container with higher contrast and clearer visualization */}
-              <div className="absolute inset-0 bg-[#0D1117]/80"></div>
+              {/* Dark base */}
+              <div className="absolute inset-0 bg-[#0D1117]"></div>
               
-              {/* Clearer world map background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover opacity-40 mix-blend-soft-light"></div>
+              {/* SVG World Map */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 1000 500"
+                preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Grid lines */}
+                <defs>
+                  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="1000" height="500" fill="url(#grid)" />
+                
+                {/* Simplified continent outlines */}
+                {/* North America */}
+                <path d="M120,60 L180,55 L220,70 L250,90 L260,120 L270,150 L250,170 L230,190 L210,200 L200,220 L180,230 L170,210 L160,200 L140,190 L130,170 L120,150 L110,130 L105,100 L110,80 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Central America */}
+                <path d="M180,230 L190,240 L195,260 L200,270 L210,280 L205,290 L195,285 L185,270 L175,250 L170,240 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* South America */}
+                <path d="M210,290 L230,280 L260,290 L280,310 L290,340 L300,370 L290,400 L270,430 L250,450 L240,440 L230,410 L220,380 L210,350 L200,320 L205,300 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Europe */}
+                <path d="M450,60 L480,55 L510,60 L530,70 L540,90 L530,110 L520,120 L500,130 L480,135 L460,130 L445,120 L440,100 L445,80 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Africa */}
+                <path d="M450,160 L480,150 L520,155 L550,170 L570,200 L580,240 L575,280 L560,320 L540,360 L520,380 L500,390 L480,380 L460,350 L445,310 L440,270 L435,230 L440,190 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Asia */}
+                <path d="M540,50 L600,45 L660,50 L720,60 L780,70 L820,90 L840,110 L830,140 L800,160 L760,170 L720,175 L680,180 L640,175 L600,165 L570,150 L550,130 L540,100 L535,75 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* India */}
+                <path d="M640,175 L660,190 L670,220 L665,260 L650,280 L635,270 L625,240 L620,210 L625,190 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Southeast Asia */}
+                <path d="M720,175 L750,190 L770,210 L780,240 L775,260 L760,250 L740,230 L730,210 L720,195 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                {/* Australia */}
+                <path d="M760,320 L810,310 L860,320 L890,340 L900,370 L890,400 L860,420 L820,425 L780,410 L760,390 L750,360 L755,340 Z" 
+                  fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+                
+                {/* Equator line */}
+                <line x1="0" y1="250" x2="1000" y2="250" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="10,10"/>
+              </svg>
               
-              {/* Enhanced grid pattern */}
-              <div className="absolute inset-0 opacity-20" style={{ 
-                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.3) 1px, transparent 0)`,
-                backgroundSize: '20px 20px' 
-              }}></div>
-              
-              {/* Map overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/40 to-[#1A1F2C]/20"></div>
-              
-              {/* Continents overlay silhouette */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589519160732-57fc6437cc72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-no-repeat bg-cover opacity-50 mix-blend-overlay"></div>
-              
-              {/* Add a subtle glow effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#33C3F0]/10 opacity-30"></div>
-              </div>
+              {/* Subtle overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/30 to-[#1A1F2C]/10 pointer-events-none"></div>
               
               <ZoneConnections zones={dangerZones} />
               

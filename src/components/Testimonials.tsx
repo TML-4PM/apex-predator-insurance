@@ -165,7 +165,7 @@ const Testimonials = () => {
         {/* Social Media Call-to-Action */}
         <div className="text-center mt-12 p-8 bg-gradient-to-r from-apex-red/10 to-apex-orange/10 rounded-xl">
           <h3 className="text-xl font-bold text-apex-black mb-4">Share Your Adventure!</h3>
-          <p className="text-apex-darkgray mb-4">Tag us @ApexPredatorIns with #ApexPredatorProofGlobal</p>
+          <p className="text-apex-darkgray mb-4">Tag us @ApexPredatorInsurance with #ApexPredatorInsurance</p>
           <div className="flex justify-center gap-4">
             <Link to="/testimonials">
               <Button className="bg-apex-red hover:bg-apex-red/90">

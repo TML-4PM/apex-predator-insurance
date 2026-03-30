@@ -64,7 +64,7 @@ const Terms = () => {
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">11. Contact Information</h2>
                 <p>If you have any questions about these Terms, please contact us at:</p>
-                <p className="mt-2"><a href="mailto:contact@tech4humanity.com.au" className="text-apex-red hover:underline">contact@tech4humanity.com.au</a></p>
+                <p className="mt-2"><a href="mailto:contact@apexpredatorinsurance.com" className="text-apex-red hover:underline">contact@apexpredatorinsurance.com</a></p>
               </section>
               
               <div className="pt-6 border-t border-white/10 text-white/60">
