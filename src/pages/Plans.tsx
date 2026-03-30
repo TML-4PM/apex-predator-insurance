@@ -5,7 +5,7 @@ import InsurancePlans from '@/components/InsurancePlans';
 import { ShoppingCart } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { getBundlePlans } from '@/constants/pricing';
+import { ULTIMATE_BUNDLE } from '@/constants/pricing/bundlePlans';
 
 interface RecentlyViewedPlan {
   id: string;
@@ -23,26 +23,14 @@ interface CartItem {
 const Plans = () => {
   const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewedPlan[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const bundlePlans = getBundlePlans();
   
   useEffect(() => {
-    console.log("Plans page mounted");
     window.scrollTo(0, 0);
-    
-    // Get recently viewed plans and cart items from localStorage
     try {
       const storedRecentlyViewed = localStorage.getItem('recentlyViewed');
       const storedCartItems = localStorage.getItem('cartItems');
-      
-      if (storedRecentlyViewed) {
-        const parsedData = JSON.parse(storedRecentlyViewed);
-        setRecentlyViewed(parsedData);
-      }
-      
-      if (storedCartItems) {
-        const parsedCartItems = JSON.parse(storedCartItems);
-        setCartItems(parsedCartItems);
-      }
+      if (storedRecentlyViewed) setRecentlyViewed(JSON.parse(storedRecentlyViewed));
+      if (storedCartItems) setCartItems(JSON.parse(storedCartItems));
     } catch (error) {
       console.error("Error retrieving data from localStorage:", error);
     }
@@ -54,20 +42,20 @@ const Plans = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-apex-black mb-4 animate-fade-up">
-              Choose Your Wildlife Shield
+              Choose Your Wildlife Certificate
             </h1>
             <p className="text-lg text-apex-darkgray/70 mb-4 animate-fade-up animate-delay-100">
-              Each plan comes with a personalized certificate to commemorate your adventurous spirit.
+              Each certificate commemorates your connection with the world's most extraordinary predators.
             </p>
             <div className="inline-flex flex-col sm:flex-row items-center gap-2 px-4 py-2 rounded-full bg-apex-red/10 text-apex-red text-sm animate-fade-up animate-delay-200">
               <div className="flex items-center gap-2">
                 <ShoppingCart size={16} />
-                <span>Individual plans: $9.99</span>
+                <span>Individual: US$9.99</span>
               </div>
               <span className="hidden sm:inline">•</span>
-              <span>25 predators: ${bundlePlans[0]?.price.toFixed(2) || '59.99'}</span>
+              <span>Top 25: US$79.00</span>
               <span className="hidden sm:inline">•</span>
-              <span><span>All 85+ predators: ${bundlePlans[1]?.price.toFixed(2) || '99.99'}</span>: ${bundlePlans[1]?.price.toFixed(2) || '99.99'}</span>
+              <span>All 60: US${ULTIMATE_BUNDLE.price.toFixed(2)}</span>
             </div>
             
             {cartItems.length > 0 && (
@@ -79,7 +67,6 @@ const Plans = () => {
             )}
           </div>
           
-          {/* Recently Viewed Section */}
           {recentlyViewed.length > 0 && (
             <div className="mt-8 animate-fade-up animate-delay-300">
               <div className="max-w-6xl mx-auto">
