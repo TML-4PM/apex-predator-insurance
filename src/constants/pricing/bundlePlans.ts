@@ -3,6 +3,27 @@ import { PricingPlan } from './types';
 
 // Enhanced Bundle Plans with psychological pricing
 export const BUNDLE_PLANS: PricingPlan[] = [
+  // ── HERO BUNDLE (drives the "25 predators: $79" callout on /plans) ──
+  {
+    id: "top-25-wildlife-pack",
+    name: "Top 25 Wildlife Pack",
+    description: "The 25 most iconic and dangerous predators on the planet — curated for the serious collector",
+    price: 79.00,
+    image: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    icon: "🦁",
+    isBundle: true,
+    category: "featured",
+    animalCount: 25,
+    savings: 170.75,
+    features: [
+      "25 Premium Predator Certificates",
+      "Hand-picked — ocean, jungle & savanna",
+      "Save $170.75 vs individual plans",
+      "Instant digital download",
+      "Share-ready social images included"
+    ]
+  },
+
   // Regional Collections
   {
     id: "african-safari-collection",
@@ -144,7 +165,7 @@ export const BUNDLE_PLANS: PricingPlan[] = [
   {
     id: "beginner-explorer-pack",
     name: "Beginner Explorer Pack",
-    description: "Perfect introduction to wildlife insurance for new adventurers",
+    description: "Perfect introduction to wildlife certificates for new adventurers",
     price: 39.99,
     image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "🎒",
@@ -155,7 +176,7 @@ export const BUNDLE_PLANS: PricingPlan[] = [
     features: [
       "5 Beginner-Friendly Certificates",
       "Low to Medium Danger Animals",
-      "Perfect for First-Time Travelers",
+      "Perfect for First-Time Collectors",
       "Save $9.96 vs individual plans",
       "Adventure planning guide"
     ]
@@ -163,7 +184,7 @@ export const BUNDLE_PLANS: PricingPlan[] = [
   {
     id: "seasoned-adventurer-collection",
     name: "Seasoned Adventurer Collection",
-    description: "For experienced travelers ready for serious challenges",
+    description: "For experienced collectors ready for serious challenges",
     price: 159.99,
     image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "⭐",
@@ -182,7 +203,7 @@ export const BUNDLE_PLANS: PricingPlan[] = [
   {
     id: "extreme-explorer-ultimate",
     name: "Extreme Explorer Ultimate",
-    description: "Only for the most daring adventurers - maximum danger level",
+    description: "Only for the most daring — maximum danger level",
     price: 99.99,
     image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     icon: "💀",
@@ -200,24 +221,24 @@ export const BUNDLE_PLANS: PricingPlan[] = [
   }
 ];
 
-// Ultimate bundle with enhanced positioning
+// Ultimate bundle — all 60 core predators
 export const ULTIMATE_BUNDLE: PricingPlan = {
   id: "complete-apex-predator-collection",
   name: "Complete Apex Predator Collection",
-  description: "Every single deadly animal certificate - the ultimate survival bragging rights",
-  price: 199.99,
-  image: "https://images.unsplash.com/photo-1591389703635-e15a07609a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+  description: "All 60 predator certificates — the ultimate collector's set and maximum bragging rights",
+  price: 119.99,
+  image: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
   icon: "🏆",
   isBundle: true,
   category: "ultimate",
-  animalCount: 79,
-  savings: 589.22,
+  animalCount: 60,
+  savings: 479.41,
   features: [
-    "All 79 Predator Certificates",
+    "All 60 Predator Certificates",
     "Every Category Included",
-    "Save $589.22 vs individual plans",
-    "Ultimate Bragging Rights",
-    "Lifetime Access to New Additions",
+    "Save $479.41 vs individual plans",
+    "Ultimate Collector Bragging Rights",
+    "Instant access to all new additions",
     "Priority Customer Support",
     "Exclusive Ultimate Explorer Badge"
   ]
