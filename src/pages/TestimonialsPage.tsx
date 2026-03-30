@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +15,7 @@ const globalTestimonials = [
     rating: 5,
     destination: 'Machu Picchu',
     quote: 'I printed my Apex Predator certificate and took it atop the ancient ruins—now it\'s framed alongside my travel photos. The design held up beautifully through the trek, and locals thought it was an official permit! Totally boosted my explorer cred.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4'
+    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&h=400&fit=crop'
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const globalTestimonials = [
     rating: 4,
     destination: 'Scottish Highlands',
     quote: 'Snapped my Eagle certificate against the backdrop of Edinburgh Castle, then carried it through the Highlands. It survived rain, wind, and midges—proof that quality matters. Just wish the delivery was a smidge faster for last-minute trips!',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4'
+    image: 'https://images.unsplash.com/photo-1506377585622-bedcbb027afc?w=600&h=400&fit=crop'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const globalTestimonials = [
     rating: 5,
     destination: 'Rio Carnival',
     quote: 'Took my Lion certificate to the Samba parade in Rio—what a roar it got from fellow revelers! Loved sharing the charity story behind it. A true conversation starter on Copacabana Beach.',
-    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325'
+    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=400&fit=crop'
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const globalTestimonials = [
     rating: 5,
     destination: 'Maldives',
     quote: 'I downloaded my Shark certificate on the plane, printed it in Malé, and posed with it before diving into the reef. The locals thought it was my diving licence—brilliant! Also, love that proceeds help marine conservation.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4'
+    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&h=400&fit=crop'
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const globalTestimonials = [
     rating: 4,
     destination: 'Mount Fuji',
     quote: 'My Wolf certificate made it into my carry-on on a Tokyo–Hakone day trip, and I got an epic shot with Mount Fuji behind it. Only missing one star because my printer at the ryokan was a bit patchy!',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4'
+    image: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600&h=400&fit=crop'
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ const globalTestimonials = [
     rating: 5,
     destination: 'Kruger National Park',
     quote: 'Held my Cheetah certificate next to a real cheetah at Kruger National Park (behind the safety of a window!). The crisp print and vibrant art made it look authentic—park rangers even asked where I got mine.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4'
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=400&fit=crop'
   }
 ];
 
@@ -141,10 +141,10 @@ const TestimonialsPage = () => {
                 <div className="flex flex-wrap justify-center gap-4 mb-4">
                   <Badge variant="outline" className="px-4 py-2">
                     <Instagram size={16} className="mr-2" />
-                    @ApexPredatorIns
+                    @ApexPredatorInsurance
                   </Badge>
                   <Badge variant="outline" className="px-4 py-2">
-                    #ApexPredatorProofGlobal
+                    #ApexPredatorInsurance
                   </Badge>
                 </div>
                 <p className="text-sm text-apex-darkgray/70">
@@ -240,14 +240,18 @@ const TestimonialsPage = () => {
                 Join thousands of explorers who've made their mark around the world
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button className="bg-apex-red hover:bg-apex-red/90" size="lg">
-                  <Camera size={20} className="mr-2" />
-                  Get Your Certificate
-                </Button>
-                <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10" size="lg">
-                  <Instagram size={20} className="mr-2" />
-                  Follow Our Journey
-                </Button>
+                <Link to="/plans">
+                  <Button className="bg-apex-red hover:bg-apex-red/90" size="lg">
+                    <Camera size={20} className="mr-2" />
+                    Get Your Certificate
+                  </Button>
+                </Link>
+                <a href="https://instagram.com/ApexPredatorInsurance" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-apex-red text-apex-red hover:bg-apex-red/10" size="lg">
+                    <Instagram size={20} className="mr-2" />
+                    Follow Our Journey
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

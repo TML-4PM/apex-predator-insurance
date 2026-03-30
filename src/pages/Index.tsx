@@ -34,7 +34,7 @@ const Index = () => (
             { icon: Users, number: '10K+', label: 'Certificates Issued', gradient: 'from-blue-500 to-blue-600' },
             { icon: Star, number: '4.9★', label: 'App Store Rating', gradient: 'from-accent to-yellow-600' },
             { icon: Target, number: '85+', label: 'Deadly Animals', gradient: 'from-green-500 to-green-600' },
-            { icon: TrendingUp, number: '#1', label: 'Novelty Gift Trend', gradient: 'from-primary to-red-600' }
+            { icon: TrendingUp, number: '#1', label: 'Travel Insurance Trend', gradient: 'from-primary to-red-600' }
           ].map((stat, index) => (
             <div key={index} className="group text-center p-6 bg-card rounded-xl shadow-card border border-border hover:shadow-elevated transition-all duration-300 hover:-translate-y-1">
               <div className={`mx-auto mb-3 w-12 h-12 rounded-full bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300`}>

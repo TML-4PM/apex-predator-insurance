@@ -176,7 +176,7 @@ const Disclaimer = () => {
                 <div className="bg-white rounded-lg">
                   <p>In the event of a covered incident, the nominated beneficiary should:</p>
                   <ol className="space-y-3 my-4 list-decimal list-inside">
-                    <li><strong>Notify us</strong> — Contact <a href="mailto:contact@tech4humanity.com.au" className="text-apex-red hover:underline">contact@tech4humanity.com.au</a> within 90 days of the incident</li>
+                    <li><strong>Notify us</strong> — Contact <a href="mailto:contact@apexpredatorinsurance.com" className="text-apex-red hover:underline">contact@apexpredatorinsurance.com</a> within 90 days of the incident</li>
                     <li><strong>Provide documentation</strong> — Submit a certified death certificate and official incident report confirming the cause of death involved a covered predator species</li>
                     <li><strong>Verification</strong> — Our claims team will verify the incident against the policy terms within 30 business days</li>
                     <li><strong>Payment</strong> — Upon approval, the $50,000 benefit will be paid to the nominated beneficiary via bank transfer within 14 business days</li>
@@ -194,7 +194,7 @@ const Disclaimer = () => {
                     You have a <strong>30-day cooling-off period</strong> from the date of purchase. During this period, you may cancel your policy and receive a full refund, provided no claim has been lodged.
                   </p>
                   <p className="mb-0">
-                    To request a cancellation or refund, contact us at <a href="mailto:contact@tech4humanity.com.au" className="text-apex-red hover:underline">contact@tech4humanity.com.au</a> with your policy number and order reference.
+                    To request a cancellation or refund, contact us at <a href="mailto:contact@apexpredatorinsurance.com" className="text-apex-red hover:underline">contact@apexpredatorinsurance.com</a> with your policy number and order reference.
                   </p>
                 </div>
               </div>
@@ -213,7 +213,7 @@ const Disclaimer = () => {
                       Registered address: Australia. All policies are issued digitally and governed by Australian consumer law.
                     </p>
                     <p className="text-apex-darkgray/80">
-                      For complaints or disputes, contact us at <a href="mailto:contact@tech4humanity.com.au" className="text-apex-red hover:underline">contact@tech4humanity.com.au</a>.
+                      For complaints or disputes, contact us at <a href="mailto:contact@apexpredatorinsurance.com" className="text-apex-red hover:underline">contact@apexpredatorinsurance.com</a>.
                     </p>
                   </div>
                 </div>

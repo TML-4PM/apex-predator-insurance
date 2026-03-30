@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Users, Gift, ArrowRight, Percent } from 'lucide-react';
+import { Users, Gift, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 interface GroupPurchaseProps {
   basePrice?: number;
@@ -25,7 +26,7 @@ const GroupPurchase = ({ basePrice = 9.99, planName = 'Shark Insurance' }: Group
   ];
 
   const getCurrentDiscount = () => {
-    const tier = discountTiers.reverse().find(tier => groupSize >= tier.size);
+    const tier = [...discountTiers].reverse().find(tier => groupSize >= tier.size);
     return tier || { size: 1, discount: 0, label: 'Solo' };
   };
 
@@ -150,10 +151,12 @@ const GroupPurchase = ({ basePrice = 9.99, planName = 'Shark Insurance' }: Group
         </Button>
         
         <div className="text-center">
-          <Button variant="outline" className="border-purple-300 text-purple-600 hover:bg-purple-50">
-            Skip Group - Buy Solo
-            <ArrowRight className="ml-2" size={16} />
-          </Button>
+          <Link to="/plans">
+            <Button variant="outline" className="border-purple-300 text-purple-600 hover:bg-purple-50">
+              Skip Group - Buy Solo
+              <ArrowRight className="ml-2" size={16} />
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -162,11 +165,7 @@ const GroupPurchase = ({ basePrice = 9.99, planName = 'Shark Insurance' }: Group
         <div className="flex items-center justify-center gap-4 text-sm text-apex-darkgray/70">
           <div className="flex items-center gap-1">
             <Users size={14} />
-            <span>2,847 groups</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Percent size={14} />
-            <span>saved this month</span>
+            <span>10,000+ groups covered</span>
           </div>
         </div>
       </div>

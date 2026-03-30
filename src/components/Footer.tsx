@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Mail } from 'lucide-react';
-import BrandCarousel from './BrandCarousel';
 
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-br from-slate-900 via-apex-black to-slate-800 text-white relative overflow-hidden">
-      <BrandCarousel />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-2">
@@ -25,7 +22,7 @@ const Footer = () => {
             </p>
 
             <div className="flex space-x-4">
-              <a href="mailto:contact@tech4humanity.com.au" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+              <a href="mailto:contact@apexpredatorinsurance.com" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
                 <Mail size={18} className="text-white" />
               </a>
             </div>
@@ -50,19 +47,15 @@ const Footer = () => {
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-apex-red hover:text-apex-red/80 transition-colors">
                 <Mail size={16} />
-                <a href="mailto:contact@tech4humanity.com.au" className="hover:underline text-sm">
-                  contact@tech4humanity.com.au
+                <a href="mailto:contact@apexpredatorinsurance.com" className="hover:underline text-sm">
+                  contact@apexpredatorinsurance.com
                 </a>
               </div>
             </div>
-            <Link to="/contact" className="text-apex-red hover:text-apex-red/80 transition-colors text-sm font-medium">
-              Full Contact Information →
-            </Link>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10">
-          {/* Legal disclaimer bar */}
+        <div className="mt-8 pt-6 border-t border-white/10">
           <p className="text-white/30 text-xs text-center mb-4 max-w-3xl mx-auto leading-relaxed">
             Apex Predator Insurance is operated by Tech 4 Humanity Pty Ltd (ABN 61 605 746 618).
             Wildlife Shield policies provide a $50,000 accidental death benefit for encounters with covered predator species.

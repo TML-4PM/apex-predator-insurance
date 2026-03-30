@@ -27,17 +27,14 @@ export const OrderSummary = ({
 }: OrderSummaryProps) => {
   const [displayName, setDisplayName] = useState(userName);
   
-  // Determine plan type based on ID
   const isMidTier = plan.id === 'bundle25';
   const isCompleteBundle = plan.id === 'bundle60';
   
-  // Calculate total if multiple items exist in cart
   const hasMultipleItems = cartItems && cartItems.length > 0;
   const totalPrice = hasMultipleItems 
     ? cartItems.reduce((sum, item) => sum + item.price, 0)
     : plan.price;
   
-  // Listen for form updates to update the certificate preview in real-time
   useEffect(() => {
     const handleFormUpdate = (e: CustomEvent) => {
       if (e.detail && e.detail.fullName) {
@@ -60,7 +57,6 @@ export const OrderSummary = ({
         </h2>
         
         {hasMultipleItems ? (
-          // Display multiple items if cart has items
           <>
             <div className="mb-4">
               <p className="text-white/80 mb-2 text-sm">
@@ -78,7 +74,6 @@ export const OrderSummary = ({
             </div>
           </>
         ) : (
-          // Display single plan if no cart items
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
               <span className="text-2xl mr-2">{plan.icon}</span>
@@ -106,9 +101,6 @@ export const OrderSummary = ({
               <div className="flex items-center"><span className="mr-1">🐺</span> Wolves</div>
               <div className="flex items-center"><span className="mr-1">+15</span> more predators</div>
             </div>
-            <p className="text-xs text-white/80 mt-2">
-              Save 40% compared to individual plans!
-            </p>
           </div>
         )}
         
@@ -130,9 +122,6 @@ export const OrderSummary = ({
               <div className="flex items-center"><span className="mr-1">🐺</span> Wolves</div>
               <div className="flex items-center"><span className="mr-1">+50</span> more predators</div>
             </div>
-            <p className="text-xs text-white/80 mt-2">
-              Save 80% compared to individual plans!
-            </p>
           </div>
         )}
         
@@ -143,38 +132,41 @@ export const OrderSummary = ({
           </div>
         </div>
         
-        <div className="mt-8">
-          <p className="text-sm text-white/60 mb-4">
-            Certificate Preview:
-          </p>
-          <div className="transform scale-75 origin-top">
-            <div className="flex justify-center items-center h-full">
-              {/* Certificate Preview */}
-              <div className="border-2 border-apex-red/50 rounded-lg p-8 w-full h-full bg-[#111111] text-center text-white/80">
-                <h3 className="text-xl font-semibold mb-2">
-                  {hasMultipleItems 
-                    ? `Multiple Predator Coverage (${cartItems.length})`
-                    : plan.name
-                  }
-                </h3>
-                <p className="mb-2">Issued to: {displayName}</p>
-                <p className="text-sm text-apex-red">$50,000 Accidental Death Benefit</p>
-                {hasMultipleItems && cartItems.length > 0 && (
-                  <div className="mt-4 text-xs text-white/70">
-                    <p>Includes coverage for:</p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-1">
-                      {cartItems.slice(0, 5).map(item => (
-                        <span key={item.id} className="inline-flex items-center">
-                          {item.icon} {item.name}
-                        </span>
-                      ))}
-                      {cartItems.length > 5 && (
-                        <span>+{cartItems.length - 5} more</span>
-                      )}
-                    </div>
-                  </div>
-                )}
+        {/* Certificate Preview */}
+        <div className="mt-6">
+          <p className="text-sm text-white/60 mb-3">Certificate Preview:</p>
+          <div className="relative border-2 border-apex-red/40 rounded-lg overflow-hidden bg-gradient-to-br from-[#111] to-[#1a1a1a]">
+            {/* Decorative border pattern */}
+            <div className="absolute inset-1 border border-apex-red/20 rounded pointer-events-none"></div>
+            
+            <div className="p-6 text-center">
+              <div className="text-3xl mb-2">{hasMultipleItems ? '🛡️' : plan.icon}</div>
+              <div className="text-xs uppercase tracking-widest text-apex-red/70 mb-1">Apex Predator Insurance</div>
+              <h3 className="text-lg font-bold text-white mb-1">
+                {hasMultipleItems 
+                  ? `${cartItems.length}-Species Coverage`
+                  : plan.name
+                }
+              </h3>
+              <div className="w-16 h-px bg-apex-red/40 mx-auto my-2"></div>
+              <p className="text-white/80 text-sm mb-1">Issued to:</p>
+              <p className="text-white font-semibold text-lg">{displayName}</p>
+              <div className="mt-3 inline-flex items-center gap-1 bg-apex-red/20 px-3 py-1 rounded-full">
+                <Shield className="h-3 w-3 text-apex-red" />
+                <span className="text-xs text-apex-red font-medium">$50,000 Accidental Death Benefit</span>
               </div>
+              {hasMultipleItems && cartItems.length > 0 && (
+                <div className="mt-3 flex flex-wrap justify-center gap-1">
+                  {cartItems.slice(0, 5).map(item => (
+                    <span key={item.id} className="text-xs text-white/60 bg-white/5 px-2 py-0.5 rounded">
+                      {item.icon} {item.name}
+                    </span>
+                  ))}
+                  {cartItems.length > 5 && (
+                    <span className="text-xs text-white/40">+{cartItems.length - 5} more</span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
