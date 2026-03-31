@@ -132,6 +132,8 @@ const EnhancedCertificateSystem = () => {
                     insuranceType={selectedAnimal.name}
                     name={previewName}
                     country={selectedAnimal.locations?.[0] || 'Worldwide'}
+                    imageUrl={selectedAnimal.imageUrl}
+                    tier="individual"
                     isPreview={true}
                   />
                   <div className="flex gap-2">
