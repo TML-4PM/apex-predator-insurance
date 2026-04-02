@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { NEWS_ARTICLES } from '@/pages/Articles';
+import { NEWS_ARTICLES } from '@/data/newsArticles';
 
 const CATEGORY_COLORS: Record<string, string> = {
   Research: 'bg-blue-100 text-blue-700',
@@ -31,7 +31,6 @@ const Blog = () => {
           {posts.map(post => (
             <Link key={post.id} to={`/articles/${post.slug}`} className="group">
               <Card className="overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 flex flex-col h-full">
-                {/* Image */}
                 <div className="h-48 overflow-hidden relative">
                   <img
                     src={post.image}
@@ -49,14 +48,12 @@ const Blog = () => {
                     <MapPin className="w-2.5 h-2.5" />{post.region}
                   </div>
                 </div>
-
                 <CardContent className="flex-1 p-4">
                   <h3 className="font-bold text-apex-black text-sm leading-snug mb-2 group-hover:text-apex-red transition-colors line-clamp-3">
                     {post.title}
                   </h3>
                   <p className="text-gray-500 text-xs line-clamp-2">{post.excerpt}</p>
                 </CardContent>
-
                 <CardFooter className="px-4 pb-4 pt-0 flex justify-between items-center">
                   <span className="text-gray-400 text-xs flex items-center gap-1">
                     <Calendar className="w-3 h-3" />{post.date}
