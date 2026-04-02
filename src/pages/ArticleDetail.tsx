@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, MapPin, Tag, Share2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { NEWS_ARTICLES } from './Articles';
+import { NEWS_ARTICLES } from '@/data/newsArticles';
 
 const CATEGORY_COLORS: Record<string, string> = {
   Research: 'bg-blue-100 text-blue-700',
@@ -23,9 +23,7 @@ const ArticleDetail = () => {
         <div className="text-6xl mb-4">🦈</div>
         <h2 className="text-2xl font-bold mb-2">Article not found</h2>
         <p className="text-gray-500 mb-6">The article you're looking for may have moved or been removed.</p>
-        <Link to="/articles">
-          <Button variant="outline">← Back to News</Button>
-        </Link>
+        <Link to="/articles"><Button variant="outline">← Back to News</Button></Link>
       </div>
     );
   }
@@ -90,12 +88,9 @@ const ArticleDetail = () => {
 
       {/* Body */}
       <div className="container mx-auto max-w-3xl px-4 py-10">
-        {/* Excerpt */}
         <p className="text-lg text-gray-700 font-medium leading-relaxed mb-8 border-l-4 border-apex-red pl-5">
           {article.excerpt}
         </p>
-
-        {/* Article body HTML */}
         <div
           className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-apex-black prose-p:text-gray-700 prose-p:leading-relaxed prose-li:text-gray-700"
           dangerouslySetInnerHTML={{ __html: article.body }}
